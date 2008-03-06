@@ -33,7 +33,7 @@ public abstract class Publication
    /**
     * Resumen de la publicacion.
     */
-   private String abstractt;
+   private String _abstract;
    
    /**
     * Comentarios al respecto.
@@ -46,14 +46,10 @@ public abstract class Publication
    private String user;
    
    /**
-    * Vector que contiene los autores que han colaborado en la creación de la misma.
-    */
-   private Vector autor;
-   
-   /**
     * Contiene todos los proyectos a los que pertenece la aplicación.
     */
    private Vector proyectos;
+   
    public PublicationException thePublicationException;
    
    /**
@@ -84,7 +80,7 @@ public abstract class Publication
     * @return java.lang.String
     * @roseuid 47C5AA3F0213
     */
-   public String getBibText() 
+   public String getBibTeX() 
    {
     return null;
    }

@@ -2,13 +2,19 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Clase que representa un artículo publicado en un periódico o revista.
  */
 public class Article extends Publication 
 {
-   
+	/**
+	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 */
+	private Vector author;
+	
    /**
     * Journal en el que se publicó.
     */

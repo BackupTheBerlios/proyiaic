@@ -2,14 +2,20 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Una obra que está impresa y encuadernada (bound), pero sin una editorial o 
  * institución patrocinadora (sponsoring).
  */
-public class BookLet extends Publication 
+public class Booklet extends Publication 
 {
-   
+	/**
+	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 */
+	private Vector author;
+	
    /**
     * Forma en la que ha sido publicado.
     */
@@ -26,11 +32,6 @@ public class BookLet extends Publication
    private String address;
    
    /**
-    * Longitud en páginas.
-    */
-   private int pages;
-   
-   /**
     * Mes de publicación.
     */
    private String month;
@@ -38,7 +39,7 @@ public class BookLet extends Publication
    /**
     * @roseuid 47C8A71101F4
     */
-   public BookLet() 
+   public Booklet() 
    {
     
    }

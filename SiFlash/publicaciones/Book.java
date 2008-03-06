@@ -2,13 +2,24 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Clase que representa un libro
  */
 public class Book extends Publication 
 {
-   
+	/**
+	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 */
+	private Vector author;
+	
+	/**
+	 * Vector que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 */
+	private Vector editor;
+	
    /**
     * Representa a la entidad que publica.
     */
@@ -43,11 +54,6 @@ public class Book extends Publication
     * Edicion del mismo.
     */
    private String edition;
-   
-   /**
-    * Longitud en páginas.
-    */
-   private int pages;
    
    /**
     * Mes de publicación.

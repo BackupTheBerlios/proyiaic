@@ -2,17 +2,18 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Una tesis de maestría o proyecto fin de carrera.
  */
 public class MasterThesis extends Publication 
 {
-   
-   /**
-    * Titulo de la publicación.
-    */
-   private String title;
+	/**
+	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 */
+	private Vector author;
    
    /**
     * Escuela en la que ser ralizó la investigación.

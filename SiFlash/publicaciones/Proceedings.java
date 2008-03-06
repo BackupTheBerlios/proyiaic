@@ -2,18 +2,29 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Las actas de sesiones de una conferencia.
  */
 public class Proceedings extends Publication 
 {
-   
    /**
     * Año de publicación.
     */
    private int year;
+
+   /**
+    * Libro al que hace referencia.
+    */
+   private String booktitle;
    
+   /**
+	 * Vector que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 */
+	private Vector editor;
+	
    /**
     * Volumen en el que está contenido.
     */

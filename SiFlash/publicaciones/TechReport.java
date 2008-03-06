@@ -2,6 +2,8 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Un reporte publicado por una escuela u otra institución, usualmente numerado 
@@ -9,11 +11,10 @@ package publicaciones;
  */
 public class TechReport extends Publication 
 {
-   
-   /**
-    * Titulo de la publicación.
-    */
-   private String title;
+	/**
+	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 */
+	private Vector author;
    
    /**
     * Institucion que lo realiza.

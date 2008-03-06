@@ -2,6 +2,8 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Una parte de un libro, que puede ser un capítulo (o sección o lo que fuere) o un 
@@ -12,11 +14,20 @@ package publicaciones;
  */
 public class InBook extends Publication 
 {
-   
+	/**
+	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 */
+	private Vector author;
+	 
+	/**
+	 * Vector que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 */
+	private Vector editor;
+	
    /**
     * Libro al que hace referencia.
     */
-   private String book_tittle;
+   private String booktitle;
    
    /**
     * Capítulo en el que está contenido

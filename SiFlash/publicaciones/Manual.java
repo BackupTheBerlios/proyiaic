@@ -2,17 +2,18 @@
 
 package publicaciones;
 
+import java.util.Vector;
+
 
 /**
  * Documentación técnica.
  */
 public class Manual extends Publication 
 {
-   
-   /**
-    * Titulo de la publicación.
-    */
-   private String title;
+	/**
+	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 */
+	private Vector author;
    
    /**
     * Organización que se encarga de la gestión de la misma.
