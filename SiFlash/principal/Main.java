@@ -8,6 +8,6 @@ public class Main
 	public static void main(String[] args) 
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar("D:\\prueba.txt");
+		pb.procesar("../SiFlash/parserFicherosBibtex/ficherosDePrueba/prueba.txt");
 	}
 }
