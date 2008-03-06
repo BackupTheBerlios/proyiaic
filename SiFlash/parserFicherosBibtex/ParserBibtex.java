@@ -5,7 +5,20 @@ import java.util.LinkedList;
 
 import parserFicherosBibtex.excepciones.ExcepcionLexica;
 import publicaciones.Article;
+import publicaciones.Book;
+import publicaciones.Booklet;
+import publicaciones.Conference;
+import publicaciones.InBook;
+import publicaciones.InCollection;
+import publicaciones.InProceedings;
+import publicaciones.Manual;
+import publicaciones.MastersThesis;
+import publicaciones.Misc;
+import publicaciones.PhdThesis;
+import publicaciones.Proceedings;
 import publicaciones.Publication;
+import publicaciones.TechReport;
+import publicaciones.Unpublished;
 
 
 public class ParserBibtex 
@@ -50,7 +63,7 @@ public class ParserBibtex
 			docNuevo = new Article(campos);
 			docNuevo.imprimir();
 		}
-		/*else if (tipoDoc.equals("book")){
+		else if (tipoDoc.equals("book")){
 			docNuevo = new Book(campos);
 			docNuevo.imprimir();	
 		}
@@ -101,7 +114,7 @@ public class ParserBibtex
 		else if (tipoDoc.equals("unpublished")){
 			docNuevo = new Unpublished(campos);
 			docNuevo.imprimir();
-		}*/
+		}
 		else
 			throw new ExcepcionLexica("El tipo de documento encontrado no es válido.");
 	}

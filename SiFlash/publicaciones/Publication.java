@@ -5,6 +5,7 @@ package publicaciones;
 import java.util.Vector;
 
 import personas.Autor;
+import personas.Editor;
 
 /**
  * Clase abstracta que agrupa los dos atributos comunes a todos las "publicaciones" 
@@ -93,6 +94,17 @@ public abstract class Publication
 	   Autor autor = new Autor(nombre, apellidos, web);
 	   Vector<Autor> v = new Vector<Autor>();
 	   v.add(autor);
+	   return v;
+   }
+   
+   public Vector<Editor> extraerEditores(String editores)
+   {
+	   String nombre = editores;
+	   String apellidos = null;
+	   String web = null;
+	   Editor editor = new Editor(nombre, apellidos, web);
+	   Vector<Editor> v = new Vector<Editor>();
+	   v.add(editor);
 	   return v;
    }
 }

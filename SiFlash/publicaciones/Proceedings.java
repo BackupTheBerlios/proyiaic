@@ -2,7 +2,11 @@
 
 package publicaciones;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Vector;
+
+import parserFicherosBibtex.Campo;
 
 
 /**
@@ -63,8 +67,127 @@ public class Proceedings extends Publication
    /**
     * @roseuid 47C8A71202BF
     */
-   public Proceedings() 
-   {
-    
-   }
+   public Proceedings(LinkedList<Campo> campos)
+	{
+		inicializarCampos();
+		Campo campo;
+		Iterator<Campo> it = campos.iterator();
+		while (it.hasNext())
+		{
+			campo = it.next();
+			String nombreCampo = campo.getNombre();
+			String valorString = campo.getValorString();
+			boolean tieneValorInt = valorString == null;
+			int valorInt = campo.getValorInt();
+			if (tieneValorInt)
+				insertarValorInt(nombreCampo, valorInt);
+			else
+				insertarValorString(nombreCampo, valorString);
+		}
+	}
+
+	private void inicializarCampos() 
+	{
+		title = null; 
+		booktitle = null;
+		editor = null;
+		volume = null;
+		series = null;
+		address = null;
+		month = null;
+		organization = null;
+		publisher = null;
+		note = null;
+		_abstract = null;
+		key = null;
+		year = -1;
+		number = -1;
+	}
+	
+	private void insertarValorString(String nombreCampo, String valorString)
+	{
+		if (nombreCampo.equals("title") && title == null)
+			title = valorString;
+		else if (nombreCampo.equals("booktitle") && booktitle == null)
+			booktitle = valorString;
+		else if (nombreCampo.equals("editor") && editor == null)
+			editor = extraerEditores(valorString);
+		else if (nombreCampo.equals("volume") && volume == null)
+			volume = valorString;
+		else if (nombreCampo.equals("series") && series == null)
+			series = valorString;
+		else if (nombreCampo.equals("address") && address == null)
+			address = valorString;
+		else if (nombreCampo.equals("month") && month == null)
+			month = valorString;
+		else if (nombreCampo.equals("organization") && organization == null)
+			organization = valorString;
+		else if (nombreCampo.equals("publisher") && publisher == null)
+			publisher = valorString;
+		else if (nombreCampo.equals("note") && note == null)
+			note = valorString;
+		else if (nombreCampo.equals("abstract") && _abstract == null)
+			_abstract = valorString;
+		else if (nombreCampo.equals("key") && key == null)
+			key = valorString;
+	}
+
+	private void insertarValorInt(String nombreCampo, int valorInt)
+	{
+		if (nombreCampo.equals("year") && year == -1)
+			year = valorInt;
+		else if (nombreCampo.equals("number") && number == -1)
+			number = valorInt;
+	}
+	
+	public void imprimir()
+	{
+		System.out.println("- Tipo de documento: Proceeding");
+		if (title != null)
+			System.out.println("   - Title: " + title);
+		if (year != -1)
+			System.out.println("   - Year: " + year);
+		if (booktitle != null)
+			System.out.println("   - Booktitle: " + booktitle);
+		if (editor != null)
+			System.out.println("   - Editor: " + editor);
+		if (volume != null)
+			System.out.println("   - Volume: " + volume);
+		if (number != -1)
+			System.out.println("   - Number: " + number);
+		if (series != null)
+			System.out.println("   - Series: " + series);
+		if (address != null)
+			System.out.println("   - Address: " + address);
+		if (month != null)
+			System.out.println("   - Month: " + month);
+		if (organization != null)
+			System.out.println("   - Organization: " + organization);
+		if (publisher != null)
+			System.out.println("   - Publisher: " + publisher);
+		if (note != null)
+			System.out.println("   - Note: " + note);
+		if (_abstract != null)
+			System.out.println("   - Abstract: " + _abstract);
+		if (key != null)
+			System.out.println("   - Key: " + key);
+	}
+
+	@Override
+	public String getBibTeX() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getHTML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getXML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

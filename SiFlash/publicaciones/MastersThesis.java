@@ -1,4 +1,4 @@
-//Source file: C:\\GENERADO\\publicaciones\\InProceedings.java
+//Source file: C:\\GENERADO\\publicaciones\\MasterThesis.java
 
 package publicaciones;
 
@@ -10,9 +10,9 @@ import parserFicherosBibtex.Campo;
 
 
 /**
- * Un artículo en las actas de sesiones (proceedings) de una conferencia
+ * Una tesis de maestría o proyecto fin de carrera.
  */
-public class InProceedings extends Publication 
+public class MastersThesis extends Publication 
 {
 	/**
 	 * Vector que contiene los autores que han colaborado en la creación de la misma.
@@ -20,44 +20,19 @@ public class InProceedings extends Publication
 	private Vector author;
    
    /**
-    * Libro al que hace referencia.
+    * Escuela en la que ser ralizó la investigación.
     */
-   private String booktitle;
+   private String school;
    
    /**
     * Año de publicación.
     */
    private int year;
-
-   /**
-    * Ayuda a generar referecias cruzadas internas.
-    */
-   private String crossref;
    
    /**
-	 * Vector que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
-	 */
-	private Vector editor;
-	
-   /**
-    * Volumen en el que está contenido.
+    * Tipo del contenido.
     */
-   private String volume;
-   
-   /**
-    * Numero de volumen.
-    */
-   private int number;
-   
-   /**
-    * Serie en la que se encuadra la publicacion.
-    */
-   private String series;
-   
-   /**
-    * Paginas en las que está contenido.
-    */
-   private int pages;
+   private String type;
    
    /**
     * Lugar de publicación.
@@ -70,19 +45,9 @@ public class InProceedings extends Publication
    private String month;
    
    /**
-    * Organización que se encarga de la gestión de la misma.
+    * @roseuid 47C8A7120167
     */
-   private String organization;
-   
-   /**
-    * Representa a la entidad que publica.
-    */
-   private String publisher;
-   
-   /**
-    * @roseuid 47C8A712006D
-    */
-   public InProceedings(LinkedList<Campo> campos)
+   public MastersThesis(LinkedList<Campo> campos)
 	{
 		inicializarCampos();
 		Campo campo;
@@ -103,49 +68,32 @@ public class InProceedings extends Publication
 
 	private void inicializarCampos() 
 	{
+		title = null;
 		author = null;
-		title = null; 
-		booktitle = null;
-		crossref = null;
-		editor = null;
-		volume = null;
-		series = null;
+		school = null;
+		type = null;
 		address = null;
 		month = null;
-		organization = null;
-		publisher = null;
 		note = null;
 		_abstract = null;
 		key = null;
 		year = -1;
-		number = -1;
-		pages = -1;
 	}
-	
+
 	private void insertarValorString(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
 			author = extraerAutores(valorString);
 		else if (nombreCampo.equals("title") && title == null)
 			title = valorString;
-		else if (nombreCampo.equals("booktitle") && booktitle == null)
-			booktitle = valorString;
-		else if (nombreCampo.equals("crossref") && crossref == null)
-			crossref = valorString;
-		else if (nombreCampo.equals("editor") && editor == null)
-			editor = extraerEditores(valorString);
-		else if (nombreCampo.equals("volume") && volume == null)
-			volume = valorString;
-		else if (nombreCampo.equals("series") && series == null)
-			series = valorString;
+		else if (nombreCampo.equals("school") && school == null)
+			school = valorString;
+		else if (nombreCampo.equals("type") && type == null)
+			type = valorString;
 		else if (nombreCampo.equals("address") && address == null)
 			address = valorString;
 		else if (nombreCampo.equals("month") && month == null)
 			month = valorString;
-		else if (nombreCampo.equals("organization") && organization == null)
-			organization = valorString;
-		else if (nombreCampo.equals("publisher") && publisher == null)
-			publisher = valorString;
 		else if (nombreCampo.equals("note") && note == null)
 			note = valorString;
 		else if (nombreCampo.equals("abstract") && _abstract == null)
@@ -158,43 +106,25 @@ public class InProceedings extends Publication
 	{
 		if (nombreCampo.equals("year") && year == -1)
 			year = valorInt;
-		else if (nombreCampo.equals("number") && number == -1)
-			number = valorInt;
-		else if (nombreCampo.equals("pages") && pages == -1)
-			pages = valorInt;
 	}
-	
+
 	public void imprimir()
 	{
-		System.out.println("- Tipo de documento: Inproceeding");
+		System.out.println("- Tipo de documento: Mastersthesis");
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
 			System.out.println("   - Author: " + author);
-		if (booktitle != null)
-			System.out.println("   - Booktitle: " + booktitle);
+		if (school != null)
+			System.out.println("   - School: " + school);
 		if (year != -1)
 			System.out.println("   - Year: " + year);
-		if (crossref != null)
-			System.out.println("   - Crossref: " + crossref);
-		if (editor != null)
-			System.out.println("   - Editor: " + editor);
-		if (volume != null)
-			System.out.println("   - Volume: " + volume);
-		if (number != -1)
-			System.out.println("   - Number: " + number);
-		if (series != null)
-			System.out.println("   - Series: " + series);
-		if (pages != -1)
-			System.out.println("   - Pages: " + pages);
+		if (type != null)
+			System.out.println("   - Type: " + type);
 		if (address != null)
 			System.out.println("   - Address: " + address);
 		if (month != null)
 			System.out.println("   - Month: " + month);
-		if (organization != null)
-			System.out.println("   - Organization: " + organization);
-		if (publisher != null)
-			System.out.println("   - Publisher: " + publisher);
 		if (note != null)
 			System.out.println("   - Note: " + note);
 		if (_abstract != null)
