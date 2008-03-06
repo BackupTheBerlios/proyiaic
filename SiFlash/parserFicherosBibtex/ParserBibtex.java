@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import parserFicherosBibtex.excepciones.ExcepcionLexica;
-
-import publicaciones.*;
+import publicaciones.Article;
+import publicaciones.Publication;
 
 
 public class ParserBibtex 
@@ -14,7 +14,7 @@ public class ParserBibtex
 	{
 	}
 	
-	/*public void procesar(String ruta)
+	public void procesar(String ruta)
 	{
 		try {
 			FileReader fr = new FileReader(ruta);
@@ -50,7 +50,7 @@ public class ParserBibtex
 			docNuevo = new Article(campos);
 			docNuevo.imprimir();
 		}
-		else if (tipoDoc.equals("book")){
+		/*else if (tipoDoc.equals("book")){
 			docNuevo = new Book(campos);
 			docNuevo.imprimir();	
 		}
@@ -101,7 +101,7 @@ public class ParserBibtex
 		else if (tipoDoc.equals("unpublished")){
 			docNuevo = new Unpublished(campos);
 			docNuevo.imprimir();
-		}
+		}*/
 		else
 			throw new ExcepcionLexica("El tipo de documento encontrado no es válido.");
 	}
@@ -123,7 +123,7 @@ public class ParserBibtex
 		while (!terminado);
 		return listaCampos;
 		
-	}*/
+	}
 
 	private Campo extraerCampo(FileReader fr, boolean posibleKey) throws ExcepcionLexica, IOException 
 	{
@@ -153,28 +153,50 @@ public class ParserBibtex
 		if (!esKey)
 		{
 			actual = siguienteCaracter(fr); //Pasamos el '='.
-			valorString = actual == '"';
-			if (!valorString)
+			valorString = !(nombreCampo.equals("year") || nombreCampo.equals("number") || nombreCampo.equals("pages"));
+			if (!valorString) //Es un número.
 			{
-				valorCampo += actual;
-				actual = siguienteCaracter(fr);
-				while(actual != ',' && actual != '}')
+				if (actual == '"') //Comienza por comillas.
+				{
+					actual = siguienteCaracter(fr); //Pasamos las comillas.
+					while(actual != '"')
+					{
+						valorCampo += actual;
+						actual = siguienteCaracter(fr);
+					}
+					actual = siguienteCaracter(fr); //Pasamos las comillas.
+				}
+				else //No lleva comillas.
 				{
 					valorCampo += actual;
 					actual = siguienteCaracter(fr);
+					while(actual != ',' && actual != '}')
+					{
+						valorCampo += actual;
+						actual = siguienteCaracter(fr);
+					}
 				}
 			}
-			else
+			else //Es un String.
 			{
-				actual = (char)fr.read();
-				while (actual != '"')
+				if (actual == '"') //Comienza por comillas.
 				{
-					valorCampo += actual;
-					actual = (char)fr.read(); //Dentro de las comillas no saltamos espacios.
+					actual = (char)fr.read();
+					while (actual != '"')
+					{
+						if (actual == '{')
+							valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+						else
+							valorCampo += actual;
+						actual = (char)fr.read(); //Dentro de las comillas no saltamos espacios.
+					}
+					actual = siguienteCaracter(fr); //Pasamos las '"'.
 				}
-				actual = siguienteCaracter(fr); //Pasamos las '"'.
-				if (actual != ',' && actual != '}')
-					throw new ExcepcionLexica("Caracter \",\" o \"}\" esperado.");
+				else
+					if (actual == '{') //Comienza por llave.
+						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+					else
+						throw new ExcepcionLexica("Caracter '\"' o '}' esperado.");
 			}
 		}
 		else
@@ -194,6 +216,30 @@ public class ParserBibtex
 			campoNuevo = new Campo(nombreCampo, valorCampoInt, ultimoCampo);
 		}
 		return campoNuevo;
+	}
+
+	private String copiarIntegroDesdeHasta(FileReader fr, String valorCampo, char desde, char hasta) throws IOException 
+	{
+		String nuevoString = valorCampo;
+		int nivel = 1;
+		char actual = (char)fr.read();
+		if (actual == desde)
+			nivel++;
+		else
+			if (actual == hasta)
+				nivel--;
+		while (!(actual == hasta && nivel == 0))
+		{
+			nuevoString += actual;
+			actual = (char)fr.read();
+			if (actual == desde)
+				nivel++;
+			else
+				if (actual == hasta)
+					nivel--;
+		}
+		actual = siguienteCaracter(fr); //Pasamos el caracter "hasta".
+		return nuevoString;
 	}
 
 	private String extraerTipoDoc(FileReader fr) throws IOException {

@@ -4,6 +4,8 @@ package publicaciones;
 
 import java.util.Vector;
 
+import personas.Autor;
+
 /**
  * Clase abstracta que agrupa los dos atributos comunes a todos las "publicaciones" 
  * 
@@ -63,10 +65,7 @@ public abstract class Publication
     * @return java.lang.String
     * @roseuid 47C4463201C5
     */
-   public String getXML() 
-   {
-    return null;
-   }
+   public abstract String getXML();
    
    /**
     * Devuelve el String correspondiente al código HTML de la publicación 
@@ -74,19 +73,26 @@ public abstract class Publication
     * @return java.lang.String
     * @roseuid 47C5AA3D006D
     */
-   public String getHTML() 
-   {
-    return null;
-   }
+   public abstract String getHTML();
    
    /**
-    * Devuelve el String correspondiente al código BibText de la publicación 
+    * Devuelve el String correspondiente al código BibTeX de la publicación 
     * correspondiente.
     * @return java.lang.String
     * @roseuid 47C5AA3F0213
     */
-   public String getBibTeX() 
+   public abstract String getBibTeX();
+   
+   public abstract void imprimir();
+   
+   public Vector<Autor> extraerAutores(String autores)
    {
-    return null;
+	   String nombre = autores;
+	   String apellidos = null;
+	   String web = null;
+	   Autor autor = new Autor(nombre, apellidos, web);
+	   Vector<Autor> v = new Vector<Autor>();
+	   v.add(autor);
+	   return v;
    }
 }

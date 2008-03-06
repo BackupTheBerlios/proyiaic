@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 import parserFicherosBibtex.Campo;
+import personas.Autor;
 
 
 /**
@@ -17,7 +18,7 @@ public class Article extends Publication
 	/**
 	 * Vector que contiene los autores que han colaborado en la creación de la misma.
 	 */
-	private Vector author;
+	private Vector<Autor> author;
 	
    /**
     * Journal en el que se publicó.
@@ -85,7 +86,7 @@ public class Article extends Publication
 	private void insertarValorString(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
-			author = valorString;
+			author = extraerAutores(valorString);
 		else if (nombreCampo.equals("title") && title == null)
 			title = valorString;
 		else if (nombreCampo.equals("journal") && journal == null)
@@ -137,5 +138,23 @@ public class Article extends Publication
 			System.out.println("   - Abstract: " + _abstract);
 		if (key != null)
 			System.out.println("   - Key: " + key);
+	}
+
+	@Override
+	public String getBibTeX() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getHTML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getXML() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

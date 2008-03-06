@@ -1,6 +1,6 @@
 //Source file: C:\\GENERADO\\usuarios\\Usuario.java
 
-package usuarios;
+package personas;
 
 
 /**

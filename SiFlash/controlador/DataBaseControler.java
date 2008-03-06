@@ -9,9 +9,9 @@ import controlador.exceptions.ConsultaPublicacionesException;
 import controlador.exceptions.ConnectionNullException;
 import controlador.exceptions.NonExistingElementException;
 import controlador.exceptions.PermisssionException;
+import personas.Usuario;
 import publicaciones.Publication;
 import controlador.exceptions.ExistingElementException;
-import usuarios.Usuario;
 
 /**
  * Clase que implementa una operación por cada funcionalidad claramente definida 

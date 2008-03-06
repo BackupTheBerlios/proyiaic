@@ -2,7 +2,7 @@
 
 package database;
 
-import usuarios.Usuario;
+import personas.Usuario;
 
 /**
  * Clase que se encarga de realizar las modificaciones necesarias en la base 

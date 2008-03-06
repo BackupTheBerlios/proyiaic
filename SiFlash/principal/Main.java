@@ -1,11 +1,13 @@
 package principal;
 
+import parserFicherosBibtex.ParserBibtex;
+
 public class Main 
 {
 
 	public static void main(String[] args) 
 	{
-		System.out.println("Hola Mundo");
+		ParserBibtex pb = new ParserBibtex();
+		pb.procesar("D:\\prueba.txt");
 	}
-
 }
