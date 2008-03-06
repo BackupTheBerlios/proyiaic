@@ -1,4 +1,4 @@
-package paquete;
+package principal;
 
 public class Main 
 {
