@@ -18,37 +18,42 @@ public abstract class Publication
    /**
     * Valor que le corresponde al Id del documento
     */
-   private int idDoc;
+	protected int idDoc;
    
    /**
     * Título que le corresponde a la publicación.
     */
-   private String title;
+   protected String title;
    
    /**
     * URL en el que se puede localizar la publicación.
     */
-   private String URL = null;
+   protected String URL = null;
    
    /**
     * Resumen de la publicacion.
     */
-   private String _abstract;
+   protected String _abstract;
    
    /**
     * Comentarios al respecto.
     */
-   private String notes;
+   protected String note;
+   
+   /**
+    * Clave/s de la publicación.
+    */
+   protected String key;
    
    /**
     * Usuario que ha añadido la publicación al sistema.
     */
-   private String user;
+   protected String user;
    
    /**
     * Contiene todos los proyectos a los que pertenece la aplicación.
     */
-   private Vector proyectos;
+   protected Vector proyectos;
    
    public PublicationException thePublicationException;
    
