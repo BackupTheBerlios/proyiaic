@@ -119,6 +119,8 @@ public class Book extends Publication
 			series = valorString;
 		else if (nombreCampo.equals("address") && address == null)
 			address = valorString;
+		else if (nombreCampo.equals("edition") && edition == null)
+			edition = valorString;
 		else if (nombreCampo.equals("month") && month == null)
 			month = valorString;
 		else if (nombreCampo.equals("note") && note == null)
@@ -182,5 +184,45 @@ public class Book extends Publication
 	public String getXML() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Vector getAuthor() {
+		return author;
+	}
+
+	public Vector getEditor() {
+		return editor;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public String getVolume() {
+		return volume;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public String getSeries() {
+		return series;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getEdition() {
+		return edition;
+	}
+
+	public String getMonth() {
+		return month;
 	}
 }

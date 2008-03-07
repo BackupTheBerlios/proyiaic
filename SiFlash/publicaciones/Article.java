@@ -157,4 +157,32 @@ public class Article extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Vector<Autor> getAuthor() {
+		return author;
+	}
+
+	public String getJournal() {
+		return journal;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public String getVolume() {
+		return volume;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public int getPages() {
+		return pages;
+	}
+
+	public String getMonth() {
+		return month;
+	}
 }

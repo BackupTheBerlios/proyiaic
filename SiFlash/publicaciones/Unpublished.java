@@ -120,4 +120,16 @@ public class Unpublished extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Vector getAuthor() {
+		return author;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public int getYear() {
+		return year;
+	}
 }

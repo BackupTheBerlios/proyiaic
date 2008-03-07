@@ -190,4 +190,44 @@ public class Proceedings extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public String getBooktitle() {
+		return booktitle;
+	}
+
+	public Vector getEditor() {
+		return editor;
+	}
+
+	public String getVolume() {
+		return volume;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public String getSeries() {
+		return series;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
 }

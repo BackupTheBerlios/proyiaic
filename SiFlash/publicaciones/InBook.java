@@ -229,4 +229,60 @@ public class InBook extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Vector getAuthor() {
+		return author;
+	}
+
+	public Vector getEditor() {
+		return editor;
+	}
+
+	public String getBooktitle() {
+		return booktitle;
+	}
+
+	public String getChapter() {
+		return chapter;
+	}
+
+	public int getPages() {
+		return pages;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public String getVolume() {
+		return volume;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public String getSeries() {
+		return series;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getEdition() {
+		return edition;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getMonth() {
+		return month;
+	}
 }

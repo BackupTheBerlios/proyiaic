@@ -130,4 +130,20 @@ public class Misc extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Vector getAuthor() {
+		return author;
+	}
+
+	public String getHowPublished() {
+		return howPublished;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public int getYear() {
+		return year;
+	}
 }

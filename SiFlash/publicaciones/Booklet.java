@@ -141,4 +141,24 @@ public class Booklet extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Vector getAuthor() {
+		return author;
+	}
+
+	public String getHowPublished() {
+		return howPublished;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getMonth() {
+		return month;
+	}
 }

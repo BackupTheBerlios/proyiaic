@@ -23,6 +23,8 @@ import publicaciones.Unpublished;
 
 public class ParserBibtex 
 {
+	private Publication ultDoc;
+	
 	public ParserBibtex()
 	{
 	}
@@ -58,62 +60,61 @@ public class ParserBibtex
 
 	private void generarDocumentoBibtex(String tipoDoc, LinkedList<Campo> campos) throws ExcepcionLexica 
 	{
-		Publication docNuevo;
 		if (tipoDoc.equals("article")){
-			docNuevo = new Article(campos);
-			docNuevo.imprimir();
+			ultDoc = new Article(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("book")){
-			docNuevo = new Book(campos);
-			docNuevo.imprimir();	
+			ultDoc = new Book(campos);
+			ultDoc.imprimir();	
 		}
 		else if (tipoDoc.equals("booklet")){
-			docNuevo = new Booklet(campos);	
-			docNuevo.imprimir();
+			ultDoc = new Booklet(campos);	
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("conference")){
-			docNuevo = new Conference(campos);
-			docNuevo.imprimir();	
+			ultDoc = new Conference(campos);
+			ultDoc.imprimir();	
 		}
 		else if (tipoDoc.equals("inbook")){
-			docNuevo = new InBook(campos);
-			docNuevo.imprimir();
+			ultDoc = new InBook(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("incollection")){
-			docNuevo = new InCollection(campos);
-			docNuevo.imprimir();
+			ultDoc = new InCollection(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("inproceeding")){
-			docNuevo = new InProceedings(campos);
-			docNuevo.imprimir();
+			ultDoc = new InProceedings(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("manual")){
-			docNuevo = new Manual(campos);
-			docNuevo.imprimir();
+			ultDoc = new Manual(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("mastersthesis")){
-			docNuevo = new MastersThesis(campos);
-			docNuevo.imprimir();
+			ultDoc = new MastersThesis(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("misc")){
-			docNuevo = new Misc(campos);
-			docNuevo.imprimir();
+			ultDoc = new Misc(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("phdthesis")){
-			docNuevo = new PhdThesis(campos);
-			docNuevo.imprimir();
+			ultDoc = new PhdThesis(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("proceeding")){
-			docNuevo = new Proceedings(campos);
-			docNuevo.imprimir();
+			ultDoc = new Proceedings(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("techreport")){
-			docNuevo = new TechReport(campos);
-			docNuevo.imprimir();
+			ultDoc = new TechReport(campos);
+			ultDoc.imprimir();
 		}
 		else if (tipoDoc.equals("unpublished")){
-			docNuevo = new Unpublished(campos);
-			docNuevo.imprimir();
+			ultDoc = new Unpublished(campos);
+			ultDoc.imprimir();
 		}
 		else
 			throw new ExcepcionLexica("El tipo de documento encontrado no es válido.");
@@ -272,6 +273,10 @@ public class ParserBibtex
 		while (c == ' ' || c == '\t' || c == '\n' || c == '\r')
 			c = (char)fr.read();
 		return c;
+	}
+
+	public Publication getUltDoc() {
+		return ultDoc;
 	}
 	
 }

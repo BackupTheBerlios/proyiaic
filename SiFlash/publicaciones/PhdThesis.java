@@ -150,4 +150,28 @@ public class PhdThesis extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Vector getAuthor() {
+		return author;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getMonth() {
+		return month;
+	}
 }

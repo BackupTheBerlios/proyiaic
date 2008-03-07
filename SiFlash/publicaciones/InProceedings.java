@@ -220,4 +220,56 @@ public class InProceedings extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Vector getAuthor() {
+		return author;
+	}
+
+	public String getBooktitle() {
+		return booktitle;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public String getCrossref() {
+		return crossref;
+	}
+
+	public Vector getEditor() {
+		return editor;
+	}
+
+	public String getVolume() {
+		return volume;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public String getSeries() {
+		return series;
+	}
+
+	public int getPages() {
+		return pages;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
 }

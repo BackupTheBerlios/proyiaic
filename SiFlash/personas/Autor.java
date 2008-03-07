@@ -23,4 +23,16 @@ public class Autor
 		apellidos = ap;
 		web = w;
 	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public String getWeb() {
+		return web;
+	}
 }

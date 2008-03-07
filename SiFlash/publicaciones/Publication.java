@@ -107,4 +107,20 @@ public abstract class Publication
 	   v.add(editor);
 	   return v;
    }
+
+public String getTitle() {
+	return title;
+}
+
+public String get_abstract() {
+	return _abstract;
+}
+
+public String getNote() {
+	return note;
+}
+
+public String getKey() {
+	return key;
+}
 }
