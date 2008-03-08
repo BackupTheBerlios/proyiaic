@@ -47,7 +47,7 @@ public class InProceedings extends Publication
    /**
     * Numero de volumen.
     */
-   private int number;
+   private String number;
    
    /**
     * Serie en la que se encuadra la publicacion.
@@ -57,7 +57,7 @@ public class InProceedings extends Publication
    /**
     * Paginas en las que está contenido.
     */
-   private int pages;
+   private String pages;
    
    /**
     * Lugar de publicación.
@@ -118,8 +118,8 @@ public class InProceedings extends Publication
 		_abstract = null;
 		key = null;
 		year = -1;
-		number = -1;
-		pages = -1;
+		number = null;
+		pages = null;
 	}
 	
 	private void insertarValorString(String nombreCampo, String valorString)
@@ -152,16 +152,16 @@ public class InProceedings extends Publication
 			_abstract = valorString;
 		else if (nombreCampo.equals("key") && key == null)
 			key = valorString;
+		else if (nombreCampo.equals("number") && number == null)
+			number = valorString;
+		else if (nombreCampo.equals("pages") && pages == null)
+			pages = valorString;
 	}
 
 	private void insertarValorInt(String nombreCampo, int valorInt)
 	{
 		if (nombreCampo.equals("year") && year == -1)
 			year = valorInt;
-		else if (nombreCampo.equals("number") && number == -1)
-			number = valorInt;
-		else if (nombreCampo.equals("pages") && pages == -1)
-			pages = valorInt;
 	}
 	
 	public void imprimir()
@@ -181,11 +181,11 @@ public class InProceedings extends Publication
 			System.out.println("   - Editor: " + editor);
 		if (volume != null)
 			System.out.println("   - Volume: " + volume);
-		if (number != -1)
+		if (number != null)
 			System.out.println("   - Number: " + number);
 		if (series != null)
 			System.out.println("   - Series: " + series);
-		if (pages != -1)
+		if (pages != null)
 			System.out.println("   - Pages: " + pages);
 		if (address != null)
 			System.out.println("   - Address: " + address);
@@ -245,7 +245,7 @@ public class InProceedings extends Publication
 		return volume;
 	}
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
@@ -253,7 +253,7 @@ public class InProceedings extends Publication
 		return series;
 	}
 
-	public int getPages() {
+	public String getPages() {
 		return pages;
 	}
 

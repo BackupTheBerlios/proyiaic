@@ -167,7 +167,7 @@ public class ParserBibtex
 		if (!esKey)
 		{
 			actual = siguienteCaracter(fr); //Pasamos el '='.
-			valorString = !(nombreCampo.equals("year") || nombreCampo.equals("number") || nombreCampo.equals("pages"));
+			valorString = !(nombreCampo.equals("year"));
 			if (!valorString) //Es un número.
 			{
 				if (actual == '"') //Comienza por comillas.

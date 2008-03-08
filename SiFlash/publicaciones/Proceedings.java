@@ -37,7 +37,7 @@ public class Proceedings extends Publication
    /**
     * Numero de volumen.
     */
-   private int number;
+   private String number;
    
    /**
     * Serie en la que se encuadra la publicacion.
@@ -101,7 +101,7 @@ public class Proceedings extends Publication
 		_abstract = null;
 		key = null;
 		year = -1;
-		number = -1;
+		number = null;
 	}
 	
 	private void insertarValorString(String nombreCampo, String valorString)
@@ -130,14 +130,14 @@ public class Proceedings extends Publication
 			_abstract = valorString;
 		else if (nombreCampo.equals("key") && key == null)
 			key = valorString;
+		else if (nombreCampo.equals("number") && number == null)
+			number = valorString;
 	}
 
 	private void insertarValorInt(String nombreCampo, int valorInt)
 	{
 		if (nombreCampo.equals("year") && year == -1)
 			year = valorInt;
-		else if (nombreCampo.equals("number") && number == -1)
-			number = valorInt;
 	}
 	
 	public void imprimir()
@@ -153,7 +153,7 @@ public class Proceedings extends Publication
 			System.out.println("   - Editor: " + editor);
 		if (volume != null)
 			System.out.println("   - Volume: " + volume);
-		if (number != -1)
+		if (number != null)
 			System.out.println("   - Number: " + number);
 		if (series != null)
 			System.out.println("   - Series: " + series);
@@ -207,7 +207,7 @@ public class Proceedings extends Publication
 		return volume;
 	}
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 

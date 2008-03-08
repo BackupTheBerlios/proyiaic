@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 import parserFicherosBibtex.Campo;
+import personas.Autor;
 
 
 /**
@@ -38,11 +39,6 @@ public class Book extends Publication
     * Volumen en el que está contenido.
     */
    private String volume;
-   
-   /**
-    * Numero de volumen.
-    */
-   private int number;
    
    /**
     * Serie en la que se encuadra la publicacion.
@@ -143,7 +139,7 @@ public class Book extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + author);
+			System.out.println("   - Author: " + ((Autor)author.firstElement()).getNombre());
 		if (editor != null)
 			System.out.println("   - Editor: " + editor);
 		if (publisher != null)
@@ -204,10 +200,6 @@ public class Book extends Publication
 
 	public String getVolume() {
 		return volume;
-	}
-
-	public int getNumber() {
-		return number;
 	}
 
 	public String getSeries() {

@@ -38,11 +38,11 @@ public class Article extends Publication
    /**
     * Número de volumen.
     */
-   private int number;
+   private String number;
    /**
     * Longitud en páginas.
     */
-   private int pages;
+   private String pages;
    
    /**
     * Mes de publicación.
@@ -79,8 +79,8 @@ public class Article extends Publication
 		_abstract = null;
 		key = null;
 		year = -1;
-		number = -1;
-		pages = -1;
+		number = null;
+		pages = null;
 	}
 
 	private void insertarValorString(String nombreCampo, String valorString)
@@ -101,16 +101,16 @@ public class Article extends Publication
 			_abstract = valorString;
 		else if (nombreCampo.equals("key") && key == null)
 			key = valorString;
+		else if (nombreCampo.equals("number") && number == null)
+				number = valorString;
+		else if (nombreCampo.equals("pages") && pages == null)
+				pages = valorString;
 	}
 
 	private void insertarValorInt(String nombreCampo, int valorInt)
 	{
 		if (nombreCampo.equals("year") && year == -1)
 			year = valorInt;
-		else if (nombreCampo.equals("number") && number == -1)
-			number = valorInt;
-		else if (nombreCampo.equals("pages") && pages == -1)
-			pages = valorInt;
 	}
 	
 	public void imprimir()
@@ -119,16 +119,16 @@ public class Article extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + author);
+			System.out.println("   - Author: " + ((Autor)author.firstElement()).getNombre());
 		if (journal != null)
 			System.out.println("   - Journal: " + journal);
 		if (year != -1)
 			System.out.println("   - Year: " + year);
 		if (volume != null)
 			System.out.println("   - Volume: " + volume);
-		if (number != -1)
+		if (number != null)
 			System.out.println("   - Number: " + number);
-		if (pages != -1)
+		if (pages != null)
 			System.out.println("   - Pages: " + pages);
 		if (month != null)
 			System.out.println("   - Month: " + month);
@@ -174,11 +174,11 @@ public class Article extends Publication
 		return volume;
 	}
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public int getPages() {
+	public String getPages() {
 		return pages;
 	}
 
