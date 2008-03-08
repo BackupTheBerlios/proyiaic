@@ -1,6 +1,6 @@
 @article{	perico+palotes,
-		institution = "La mía",
+		institution = "Mi institución",
 		type = "type-R",
 		month = "april",
-		title = {Mi vida {"es"} una full},
-		author = "Alfonsete"}
+		title = {El título del artículo.},
+		author = "Alfonso"}
