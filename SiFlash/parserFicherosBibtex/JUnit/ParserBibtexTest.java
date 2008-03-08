@@ -15,7 +15,7 @@ public class ParserBibtexTest extends TestCase
 	public void testPrueba1()
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar("D:\\prueba.txt");
+		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba1.txt");
 
 		boolean esLibro = pb.getUltDoc() instanceof Book;
 		String autorEsperado = "Milton Abramowitz and Irene A. Stegun";
@@ -48,7 +48,7 @@ public class ParserBibtexTest extends TestCase
 	public void testPrueba2()
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar("D:\\prueba2.txt");
+		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba2.txt");
 
 		boolean esArticulo = pb.getUltDoc() instanceof Article;
 		String autorEsperado = "Alfonsete";
