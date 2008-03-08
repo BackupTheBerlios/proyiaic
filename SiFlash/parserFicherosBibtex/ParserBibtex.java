@@ -84,7 +84,7 @@ public class ParserBibtex
 			ultDoc = new InCollection(campos);
 			ultDoc.imprimir();
 		}
-		else if (tipoDoc.equals("inproceeding")){
+		else if (tipoDoc.equals("inproceedings")){
 			ultDoc = new InProceedings(campos);
 			ultDoc.imprimir();
 		}
@@ -125,29 +125,33 @@ public class ParserBibtex
 		LinkedList<Campo> listaCampos = new LinkedList<Campo>();
 		
 		boolean terminado;
-		boolean posibleKey = true;
+		boolean posibleReferencia = true;
 		Campo nuevo;
 		do
 		{
-			nuevo = extraerCampo(fr, posibleKey);
-			listaCampos.add(nuevo);
+			nuevo = extraerCampo(fr, posibleReferencia);
+			if (!nuevo.getNombre().equals("referencia"))
+			{
+				nuevo.sustituirTildes();
+				listaCampos.add(nuevo);
+			}
 			terminado = nuevo.getEsUltimo();
-			posibleKey = false;
+			posibleReferencia = false;
 		}
 		while (!terminado);
 		return listaCampos;
 		
 	}
 
-	private Campo extraerCampo(FileReader fr, boolean posibleKey) throws ExcepcionLexica, IOException 
+	private Campo extraerCampo(FileReader fr, boolean posibleReferencia) throws ExcepcionLexica, IOException 
 	{
 		String nombreCampo = "";
 		String valorCampo = "";
 		boolean valorString;
-		boolean esKey = false;
+		boolean esReferencia = false;
 		char actual = siguienteCaracter(fr);
 		
-		if (!posibleKey)
+		if (!posibleReferencia)
 			while (actual != '=')
 			{
 				nombreCampo += actual;
@@ -161,10 +165,10 @@ public class ParserBibtex
 				actual = siguienteCaracter(fr);
 			}
 			if (actual == ',')
-				esKey = true;
+				esReferencia = true;
 		}
 		nombreCampo = nombreCampo.toLowerCase();
-		if (!esKey)
+		if (!esReferencia)
 		{
 			actual = siguienteCaracter(fr); //Pasamos el '='.
 			valorString = !(nombreCampo.equals("year"));
@@ -182,12 +186,19 @@ public class ParserBibtex
 				}
 				else //No lleva comillas.
 				{
-					valorCampo += actual;
-					actual = siguienteCaracter(fr);
-					while(actual != ',' && actual != '}')
+					if (actual == '{') // Está encerrado entre llaves.
+					{
+						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+					}
+					else
 					{
 						valorCampo += actual;
 						actual = siguienteCaracter(fr);
+						while(actual != ',' && actual != '}')
+						{
+							valorCampo += actual;
+							actual = siguienteCaracter(fr);
+						}
 					}
 				}
 			}
@@ -208,15 +219,18 @@ public class ParserBibtex
 				}
 				else
 					if (actual == '{') //Comienza por llave.
+					{
 						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+						actual = siguienteCaracter(fr); //Pasamos el caracter "hasta".
+					}
 					else
 						throw new ExcepcionLexica("Caracter '\"' o '}' esperado.");
 			}
 		}
 		else
 		{
-			valorCampo = nombreCampo;
-			nombreCampo = "key";
+			nombreCampo = "referencia";
+			valorCampo = null;
 			valorString = true;
 		}
 
@@ -252,7 +266,6 @@ public class ParserBibtex
 				if (actual == hasta)
 					nivel--;
 		}
-		actual = siguienteCaracter(fr); //Pasamos el caracter "hasta".
 		return nuevoString;
 	}
 

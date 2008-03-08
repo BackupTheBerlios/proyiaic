@@ -24,7 +24,6 @@ public class ParserBibtexTest extends TestCase
 		int yearEsperado = 1964;
 		String addressEsperado = "New York";
 		String editionEsperado = "ninth Dover printing, tenth GPO printing";
-		String keyEsperado = "abramowitz+stegun";
 		
 		String autor = ((Autor)((Book)pb.getUltDoc()).getAuthor().firstElement()).getNombre();
 		String titulo = pb.getUltDoc().getTitle();
@@ -32,7 +31,6 @@ public class ParserBibtexTest extends TestCase
 		int year = ((Book)pb.getUltDoc()).getYear();
 		String address = ((Book)pb.getUltDoc()).getAddress();
 		String edition = ((Book)pb.getUltDoc()).getEdition();
-		String key = pb.getUltDoc().getKey();
 		
 		assertTrue(esLibro);
 		assertEquals(autorEsperado, autor);
@@ -41,7 +39,6 @@ public class ParserBibtexTest extends TestCase
 		assertEquals(yearEsperado, year);
 		assertEquals(addressEsperado, address);
 		assertEquals(editionEsperado, edition);
-		assertEquals(keyEsperado, key);
 		
 	}
 	
@@ -51,21 +48,18 @@ public class ParserBibtexTest extends TestCase
 		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba2.txt");
 
 		boolean esArticulo = pb.getUltDoc() instanceof Article;
-		String autorEsperado = "Alfonsete";
-		String tituloEsperado = "Mi vida {\"es\"} una full";
+		String autorEsperado = "Alfonso";
+		String tituloEsperado = "El título del artículo.";
 		String monthEsperado = "april";
-		String keyEsperado = "perico+palotes";
 		
 		String autor = ((Autor)((Article)pb.getUltDoc()).getAuthor().firstElement()).getNombre();
 		String titulo = pb.getUltDoc().getTitle();
 		String month = ((Article)pb.getUltDoc()).getMonth();
-		String key = pb.getUltDoc().getKey();
 		
 		assertTrue(esArticulo);
 		assertEquals(autorEsperado, autor);
 		assertEquals(tituloEsperado, titulo);
 		assertEquals(monthEsperado, month);
-		assertEquals(keyEsperado, key);
 		
 	}
 }

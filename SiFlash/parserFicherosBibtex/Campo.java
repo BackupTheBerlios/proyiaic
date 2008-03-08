@@ -38,4 +38,29 @@ public class Campo
 	public int getValorInt() {
 		return valorInt;
 	}
+
+	public void sustituirTildes() 
+	{
+		if (valorString != null)
+		{
+			valorString = valorString.replaceAll("\\\\\'a", "á");
+			valorString = valorString.replaceAll("\\\\\'e", "é");
+			valorString = valorString.replaceAll("\\\\\'\\\\i", "í"); //NO SE QUITAN LAS LLAVES!!
+			valorString = valorString.replaceAll("\\\\'o", "ó");
+			valorString = valorString.replaceAll("\\\\\'u", "ú");
+			
+			omitirLlaves();
+		}
+	}
+
+	private void omitirLlaves() 
+	{
+		char[] cadena = valorString.toCharArray();
+		String sinLlaves = "";
+		for (int i = 0; i < cadena.length; i++)
+			if (cadena[i] != '{' && cadena[i] != '}')
+				sinLlaves += cadena[i];
+		
+		valorString = sinLlaves.toString();
+	}
 }

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 import parserFicherosBibtex.Campo;
+import personas.Autor;
 
 
 /**
@@ -166,11 +167,11 @@ public class InProceedings extends Publication
 	
 	public void imprimir()
 	{
-		System.out.println("- Tipo de documento: Inproceeding");
+		System.out.println("- Tipo de documento: Inproceedings");
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + author);
+			System.out.println("   - Author: " + ((Autor)author.firstElement()).getNombre());
 		if (booktitle != null)
 			System.out.println("   - Booktitle: " + booktitle);
 		if (year != -1)
