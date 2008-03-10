@@ -80,7 +80,7 @@ public class DataBaseControler
     */
    public Vector<Publication> consultaDocumentos(int tipo_publicaciones, Vector<Integer> authors, String title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector note, Vector abstracts, String bookTitle) throws ConnectionException, ConsultaPublicacionesException 
    {
-    return null;
+	   return null;
    }
    
    /**

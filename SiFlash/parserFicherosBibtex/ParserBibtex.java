@@ -61,7 +61,7 @@ public class ParserBibtex
 	private void extraerDocumento(FileReader fr) throws IOException, ExcepcionLexica
 	{
 		char actual = siguienteCaracter(fr);
-		while (actual != -1)
+		while (actual != '\0')
 		{
 			if (actual == '%')
 				saltarComentario(fr);
@@ -313,9 +313,17 @@ public class ParserBibtex
 	 */
 	private char siguienteCaracter(FileReader fr) throws IOException
 	{
-		char c = (char)fr.read();
+		int num = fr.read();
+		char c = (char)num;
+		if (num == -1)
+			return '\0';
 		while (c == ' ' || c == '\t' || c == '\n' || c == '\r')
-			c = (char)fr.read();
+		{
+			num = fr.read();
+			c = (char)num;
+			if (num == -1)
+				return '\0';
+		}
 		return c;
 	}
 

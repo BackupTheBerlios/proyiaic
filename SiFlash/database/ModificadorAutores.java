@@ -16,7 +16,12 @@ public class ModificadorAutores
     */
    public ModificadorAutores() 
    {
-    
+	   
+   }
+   
+   public ModificadorAutores(BaseDatos database)
+   {
+	   theBaseDatos = database;
    }
    
    /**
