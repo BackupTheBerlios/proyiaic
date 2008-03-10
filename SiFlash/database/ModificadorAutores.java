@@ -51,9 +51,15 @@ public class ModificadorAutores
 	   theBaseDatos.exeUpdate(consulta);   
    }
    
-   /**
+   /** Modifica los datos del autor cuyo nombre y apellidos se han pasado como parámetro, sustituyendolos por
+    *  los nuevos datos que se obtienen como parámetro.
+    *  @param nombreActual Nombre actual del autor.
+    *  @param apellidosActual Apellidos actuales del autor.
+    *  @param nombreNuevo Nuevo nombre que se quiere almacenar en la base de datos.
+    *  @param apellidosNuevos Apellidos nuevos del autor que se quieren almacenar en la base de datos.
+    *  @param urlNueva Nueva dirección Web del autor que se quiere almacenar en la base de datos.
     * @throws BDException 
- * @roseuid 47C5A5EA034B
+    * @roseuid 47C5A5EA034B
     */
    public void modificaAutor(String nombreActual, String apellidosActual, String nombreNuevo, String apellidosNuevos, String urlNueva) throws BDException 
    {
