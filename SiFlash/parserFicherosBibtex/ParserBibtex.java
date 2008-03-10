@@ -23,12 +23,19 @@ import publicaciones.Unpublished;
 
 public class ParserBibtex 
 {
+	/**
+	 * Última publicación procesada.
+	 */
 	private Publication ultDoc;
 	
 	public ParserBibtex()
 	{
 	}
 	
+	/**
+	 * Intenta abrir el fichero indicado y, si hay éxito, lo procesa.
+	 * @param ruta Ruta del fichero que se quiere procesar.
+	 */
 	public void procesar(String ruta)
 	{
 		try {
@@ -45,19 +52,37 @@ public class ParserBibtex
 		}
 	}
 
+	/**
+	 * Lee el tipo de publicación a procesar, así como sus campos. Después, genera la publicación.
+	 * @param fr Fichero del que se va a leer.
+	 * @throws IOException
+	 * @throws ExcepcionLexica
+	 */
 	private void extraerDocumento(FileReader fr) throws IOException, ExcepcionLexica
 	{
 		char actual = siguienteCaracter(fr);
-		if (actual != '@')
-			throw new ExcepcionLexica("El primer caracter encontrado no es '@'.");
-
-		String tipoDoc = extraerTipoDoc(fr);
-		
-		LinkedList<Campo> campos = extraerCampos(fr);
-		
-		generarDocumentoBibtex(tipoDoc, campos);
+		while (actual != -1)
+		{
+			if (actual == '%')
+				saltarComentario(fr);
+			else if (actual == '@')
+			{
+				String tipoDoc = extraerTipoDoc(fr);
+				LinkedList<Campo> campos = extraerCampos(fr);
+				generarDocumentoBibtex(tipoDoc, campos);
+			}
+			else
+				throw new ExcepcionLexica("El primer caracter encontrado no es '@' ni '%'.");
+			actual = siguienteCaracter(fr);
+		}
 	}
 
+	/**
+	 * Genera una publicación, a partir del tipo de documento y los campos extraídos.
+	 * @param tipoDoc Tipo de publicación a generar.
+	 * @param campos Campos de la publicación a generar.
+	 * @throws ExcepcionLexica
+	 */
 	private void generarDocumentoBibtex(String tipoDoc, LinkedList<Campo> campos) throws ExcepcionLexica 
 	{
 		if (tipoDoc.equals("article")){
@@ -120,6 +145,13 @@ public class ParserBibtex
 			throw new ExcepcionLexica("El tipo de documento encontrado no es válido.");
 	}
 
+	/**
+	 * Extrae los campos del documento.
+	 * @param fr Fichero del que se va a leer.
+	 * @return La lista de los campos extraídos.
+	 * @throws IOException
+	 * @throws ExcepcionLexica
+	 */
 	private LinkedList<Campo> extraerCampos(FileReader fr) throws IOException, ExcepcionLexica 
 	{
 		LinkedList<Campo> listaCampos = new LinkedList<Campo>();
@@ -143,6 +175,14 @@ public class ParserBibtex
 		
 	}
 
+	/**
+	 * Extrae un campo de un documento.
+	 * @param fr Fichero del que se va a leer.
+	 * @param posibleReferencia Indica si hay posibilidad de que lo que se extraiga sea la referencia de un documento, y no uno de sus campos.
+	 * @return Un campo de una publicación.
+	 * @throws ExcepcionLexica
+	 * @throws IOException
+	 */
 	private Campo extraerCampo(FileReader fr, boolean posibleReferencia) throws ExcepcionLexica, IOException 
 	{
 		String nombreCampo = "";
@@ -223,8 +263,14 @@ public class ParserBibtex
 						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
 						actual = siguienteCaracter(fr); //Pasamos el caracter "hasta".
 					}
-					else
-						throw new ExcepcionLexica("Caracter '\"' o '}' esperado.");
+					else //No comienza ni por '"' ni por '{'.
+					{
+						while (actual != ',')
+						{
+							valorCampo += actual;
+							actual = siguienteCaracter(fr);
+						}
+					}
 			}
 		}
 		else
@@ -246,6 +292,15 @@ public class ParserBibtex
 		return campoNuevo;
 	}
 
+	/**
+	 * Copia íntegramente desde un fichero, hasta que encuentra un caracter determinado.
+	 * @param fr Fichero del que se va a leer.
+	 * @param valorCampo String inicial.
+	 * @param desde Caracter anterior al punto desde donde se empezará a copiar. Sirve para permitir niveles.
+	 * @param hasta Caracter que indicará que se tiene que dejar de copiar.
+	 * @return String resultante.
+	 * @throws IOException
+	 */
 	private String copiarIntegroDesdeHasta(FileReader fr, String valorCampo, char desde, char hasta) throws IOException 
 	{
 		String nuevoString = valorCampo;
@@ -269,6 +324,12 @@ public class ParserBibtex
 		return nuevoString;
 	}
 
+	/**
+	 * Extrae el tipo de documento.
+	 * @param fr Fichero desde el que se va a leer.
+	 * @return El tipo de documento.
+	 * @throws IOException
+	 */
 	private String extraerTipoDoc(FileReader fr) throws IOException {
 		String s = "";
 		char actual = siguienteCaracter(fr);
@@ -280,6 +341,12 @@ public class ParserBibtex
 		return s.toLowerCase();
 	}
 
+	/**
+	 * Lee el siguiente caracter desde un fichero. Omite tabulaciones, saltos de línea, espacios, ...
+	 * @param fr Fichero desde el que se va a leer.
+	 * @return El siguiente caracter.
+	 * @throws IOException
+	 */
 	private char siguienteCaracter(FileReader fr) throws IOException
 	{
 		char c = (char)fr.read();
@@ -288,6 +355,14 @@ public class ParserBibtex
 		return c;
 	}
 
+
+	private void saltarComentario(FileReader fr) throws IOException 
+	{
+		char actual = (char)fr.read();
+		while(actual != '\n')
+			actual = (char)fr.read();
+	}
+	
 	public Publication getUltDoc() {
 		return ultDoc;
 	}

@@ -8,6 +8,6 @@ public class Main
 	public static void main(String[] args) 
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\libros.bib");
+		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\entcs.bib");
 	}
 }
