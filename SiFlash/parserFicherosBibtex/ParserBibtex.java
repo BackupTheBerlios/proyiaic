@@ -187,58 +187,63 @@ public class ParserBibtex
 	{
 		String nombreCampo = "";
 		String valorCampo = "";
-		boolean valorString;
+		boolean valorString = true;
 		boolean esReferencia = false;
 		char actual = siguienteCaracter(fr);
-		
-		if (!posibleReferencia)
-			while (actual != '=')
-			{
-				nombreCampo += actual;
-				actual = siguienteCaracter(fr);
-			}
-		else
+		if (actual != '}') //Hay campo.
 		{
-			while (actual != '=' && actual != ',')
+			if (!posibleReferencia)
+				while (actual != '=')
+				{
+					nombreCampo += actual;
+					actual = siguienteCaracter(fr);
+				}
+			else
 			{
-				nombreCampo += actual;
-				actual = siguienteCaracter(fr);
+				while (actual != '=' && actual != ',')
+				{
+					nombreCampo += actual;
+					actual = siguienteCaracter(fr);
+				}
+				if (actual == ',')
+					esReferencia = true;
 			}
-			if (actual == ',')
-				esReferencia = true;
-		}
-		nombreCampo = nombreCampo.toLowerCase();
-		if (!esReferencia)
-		{
-			actual = siguienteCaracter(fr); //Pasamos el '='.
-			valorString = !(nombreCampo.equals("year"));
-			if (actual == '"') //Comienza por comillas.
+			nombreCampo = nombreCampo.toLowerCase();
+			if (!esReferencia)
 			{
-				valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '"', '"');
-				actual = siguienteCaracter(fr); //Pasamos el caracter '"'.
+				actual = siguienteCaracter(fr); //Pasamos el '='.
+				valorString = !(nombreCampo.equals("year"));
+				if (actual == '"') //Comienza por comillas.
+				{
+					valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '"', '"');
+					actual = siguienteCaracter(fr); //Pasamos el caracter '"'.
+				}
+				else
+					if (actual == '{') //Comienza por llave.
+					{
+						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+						actual = siguienteCaracter(fr); //Pasamos el caracter '}'.
+					}
+					else //No comienza ni por '"' ni por '{'.
+					{
+						while (actual != ',')
+						{
+							valorCampo += actual;
+							actual = siguienteCaracter(fr);
+						}
+					}
 			}
 			else
-				if (actual == '{') //Comienza por llave.
-				{
-					valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
-					actual = siguienteCaracter(fr); //Pasamos el caracter '}'.
-				}
-				else //No comienza ni por '"' ni por '{'.
-				{
-					while (actual != ',')
-					{
-						valorCampo += actual;
-						actual = siguienteCaracter(fr);
-					}
-				}
+			{
+				nombreCampo = "referencia";
+				valorCampo = null;
+			}
 		}
-		else
+		else //No hay más campos.
 		{
-			nombreCampo = "referencia";
+			nombreCampo = "vacio";
 			valorCampo = null;
-			valorString = true;
 		}
-
 		boolean ultimoCampo = actual == '}';
 		Campo campoNuevo;
 		if (valorString)
