@@ -31,7 +31,8 @@ public class ModificadorAutores
     */
    public void insertaAutor(String nombre, String apellidos, String web) throws BDException 
    {
-    
+	   String consulta = "INSERT INTO Autores VALUES (" + nombre + ", " + apellidos + ", " + web + ");";
+	   theBaseDatos.exeUpdate(consulta);
    }
    
    /**
@@ -41,18 +42,23 @@ public class ModificadorAutores
     * Excepcion si no se tienen permisos.
     * @param nombre - Nombre del autor.
     * @param apellidos - Apellidos del autor.
+    * @throws BDException 
     * @roseuid 47C5A4F702CE
     */
-   public void borraAutor(String nombre, String apellidos) 
+   public void borraAutor(String nombre, String apellidos) throws BDException  
    {
-    
+	   String consulta = "DELETE FROM Autores WHERE nombre = " + nombre + " and apellidos = " + apellidos + ";";
+	   theBaseDatos.exeUpdate(consulta);   
    }
    
    /**
-    * @roseuid 47C5A5EA034B
+    * @throws BDException 
+ * @roseuid 47C5A5EA034B
     */
-   public void modificaAutor() 
+   public void modificaAutor(String nombreActual, String apellidosActual, String nombreNuevo, String apellidosNuevos, String urlNueva) throws BDException 
    {
-    
+	   String consulta = "UPDATE Autores SET nombre = " + nombreNuevo + ", apellidos = " + apellidosNuevos + ", url = " + urlNueva +
+	   		"WHERE nombre = " + nombreActual + " and apellidos = " + apellidosActual + ";" ;
+	   theBaseDatos.exeUpdate(consulta);    
    }
 }
