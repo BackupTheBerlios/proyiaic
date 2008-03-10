@@ -73,6 +73,7 @@ public class ParserBibtex
 			}
 			else
 				throw new ExcepcionLexica("El primer caracter encontrado no es '@' ni '%'.");
+			actual = siguienteCaracter(fr);
 		}
 	}
 
