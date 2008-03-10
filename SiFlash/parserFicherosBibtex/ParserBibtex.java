@@ -73,7 +73,6 @@ public class ParserBibtex
 			}
 			else
 				throw new ExcepcionLexica("El primer caracter encontrado no es '@' ni '%'.");
-			actual = siguienteCaracter(fr);
 		}
 	}
 
@@ -229,6 +228,7 @@ public class ParserBibtex
 					if (actual == '{') // Está encerrado entre llaves.
 					{
 						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+						actual = siguienteCaracter(fr);
 					}
 					else
 					{
