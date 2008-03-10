@@ -129,7 +129,7 @@ public class ParserBibtex
 			ultDoc = new PhdThesis(campos);
 			ultDoc.imprimir();
 		}
-		else if (tipoDoc.equals("proceeding")){
+		else if (tipoDoc.equals("proceedings")){
 			ultDoc = new Proceedings(campos);
 			ultDoc.imprimir();
 		}
@@ -212,67 +212,25 @@ public class ParserBibtex
 		{
 			actual = siguienteCaracter(fr); //Pasamos el '='.
 			valorString = !(nombreCampo.equals("year"));
-			if (!valorString) //Es un número.
+			if (actual == '"') //Comienza por comillas.
 			{
-				if (actual == '"') //Comienza por comillas.
+				valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '"', '"');
+				actual = siguienteCaracter(fr); //Pasamos el caracter '"'.
+			}
+			else
+				if (actual == '{') //Comienza por llave.
 				{
-					actual = siguienteCaracter(fr); //Pasamos las comillas.
-					while(actual != '"')
+					valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+					actual = siguienteCaracter(fr); //Pasamos el caracter '}'.
+				}
+				else //No comienza ni por '"' ni por '{'.
+				{
+					while (actual != ',')
 					{
 						valorCampo += actual;
 						actual = siguienteCaracter(fr);
 					}
-					actual = siguienteCaracter(fr); //Pasamos las comillas.
 				}
-				else //No lleva comillas.
-				{
-					if (actual == '{') // Está encerrado entre llaves.
-					{
-						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
-						actual = siguienteCaracter(fr);
-					}
-					else
-					{
-						valorCampo += actual;
-						actual = siguienteCaracter(fr);
-						while(actual != ',' && actual != '}')
-						{
-							valorCampo += actual;
-							actual = siguienteCaracter(fr);
-						}
-					}
-				}
-			}
-			else //Es un String.
-			{
-				if (actual == '"') //Comienza por comillas.
-				{
-					actual = (char)fr.read();
-					while (actual != '"')
-					{
-						if (actual == '{')
-							valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
-						else
-							valorCampo += actual;
-						actual = (char)fr.read(); //Dentro de las comillas no saltamos espacios.
-					}
-					actual = siguienteCaracter(fr); //Pasamos las '"'.
-				}
-				else
-					if (actual == '{') //Comienza por llave.
-					{
-						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
-						actual = siguienteCaracter(fr); //Pasamos el caracter "hasta".
-					}
-					else //No comienza ni por '"' ni por '{'.
-					{
-						while (actual != ',')
-						{
-							valorCampo += actual;
-							actual = siguienteCaracter(fr);
-						}
-					}
-			}
 		}
 		else
 		{
@@ -307,20 +265,20 @@ public class ParserBibtex
 		String nuevoString = valorCampo;
 		int nivel = 1;
 		char actual = (char)fr.read();
-		if (actual == desde)
-			nivel++;
+		if (actual == hasta)
+			nivel--;
 		else
-			if (actual == hasta)
-				nivel--;
+			if (actual == desde)
+				nivel++;
 		while (!(actual == hasta && nivel == 0))
 		{
 			nuevoString += actual;
 			actual = (char)fr.read();
-			if (actual == desde)
-				nivel++;
+			if (actual == hasta)
+				nivel--;
 			else
-				if (actual == hasta)
-					nivel--;
+				if (actual == desde)
+					nivel++;
 		}
 		return nuevoString;
 	}
