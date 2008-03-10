@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import parserFicherosBibtex.Campo;
+import parserFicherosBibtex.CampoPublicacion;
 import personas.Autor;
 
 
@@ -63,11 +63,11 @@ public class Book extends Publication
    /**
     * @roseuid 47C8A7110177
     */
-   public Book(LinkedList<Campo> campos)
+   public Book(LinkedList<CampoPublicacion> campos)
 	{
 		inicializarCampos();
-		Campo campo;
-		Iterator<Campo> it = campos.iterator();
+		CampoPublicacion campo;
+		Iterator<CampoPublicacion> it = campos.iterator();
 		while (it.hasNext())
 		{
 			campo = it.next();

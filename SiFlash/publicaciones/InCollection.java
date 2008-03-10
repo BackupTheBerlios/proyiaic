@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import parserFicherosBibtex.Campo;
+import parserFicherosBibtex.CampoPublicacion;
 
 
 /**
@@ -92,11 +92,11 @@ public class InCollection extends Publication
    /**
     * @roseuid 47C8A71103B9
     */
-   public InCollection(LinkedList<Campo> campos)
+   public InCollection(LinkedList<CampoPublicacion> campos)
 	{
 		inicializarCampos();
-		Campo campo;
-		Iterator<Campo> it = campos.iterator();
+		CampoPublicacion campo;
+		Iterator<CampoPublicacion> it = campos.iterator();
 		while (it.hasNext())
 		{
 			campo = it.next();

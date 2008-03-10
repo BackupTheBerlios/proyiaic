@@ -2,6 +2,7 @@ package parserFicherosBibtex;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import parserFicherosBibtex.excepciones.ExcepcionLexica;
 import publicaciones.Article;
@@ -28,8 +29,12 @@ public class ParserBibtex
 	 */
 	private Publication ultDoc;
 	
+	private Vector<CampoString> strings;
+	
 	public ParserBibtex()
 	{
+		ultDoc = null;
+		strings = new Vector<CampoString>();
 	}
 	
 	/**
@@ -68,13 +73,52 @@ public class ParserBibtex
 			else if (actual == '@')
 			{
 				String tipoDoc = extraerTipoDoc(fr);
-				LinkedList<Campo> campos = extraerCampos(fr);
-				generarDocumentoBibtex(tipoDoc, campos);
+				if (tipoDoc.equals("string"))
+				{
+					CampoString campoString = extraerCampoString(fr);
+					strings.add(campoString);
+				}
+				else
+				{
+					LinkedList<CampoPublicacion> campos = extraerCampos(fr);
+					generarDocumentoBibtex(tipoDoc, campos);
+				}
 			}
 			else
 				throw new ExcepcionLexica("El primer caracter encontrado no es '@' ni '%'.");
 			actual = siguienteCaracter(fr);
 		}
+	}
+
+	private CampoString extraerCampoString(FileReader fr) throws IOException, ExcepcionLexica 
+	{
+		char actual = siguienteCaracter(fr);
+		String abrev = "";
+		while (actual != '=')
+		{
+			abrev += actual;
+			actual = siguienteCaracter(fr);
+		}
+		
+		String texto = "";
+		actual = siguienteCaracter(fr);
+		if (actual == '"') //Comienza por comillas.
+		{
+			texto = copiarIntegroDesdeHasta(fr, texto, '"', '"');
+			actual = siguienteCaracter(fr); //Pasamos el caracter '"'.
+		}
+		else
+			if (actual == '{') //Comienza por llave.
+			{
+				texto = copiarIntegroDesdeHasta(fr, texto, '{', '}');
+				actual = siguienteCaracter(fr); //Pasamos el caracter '}'.
+			}
+			else
+				throw new ExcepcionLexica("Caracter \'\"\' o \'{\' esperado.");
+		if (actual != '}') //Llave que cierra el @STRING.
+			throw new ExcepcionLexica("Caracter \'}\' esperado.");
+		
+		return new CampoString(abrev, texto);
 	}
 
 	/**
@@ -83,7 +127,7 @@ public class ParserBibtex
 	 * @param campos Campos de la publicación a generar.
 	 * @throws ExcepcionLexica
 	 */
-	private void generarDocumentoBibtex(String tipoDoc, LinkedList<Campo> campos) throws ExcepcionLexica 
+	private void generarDocumentoBibtex(String tipoDoc, LinkedList<CampoPublicacion> campos) throws ExcepcionLexica 
 	{
 		if (tipoDoc.equals("article")){
 			ultDoc = new Article(campos);
@@ -152,13 +196,13 @@ public class ParserBibtex
 	 * @throws IOException
 	 * @throws ExcepcionLexica
 	 */
-	private LinkedList<Campo> extraerCampos(FileReader fr) throws IOException, ExcepcionLexica 
+	private LinkedList<CampoPublicacion> extraerCampos(FileReader fr) throws IOException, ExcepcionLexica 
 	{
-		LinkedList<Campo> listaCampos = new LinkedList<Campo>();
+		LinkedList<CampoPublicacion> listaCampos = new LinkedList<CampoPublicacion>();
 		
 		boolean terminado;
 		boolean posibleReferencia = true;
-		Campo nuevo;
+		CampoPublicacion nuevo;
 		do
 		{
 			nuevo = extraerCampo(fr, posibleReferencia);
@@ -183,7 +227,7 @@ public class ParserBibtex
 	 * @throws ExcepcionLexica
 	 * @throws IOException
 	 */
-	private Campo extraerCampo(FileReader fr, boolean posibleReferencia) throws ExcepcionLexica, IOException 
+	private CampoPublicacion extraerCampo(FileReader fr, boolean posibleReferencia) throws ExcepcionLexica, IOException 
 	{
 		String nombreCampo = "";
 		String valorCampo = "";
@@ -226,9 +270,16 @@ public class ParserBibtex
 					}
 					else //No comienza ni por '"' ni por '{'.
 					{
-						while (actual != ',')
+						while (actual != ',' && actual != '}')
 						{
-							valorCampo += actual;
+							if (actual == '{')
+							{
+								valorCampo += '{';
+								valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+								valorCampo += '}';
+							}
+							else
+								valorCampo += actual;
 							actual = siguienteCaracter(fr);
 						}
 					}
@@ -245,13 +296,13 @@ public class ParserBibtex
 			valorCampo = null;
 		}
 		boolean ultimoCampo = actual == '}';
-		Campo campoNuevo;
+		CampoPublicacion campoNuevo;
 		if (valorString)
-			campoNuevo = new Campo(nombreCampo, valorCampo, ultimoCampo);
+			campoNuevo = new CampoPublicacion(nombreCampo, valorCampo, ultimoCampo);
 		else
 		{
 			int valorCampoInt = Integer.parseInt(valorCampo);
-			campoNuevo = new Campo(nombreCampo, valorCampoInt, ultimoCampo);
+			campoNuevo = new CampoPublicacion(nombreCampo, valorCampoInt, ultimoCampo);
 		}
 		return campoNuevo;
 	}

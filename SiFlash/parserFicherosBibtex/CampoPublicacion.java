@@ -1,20 +1,20 @@
 package parserFicherosBibtex;
 
-public class Campo 
+public class CampoPublicacion
 {
 	private String nombre, valorString;
 	private int valorInt;
 	
 	private boolean esUltimo; //Indica si es el último campo del documento.
 	
-	public Campo(String nombre, String valor, boolean ult)
+	public CampoPublicacion(String nombre, String valor, boolean ult)
 	{
 		this.nombre = nombre;
 		this.valorString = valor;
 		this.esUltimo = ult;
 	}
 	
-	public Campo (String nombre, int valorInt, boolean ult)
+	public CampoPublicacion(String nombre, int valorInt, boolean ult)
 	{
 		this.nombre = nombre;
 		this.valorInt = valorInt;
@@ -49,7 +49,7 @@ public class Campo
 			valorString = valorString.replaceAll("\\\\'o", "ó");
 			valorString = valorString.replaceAll("\\\\\'u", "ú");
 			
-			omitirLlaves();
+			//omitirLlaves();
 		}
 	}
 
