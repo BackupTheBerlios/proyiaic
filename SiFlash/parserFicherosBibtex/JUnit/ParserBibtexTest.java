@@ -21,14 +21,14 @@ public class ParserBibtexTest extends TestCase
 		String autorEsperado = "Milton Abramowitz and Irene A. Stegun";
 		String tituloEsperado = "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables";
 		String publisherEsperado = "Dover";
-		int yearEsperado = 1964;
+		String yearEsperado = "1964";
 		String addressEsperado = "New York";
 		String editionEsperado = "ninth Dover printing, tenth GPO printing";
 		
 		String autor = ((Autor)((Book)pb.getUltDoc()).getAuthor().firstElement()).getNombre();
 		String titulo = pb.getUltDoc().getTitle();
 		String publisher = ((Book)pb.getUltDoc()).getPublisher();
-		int year = ((Book)pb.getUltDoc()).getYear();
+		String year = ((Book)pb.getUltDoc()).getYear();
 		String address = ((Book)pb.getUltDoc()).getAddress();
 		String edition = ((Book)pb.getUltDoc()).getEdition();
 		

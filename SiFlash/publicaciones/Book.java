@@ -33,7 +33,7 @@ public class Book extends Publication
    /**
     * Año de publicación.
     */
-   private int year;
+   private String year;
    
    /**
     * Volumen en el que está contenido.
@@ -72,13 +72,8 @@ public class Book extends Publication
 		{
 			campo = it.next();
 			String nombreCampo = campo.getNombre();
-			String valorString = campo.getValorString();
-			boolean tieneValorInt = valorString == null;
-			int valorInt = campo.getValorInt();
-			if (tieneValorInt)
-				insertarValorInt(nombreCampo, valorInt);
-			else
-				insertarValorString(nombreCampo, valorString);
+			String valor = campo.getValor();
+			insertar(nombreCampo, valor);
 		}
 }
 
@@ -96,10 +91,10 @@ public class Book extends Publication
 		note = null;
 		_abstract = null;
 		key = null;
-		year = -1;
+		year = null;
 	}
 	
-	private void insertarValorString(String nombreCampo, String valorString)
+	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
 			author = extraerAutores(valorString);
@@ -125,12 +120,8 @@ public class Book extends Publication
 			_abstract = valorString;
 		else if (nombreCampo.equals("key") && key == null)
 			key = valorString;
-	}
-
-	private void insertarValorInt(String nombreCampo, int valorInt)
-	{
-		if (nombreCampo.equals("year") && year == -1)
-			year = valorInt;
+		else if (nombreCampo.equals("year") && year == null)
+			year = valorString;
 	}
 	
 	public void imprimir()
@@ -144,7 +135,7 @@ public class Book extends Publication
 			System.out.println("   - Editor: " + editor);
 		if (publisher != null)
 			System.out.println("   - Publisher: " + publisher);
-		if (year != -1)
+		if (year != null)
 			System.out.println("   - Year: " + year);
 		if (volume != null)
 			System.out.println("   - Volume: " + volume);
@@ -194,7 +185,7 @@ public class Book extends Publication
 		return publisher;
 	}
 
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 

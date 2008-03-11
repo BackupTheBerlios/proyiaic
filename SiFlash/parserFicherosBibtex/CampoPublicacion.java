@@ -2,23 +2,14 @@ package parserFicherosBibtex;
 
 public class CampoPublicacion
 {
-	private String nombre, valorString;
-	private int valorInt;
+	private String nombre, valor;
 	
 	private boolean esUltimo; //Indica si es el último campo del documento.
 	
 	public CampoPublicacion(String nombre, String valor, boolean ult)
 	{
 		this.nombre = nombre;
-		this.valorString = valor;
-		this.esUltimo = ult;
-	}
-	
-	public CampoPublicacion(String nombre, int valorInt, boolean ult)
-	{
-		this.nombre = nombre;
-		this.valorInt = valorInt;
-		this.valorString = null;
+		this.valor = valor;
 		this.esUltimo = ult;
 	}
 	
@@ -31,23 +22,19 @@ public class CampoPublicacion
 		return nombre;
 	}
 
-	public String getValorString() {
-		return valorString;
-	}
-
-	public int getValorInt() {
-		return valorInt;
+	public String getValor() {
+		return valor;
 	}
 
 	public void sustituirTildes() 
 	{
-		if (valorString != null)
+		if (valor != null)
 		{
-			valorString = valorString.replaceAll("\\\\\'a", "á");
-			valorString = valorString.replaceAll("\\\\\'e", "é");
-			valorString = valorString.replaceAll("\\\\\'\\\\i", "í"); //NO SE QUITAN LAS LLAVES!!
-			valorString = valorString.replaceAll("\\\\'o", "ó");
-			valorString = valorString.replaceAll("\\\\\'u", "ú");
+			valor = valor.replaceAll("\\\\\'a", "á");
+			valor = valor.replaceAll("\\\\\'e", "é");
+			valor = valor.replaceAll("\\\\\'\\\\i", "í"); //NO SE QUITAN LAS LLAVES!!
+			valor = valor.replaceAll("\\\\'o", "ó");
+			valor = valor.replaceAll("\\\\\'u", "ú");
 			
 			//omitirLlaves();
 		}
@@ -55,12 +42,12 @@ public class CampoPublicacion
 
 	private void omitirLlaves() 
 	{
-		char[] cadena = valorString.toCharArray();
+		char[] cadena = valor.toCharArray();
 		String sinLlaves = "";
 		for (int i = 0; i < cadena.length; i++)
 			if (cadena[i] != '{' && cadena[i] != '}')
 				sinLlaves += cadena[i];
 		
-		valorString = sinLlaves.toString();
+		valor = sinLlaves.toString();
 	}
 }

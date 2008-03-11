@@ -231,7 +231,6 @@ public class ParserBibtex
 	{
 		String nombreCampo = "";
 		String valorCampo = "";
-		boolean valorString = true;
 		boolean esReferencia = false;
 		char actual = siguienteCaracter(fr);
 		if (actual != '}') //Hay campo.
@@ -256,7 +255,6 @@ public class ParserBibtex
 			if (!esReferencia)
 			{
 				actual = siguienteCaracter(fr); //Pasamos el '='.
-				valorString = !(nombreCampo.equals("year"));
 				if (actual == '"') //Comienza por comillas.
 				{
 					valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '"', '"');
@@ -295,15 +293,10 @@ public class ParserBibtex
 			nombreCampo = "vacio";
 			valorCampo = null;
 		}
+		
 		boolean ultimoCampo = actual == '}';
-		CampoPublicacion campoNuevo;
-		if (valorString)
-			campoNuevo = new CampoPublicacion(nombreCampo, valorCampo, ultimoCampo);
-		else
-		{
-			int valorCampoInt = Integer.parseInt(valorCampo);
-			campoNuevo = new CampoPublicacion(nombreCampo, valorCampoInt, ultimoCampo);
-		}
+		CampoPublicacion campoNuevo = new CampoPublicacion(nombreCampo, valorCampo, ultimoCampo);
+
 		return campoNuevo;
 	}
 
