@@ -291,4 +291,10 @@ public class InCollection extends Publication
 	public String getMonth() {
 		return month;
 	}
+
+	@Override
+	public void sustituir(String abrev, String texto) {
+		// TODO Auto-generated method stub
+		
+	}
 }

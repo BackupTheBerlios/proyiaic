@@ -176,4 +176,11 @@ public class Article extends Publication
 	public String getMonth() {
 		return month;
 	}
+
+	@Override
+	public void sustituir(String abrev, String texto) 
+	{
+		
+		
+	}
 }

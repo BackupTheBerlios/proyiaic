@@ -264,4 +264,10 @@ public class Conference extends Publication
 	public String getPublisher() {
 		return publisher;
 	}
+
+	@Override
+	public void sustituir(String abrev, String texto) {
+		// TODO Auto-generated method stub
+		
+	}
 }

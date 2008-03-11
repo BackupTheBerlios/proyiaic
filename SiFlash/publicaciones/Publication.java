@@ -84,6 +84,8 @@ public abstract class Publication
     */
    public abstract String getBibTeX();
    
+   public abstract void sustituir(String abrev, String texto);
+   
    public abstract void imprimir();
    
    public Vector<Autor> extraerAutores(String autores)

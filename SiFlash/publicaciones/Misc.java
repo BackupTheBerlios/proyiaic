@@ -137,4 +137,10 @@ public class Misc extends Publication
 	public String getYear() {
 		return year;
 	}
+
+	@Override
+	public void sustituir(String abrev, String texto) {
+		// TODO Auto-generated method stub
+		
+	}
 }

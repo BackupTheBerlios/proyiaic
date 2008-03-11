@@ -1,6 +1,7 @@
 package parserFicherosBibtex;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -25,28 +26,29 @@ import publicaciones.Unpublished;
 public class ParserBibtex 
 {
 	/**
-	 * Última publicación procesada.
+	 * Publicaciones procesadas.
 	 */
-	private Publication ultDoc;
+	private LinkedList<Publication> publicaciones;
 	
-	private Vector<CampoString> strings;
+	private LinkedList<CampoString> strings;
 	
 	public ParserBibtex()
 	{
-		ultDoc = null;
-		strings = new Vector<CampoString>();
+		publicaciones = new LinkedList<Publication>();
+		strings = new LinkedList<CampoString>();
 	}
 	
 	/**
 	 * Intenta abrir el fichero indicado y, si hay éxito, lo procesa.
 	 * @param ruta Ruta del fichero que se quiere procesar.
 	 */
-	public void procesar(String ruta)
+	public LinkedList<Publication> procesar(String ruta)
 	{
 		try {
 			FileReader fr = new FileReader(ruta);
 			
 			extraerDocumento(fr);
+			
 		} 
 		catch (ExcepcionLexica e)
 		{
@@ -55,6 +57,9 @@ public class ParserBibtex
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		sustituirStrings();
+		imprimirPublicaciones();
+		return publicaciones;
 	}
 
 	/**
@@ -129,61 +134,62 @@ public class ParserBibtex
 	 */
 	private void generarDocumentoBibtex(String tipoDoc, LinkedList<CampoPublicacion> campos) throws ExcepcionLexica 
 	{
+		Publication nuevaPublicacion;
 		if (tipoDoc.equals("article")){
-			ultDoc = new Article(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new Article(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("book")){
-			ultDoc = new Book(campos);
-			ultDoc.imprimir();	
+			nuevaPublicacion = new Book(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("booklet")){
-			ultDoc = new Booklet(campos);	
-			ultDoc.imprimir();
+			nuevaPublicacion = new Booklet(campos);	
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("conference")){
-			ultDoc = new Conference(campos);
-			ultDoc.imprimir();	
+			nuevaPublicacion = new Conference(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("inbook")){
-			ultDoc = new InBook(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new InBook(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("incollection")){
-			ultDoc = new InCollection(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new InCollection(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("inproceedings")){
-			ultDoc = new InProceedings(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new InProceedings(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("manual")){
-			ultDoc = new Manual(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new Manual(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("mastersthesis")){
-			ultDoc = new MastersThesis(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new MastersThesis(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("misc")){
-			ultDoc = new Misc(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new Misc(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("phdthesis")){
-			ultDoc = new PhdThesis(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new PhdThesis(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("proceedings")){
-			ultDoc = new Proceedings(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new Proceedings(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("techreport")){
-			ultDoc = new TechReport(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new TechReport(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("unpublished")){
-			ultDoc = new Unpublished(campos);
-			ultDoc.imprimir();
+			nuevaPublicacion = new Unpublished(campos);
+			publicaciones.add(nuevaPublicacion);
 		}
 		else
 			throw new ExcepcionLexica("El tipo de documento encontrado no es válido.");
@@ -380,7 +386,32 @@ public class ParserBibtex
 	}
 	
 	public Publication getUltDoc() {
-		return ultDoc;
+		return publicaciones.getLast();
 	}
 	
+	public void imprimirPublicaciones()
+	{
+		Iterator<Publication> it = publicaciones.iterator();
+		while (it.hasNext())
+		{
+			Publication p = it.next();
+			p.imprimir();
+		}
+	}
+	
+	private void sustituirStrings()
+	{
+		Iterator<CampoString> itStrings = strings.iterator();
+		Publication p;
+		while (itStrings.hasNext())
+		{
+			CampoString c = itStrings.next();
+			Iterator<Publication> itPubl = publicaciones.iterator();
+			while (itPubl.hasNext())
+			{
+				p = itPubl.next();
+				p.sustituir(c.getAbrev(), c.getTexto());
+			}
+		}
+	}
 }
