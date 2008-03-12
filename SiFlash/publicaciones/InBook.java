@@ -49,11 +49,6 @@ public class InBook extends Publication
    private String publisher;
    
    /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * Volumen en el que está contenido.
     */
    private String volume;
@@ -82,11 +77,6 @@ public class InBook extends Publication
     * Lugar de publicación.
     */
    private String address;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
    
    /**
     * @roseuid 47C8A711031C
@@ -245,10 +235,6 @@ public class InBook extends Publication
 		return publisher;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
 	public String getVolume() {
 		return volume;
 	}
@@ -271,10 +257,6 @@ public class InBook extends Publication
 
 	public String getAddress() {
 		return address;
-	}
-
-	public String getMonth() {
-		return month;
 	}
 
 	@Override

@@ -35,16 +35,6 @@ public class Manual extends Publication
    private String edition;
    
    /**
-    * Mes de publicación.
-    */
-   private String month;
-   
-   /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * @roseuid 47C8A71200FA
     */
    public Manual(LinkedList<CampoPublicacion> campos)
@@ -156,14 +146,6 @@ public class Manual extends Publication
 
 	public String getEdition() {
 		return edition;
-	}
-
-	public String getMonth() {
-		return month;
-	}
-
-	public String getYear() {
-		return year;
 	}
 
 	@Override

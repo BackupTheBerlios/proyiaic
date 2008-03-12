@@ -26,11 +26,6 @@ public class Article extends Publication
    private String journal;
    
    /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * Volumen en el que está contenido.
     */
    private String volume;
@@ -39,15 +34,12 @@ public class Article extends Publication
     * Número de volumen.
     */
    private String number;
+   
    /**
     * Longitud en páginas.
     */
    private String pages;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
+  
    
    public Article(LinkedList<CampoPublicacion> campos)
 	{
@@ -157,9 +149,6 @@ public class Article extends Publication
 		return journal;
 	}
 
-	public String getYear() {
-		return year;
-	}
 
 	public String getVolume() {
 		return volume;
@@ -173,9 +162,6 @@ public class Article extends Publication
 		return pages;
 	}
 
-	public String getMonth() {
-		return month;
-	}
 
 	@Override
 	public void sustituir(String abrev, String texto) 

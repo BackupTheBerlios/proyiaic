@@ -24,11 +24,6 @@ public class InProceedings extends Publication
     * Libro al que hace referencia.
     */
    private String booktitle;
-   
-   /**
-    * Año de publicación.
-    */
-   private String year;
 
    /**
     * Ayuda a generar referecias cruzadas internas.
@@ -64,11 +59,6 @@ public class InProceedings extends Publication
     * Lugar de publicación.
     */
    private String address;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
    
    /**
     * Organización que se encarga de la gestión de la misma.
@@ -221,10 +211,6 @@ public class InProceedings extends Publication
 		return booktitle;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
 	public String getCrossref() {
 		return crossref;
 	}
@@ -251,10 +237,6 @@ public class InProceedings extends Publication
 
 	public String getAddress() {
 		return address;
-	}
-
-	public String getMonth() {
-		return month;
 	}
 
 	public String getOrganization() {

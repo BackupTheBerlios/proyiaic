@@ -25,11 +25,6 @@ public class MastersThesis extends Publication
    private String school;
    
    /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * Tipo del contenido.
     */
    private String type;
@@ -38,11 +33,6 @@ public class MastersThesis extends Publication
     * Lugar de publicación.
     */
    private String address;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
    
    /**
     * @roseuid 47C8A7120167
@@ -150,20 +140,12 @@ public class MastersThesis extends Publication
 		return school;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
 	public String getType() {
 		return type;
 	}
 
 	public String getAddress() {
 		return address;
-	}
-
-	public String getMonth() {
-		return month;
 	}
 
 	@Override

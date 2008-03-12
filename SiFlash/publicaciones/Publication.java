@@ -29,6 +29,16 @@ public abstract class Publication
    protected String title;
    
    /**
+    * Año de publicación.
+    */
+   protected String year;
+   
+   /**
+    * Mes de publicación.
+    */
+   protected String month;
+   
+   /**
     * URL en el que se puede localizar la publicación.
     */
    protected String URL = null;
@@ -110,19 +120,27 @@ public abstract class Publication
 	   return v;
    }
 
-public String getTitle() {
-	return title;
-}
+   public String getTitle() {
+	   return title;
+   }
 
-public String get_abstract() {
-	return _abstract;
-}
+   public String get_abstract() {
+	   return _abstract;
+   }
 
-public String getNote() {
-	return note;
-}
+   public String getNote() {
+	   return note;
+   }
 
-public String getKey() {
-	return key;
-}
+   public String getKey() {
+	   return key;
+   }
+
+	public String getMonth() {
+		return month;
+	}
+
+	public String getYear() {
+		return year;
+	}
 }

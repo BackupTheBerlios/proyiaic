@@ -20,16 +20,6 @@ public class Unpublished extends Publication
 	private Vector author;
    
    /**
-    * Mes de realización.
-    */
-   private String month;
-   
-   /**
-    * Año de realización.
-    */
-   private String year;
-   
-   /**
     * @roseuid 47C8A71203B9
     */
    public Unpublished(LinkedList<CampoPublicacion> campos)
@@ -114,14 +104,6 @@ public class Unpublished extends Publication
 
 	public Vector getAuthor() {
 		return author;
-	}
-
-	public String getMonth() {
-		return month;
-	}
-
-	public String getYear() {
-		return year;
 	}
 
 	@Override

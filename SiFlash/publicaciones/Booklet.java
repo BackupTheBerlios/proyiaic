@@ -26,19 +26,9 @@ public class Booklet extends Publication
    private String howPublished;
    
    /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * Lugar de publicación.
     */
    private String address;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
    
    /**
     * @roseuid 47C8A71101F4
@@ -141,18 +131,9 @@ public class Booklet extends Publication
 		return howPublished;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
 	public String getAddress() {
 		return address;
 	}
-
-	public String getMonth() {
-		return month;
-	}
-
 	@Override
 	public void sustituir(String abrev, String texto) {
 		// TODO Auto-generated method stub

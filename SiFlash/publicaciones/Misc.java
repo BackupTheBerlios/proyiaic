@@ -25,16 +25,6 @@ public class Misc extends Publication
    private String howPublished;
    
    /**
-    * Mes de publicación.
-    */
-   private String month;
-   
-   /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * @roseuid 47C8A71201C5
     */
    public Misc(LinkedList<CampoPublicacion> campos)
@@ -128,14 +118,6 @@ public class Misc extends Publication
 
 	public String getHowPublished() {
 		return howPublished;
-	}
-
-	public String getMonth() {
-		return month;
-	}
-
-	public String getYear() {
-		return year;
 	}
 
 	@Override

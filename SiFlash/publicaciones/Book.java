@@ -31,11 +31,6 @@ public class Book extends Publication
    private String publisher;
    
    /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * Volumen en el que está contenido.
     */
    private String volume;
@@ -54,11 +49,6 @@ public class Book extends Publication
     * Edicion del mismo.
     */
    private String edition;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
    
    /**
     * @roseuid 47C8A7110177
@@ -185,10 +175,6 @@ public class Book extends Publication
 		return publisher;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
 	public String getVolume() {
 		return volume;
 	}
@@ -205,9 +191,6 @@ public class Book extends Publication
 		return edition;
 	}
 
-	public String getMonth() {
-		return month;
-	}
 
 	@Override
 	public void sustituir(String abrev, String texto) {

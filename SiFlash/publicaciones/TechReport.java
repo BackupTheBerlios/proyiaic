@@ -26,11 +26,6 @@ public class TechReport extends Publication
    private String institution;
    
    /**
-    * Año de publicación.
-    */
-   private String year;
-   
-   /**
     * Tipo del contenido.
     */
    private String type;
@@ -44,11 +39,6 @@ public class TechReport extends Publication
     * Lugar de publicación.
     */
    private String address;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
    
    /**
     * @roseuid 47C8A712034B
@@ -166,10 +156,6 @@ public class TechReport extends Publication
 		return institution;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -180,10 +166,6 @@ public class TechReport extends Publication
 
 	public String getAddress() {
 		return address;
-	}
-
-	public String getMonth() {
-		return month;
 	}
 
 	@Override

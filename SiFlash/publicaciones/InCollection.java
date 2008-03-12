@@ -28,11 +28,6 @@ public class InCollection extends Publication
     * Representa a la entidad que publica.
     */
    private String publisher;
-   
-   /**
-    * Año de publicación.
-    */
-   private String year;
 
    /**
     * Ayuda a generar referecias cruzadas internas.
@@ -83,11 +78,6 @@ public class InCollection extends Publication
     * Edicion del mismo.
     */
    private String edition;
-   
-   /**
-    * Mes de publicación.
-    */
-   private String month;
    
    /**
     * @roseuid 47C8A71103B9
