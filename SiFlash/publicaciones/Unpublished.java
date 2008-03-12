@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 import parserFicherosBibtex.CampoPublicacion;
+import personas.Autor;
 
 
 /**
@@ -17,7 +18,7 @@ public class Unpublished extends Publication
 	/**
 	 * Vector que contiene los autores que han colaborado en la creación de la misma.
 	 */
-	private Vector author;
+	private Vector<Autor> author;
    
    /**
     * @roseuid 47C8A71203B9
@@ -102,13 +103,34 @@ public class Unpublished extends Publication
 		return null;
 	}
 
-	public Vector getAuthor() {
+	public Vector<Autor> getAuthor() {
 		return author;
 	}
 
 	@Override
-	public void sustituir(String abrev, String texto) {
-		// TODO Auto-generated method stub
+	public void sustituir(String abrev, String texto) 
+	{
+		title = title.replaceAll(" " + abrev + " ", " " + texto + " ");
 		
+		Iterator<Autor> it = author.iterator();
+		while (it.hasNext())
+		{
+			Autor a = it.next();
+			a.sustituir(abrev, texto);
+		}
+
+		note = note.replaceAll(" " + abrev + " ", " " + texto + " ");
+		month = month.replaceAll(" " + abrev + " ", " " + texto + " ");
+		year = year.replaceAll(" " + abrev + " ", " " + texto + " ");
+		_abstract = _abstract.replaceAll(" " + abrev + " ", " " + texto + " ");
+		key = key.replaceAll(" " + abrev + " ", " " + texto + " ");
+		
+		//También reemplazamos cuando esté pegado a una coma:
+		title = title.replaceAll(" " + abrev + ",", " " + texto + ",");
+		note = note.replaceAll(" " + abrev + ",", " " + texto + ",");
+		month = month.replaceAll(" " + abrev + ",", " " + texto + ",");
+		year = year.replaceAll(" " + abrev + ",", " " + texto + ",");
+		_abstract = _abstract.replaceAll(" " + abrev + ",", " " + texto + ",");
+		key = key.replaceAll(" " + abrev + ",", " " + texto + ",");
 	}
 }

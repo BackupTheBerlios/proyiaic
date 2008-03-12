@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 import parserFicherosBibtex.CampoPublicacion;
+import personas.Autor;
+import personas.Editor;
 
 
 /**
@@ -17,7 +19,7 @@ public class InCollection extends Publication
 	/**
 	 * Vector que contiene los autores que han colaborado en la creación de la misma.
 	 */
-	private Vector author;
+	private Vector<Autor> author;
    
    /**
     * Libro al que hace referencia.
@@ -37,7 +39,7 @@ public class InCollection extends Publication
    /**
 	 * Vector que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
 	 */
-	private Vector editor;
+	private Vector<Editor> editor;
 	
    /**
     * Volumen en el que está contenido.
@@ -222,7 +224,7 @@ public class InCollection extends Publication
 		return null;
 	}
 
-	public Vector getAuthor() {
+	public Vector<Autor> getAuthor() {
 		return author;
 	}
 
@@ -242,7 +244,7 @@ public class InCollection extends Publication
 		return crossref;
 	}
 
-	public Vector getEditor() {
+	public Vector<Editor> getEditor() {
 		return editor;
 	}
 
@@ -283,8 +285,58 @@ public class InCollection extends Publication
 	}
 
 	@Override
-	public void sustituir(String abrev, String texto) {
-		// TODO Auto-generated method stub
+	public void sustituir(String abrev, String texto) 
+	{
+		title = title.replaceAll(" " + abrev + " ", " " + texto + " ");
 		
+		Iterator<Autor> it = author.iterator();
+		while (it.hasNext())
+		{
+			Autor a = it.next();
+			a.sustituir(abrev, texto);
+		}
+		
+		Iterator<Editor> it2 = editor.iterator();
+		while (it2.hasNext())
+		{
+			Editor a = it2.next();
+			a.sustituir(abrev, texto);
+		}
+		
+		booktitle = booktitle.replaceAll(" " + abrev + " ", " " + texto + " ");
+		publisher = publisher.replaceAll(" " + abrev + " ", " " + texto + " ");
+		year = year.replaceAll(" " + abrev + " ", " " + texto + " ");
+		crossref = crossref.replaceAll(" " + abrev + " ", " " + texto + " ");
+		volume = volume.replaceAll(" " + abrev + " ", " " + texto + " ");
+		number = number.replaceAll(" " + abrev + " ", " " + texto + " ");
+		series = series.replaceAll(" " + abrev + " ", " " + texto + " ");
+		type = type.replaceAll(" " + abrev + " ", " " + texto + " ");
+		chapter = chapter.replaceAll(" " + abrev + " ", " " + texto + " ");
+		pages = pages.replaceAll(" " + abrev + " ", " " + texto + " ");
+		address = address.replaceAll(" " + abrev + " ", " " + texto + " ");
+		edition = edition.replaceAll(" " + abrev + " ", " " + texto + " ");
+		month = month.replaceAll(" " + abrev + " ", " " + texto + " ");
+		note = note.replaceAll(" " + abrev + " ", " " + texto + " ");
+		_abstract = _abstract.replaceAll(" " + abrev + " ", " " + texto + " ");
+		key = key.replaceAll(" " + abrev + " ", " " + texto + " ");
+		
+		//También reemplazamos cuando esté pegado a una coma:
+		title = title.replaceAll(" " + abrev + ",", " " + texto + ",");
+		booktitle = booktitle.replaceAll(" " + abrev + ",", " " + texto + ",");
+		publisher = publisher.replaceAll(" " + abrev + ",", " " + texto + ",");
+		year = year.replaceAll(" " + abrev + ",", " " + texto + ",");
+		crossref = crossref.replaceAll(" " + abrev + ",", " " + texto + ",");
+		volume = volume.replaceAll(" " + abrev + ",", " " + texto + ",");
+		number = number.replaceAll(" " + abrev + ",", " " + texto + ",");
+		series = series.replaceAll(" " + abrev + ",", " " + texto + ",");
+		type = type.replaceAll(" " + abrev + ",", " " + texto + ",");
+		chapter = chapter.replaceAll(" " + abrev + ",", " " + texto + ",");
+		pages = pages.replaceAll(" " + abrev + ",", " " + texto + ",");
+		address = address.replaceAll(" " + abrev + ",", " " + texto + ",");
+		edition = edition.replaceAll(" " + abrev + ",", " " + texto + ",");
+		month = month.replaceAll(" " + abrev + ",", " " + texto + ",");
+		note = note.replaceAll(" " + abrev + ",", " " + texto + ",");
+		_abstract = _abstract.replaceAll(" " + abrev + ",", " " + texto + ",");
+		key = key.replaceAll(" " + abrev + ",", " " + texto + ",");
 	}
 }

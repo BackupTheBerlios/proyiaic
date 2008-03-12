@@ -23,4 +23,9 @@ public class Editor
 		apellidos = ap;
 		web = w;
 	}
+
+	public void sustituir(String abrev, String texto) {
+		// TODO Auto-generated method stub
+		
+	}
 }

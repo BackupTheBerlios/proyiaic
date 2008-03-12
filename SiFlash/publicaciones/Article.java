@@ -166,7 +166,36 @@ public class Article extends Publication
 	@Override
 	public void sustituir(String abrev, String texto) 
 	{
+		title = title.replaceAll(" " + abrev + " ", " " + texto + " ");
 		
+		Iterator<Autor> it = author.iterator();
+		while (it.hasNext())
+		{
+			Autor a = it.next();
+			a.sustituir(abrev, texto);
+		}
 		
+		journal = journal.replaceAll(" " + abrev + " ", " " + texto + " ");
+		year = year.replaceAll(" " + abrev + " ", " " + texto + " ");
+		volume = volume.replaceAll(" " + abrev + " ", " " + texto + " ");
+		number = number.replaceAll(" " + abrev + " ", " " + texto + " ");
+		pages = pages.replaceAll(" " + abrev + " ", " " + texto + " ");
+		month = month.replaceAll(" " + abrev + " ", " " + texto + " ");
+		note = note.replaceAll(" " + abrev + " ", " " + texto + " ");
+		_abstract = _abstract.replaceAll(" " + abrev + " ", " " + texto + " ");
+		key = key.replaceAll(" " + abrev + " ", " " + texto + " ");
+		
+		//También reemplazamos cuando esté pegado a una coma:
+		title = title.replaceAll(" " + abrev + ",", " " + texto + ",");
+		
+		journal = journal.replaceAll(" " + abrev + ",", " " + texto + ",");
+		year = year.replaceAll(" " + abrev + ",", " " + texto + ",");
+		volume = volume.replaceAll(" " + abrev + ",", " " + texto + ",");
+		number = number.replaceAll(" " + abrev + ",", " " + texto + ",");
+		pages = pages.replaceAll(" " + abrev + ",", " " + texto + ",");
+		month = month.replaceAll(" " + abrev + ",", " " + texto + ",");
+		note = note.replaceAll(" " + abrev + ",", " " + texto + ",");
+		_abstract = _abstract.replaceAll(" " + abrev + ",", " " + texto + ",");
+		key = key.replaceAll(" " + abrev + ",", " " + texto + ",");
 	}
 }
