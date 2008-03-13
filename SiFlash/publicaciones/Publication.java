@@ -2,8 +2,10 @@
 
 package publicaciones;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
+import parserFicherosBibtex.CampoString;
 import personas.AutorEditor;
 
 /**
@@ -93,32 +95,56 @@ public abstract class Publication
     */
    public abstract String getBibTeX();
    
-   public abstract void sustituir(String abrev, String texto);
-   
    public abstract void imprimir();
    
-   public LinkedList<AutorEditor> extraerAutorEditores(String AutorEditores)
+   protected LinkedList<AutorEditor> extraerAutoresEditores(String autoresEditores)
    {
-	   String nombre = AutorEditores;
-	   String apellidos = null;
-	   String web = null;
-	   AutorEditor autorEditor = new AutorEditor(nombre, apellidos, web);
-	   LinkedList<AutorEditor> v = new LinkedList<AutorEditor>();
-	   v.add(autorEditor);
-	   return v;
-   }
-   
-   public LinkedList<AutorEditor> extraerAutoresEditores(String autoresEditores)
-   {
-	   LinkedList<AutorEditor> edit = new LinkedList<AutorEditor>();
+	   LinkedList<AutorEditor> lista = new LinkedList<AutorEditor>();
 	   if (autoresEditores != null)
 	   {
-		   autoresEditores.split("and");
-		   return null;
+		   if (autoresEditores.charAt(0) == '{')
+		   {
+			   String sinLlaves = autoresEditores.substring(1, autoresEditores.length()-2);
+			   lista.add(new AutorEditor(sinLlaves));
+		   }
+		   else
+			   if (autoresEditores.contains(" and "))
+			   {
+				   String[] separados = autoresEditores.split(" and ");
+				   int numSeparados = separados.length;
+				   LinkedList<AutorEditor> ae = new LinkedList<AutorEditor>();
+				   for (int i = 0; i < numSeparados; i++)
+				   {
+					   ae = extraerAutoresEditores(separados[i]);
+					   lista.addAll(ae);
+				   }
+			   }
+			   else
+				   lista.add(new AutorEditor(autoresEditores));
+		   return lista;
 	   }
 	   else
 		   return null;
    }
+   
+   protected String sustituirStrings(LinkedList<CampoString> strings, String valorString)
+	{
+	   String nuevo = valorString;
+		Iterator<CampoString> itStrings = strings.iterator();
+		CampoString c;
+		while (itStrings.hasNext())
+		{
+			c = itStrings.next();
+			String abrev = c.getAbrev();
+			String texto = c.getTexto();
+
+			nuevo = nuevo.replaceAll(" " + abrev + " ", " " + texto + " ");
+			nuevo = nuevo.replaceAll(" " + abrev + ",", " " + texto + ",");
+			nuevo = nuevo.replaceAll("=" + abrev + " ", "=" + texto + " ");
+			nuevo = nuevo.replaceAll("=" + abrev + ",", "=" + texto + ",");
+		}
+		return nuevo;
+	}
 
    public String getTitle() {
 	   return title;

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import parserFicherosBibtex.CampoPublicacion;
+import parserFicherosBibtex.CampoString;
 import personas.AutorEditor;
 
 
@@ -40,7 +41,7 @@ public class Article extends Publication
    private String pages;
   
    
-   public Article(LinkedList<CampoPublicacion> campos)
+   public Article(LinkedList<CampoPublicacion> campos, LinkedList<CampoString> strings)
 	{
 		inicializarCampos();
 		CampoPublicacion campo;
@@ -50,7 +51,7 @@ public class Article extends Publication
 			campo = it.next();
 			String nombreCampo = campo.getNombre();
 			String valor = campo.getValor();
-			insertar(nombreCampo, valor);
+			insertar(nombreCampo, valor, strings);
 		}
 	}
 
@@ -69,8 +70,9 @@ public class Article extends Publication
 		pages = null;
 	}
 
-	private void insertar(String nombreCampo, String valorString)
+	private void insertar(String nombreCampo, String valorString, LinkedList<CampoString> strings)
 	{
+		valorString = sustituirStrings(strings, valorString);
 		if (nombreCampo.equals("author") && author == null)
 			author = extraerAutoresEditores(valorString);
 		else if (nombreCampo.equals("title") && title == null)
@@ -159,80 +161,5 @@ public class Article extends Publication
 
 	public String getPages() {
 		return pages;
-	}
-
-
-	@Override
-	public void sustituir(String abrev, String texto) 
-	{
-		if (title != null)
-		{
-			title = title.replaceAll(" " + abrev + " ", " " + texto + " ");
-			title = title.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (author != null)
-		{
-			Iterator<AutorEditor> it = author.iterator();
-			while (it.hasNext())
-			{
-				AutorEditor a = it.next();
-				a.sustituir(abrev, texto);
-			}
-		}
-		
-		if (journal != null)
-		{
-			journal = journal.replaceAll(" " + abrev + " ", " " + texto + " ");
-			journal = journal.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (year != null)
-		{
-			year = year.replaceAll(" " + abrev + " ", " " + texto + " ");
-			year = year.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (volume != null)
-		{
-			volume = volume.replaceAll(" " + abrev + " ", " " + texto + " ");
-			volume = volume.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (number != null)
-		{
-			number = number.replaceAll(" " + abrev + " ", " " + texto + " ");
-			number = number.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (pages != null)
-		{
-			pages = pages.replaceAll(" " + abrev + " ", " " + texto + " ");
-			pages = pages.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (month != null)
-		{
-			month = month.replaceAll(" " + abrev + " ", " " + texto + " ");
-			month = month.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (note != null)
-		{
-			note = note.replaceAll(" " + abrev + " ", " " + texto + " ");
-			note = note.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (_abstract != null)
-		{
-			_abstract = _abstract.replaceAll(" " + abrev + " ", " " + texto + " ");
-			_abstract = _abstract.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
-		
-		if (key != null)
-		{
-			key = key.replaceAll(" " + abrev + " ", " " + texto + " ");
-			key = key.replaceAll(" " + abrev + ",", " " + texto + ",");
-		}
 	}
 }

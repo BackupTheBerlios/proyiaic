@@ -57,7 +57,6 @@ public class ParserBibtex
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		sustituirStrings();
 		imprimirPublicaciones();
 		return publicaciones;
 	}
@@ -136,59 +135,59 @@ public class ParserBibtex
 	{
 		Publication nuevaPublicacion;
 		if (tipoDoc.equals("article")){
-			nuevaPublicacion = new Article(campos);
+			nuevaPublicacion = new Article(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("book")){
-			nuevaPublicacion = new Book(campos);
+			nuevaPublicacion = new Book(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("booklet")){
-			nuevaPublicacion = new Booklet(campos);	
+			nuevaPublicacion = new Booklet(campos, strings);	
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("conference")){
-			nuevaPublicacion = new Conference(campos);
+			nuevaPublicacion = new Conference(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("inbook")){
-			nuevaPublicacion = new InBook(campos);
+			nuevaPublicacion = new InBook(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("incollection")){
-			nuevaPublicacion = new InCollection(campos);
+			nuevaPublicacion = new InCollection(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("inproceedings")){
-			nuevaPublicacion = new InProceedings(campos);
+			nuevaPublicacion = new InProceedings(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("manual")){
-			nuevaPublicacion = new Manual(campos);
+			nuevaPublicacion = new Manual(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("mastersthesis")){
-			nuevaPublicacion = new MastersThesis(campos);
+			nuevaPublicacion = new MastersThesis(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("misc")){
-			nuevaPublicacion = new Misc(campos);
+			nuevaPublicacion = new Misc(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("phdthesis")){
-			nuevaPublicacion = new PhdThesis(campos);
+			nuevaPublicacion = new PhdThesis(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("proceedings")){
-			nuevaPublicacion = new Proceedings(campos);
+			nuevaPublicacion = new Proceedings(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("techreport")){
-			nuevaPublicacion = new TechReport(campos);
+			nuevaPublicacion = new TechReport(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else if (tipoDoc.equals("unpublished")){
-			nuevaPublicacion = new Unpublished(campos);
+			nuevaPublicacion = new Unpublished(campos, strings);
 			publicaciones.add(nuevaPublicacion);
 		}
 		else
@@ -396,22 +395,6 @@ public class ParserBibtex
 		{
 			Publication p = it.next();
 			p.imprimir();
-		}
-	}
-	
-	private void sustituirStrings()
-	{
-		Iterator<CampoString> itStrings = strings.iterator();
-		Publication p;
-		while (itStrings.hasNext())
-		{
-			CampoString c = itStrings.next();
-			Iterator<Publication> itPubl = publicaciones.iterator();
-			while (itPubl.hasNext())
-			{
-				p = itPubl.next();
-				p.sustituir(c.getAbrev(), c.getTexto());
-			}
 		}
 	}
 }
