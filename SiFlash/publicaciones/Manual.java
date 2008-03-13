@@ -98,7 +98,7 @@ public class Manual extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + author);
+			imprimirAutoresEditores();
 		if (organization != null)
 			System.out.println("   - Organization: " + organization);
 		if (address != null)
@@ -117,6 +117,14 @@ public class Manual extends Publication
 			System.out.println("   - Key: " + key);
 	}
 
+	private void imprimirAutoresEditores() 
+	{	
+		System.out.println("   - Author:");
+		Iterator<AutorEditor> it = author.iterator();
+		while (it.hasNext())
+			it.next().imprimir();
+	}
+	
 	@Override
 	public String getBibTeX() {
 		// TODO Auto-generated method stub

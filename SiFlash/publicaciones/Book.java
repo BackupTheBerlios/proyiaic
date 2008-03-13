@@ -122,9 +122,9 @@ public class Book extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + ((AutorEditor)author.getFirst()).getNombre());
+			imprimirAutoresEditores(true);
 		if (editor != null)
-			System.out.println("   - Editor: " + editor);
+			imprimirAutoresEditores(false);
 		if (publisher != null)
 			System.out.println("   - Publisher: " + publisher);
 		if (year != null)
@@ -145,6 +145,25 @@ public class Book extends Publication
 			System.out.println("   - Abstract: " + _abstract);
 		if (key != null)
 			System.out.println("   - Key: " + key);
+	}
+
+	private void imprimirAutoresEditores(boolean b) 
+	{
+		LinkedList<AutorEditor> lista;
+		if (b)
+		{
+			lista = author;
+			System.out.println("   - Author:");
+		}
+		else
+		{
+			lista = editor;
+			System.out.println("   - Editor:");
+		}
+		
+		Iterator<AutorEditor> it = lista.iterator();
+		while (it.hasNext())
+			it.next().imprimir();
 	}
 
 	@Override

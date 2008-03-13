@@ -74,7 +74,7 @@ public class Unpublished extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + author);
+			imprimirAutoresEditores();
 		if (note != null)
 			System.out.println("   - Note: " + note);
 		if (month != null)
@@ -85,6 +85,14 @@ public class Unpublished extends Publication
 			System.out.println("   - Abstract: " + _abstract);
 		if (key != null)
 			System.out.println("   - Key: " + key);
+	}
+
+	private void imprimirAutoresEditores() 
+	{	
+		System.out.println("   - Author:");
+		Iterator<AutorEditor> it = author.iterator();
+		while (it.hasNext())
+			it.next().imprimir();
 	}
 
 	@Override

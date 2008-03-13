@@ -91,7 +91,7 @@ public class Booklet extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + author);
+			imprimirAutoresEditores();
 		if (howPublished != null)
 			System.out.println("   - Howpublished: " + howPublished);
 		if (address != null)
@@ -106,6 +106,14 @@ public class Booklet extends Publication
 			System.out.println("   - Abstract: " + _abstract);
 		if (key != null)
 			System.out.println("   - Key: " + key);
+	}
+	
+	private void imprimirAutoresEditores() 
+	{
+		System.out.println("   - Author:");
+		Iterator<AutorEditor> it = author.iterator();
+		while (it.hasNext())
+			it.next().imprimir();
 	}
 
 	@Override

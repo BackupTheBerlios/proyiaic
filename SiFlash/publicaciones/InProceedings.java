@@ -154,7 +154,7 @@ public class InProceedings extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + ((AutorEditor)author.getFirst()).getNombre());
+			imprimirAutoresEditores(true);
 		if (booktitle != null)
 			System.out.println("   - Booktitle: " + booktitle);
 		if (year != null)
@@ -162,7 +162,7 @@ public class InProceedings extends Publication
 		if (crossref != null)
 			System.out.println("   - Crossref: " + crossref);
 		if (editor != null)
-			System.out.println("   - Editor: " + editor);
+			imprimirAutoresEditores(false);
 		if (volume != null)
 			System.out.println("   - Volume: " + volume);
 		if (number != null)
@@ -187,6 +187,25 @@ public class InProceedings extends Publication
 			System.out.println("   - Key: " + key);
 	}
 
+	private void imprimirAutoresEditores(boolean b) 
+	{
+		LinkedList<AutorEditor> lista;
+		if (b)
+		{
+			lista = author;
+			System.out.println("   - Author:");
+		}
+		else
+		{
+			lista = editor;
+			System.out.println("   - Editor:");
+		}
+		
+		Iterator<AutorEditor> it = lista.iterator();
+		while (it.hasNext())
+			it.next().imprimir();
+	}
+	
 	@Override
 	public String getBibTeX() {
 		// TODO Auto-generated method stub

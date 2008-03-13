@@ -110,4 +110,14 @@ public class AutorEditor
 	public String getWeb() {
 		return web;
 	}
+
+	public void imprimir() 
+	{
+		if (nombre != null)
+			System.out.println("      - Nombre: " + nombre);
+		if (apellidos != null)
+			System.out.println("      - Apellidos: " + apellidos);
+		if (web != null)
+			System.out.println("      - Web: " + web);
+	}
 }

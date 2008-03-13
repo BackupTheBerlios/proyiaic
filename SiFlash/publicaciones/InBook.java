@@ -163,9 +163,9 @@ public class InBook extends Publication
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
-			System.out.println("   - Author: " + author);
+			imprimirAutoresEditores(true);
 		if (editor != null)
-			System.out.println("   - Editor: " + editor);
+			imprimirAutoresEditores(false);
 		if (chapter != null)
 			System.out.println("   - Chapter: " + chapter);
 		if (pages != null)
@@ -196,6 +196,25 @@ public class InBook extends Publication
 			System.out.println("   - Key: " + key);
 	}
 
+	private void imprimirAutoresEditores(boolean b) 
+	{
+		LinkedList<AutorEditor> lista;
+		if (b)
+		{
+			lista = author;
+			System.out.println("   - Author:");
+		}
+		else
+		{
+			lista = editor;
+			System.out.println("   - Editor:");
+		}
+		
+		Iterator<AutorEditor> it = lista.iterator();
+		while (it.hasNext())
+			it.next().imprimir();
+	}
+	
 	@Override
 	public String getBibTeX() {
 		// TODO Auto-generated method stub

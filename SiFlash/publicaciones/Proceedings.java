@@ -134,7 +134,7 @@ public class Proceedings extends Publication
 		if (booktitle != null)
 			System.out.println("   - Booktitle: " + booktitle);
 		if (editor != null)
-			System.out.println("   - Editor: " + editor);
+			imprimirAutoresEditores();
 		if (volume != null)
 			System.out.println("   - Volume: " + volume);
 		if (number != null)
@@ -155,6 +155,14 @@ public class Proceedings extends Publication
 			System.out.println("   - Abstract: " + _abstract);
 		if (key != null)
 			System.out.println("   - Key: " + key);
+	}
+
+	private void imprimirAutoresEditores() 
+	{	
+		System.out.println("   - Editor:");
+		Iterator<AutorEditor> it = editor.iterator();
+		while (it.hasNext())
+			it.next().imprimir();
 	}
 
 	@Override
