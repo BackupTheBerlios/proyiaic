@@ -1,6 +1,6 @@
 package personas;
 
-public class Autor 
+public class AutorEditor 
 {
 	/**
 	 * Nombre del autor.
@@ -17,7 +17,7 @@ public class Autor
 	 */
 	private String web;
 	
-	public Autor(String nom, String ap, String w)
+	public AutorEditor(String nom, String ap, String w)
 	{
 		nombre = nom;
 		apellidos = ap;
@@ -38,7 +38,7 @@ public class Autor
 
 	public void sustituir(String abrev, String texto) 
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 }

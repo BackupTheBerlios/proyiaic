@@ -2,10 +2,9 @@
 
 package publicaciones;
 
-import java.util.Vector;
+import java.util.LinkedList;
 
-import personas.Autor;
-import personas.Editor;
+import personas.AutorEditor;
 
 /**
  * Clase abstracta que agrupa los dos atributos comunes a todos las "publicaciones" 
@@ -66,7 +65,7 @@ public abstract class Publication
    /**
     * Contiene todos los proyectos a los que pertenece la aplicación.
     */
-   protected Vector proyectos;
+   protected LinkedList proyectos;
    
    public PublicationException thePublicationException;
    
@@ -98,26 +97,27 @@ public abstract class Publication
    
    public abstract void imprimir();
    
-   public Vector<Autor> extraerAutores(String autores)
+   public LinkedList<AutorEditor> extraerAutorEditores(String AutorEditores)
    {
-	   String nombre = autores;
+	   String nombre = AutorEditores;
 	   String apellidos = null;
 	   String web = null;
-	   Autor autor = new Autor(nombre, apellidos, web);
-	   Vector<Autor> v = new Vector<Autor>();
-	   v.add(autor);
+	   AutorEditor autorEditor = new AutorEditor(nombre, apellidos, web);
+	   LinkedList<AutorEditor> v = new LinkedList<AutorEditor>();
+	   v.add(autorEditor);
 	   return v;
    }
    
-   public Vector<Editor> extraerEditores(String editores)
+   public LinkedList<AutorEditor> extraerAutoresEditores(String autoresEditores)
    {
-	   String nombre = editores;
-	   String apellidos = null;
-	   String web = null;
-	   Editor editor = new Editor(nombre, apellidos, web);
-	   Vector<Editor> v = new Vector<Editor>();
-	   v.add(editor);
-	   return v;
+	   LinkedList<AutorEditor> edit = new LinkedList<AutorEditor>();
+	   if (autoresEditores != null)
+	   {
+		   autoresEditores.split("and");
+		   return null;
+	   }
+	   else
+		   return null;
    }
 
    public String getTitle() {

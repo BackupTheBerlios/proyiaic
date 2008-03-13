@@ -4,11 +4,9 @@ package publicaciones;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Vector;
 
 import parserFicherosBibtex.CampoPublicacion;
-import personas.Autor;
-import personas.Editor;
+import personas.AutorEditor;
 
 
 /**
@@ -21,14 +19,14 @@ import personas.Editor;
 public class InBook extends Publication 
 {
 	/**
-	 * Vector que contiene los autores que han colaborado en la creación de la misma.
+	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
 	 */
-	private Vector<Autor> author;
+	private LinkedList<AutorEditor> author;
 	 
 	/**
-	 * Vector que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 * LinkedList que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
 	 */
-	private Vector<Editor> editor;
+	private LinkedList<AutorEditor> editor;
 	
    /**
     * Libro al que hace referencia.
@@ -121,9 +119,9 @@ public class InBook extends Publication
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
-			author = extraerAutores(valorString);
+			author = extraerAutoresEditores(valorString);
 		else if (nombreCampo.equals("editor") && editor == null)
-			editor = extraerEditores(valorString);
+			editor = extraerAutoresEditores(valorString);
 		else if (nombreCampo.equals("title") && title == null)
 			title = valorString;
 		else if (nombreCampo.equals("chapter") && chapter == null)
@@ -213,11 +211,11 @@ public class InBook extends Publication
 		return null;
 	}
 
-	public Vector<Autor> getAuthor() {
+	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
-	public Vector<Editor> getEditor() {
+	public LinkedList<AutorEditor> getEditor() {
 		return editor;
 	}
 
@@ -264,53 +262,114 @@ public class InBook extends Publication
 	@Override
 	public void sustituir(String abrev, String texto) 
 	{
-		title = title.replaceAll(" " + abrev + " ", " " + texto + " ");
-		
-		Iterator<Autor> it = author.iterator();
-		while (it.hasNext())
+		if (title != null)
 		{
-			Autor a = it.next();
-			a.sustituir(abrev, texto);
-		}
-		
-		Iterator<Editor> it2 = editor.iterator();
-		while (it2.hasNext())
-		{
-			Editor a = it2.next();
-			a.sustituir(abrev, texto);
+			title = title.replaceAll(" " + abrev + " ", " " + texto + " ");
+			title = title.replaceAll(" " + abrev + ",", " " + texto + ",");
 		}
 
-		chapter = chapter.replaceAll(" " + abrev + " ", " " + texto + " ");
-		pages = pages.replaceAll(" " + abrev + " ", " " + texto + " ");
-		publisher = publisher.replaceAll(" " + abrev + " ", " " + texto + " ");
-		year = year.replaceAll(" " + abrev + " ", " " + texto + " ");
-		volume = volume.replaceAll(" " + abrev + " ", " " + texto + " ");
-		number = number.replaceAll(" " + abrev + " ", " " + texto + " ");
-		series = series.replaceAll(" " + abrev + " ", " " + texto + " ");
-		type = type.replaceAll(" " + abrev + " ", " " + texto + " ");
-		address = address.replaceAll(" " + abrev + " ", " " + texto + " ");
-		edition = edition.replaceAll(" " + abrev + " ", " " + texto + " ");
-		month = month.replaceAll(" " + abrev + " ", " " + texto + " ");
-		note = note.replaceAll(" " + abrev + " ", " " + texto + " ");
-		_abstract = _abstract.replaceAll(" " + abrev + " ", " " + texto + " ");
-		key = key.replaceAll(" " + abrev + " ", " " + texto + " ");
-		
-		//También reemplazamos cuando esté pegado a una coma:
-		
-		title = title.replaceAll(" " + abrev + ",", " " + texto + ",");
-		chapter = chapter.replaceAll(" " + abrev + ",", " " + texto + ",");
-		pages = pages.replaceAll(" " + abrev + ",", " " + texto + ",");
-		publisher = publisher.replaceAll(" " + abrev + ",", " " + texto + ",");
-		year = year.replaceAll(" " + abrev + ",", " " + texto + ",");
-		volume = volume.replaceAll(" " + abrev + ",", " " + texto + ",");
-		number = number.replaceAll(" " + abrev + ",", " " + texto + ",");
-		series = series.replaceAll(" " + abrev + ",", " " + texto + ",");
-		type = type.replaceAll(" " + abrev + ",", " " + texto + ",");
-		address = address.replaceAll(" " + abrev + ",", " " + texto + ",");
-		edition = edition.replaceAll(" " + abrev + ",", " " + texto + ",");
-		month = month.replaceAll(" " + abrev + ",", " " + texto + ",");
-		note = note.replaceAll(" " + abrev + ",", " " + texto + ",");
-		_abstract = _abstract.replaceAll(" " + abrev + ",", " " + texto + ",");
-		key = key.replaceAll(" " + abrev + ",", " " + texto + ",");
+		if (author != null)
+		{
+			Iterator<AutorEditor> it = author.iterator();
+			while (it.hasNext())
+			{
+				AutorEditor a = it.next();
+				a.sustituir(abrev, texto);
+			}
+		}
+
+		if (editor != null)
+		{
+			Iterator<AutorEditor> it2 = editor.iterator();
+			while (it2.hasNext())
+			{
+				AutorEditor a = it2.next();
+				a.sustituir(abrev, texto);
+			}
+		}
+
+		if (chapter != null)
+		{
+			chapter = chapter.replaceAll(" " + abrev + " ", " " + texto + " ");
+			chapter = chapter.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (pages != null)
+		{
+			pages = pages.replaceAll(" " + abrev + " ", " " + texto + " ");
+			pages = pages.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (publisher != null)
+		{
+			publisher = publisher.replaceAll(" " + abrev + " ", " " + texto + " ");
+			publisher = publisher.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (year != null)
+		{
+			year = year.replaceAll(" " + abrev + " ", " " + texto + " ");
+			year = year.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (volume != null)
+		{
+			volume = volume.replaceAll(" " + abrev + " ", " " + texto + " ");
+			volume = volume.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (number != null)
+		{
+			number = number.replaceAll(" " + abrev + " ", " " + texto + " ");
+			number = number.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (series != null)
+		{
+			series = series.replaceAll(" " + abrev + " ", " " + texto + " ");
+			series = series.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (type != null)
+		{
+			type = type.replaceAll(" " + abrev + " ", " " + texto + " ");
+			type = type.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (address != null)
+		{
+			address = address.replaceAll(" " + abrev + " ", " " + texto + " ");
+			address = address.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (edition != null)
+		{
+			edition = edition.replaceAll(" " + abrev + " ", " " + texto + " ");
+			edition = edition.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (month != null)
+		{
+			month = month.replaceAll(" " + abrev + " ", " " + texto + " ");
+			month = month.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (note != null)
+		{
+			note = note.replaceAll(" " + abrev + " ", " " + texto + " ");
+			note = note.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (_abstract != null)
+		{
+			_abstract = _abstract.replaceAll(" " + abrev + " ", " " + texto + " ");
+			_abstract = _abstract.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
+
+		if (key != null)
+		{
+			key = key.replaceAll(" " + abrev + " ", " " + texto + " ");
+			key = key.replaceAll(" " + abrev + ",", " " + texto + ",");
+		}
 	}
 }

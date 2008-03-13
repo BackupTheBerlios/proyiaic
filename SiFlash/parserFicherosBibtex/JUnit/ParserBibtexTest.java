@@ -2,7 +2,7 @@ package parserFicherosBibtex.JUnit;
 
 import junit.framework.TestCase;
 import parserFicherosBibtex.ParserBibtex;
-import personas.Autor;
+import personas.AutorEditor;
 import publicaciones.Article;
 import publicaciones.Book;
 
@@ -25,7 +25,7 @@ public class ParserBibtexTest extends TestCase
 		String addressEsperado = "New York";
 		String editionEsperado = "ninth Dover printing, tenth GPO printing";
 		
-		String autor = ((Autor)((Book)pb.getUltDoc()).getAuthor().firstElement()).getNombre();
+		String autor = ((AutorEditor)((Book)pb.getUltDoc()).getAuthor().getFirst()).getNombre();
 		String titulo = pb.getUltDoc().getTitle();
 		String publisher = ((Book)pb.getUltDoc()).getPublisher();
 		String year = ((Book)pb.getUltDoc()).getYear();
@@ -52,7 +52,7 @@ public class ParserBibtexTest extends TestCase
 		String tituloEsperado = "El título del artículo.";
 		String monthEsperado = "april";
 		
-		String autor = ((Autor)((Article)pb.getUltDoc()).getAuthor().firstElement()).getNombre();
+		String autor = ((AutorEditor)((Article)pb.getUltDoc()).getAuthor().getFirst()).getNombre();
 		String titulo = pb.getUltDoc().getTitle();
 		String month = ((Article)pb.getUltDoc()).getMonth();
 		
