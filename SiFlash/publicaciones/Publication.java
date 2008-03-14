@@ -103,10 +103,7 @@ public abstract class Publication
 	   if (autoresEditores != null)
 	   {
 		   if (autoresEditores.charAt(0) == '{')
-		   {
-			   String sinLlaves = autoresEditores.substring(1, autoresEditores.length()-2);
-			   lista.add(new AutorEditor(sinLlaves));
-		   }
+			   lista.add(new AutorEditor(autoresEditores));
 		   else
 			   if (autoresEditores.contains(" and "))
 			   {
@@ -120,7 +117,10 @@ public abstract class Publication
 				   }
 			   }
 			   else
-				   lista.add(new AutorEditor(autoresEditores));
+			   {
+				   AutorEditor nuevo = new AutorEditor(autoresEditores);
+				   lista.add(nuevo);
+			   }
 		   return lista;
 	   }
 	   else

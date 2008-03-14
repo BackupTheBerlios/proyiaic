@@ -9,6 +9,6 @@ public class Main
 	{
 		ParserBibtex pb = new ParserBibtex();
 		//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
-		pb.procesar("D:\\prueba.txt");
+		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba2.txt");
 	}
 }

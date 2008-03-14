@@ -35,14 +35,14 @@ public class AutorEditor
 		if (ae.charAt(0) == '{') //Encerrado entre llaves --> Todo es apellido.
 		{
 			nombre = null;
-			apellidos = ae.substring(1, ae.length() - 2);
+			apellidos = ae.substring(1, ae.length() - 1);
 		}
 		else
 		{
 			if (ae.contains(",")) //Lo de detrás de la coma es el nombre, y lo de antes son los apellidos.
 			{
 				int posicionComa = ae.indexOf(',');
-				asignar(ae.substring(0, posicionComa-1), true);
+				asignar(ae.substring(0, posicionComa), true);
 				asignar(ae.substring(posicionComa+1), false);
 			}
 			else
@@ -50,7 +50,7 @@ public class AutorEditor
 				if (ae.contains(" ")) //Hay varias palabras: la última es el apellido y el resto es el nombre.
 				{
 					int posicionUltEspacio = ae.lastIndexOf(' ');
-					asignar(ae.substring(0, posicionUltEspacio - 1), false);
+					asignar(ae.substring(0, posicionUltEspacio), false);
 					asignar(ae.substring(posicionUltEspacio + 1), true);
 				}
 				else //Sólo hay una palabra: es el apellido.
@@ -94,7 +94,7 @@ public class AutorEditor
 			int i = ae.length() -1;
 			while (ae.charAt(i) == ' ')
 				i--;
-			return ae.substring(0, i);
+			return ae.substring(0, i+1);
 		}
 		
 	}
