@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import parserFicherosBibtex.CampoPublicacion;
-import parserFicherosBibtex.CampoString;
 import personas.AutorEditor;
 
 
@@ -42,10 +41,9 @@ public class TechReport extends Publication
    private String address;
    
    /**
-    * @param strings 
- * @roseuid 47C8A712034B
+    * @roseuid 47C8A712034B
     */
-   public TechReport(LinkedList<CampoPublicacion> campos, LinkedList<CampoString> strings)
+   public TechReport(LinkedList<CampoPublicacion> campos)
 	{
 		inicializarCampos();
 		CampoPublicacion campo;
@@ -55,12 +53,13 @@ public class TechReport extends Publication
 			campo = it.next();
 			String nombreCampo = campo.getNombre();
 			String valor = campo.getValor();
-			insertar(nombreCampo, valor, strings);
+			insertar(nombreCampo, valor);
 		}
 	}
 
 	private void inicializarCampos() 
 	{
+		referencia = null;
 		title = null;
 		author = null;
 		institution = null;
@@ -74,11 +73,12 @@ public class TechReport extends Publication
 		number = null;
 	}
 
-	private void insertar(String nombreCampo, String valorString, LinkedList<CampoString> strings)
+	private void insertar(String nombreCampo, String valorString)
 	{
-		valorString = sustituirStrings(strings, valorString);
 		if (nombreCampo.equals("author") && author == null)
 			author = extraerAutoresEditores(valorString);
+		else if (nombreCampo.equals("referencia") && referencia == null)
+			referencia = valorString;
 		else if (nombreCampo.equals("title") && title == null)
 			title = valorString;
 		else if (nombreCampo.equals("institution") && institution == null)
@@ -104,6 +104,8 @@ public class TechReport extends Publication
 	public void imprimir()
 	{
 		System.out.println("- Tipo de documento: Techreport");
+		if (referencia != null)
+			System.out.println("   - Referencia: " + referencia);
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)

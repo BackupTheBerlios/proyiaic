@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import parserFicherosBibtex.CampoPublicacion;
-import parserFicherosBibtex.CampoString;
 import personas.AutorEditor;
 
 
@@ -21,10 +20,9 @@ public class Unpublished extends Publication
 	private LinkedList<AutorEditor> author;
    
    /**
-    * @param strings 
- * @roseuid 47C8A71203B9
+    * @roseuid 47C8A71203B9
     */
-   public Unpublished(LinkedList<CampoPublicacion> campos, LinkedList<CampoString> strings)
+   public Unpublished(LinkedList<CampoPublicacion> campos)
 	{
 		inicializarCampos();
 		CampoPublicacion campo;
@@ -34,12 +32,13 @@ public class Unpublished extends Publication
 			campo = it.next();
 			String nombreCampo = campo.getNombre();
 			String valor = campo.getValor();
-			insertar(nombreCampo, valor, strings);
+			insertar(nombreCampo, valor);
 		}
 	}
 
 	private void inicializarCampos() 
 	{
+		referencia = null;
 		title = null;
 		author = null;
 		note = null;
@@ -49,11 +48,12 @@ public class Unpublished extends Publication
 		year = null;
 	}
 
-	private void insertar(String nombreCampo, String valorString, LinkedList<CampoString> strings)
+	private void insertar(String nombreCampo, String valorString)
 	{
-		valorString = sustituirStrings(strings, valorString);
 		if (nombreCampo.equals("author") && author == null)
 			author = extraerAutoresEditores(valorString);
+		else if (nombreCampo.equals("referencia") && referencia == null)
+			referencia = valorString;
 		else if (nombreCampo.equals("title") && title == null)
 			title = valorString;
 		else if (nombreCampo.equals("note") && note == null)
@@ -71,6 +71,8 @@ public class Unpublished extends Publication
 	public void imprimir()
 	{
 		System.out.println("- Tipo de documento: Unpublished");
+		if (referencia != null)
+			System.out.println("   - Referencia: " + referencia);
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)

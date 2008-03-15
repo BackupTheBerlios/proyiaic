@@ -2,10 +2,8 @@
 
 package publicaciones;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
-import parserFicherosBibtex.CampoString;
 import personas.AutorEditor;
 
 /**
@@ -23,7 +21,12 @@ public abstract class Publication
     * Valor que le corresponde al Id del documento
     */
 	protected int idDoc;
-   
+	
+	/**
+	 * Referencia del documento BibTeX.
+	 */
+   protected String referencia;
+	
    /**
     * Título que le corresponde a la publicación.
     */
@@ -105,9 +108,11 @@ public abstract class Publication
 		   if (autoresEditores.charAt(0) == '{')
 			   lista.add(new AutorEditor(autoresEditores));
 		   else
-			   if (autoresEditores.contains(" and "))
+		   {
+			   String separador = dameSeparador(autoresEditores);
+			   if (separador != null)
 			   {
-				   String[] separados = autoresEditores.split(" and ");
+				   String[] separados = autoresEditores.split(separador);
 				   int numSeparados = separados.length;
 				   LinkedList<AutorEditor> ae = new LinkedList<AutorEditor>();
 				   for (int i = 0; i < numSeparados; i++)
@@ -121,30 +126,52 @@ public abstract class Publication
 				   AutorEditor nuevo = new AutorEditor(autoresEditores);
 				   lista.add(nuevo);
 			   }
+		   }
 		   return lista;
 	   }
 	   else
 		   return null;
    }
    
-   protected String sustituirStrings(LinkedList<CampoString> strings, String valorString)
-	{
-	   String nuevo = valorString;
-		Iterator<CampoString> itStrings = strings.iterator();
-		CampoString c;
-		while (itStrings.hasNext())
-		{
-			c = itStrings.next();
-			String abrev = c.getAbrev();
-			String texto = c.getTexto();
-
-			nuevo = nuevo.replaceAll(" " + abrev + " ", " " + texto + " ");
-			nuevo = nuevo.replaceAll(" " + abrev + ",", " " + texto + ",");
-			nuevo = nuevo.replaceAll("=" + abrev + " ", "=" + texto + " ");
-			nuevo = nuevo.replaceAll("=" + abrev + ",", "=" + texto + ",");
-		}
-		return nuevo;
-	}
+   private String dameSeparador(String autoresEditores) 
+   {
+	   int posAnd;
+	   if (autoresEditores.contains(" and "))
+		   return " and ";
+	   else if (autoresEditores.contains(" and\n"))
+		   return " and\n";
+	   else if (autoresEditores.contains(" and\t"))
+		   return " and\t";
+	   else if (autoresEditores.contains(" and\r"))
+		   return " and\r";
+	   else if (autoresEditores.contains("\nand "))
+		   return "\nand ";
+	   else if (autoresEditores.contains("\nand\n"))
+		   return "\nand\n";
+	   else if (autoresEditores.contains("\nand\t"))
+		   return "\nand\t";
+	   else if (autoresEditores.contains("\nand\r"))
+		   return "\nand\r";
+	   else if (autoresEditores.contains("\tand "))
+		   return "\tand ";
+	   else if (autoresEditores.contains("\tand\n"))
+		   return "\tand\n";
+	   else if (autoresEditores.contains("\tand\t"))
+		   return "\tand\t";
+	   else if (autoresEditores.contains("\tand\r"))
+		   return "\tand\r";
+	   else if (autoresEditores.contains("\rand "))
+		   return "\rand ";
+	   else if (autoresEditores.contains("\rand\n"))
+		   return "\rand\n";
+	   else if (autoresEditores.contains("\rand\t"))
+		   return "\rand\t";
+	   else if (autoresEditores.contains("\rand\r"))
+		   return "\rand\r";
+	   else 
+		   return null;
+	 
+   }
 
    public String getTitle() {
 	   return title;
@@ -168,5 +195,9 @@ public abstract class Publication
 
 	public String getYear() {
 		return year;
+	}
+
+	public String getReferencia() {
+		return referencia;
 	}
 }

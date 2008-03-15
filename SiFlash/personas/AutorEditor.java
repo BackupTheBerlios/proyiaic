@@ -27,9 +27,9 @@ public class AutorEditor
 	public AutorEditor(String autorEditor) 
 	{
 		String ae = autorEditor;
-		if (ae.charAt(0) == ' ')
+		if (ae.charAt(0) == ' ' || ae.charAt(0) == '\n' || ae.charAt(0) == '\t' || ae.charAt(0) == '\r')
 			ae = quitarEspacios(ae, true);
-		if (ae.charAt(ae.length()-1) == ' ')
+		if (ae.charAt(ae.length()-1) == ' ' || ae.charAt(ae.length()-1) == '\n' || ae.charAt(ae.length()-1) == '\t' || ae.charAt(ae.length()-1) == '\r')
 			ae = quitarEspacios(ae, false);
 		
 		if (ae.charAt(0) == '{') //Encerrado entre llaves --> Todo es apellido.
@@ -85,14 +85,14 @@ public class AutorEditor
 		if (alPrincipio)
 		{
 			int i = 0;
-			while (ae.charAt(i) == ' ')
+			while (ae.charAt(i) == ' ' || ae.charAt(i) == '\n' || ae.charAt(i) == '\t' || ae.charAt(i) == '\r')
 				i++;
 			return ae.substring(i);
 		}
 		else
 		{
 			int i = ae.length() -1;
-			while (ae.charAt(i) == ' ')
+			while (ae.charAt(i) == ' ' || ae.charAt(i) == '\n' || ae.charAt(i) == '\t' || ae.charAt(i) == '\r')
 				i--;
 			return ae.substring(0, i+1);
 		}

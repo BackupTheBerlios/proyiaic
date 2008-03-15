@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import parserFicherosBibtex.CampoPublicacion;
-import parserFicherosBibtex.CampoString;
 import personas.AutorEditor;
 
 
@@ -36,10 +35,9 @@ public class PhdThesis extends Publication
    private String address;
    
    /**
-    * @param strings 
- * @roseuid 47C8A7120232
+    * @roseuid 47C8A7120232
     */
-   public PhdThesis(LinkedList<CampoPublicacion> campos, LinkedList<CampoString> strings)
+   public PhdThesis(LinkedList<CampoPublicacion> campos)
 	{
 		inicializarCampos();
 		CampoPublicacion campo;
@@ -49,12 +47,13 @@ public class PhdThesis extends Publication
 			campo = it.next();
 			String nombreCampo = campo.getNombre();
 			String valor = campo.getValor();
-			insertar(nombreCampo, valor, strings);
+			insertar(nombreCampo, valor);
 		}
 	}
 
 	private void inicializarCampos() 
 	{
+		referencia = null;
 		title = null;
 		author = null;
 		school = null;
@@ -67,11 +66,12 @@ public class PhdThesis extends Publication
 		year = null;
 	}
 
-	private void insertar(String nombreCampo, String valorString, LinkedList<CampoString> strings)
+	private void insertar(String nombreCampo, String valorString)
 	{
-		valorString = sustituirStrings(strings, valorString);
 		if (nombreCampo.equals("author") && author == null)
 			author = extraerAutoresEditores(valorString);
+		else if (nombreCampo.equals("referencia") && referencia == null)
+			referencia = valorString;
 		else if (nombreCampo.equals("title") && title == null)
 			title = valorString;
 		else if (nombreCampo.equals("school") && school == null)
@@ -95,6 +95,8 @@ public class PhdThesis extends Publication
 	public void imprimir()
 	{
 		System.out.println("- Tipo de documento: Phdthesis");
+		if (referencia != null)
+			System.out.println("   - Referencia: " + referencia);
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)

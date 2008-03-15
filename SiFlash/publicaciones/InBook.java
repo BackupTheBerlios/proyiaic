@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import parserFicherosBibtex.CampoPublicacion;
-import parserFicherosBibtex.CampoString;
 import personas.AutorEditor;
 
 
@@ -80,10 +79,9 @@ public class InBook extends Publication
    private String address;
    
    /**
-    * @param strings 
- * @roseuid 47C8A711031C
+    * @roseuid 47C8A711031C
     */
-   public InBook(LinkedList<CampoPublicacion> campos, LinkedList<CampoString> strings)
+   public InBook(LinkedList<CampoPublicacion> campos)
 	{
 		inicializarCampos();
 		CampoPublicacion campo;
@@ -93,12 +91,13 @@ public class InBook extends Publication
 			campo = it.next();
 			String nombreCampo = campo.getNombre();
 			String valor = campo.getValor();
-			insertar(nombreCampo, valor, strings);
+			insertar(nombreCampo, valor);
 		}
 	}
 
 	private void inicializarCampos() 
 	{
+		referencia = null;
 		author = null;
 		editor = null;
 		title = null; 
@@ -118,11 +117,12 @@ public class InBook extends Publication
 		number = null;
 	}
 	
-	private void insertar(String nombreCampo, String valorString, LinkedList<CampoString> strings)
+	private void insertar(String nombreCampo, String valorString)
 	{
-		valorString = sustituirStrings(strings, valorString);
 		if (nombreCampo.equals("author") && author == null)
 			author = extraerAutoresEditores(valorString);
+		else if (nombreCampo.equals("referencia") && referencia == null)
+			referencia = valorString;
 		else if (nombreCampo.equals("editor") && editor == null)
 			editor = extraerAutoresEditores(valorString);
 		else if (nombreCampo.equals("title") && title == null)
@@ -160,6 +160,8 @@ public class InBook extends Publication
 	public void imprimir()
 	{
 		System.out.println("- Tipo de documento: Inbook");
+		if (referencia != null)
+			System.out.println("   - Referencia: " + referencia);
 		if (title != null)
 			System.out.println("   - Title: " + title);
 		if (author != null)
