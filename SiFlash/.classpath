@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.1.0/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
+	<classpathentry kind="var" path="JUNIT_HOME/junit.jar" sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.1.0/src/org.junit_3.8.1/junitsrc.zip"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/Alfonso/Escritorio/jdom-1.1/jdom-1.1/build/jdom.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

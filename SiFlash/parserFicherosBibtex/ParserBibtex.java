@@ -1,9 +1,13 @@
 package parserFicherosBibtex;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Vector;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 import parserFicherosBibtex.excepciones.ExcepcionLexica;
 import publicaciones.Article;
@@ -42,12 +46,14 @@ public class ParserBibtex
 	 * Intenta abrir el fichero indicado y, si hay éxito, lo procesa.
 	 * @param ruta Ruta del fichero que se quiere procesar.
 	 */
-	public LinkedList<Publication> procesar(String ruta)
+	public void procesar(String ruta)
 	{
 		try {
 			FileReader fr = new FileReader(ruta);
 			
 			extraerDocumento(fr);
+			
+			generarXML();
 			
 		} 
 		catch (ExcepcionLexica e)
@@ -57,8 +63,27 @@ public class ParserBibtex
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		imprimirPublicaciones();
-		return publicaciones;
+	}
+
+	private void generarXML() 
+	{
+		Element root = new Element("listaPublicaciones");
+		Iterator<Publication> it = publicaciones.iterator();
+		Publication p;
+		while (it.hasNext())
+		{
+			p = it.next();
+			Element elemento = p.generarElementoXML();
+			root.addContent(elemento);
+		}
+		XMLOutputter outputter = new XMLOutputter();
+		try
+		{
+			outputter.output (new Document(root), new FileOutputStream("miXML.xml"));
+		}
+		catch (Exception e){
+		    e.getMessage();
+		}
 	}
 
 	/**
@@ -399,15 +424,5 @@ public class ParserBibtex
 	
 	public Publication getUltDoc() {
 		return publicaciones.getLast();
-	}
-	
-	public void imprimirPublicaciones()
-	{
-		Iterator<Publication> it = publicaciones.iterator();
-		while (it.hasNext())
-		{
-			Publication p = it.next();
-			p.imprimir();
-		}
 	}
 }

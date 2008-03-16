@@ -5,6 +5,8 @@ package publicaciones;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.jdom.Element;
+
 import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
 
@@ -148,45 +150,47 @@ public class InProceedings extends Publication
 			year = valorString;
 	}
 	
-	public void imprimir()
+	public Element generarElementoXML()
 	{
-		System.out.println("- Tipo de documento: Inproceedings");
+		Element elemento = new Element("publication");
+		elemento.setAttribute ("tipo", "InProceedings");
 		if (referencia != null)
-			System.out.println("   - Referencia: " + referencia);
+			elemento.setAttribute("referencia", referencia);
 		if (title != null)
-			System.out.println("   - Title: " + title);
+			elemento.setAttribute("title", title);
 		if (author != null)
 			imprimirAutoresEditores(true);
 		if (booktitle != null)
-			System.out.println("   - Booktitle: " + booktitle);
+			elemento.setAttribute("booktitle", booktitle);
 		if (year != null)
-			System.out.println("   - Year: " + year);
+			elemento.setAttribute("year", year);
 		if (crossref != null)
-			System.out.println("   - Crossref: " + crossref);
+			elemento.setAttribute("crossref", crossref);
 		if (editor != null)
 			imprimirAutoresEditores(false);
 		if (volume != null)
-			System.out.println("   - Volume: " + volume);
+			elemento.setAttribute("volume", volume);
 		if (number != null)
-			System.out.println("   - Number: " + number);
+			elemento.setAttribute("number", number);
 		if (series != null)
-			System.out.println("   - Series: " + series);
+			elemento.setAttribute("series", series);
 		if (pages != null)
-			System.out.println("   - Pages: " + pages);
+			elemento.setAttribute("pages", pages);
 		if (address != null)
-			System.out.println("   - Address: " + address);
+			elemento.setAttribute("address", address);
 		if (month != null)
-			System.out.println("   - Month: " + month);
+			elemento.setAttribute("month", month);
 		if (organization != null)
-			System.out.println("   - Organization: " + organization);
+			elemento.setAttribute("organization", organization);
 		if (publisher != null)
-			System.out.println("   - Publisher: " + publisher);
+			elemento.setAttribute("publisher", publisher);
 		if (note != null)
-			System.out.println("   - Note: " + note);
+			elemento.setAttribute("note", note);
 		if (_abstract != null)
-			System.out.println("   - Abstract: " + _abstract);
+			elemento.setAttribute("abstract", _abstract);
 		if (key != null)
-			System.out.println("   - Key: " + key);
+			elemento.setAttribute("key", key);
+		return elemento;
 	}
 
 	private void imprimirAutoresEditores(boolean b) 

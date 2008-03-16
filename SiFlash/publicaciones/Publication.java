@@ -4,6 +4,8 @@ package publicaciones;
 
 import java.util.LinkedList;
 
+import org.jdom.Element;
+
 import personas.AutorEditor;
 
 /**
@@ -98,7 +100,7 @@ public abstract class Publication
     */
    public abstract String getBibTeX();
    
-   public abstract void imprimir();
+   public abstract Element generarElementoXML();
    
    protected LinkedList<AutorEditor> extraerAutoresEditores(String autoresEditores)
    {

@@ -5,6 +5,8 @@ package publicaciones;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.jdom.Element;
+
 import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
 
@@ -98,36 +100,38 @@ public class Article extends Publication
 				year = valorString;
 	}
 	
-	public void imprimir()
+	public Element generarElementoXML()
 	{
-		System.out.println("- Tipo de documento: Article");
+		Element elemento = new Element("publication");
+		elemento.setAttribute ("tipo", "Article");
 		if (referencia != null)
-			System.out.println("   - Referencia: " + referencia);
+			elemento.setAttribute("referencia", referencia);
 		if (title != null)
-			System.out.println("   - Title: " + title);
+			elemento.setAttribute("title", title);
 		if (author != null)
-			imprimirAutoresEditores();
+			generarAutoresEditoresXML();
 		if (journal != null)
-			System.out.println("   - Journal: " + journal);
+			elemento.setAttribute("journal", journal);
 		if (year != null)
-			System.out.println("   - Year: " + year);
+			elemento.setAttribute("year", year);
 		if (volume != null)
-			System.out.println("   - Volume: " + volume);
+			elemento.setAttribute("volume", volume);
 		if (number != null)
-			System.out.println("   - Number: " + number);
+			elemento.setAttribute("number", number);
 		if (pages != null)
-			System.out.println("   - Pages: " + pages);
+			elemento.setAttribute("pages", pages);
 		if (month != null)
-			System.out.println("   - Month: " + month);
+			elemento.setAttribute("month", month);
 		if (note != null)
-			System.out.println("   - Note: " + note);
+			elemento.setAttribute("note", note);
 		if (_abstract != null)
-			System.out.println("   - Abstract: " + _abstract);
+			elemento.setAttribute("abstract", _abstract);
 		if (key != null)
-			System.out.println("   - Key: " + key);
+			elemento.setAttribute("key", key);
+		return elemento;
 	}
 
-	private void imprimirAutoresEditores() 
+	private void generarAutoresEditoresXML() 
 	{	
 		System.out.println("   - Author:");
 		Iterator<AutorEditor> it = author.iterator();

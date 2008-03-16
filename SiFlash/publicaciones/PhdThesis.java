@@ -5,6 +5,8 @@ package publicaciones;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.jdom.Element;
+
 import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
 
@@ -92,31 +94,33 @@ public class PhdThesis extends Publication
 			year = valorString;
 	}
 
-	public void imprimir()
+	public Element generarElementoXML()
 	{
-		System.out.println("- Tipo de documento: Phdthesis");
+		Element elemento = new Element("publication");
+		elemento.setAttribute ("tipo", "PhdThesis");
 		if (referencia != null)
-			System.out.println("   - Referencia: " + referencia);
+			elemento.setAttribute("referencia", referencia);
 		if (title != null)
-			System.out.println("   - Title: " + title);
+			elemento.setAttribute("title", title);
 		if (author != null)
 			imprimirAutoresEditores();
 		if (school != null)
-			System.out.println("   - School: " + school);
+			elemento.setAttribute("school", school);
 		if (year != null)
-			System.out.println("   - Year: " + year);
+			elemento.setAttribute("year", year);
 		if (type != null)
-			System.out.println("   - Type: " + type);
+			elemento.setAttribute("type", type);
 		if (address != null)
-			System.out.println("   - Address: " + address);
+			elemento.setAttribute("address", address);
 		if (month != null)
-			System.out.println("   - Month: " + month);
+			elemento.setAttribute("month", month);
 		if (note != null)
-			System.out.println("   - Note: " + note);
+			elemento.setAttribute("note", note);
 		if (_abstract != null)
-			System.out.println("   - Abstract: " + _abstract);
+			elemento.setAttribute("abstract", _abstract);
 		if (key != null)
-			System.out.println("   - Key: " + key);
+			elemento.setAttribute("key", key);
+		return elemento;
 	}
 
 	private void imprimirAutoresEditores() 
