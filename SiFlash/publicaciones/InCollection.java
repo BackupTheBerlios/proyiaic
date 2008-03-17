@@ -82,11 +82,11 @@ public class InCollection extends Publication
    private String edition;
    
    /**
-    * @roseuid 47C8A71103B9
+    * Crea un InCollection a partir de una lista de campos.
+    * @param campos Campos a partir de los cuales se quiere crear el objeto.
     */
    public InCollection(LinkedList<CampoPublicacion> campos)
 	{
-		inicializarCampos();
 		CampoPublicacion campo;
 		Iterator<CampoPublicacion> it = campos.iterator();
 		while (it.hasNext())
@@ -98,30 +98,11 @@ public class InCollection extends Publication
 		}
 	}
 
-	private void inicializarCampos() 
-	{
-		referencia = null;
-		author = null;
-		title = null; 
-		booktitle = null;
-		publisher = null;
-		crossref = null;
-		editor = null;
-		volume = null;
-		series = null;
-		type = null;
-		chapter = null;
-		address = null;
-		edition = null;
-		month = null;
-		note = null;
-		_abstract = null;
-		key = null;
-		year = null;
-		number = null;
-		pages = null;
-	}
-	
+   /**
+    * Inserta el campo.
+    * @param nombreCampo Nombre del campo que se quiere insertar.
+    * @param valorString Valor del campo que se quiere insertar.
+    */
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
@@ -165,7 +146,11 @@ public class InCollection extends Publication
 		else if (nombreCampo.equals("year") && year == null)
 			year = valorString;
 	}
-	
+
+	   /**
+		 * Genera un elemento XML con la información del objeto.
+		 * @return El elemento generado.
+		 */
 	public Element generarElementoXML()
 	{
 		Element elemento = new Element("publication");
@@ -249,7 +234,11 @@ public class InCollection extends Publication
 		
 		return elemento;
 	}
-	
+
+	/**
+	 * Genera un elemento XML con todos los autores/editores.
+	 * @return El elemento generado.
+	 */
 	private Element generarAutoresEditoresXML(boolean b) 
 	{
 		Element eAuthorEditor;
@@ -284,12 +273,6 @@ public class InCollection extends Publication
 
 	@Override
 	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getXML() {
 		// TODO Auto-generated method stub
 		return null;
 	}

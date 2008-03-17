@@ -57,11 +57,11 @@ public class Proceedings extends Publication
    private String publisher;
    
    /**
-    * @roseuid 47C8A71202BF
+    * Crea un Proceedings a partir de una lista de campos.
+    * @param campos Campos a partir de los cuales se quiere crear el objeto.
     */
    public Proceedings(LinkedList<CampoPublicacion> campos)
 	{
-		inicializarCampos();
 		CampoPublicacion campo;
 		Iterator<CampoPublicacion> it = campos.iterator();
 		while (it.hasNext())
@@ -73,25 +73,11 @@ public class Proceedings extends Publication
 		}
 	}
 
-	private void inicializarCampos() 
-	{
-		referencia = null;
-		title = null; 
-		booktitle = null;
-		editor = null;
-		volume = null;
-		series = null;
-		address = null;
-		month = null;
-		organization = null;
-		publisher = null;
-		note = null;
-		_abstract = null;
-		key = null;
-		year = null;
-		number = null;
-	}
-	
+   /**
+    * Inserta el campo.
+    * @param nombreCampo Nombre del campo que se quiere insertar.
+    * @param valorString Valor del campo que se quiere insertar.
+    */
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("title") && title == null)
@@ -125,7 +111,11 @@ public class Proceedings extends Publication
 		else if (nombreCampo.equals("year") && year == null)
 			year = valorString;
 	}
-	
+
+	   /**
+		 * Genera un elemento XML con la información del objeto.
+		 * @return El elemento generado.
+		 */
 	public Element generarElementoXML()
 	{
 		Element elemento = new Element("publication");
@@ -191,6 +181,10 @@ public class Proceedings extends Publication
 		return elemento;
 	}
 
+	/**
+	 * Genera un elemento XML con todos los editores.
+	 * @return El elemento generado.
+	 */
 	private Element generarAutoresEditoresXML() 
 	{	
 		Element eEditor = new Element("editors");
@@ -211,12 +205,6 @@ public class Proceedings extends Publication
 
 	@Override
 	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getXML() {
 		// TODO Auto-generated method stub
 		return null;
 	}

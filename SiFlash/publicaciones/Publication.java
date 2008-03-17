@@ -77,14 +77,6 @@ public abstract class Publication
    public PublicationException thePublicationException;
    
    /**
-    * Devuelve el String correspondiente al código XML de la publicación 
-    * correspondiente.
-    * @return java.lang.String
-    * @roseuid 47C4463201C5
-    */
-   public abstract String getXML();
-   
-   /**
     * Devuelve el String correspondiente al código HTML de la publicación 
     * correspondiente.
     * @return java.lang.String
@@ -100,8 +92,17 @@ public abstract class Publication
     */
    public abstract String getBibTeX();
    
+   /**
+    * Genera un elemento XML con la información almacenada.
+    * @return El elemento XML generado.
+    */
    public abstract Element generarElementoXML();
    
+   /**
+    * Extrae los autores/editores de una cadena de caracteres.
+    * @param autoresEditores Cadena que se  quiere separar.
+    * @return Una lista con los autores/editores.
+    */
    protected LinkedList<AutorEditor> extraerAutoresEditores(String autoresEditores)
    {
 	   LinkedList<AutorEditor> lista = new LinkedList<AutorEditor>();
@@ -135,6 +136,11 @@ public abstract class Publication
 		   return null;
    }
    
+   /**
+    * Retorna un separador de autores/editores, si existe.
+    * @param autoresEditores String que se quiere evaluar.
+    * @return El separador encontrado, o null si no hay ninguno.
+    */
    private String dameSeparador(String autoresEditores) 
    {
 	   int posAnd;

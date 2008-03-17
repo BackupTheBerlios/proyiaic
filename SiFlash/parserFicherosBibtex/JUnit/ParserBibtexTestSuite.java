@@ -3,6 +3,9 @@ package parserFicherosBibtex.JUnit;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+/**
+ * Clase que ejecuta las pruebas.
+ */
 public class ParserBibtexTestSuite 
 {
 	public static Test suite() 

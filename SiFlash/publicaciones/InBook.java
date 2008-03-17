@@ -81,11 +81,11 @@ public class InBook extends Publication
    private String address;
    
    /**
-    * @roseuid 47C8A711031C
+    * Crea un InBook a partir de una lista de campos.
+    * @param campos Campos a partir de los cuales se quiere crear el objeto.
     */
    public InBook(LinkedList<CampoPublicacion> campos)
 	{
-		inicializarCampos();
 		CampoPublicacion campo;
 		Iterator<CampoPublicacion> it = campos.iterator();
 		while (it.hasNext())
@@ -97,28 +97,11 @@ public class InBook extends Publication
 		}
 	}
 
-	private void inicializarCampos() 
-	{
-		referencia = null;
-		author = null;
-		editor = null;
-		title = null; 
-		chapter = null;
-		publisher = null;
-		volume = null;
-		series = null;
-		type = null;
-		address = null;
-		edition = null;
-		month = null;
-		note = null;
-		_abstract = null;
-		key = null;
-		pages = null;
-		year = null;
-		number = null;
-	}
-	
+   /**
+    * Inserta el campo.
+    * @param nombreCampo Nombre del campo que se quiere insertar.
+    * @param valorString Valor del campo que se quiere insertar.
+    */
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
@@ -158,7 +141,11 @@ public class InBook extends Publication
 		else if (nombreCampo.equals("year") && year == null)
 			year = valorString;
 	}
-	
+
+	   /**
+		 * Genera un elemento XML con la información del objeto.
+		 * @return El elemento generado.
+		 */
 	public Element generarElementoXML()
 	{
 		Element elemento = new Element("publication");
@@ -235,6 +222,10 @@ public class InBook extends Publication
 		return elemento;
 	}
 
+	/**
+	 * Genera un elemento XML con todos los autores/editores.
+	 * @return El elemento generado.
+	 */
 	private Element generarAutoresEditoresXML(boolean b) 
 	{
 		Element eAuthorEditor;
@@ -269,12 +260,6 @@ public class InBook extends Publication
 
 	@Override
 	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getXML() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -21,12 +21,12 @@ public class Unpublished extends Publication
 	 */
 	private LinkedList<AutorEditor> author;
    
-   /**
-    * @roseuid 47C8A71203B9
-    */
+	/**
+	    * Crea un Unpublished a partir de una lista de campos.
+	    * @param campos Campos a partir de los cuales se quiere crear el objeto.
+	    */
    public Unpublished(LinkedList<CampoPublicacion> campos)
 	{
-		inicializarCampos();
 		CampoPublicacion campo;
 		Iterator<CampoPublicacion> it = campos.iterator();
 		while (it.hasNext())
@@ -38,18 +38,11 @@ public class Unpublished extends Publication
 		}
 	}
 
-	private void inicializarCampos() 
-	{
-		referencia = null;
-		title = null;
-		author = null;
-		note = null;
-		month = null;
-		_abstract = null;
-		key = null;
-		year = null;
-	}
-
+   /**
+    * Inserta el campo.
+    * @param nombreCampo Nombre del campo que se quiere insertar.
+    * @param valorString Valor del campo que se quiere insertar.
+    */
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
@@ -70,6 +63,10 @@ public class Unpublished extends Publication
 			year = valorString;
 	}
 
+	/**
+	 * Genera un elemento XML con la información del objeto.
+	 * @return El elemento generado.
+	 */
 	public Element generarElementoXML()
 	{
 		Element elemento = new Element("publication");
@@ -107,6 +104,10 @@ public class Unpublished extends Publication
 		return elemento;
 	}
 
+	/**
+	 * Genera un elemento XML con todos los autores.
+	 * @return El elemento generado.
+	 */
 	private Element generarAutoresEditoresXML() 
 	{	
 		Element eAuthor = new Element("authors");
@@ -127,12 +128,6 @@ public class Unpublished extends Publication
 
 	@Override
 	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getXML() {
 		// TODO Auto-generated method stub
 		return null;
 	}

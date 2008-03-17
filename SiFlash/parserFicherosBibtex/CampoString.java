@@ -1,5 +1,8 @@
 package parserFicherosBibtex;
 
+/**
+ * Clase que sirve para extraer un "@STRING".
+ */
 public class CampoString 
 {
 	/**

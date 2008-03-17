@@ -34,6 +34,9 @@ public class ParserBibtex
 	 */
 	private LinkedList<Publication> publicaciones;
 	
+	/**
+	 * Strings procesados.
+	 */
 	private LinkedList<CampoString> strings;
 	
 	public ParserBibtex()
@@ -53,7 +56,7 @@ public class ParserBibtex
 			
 			extraerDocumento(fr);
 			
-			generarXML();
+			generarXML("miXML.xml");
 			
 		} 
 		catch (ExcepcionLexica e)
@@ -65,7 +68,11 @@ public class ParserBibtex
 		}
 	}
 
-	private void generarXML() 
+	/**
+	 * Genera un documento XML a partir de las publicaciones procesadas.
+	 * @param rutaXML Ruta y nombre del archivo XML que se va a generar.
+	 */
+	private void generarXML(String rutaXML) 
 	{
 		Element root = new Element("listaPublicaciones");
 		Iterator<Publication> it = publicaciones.iterator();
@@ -79,7 +86,7 @@ public class ParserBibtex
 		XMLOutputter outputter = new XMLOutputter();
 		try
 		{
-			outputter.output (new Document(root), new FileOutputStream("miXML.xml"));
+			outputter.output (new Document(root), new FileOutputStream(rutaXML));
 		}
 		catch (Exception e){
 		    e.getMessage();
@@ -119,6 +126,13 @@ public class ParserBibtex
 		}
 	}
 
+	/**
+	 * Extrae el contenido de un "@STRING".
+	 * @param fr Fichero desde donde se va a leer.
+	 * @return El contenido del "@STRING"
+	 * @throws IOException
+	 * @throws ExcepcionLexica
+	 */
 	private CampoString extraerCampoString(FileReader fr) throws IOException, ExcepcionLexica 
 	{
 		char actual = siguienteCaracter(fr);
@@ -328,19 +342,24 @@ public class ParserBibtex
 		return campoNuevo;
 	}
 
+	/**
+	 * Reemplaza una abreviatura por su texto completo, si es preciso.
+	 * @param valorCampo Texto a analizar.
+	 * @return El texto completo, si se encuentran coincidencias con las abreviaturas.
+	 */
 	private String analizarStrings(String valorCampo) 
 	{
-			String nuevo = valorCampo;
-		   Iterator<CampoString> itStrings = strings.iterator();
-		   CampoString c;
-		   while (itStrings.hasNext())
-		   {
-			   c = itStrings.next();
-			   String abrev = c.getAbrev();
-			   if (nuevo.equals(abrev))
-				   nuevo = c.getTexto();
-		   }
-		   return nuevo;
+		String nuevo = valorCampo;
+		Iterator<CampoString> itStrings = strings.iterator();
+		CampoString c;
+		while (itStrings.hasNext())
+		{
+			c = itStrings.next();
+			String abrev = c.getAbrev();
+			if (nuevo.equals(abrev))
+				nuevo = c.getTexto();
+		}
+		return nuevo;
 	}
 
 	/**
@@ -414,7 +433,11 @@ public class ParserBibtex
 		return c;
 	}
 
-
+	/**
+	 * Salta los comentarios que hay en un fichero.
+	 * @param fr Fichero desde el que se lee.
+	 * @throws IOException
+	 */
 	private void saltarComentario(FileReader fr) throws IOException 
 	{
 		char actual = (char)fr.read();
@@ -422,6 +445,10 @@ public class ParserBibtex
 			actual = (char)fr.read();
 	}
 	
+	/**
+	 * Devuelve la última publicación procesada.
+	 * @return La última publicación procesada.
+	 */
 	public Publication getUltDoc() {
 		return publicaciones.getLast();
 	}

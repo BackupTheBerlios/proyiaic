@@ -2,6 +2,9 @@ package personas;
 
 import org.jdom.Element;
 
+/**
+ * Clase que guarda los datos de un autor o un editor.
+ */
 public class AutorEditor 
 {
 	/**
@@ -18,14 +21,11 @@ public class AutorEditor
 	 * Web del autor.
 	 */
 	private String web;
-	
-	public AutorEditor(String nom, String ap, String w)
-	{
-		nombre = nom;
-		apellidos = ap;
-		web = w;
-	}
 
+	/**
+	 * Separa el nombre y apellidos de los autores/editores.
+	 * @param autorEditor String que contiene el nombre y apellidos de los autores/editores.
+	 */
 	public AutorEditor(String autorEditor) 
 	{
 		String ae = autorEditor;
@@ -82,6 +82,12 @@ public class AutorEditor
 			nombre = sinEspacios;
 	}
 
+	/**
+	 * Quita los espacios que haya al principio o al final de un string.
+	 * @param ae String del que se quieren quitar espacios.
+	 * @param alPrincipio Indica si los espacios que se quieren quitar están al principio o al final de la cadena.
+	 * @return La cadena entrante, pero sin espacios.
+	 */
 	private String quitarEspacios(String ae, boolean alPrincipio) 
 	{
 		if (alPrincipio)
@@ -113,16 +119,10 @@ public class AutorEditor
 		return web;
 	}
 
-	public void imprimir() 
-	{
-		if (nombre != "")
-			System.out.println("      - Nombre: " + nombre);
-		if (apellidos != "")
-			System.out.println("      - Apellidos: " + apellidos);
-		if (web != "")
-			System.out.println("      - Web: " + web);
-	}
-
+	/**
+	 * Genera un elemento XML con la información del autor.
+	 * @return El elemento generado.
+	 */
 	public Element generarAuthorXML() 
 	{
 		Element eAuthor = new Element("author");
@@ -142,6 +142,10 @@ public class AutorEditor
 		return eAuthor;
 	}
 	
+	/**
+	 * Genera un elemento XML con la información del editor.
+	 * @return El elemento generado.
+	 */
 	public Element generarEditorXML() 
 	{
 		Element eEditor = new Element("editor");

@@ -9,9 +9,11 @@ import publicaciones.Book;
 /**
  * Clase JUnit para probar la clase ParserBibtex
  */
-
 public class ParserBibtexTest extends TestCase
 {
+	/**
+	 * Prueba el fichero "prueba1.txt".
+	 */
 	public void testPrueba1()
 	{
 		ParserBibtex pb = new ParserBibtex();
@@ -42,6 +44,9 @@ public class ParserBibtexTest extends TestCase
 		
 	}
 	
+	/**
+	 * Prueba el fichero "prueba2.txt".
+	 */
 	public void testPrueba2()
 	{
 		ParserBibtex pb = new ParserBibtex();

@@ -1,10 +1,26 @@
 package parserFicherosBibtex;
 
+/**
+ * Clase que sirve para extraer un campo de una publicación 
+ * mediante el ParserBibTeX.
+ */
 public class CampoPublicacion
 {
-	private String nombre, valor;
+	/**
+	 * Nombre del campo.
+	 */
+	private String nombre;
 	
-	private boolean esUltimo; //Indica si es el último campo del documento.
+	/**
+	 * Valor del campo.
+	 */
+	private String valor;
+	
+	/**
+	 * Indica si es el último campo del documento.
+	 */
+	private boolean esUltimo;
+	
 	
 	public CampoPublicacion(String nombre, String valor, boolean ult)
 	{
@@ -25,7 +41,10 @@ public class CampoPublicacion
 	public String getValor() {
 		return valor;
 	}
-
+	/**
+	 * Sustituye las cadenas de caracteres que representan las tildes,
+	 * por la propia letra con tilde.
+	 */
 	public void sustituirTildes() 
 	{
 		if (valor != null)
@@ -35,19 +54,6 @@ public class CampoPublicacion
 			valor = valor.replaceAll("\\\\\'\\\\i", "í"); //NO SE QUITAN LAS LLAVES!!
 			valor = valor.replaceAll("\\\\'o", "ó");
 			valor = valor.replaceAll("\\\\\'u", "ú");
-			
-			//omitirLlaves();
 		}
-	}
-
-	private void omitirLlaves() 
-	{
-		char[] cadena = valor.toCharArray();
-		String sinLlaves = "";
-		for (int i = 0; i < cadena.length; i++)
-			if (cadena[i] != '{' && cadena[i] != '}')
-				sinLlaves += cadena[i];
-		
-		valor = sinLlaves.toString();
 	}
 }
