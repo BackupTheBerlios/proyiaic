@@ -106,37 +106,63 @@ public class Article extends Publication
 		elemento.setAttribute ("tipo", "Article");
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
-		if (title != null)
-			elemento.setAttribute("title", title);
-		if (author != null)
-			generarAutoresEditoresXML();
-		if (journal != null)
-			elemento.setAttribute("journal", journal);
-		if (year != null)
-			elemento.setAttribute("year", year);
-		if (volume != null)
-			elemento.setAttribute("volume", volume);
-		if (number != null)
-			elemento.setAttribute("number", number);
-		if (pages != null)
-			elemento.setAttribute("pages", pages);
-		if (month != null)
-			elemento.setAttribute("month", month);
-		if (note != null)
-			elemento.setAttribute("note", note);
-		if (_abstract != null)
-			elemento.setAttribute("abstract", _abstract);
-		if (key != null)
-			elemento.setAttribute("key", key);
+		
+		Element eTitle = new Element("title");
+		eTitle.addContent(title);
+		elemento.addContent(eTitle);
+		
+		Element eAuthor = generarAutoresEditoresXML();
+		elemento.addContent(eAuthor);
+		
+		Element eJournal = new Element("journal");
+		eJournal.addContent(journal);
+		elemento.addContent(eJournal);
+		
+		Element eYear = new Element("year");
+		eYear.addContent(year);
+		elemento.addContent(eYear);
+		
+		Element eVolume = new Element("volume");
+		eVolume.addContent(volume);
+		elemento.addContent(eVolume);
+		
+		Element eNumber = new Element("number");
+		eNumber.addContent(number);
+		elemento.addContent(eNumber);
+		
+		Element ePages = new Element("pages");
+		ePages.addContent(pages);
+		elemento.addContent(ePages);
+		
+		Element eMonth = new Element("month");
+		eMonth.addContent(month);
+		elemento.addContent(eMonth);
+		
+		Element eNote = new Element("note");
+		eNote.addContent(note);
+		elemento.addContent(eNote);
+		
+		Element eAbstract = new Element("_abstract");
+		eAbstract.addContent(_abstract);
+		elemento.addContent(eAbstract);
+		
+		Element eKey = new Element("key");
+		eKey.addContent(key);
+		elemento.addContent(eKey);
+		
 		return elemento;
 	}
 
-	private void generarAutoresEditoresXML() 
+	private Element generarAutoresEditoresXML() 
 	{	
-		System.out.println("   - Author:");
-		Iterator<AutorEditor> it = author.iterator();
-		while (it.hasNext())
-			it.next().imprimir();
+		Element eAuthor = new Element("authors");
+		if (author != null)
+		{
+			Iterator<AutorEditor> it = author.iterator();
+			while (it.hasNext())
+				eAuthor.addContent(it.next().generarAuthorXML());
+		}
+		return eAuthor;
 	}
 
 	@Override

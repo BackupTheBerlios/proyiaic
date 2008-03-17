@@ -124,52 +124,84 @@ public class Book extends Publication
 		elemento.setAttribute ("tipo", "Book");
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
-		if (title != null)
-			elemento.setAttribute("title", title);
-		if (author != null)
-			imprimirAutoresEditores(true);
-		if (editor != null)
-			imprimirAutoresEditores(false);
-		if (publisher != null)
-			elemento.setAttribute("publisher", publisher);
-		if (year != null)
-			elemento.setAttribute("year", year);
-		if (volume != null)
-			elemento.setAttribute("volume", volume);
-		if (series != null)
-			elemento.setAttribute("series", series);
-		if (address != null)
-			elemento.setAttribute("address", address);
-		if (edition != null)
-			elemento.setAttribute("edition", edition);
-		if (month != null)
-			elemento.setAttribute("month", month);
-		if (note != null)
-			elemento.setAttribute("note", note);
-		if (_abstract != null)
-			elemento.setAttribute("abstract", _abstract);
-		if (key != null)
-			elemento.setAttribute("key", key);
+		
+		Element eTitle = new Element("title");
+		eTitle.addContent(title);
+		elemento.addContent(eTitle);
+		
+		Element eAuthor = generarAutoresEditoresXML(true);
+		elemento.addContent(eAuthor);
+		
+		Element eEditor = generarAutoresEditoresXML(false);
+		elemento.addContent(eEditor);
+		
+		Element ePublisher = new Element("publisher");
+		ePublisher.addContent(publisher);
+		elemento.addContent(ePublisher);
+		
+		Element eYear = new Element("year");
+		eYear.addContent(year);
+		elemento.addContent(eYear);
+		
+		Element eVolume = new Element("volume");
+		eVolume.addContent(volume);
+		elemento.addContent(eVolume);
+		
+		Element eSeries = new Element("series");
+		eSeries.addContent(series);
+		elemento.addContent(eSeries);
+		
+		Element eAddress = new Element("address");
+		eAddress.addContent(address);
+		elemento.addContent(eAddress);
+		
+		Element eEdition = new Element("edition");
+		eEdition.addContent(edition);
+		elemento.addContent(eEdition);
+		
+		Element eMonth = new Element("month");
+		eMonth.addContent(month);
+		elemento.addContent(eMonth);
+		
+		Element eNote = new Element("note");
+		eNote.addContent(note);
+		elemento.addContent(eNote);
+		
+		Element eAbstract = new Element("abstract");
+		eAbstract.addContent(_abstract);
+		elemento.addContent(eAbstract);
+		
+		Element eKey = new Element("key");
+		eKey.addContent(key);
+		elemento.addContent(eKey);
+		
 		return elemento;
 	}
 
-	private void imprimirAutoresEditores(boolean b) 
+	private Element generarAutoresEditoresXML(boolean b) 
 	{
-		LinkedList<AutorEditor> lista;
-		if (b)
+		Element eAuthorEditor;
+		if (b) //eAuthor
 		{
-			lista = author;
-			System.out.println("   - Author:");
+			eAuthorEditor = new Element("authors");
+			if (author != null)
+			{
+				Iterator<AutorEditor> it = author.iterator();
+				while (it.hasNext())
+					eAuthorEditor.addContent(it.next().generarAuthorXML());
+			}
 		}
-		else
+		else //eEditor
 		{
-			lista = editor;
-			System.out.println("   - Editor:");
+			eAuthorEditor = new Element("editors");
+			if (editor != null)
+			{
+				Iterator<AutorEditor> it = editor.iterator();
+				while (it.hasNext())
+					eAuthorEditor.addContent(it.next().generarEditorXML());
+			}
 		}
-		
-		Iterator<AutorEditor> it = lista.iterator();
-		while (it.hasNext())
-			it.next().imprimir();
+		return eAuthorEditor;
 	}
 
 	@Override

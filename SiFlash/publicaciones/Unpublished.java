@@ -76,29 +76,47 @@ public class Unpublished extends Publication
 		elemento.setAttribute ("tipo", "Unpublished");
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
-		if (title != null)
-			elemento.setAttribute("title", title);
-		if (author != null)
-			imprimirAutoresEditores();
-		if (note != null)
-			elemento.setAttribute("note", note);
-		if (month != null)
-			elemento.setAttribute("month", month);
-		if (year != null)
-			elemento.setAttribute("year", year);
-		if (_abstract != null)
-			elemento.setAttribute("abstract", _abstract);
-		if (key != null)
-			elemento.setAttribute("key", key);
+		
+		Element eTitle = new Element("title");
+		eTitle.addContent(title);
+		elemento.addContent(eTitle);
+		
+		Element eAuthor = generarAutoresEditoresXML();
+		elemento.addContent(eAuthor);
+		
+		Element eNote = new Element("note");
+		eNote.addContent(note);
+		elemento.addContent(eNote);
+		
+		Element eMonth = new Element("month");
+		eMonth.addContent(month);
+		elemento.addContent(eMonth);
+		
+		Element eYear = new Element("year");
+		eYear.addContent(year);
+		elemento.addContent(eYear);
+		
+		Element eAbstract = new Element("_abstract");
+		eAbstract.addContent(_abstract);
+		elemento.addContent(eAbstract);
+		
+		Element eKey = new Element("key");
+		eKey.addContent(key);
+		elemento.addContent(eKey);
+		
 		return elemento;
 	}
 
-	private void imprimirAutoresEditores() 
+	private Element generarAutoresEditoresXML() 
 	{	
-		System.out.println("   - Author:");
-		Iterator<AutorEditor> it = author.iterator();
-		while (it.hasNext())
-			it.next().imprimir();
+		Element eAuthor = new Element("authors");
+		if (author != null)
+		{
+			Iterator<AutorEditor> it = author.iterator();
+			while (it.hasNext())
+				eAuthor.addContent(it.next().generarAuthorXML());
+		}
+		return eAuthor;
 	}
 
 	@Override

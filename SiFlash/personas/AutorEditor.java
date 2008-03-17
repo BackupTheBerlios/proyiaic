@@ -1,5 +1,7 @@
 package personas;
 
+import org.jdom.Element;
+
 public class AutorEditor 
 {
 	/**
@@ -34,7 +36,7 @@ public class AutorEditor
 		
 		if (ae.charAt(0) == '{') //Encerrado entre llaves --> Todo es apellido.
 		{
-			nombre = null;
+			nombre = "";
 			apellidos = ae.substring(1, ae.length() - 1);
 		}
 		else
@@ -55,7 +57,7 @@ public class AutorEditor
 				}
 				else //Sólo hay una palabra: es el apellido.
 				{
-					nombre = null;
+					nombre = "";
 					apellidos = ae;
 				}
 			}
@@ -113,11 +115,49 @@ public class AutorEditor
 
 	public void imprimir() 
 	{
-		if (nombre != null)
+		if (nombre != "")
 			System.out.println("      - Nombre: " + nombre);
-		if (apellidos != null)
+		if (apellidos != "")
 			System.out.println("      - Apellidos: " + apellidos);
-		if (web != null)
+		if (web != "")
 			System.out.println("      - Web: " + web);
+	}
+
+	public Element generarAuthorXML() 
+	{
+		Element eAuthor = new Element("author");
+		
+		Element eNombre = new Element("nombre");
+		eNombre.addContent(nombre);
+		eAuthor.addContent(eNombre);
+		
+		Element eApellidos = new Element("apellidos");
+		eApellidos.addContent(apellidos);
+		eAuthor.addContent(eApellidos);
+		
+		Element eWeb = new Element("web");
+		eWeb.addContent(web);
+		eAuthor.addContent(eWeb);
+		
+		return eAuthor;
+	}
+	
+	public Element generarEditorXML() 
+	{
+		Element eEditor = new Element("editor");
+		
+		Element eNombre = new Element("nombre");
+		eNombre.addContent(nombre);
+		eEditor.addContent(eNombre);
+		
+		Element eApellidos = new Element("apellidos");
+		eApellidos.addContent(apellidos);
+		eEditor.addContent(eApellidos);
+		
+		Element eWeb = new Element("web");
+		eWeb.addContent(web);
+		eEditor.addContent(eWeb);
+		
+		return eEditor;
 	}
 }
