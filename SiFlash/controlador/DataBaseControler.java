@@ -9,6 +9,7 @@ import controlador.exceptions.ConsultaPublicacionesException;
 import controlador.exceptions.ConnectionNullException;
 import controlador.exceptions.NonExistingElementException;
 import controlador.exceptions.PermisssionException;
+import personas.AutorEditor;
 import personas.Usuario;
 import publicaciones.Publication;
 import controlador.exceptions.ExistingElementException;
@@ -89,12 +90,12 @@ public class DataBaseControler
     * @param nombre - Nombre del autor.
     * @param apellido - Apellidos del autor.
     * @param web - URL de la web del autor.
-    * @return java.util.Vector
+    * @return java.util.Vector Vector con los autores y/o editores consultados
     * @throws controlador.exceptions.ConnectionException
     * @throws controlador.exceptions.ConnectionNullException
     * @roseuid 47C5ACED0109
     */
-   public Vector consultaAutores(String nombre, String apellido, String web) throws ConnectionException, ConnectionNullException 
+   public Vector<AutorEditor> consultaAutores(String nombre, String apellido, String web) throws ConnectionException, ConnectionNullException 
    {
     return null;
    }
