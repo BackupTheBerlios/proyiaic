@@ -9,17 +9,39 @@ package database;
  */
 public class BDException extends Exception 
 {
-   
-   /**
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1700034899133845429L;
 
-/**
-    * @roseuid 47C8A7100203
-    */
-   public BDException() 
-   {
-    
-   }
+	/**
+	 * Constructor por defecto de la clase
+	 */
+	public BDException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * Constructor proporcionandole un mensaje
+	 * @param message
+	 */
+	public BDException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Throwable#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+
+
+
+
 }
