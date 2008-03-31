@@ -11,8 +11,24 @@ import controlador.exceptions.NonExistingElementException;
 import controlador.exceptions.PermisssionException;
 import personas.AutorEditor;
 import personas.Usuario;
+import publicaciones.Article;
+import publicaciones.Book;
+import publicaciones.Booklet;
+import publicaciones.Conference;
+import publicaciones.InBook;
+import publicaciones.InCollection;
+import publicaciones.InProceedings;
+import publicaciones.Manual;
+import publicaciones.MastersThesis;
+import publicaciones.Misc;
+import publicaciones.PhdThesis;
+import publicaciones.Proceedings;
 import publicaciones.Publication;
+import publicaciones.TechReport;
+import publicaciones.Unpublished;
 import controlador.exceptions.ExistingElementException;
+
+
 
 /**
  * Clase que implementa una operación por cada funcionalidad claramente definida 
@@ -27,11 +43,12 @@ public class DataBaseControler
    private BaseDatos database;
    
    /**
+    * Constructor por defecto de la clase.
     * @roseuid 47C8A70F01C5
     */
    public DataBaseControler() 
    {
-    
+	   database = new BaseDatos();
    }
    
    /**
@@ -79,9 +96,9 @@ public class DataBaseControler
     * @throws controlador.exceptions.ConsultaPublicacionesException
     * @roseuid 47C5A76F02DE
     */
-   public Vector<Publication> consultaDocumentos(int tipo_publicaciones, Vector<Integer> authors, String title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector note, Vector abstracts, String bookTitle) throws ConnectionException, ConsultaPublicacionesException 
+   public Vector<Publication> consultaDocumentos(int tipo_publicaciones, Vector<String> authors, String title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> note, Vector<String> abstracts, String bookTitle) throws ConnectionException, ConsultaPublicacionesException 
    {
-	   return null;
+	   
    }
    
    /**
@@ -97,6 +114,7 @@ public class DataBaseControler
     */
    public Vector<AutorEditor> consultaAutores(String nombre, String apellido, String web) throws ConnectionException, ConnectionNullException 
    {
+	   
     return null;
    }
    
@@ -127,6 +145,7 @@ public class DataBaseControler
     */
    public Vector consultaUsuariosProyecto(String proyecto) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException 
    {
+	
     return null;
    }
    

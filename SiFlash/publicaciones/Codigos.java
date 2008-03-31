@@ -23,12 +23,4 @@ public class Codigos
    public static final int codProceedings = 2048;
    public static final int codTechReport = 4096;
    public static final int codUnpublished = 8192;
-   
-   /**
-    * @roseuid 47C8A92A034B
-    */
-   public Codigos() 
-   {
-    
-   }
 }

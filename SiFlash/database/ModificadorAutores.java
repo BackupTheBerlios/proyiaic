@@ -25,7 +25,7 @@ public class ModificadorAutores
    }
    
    /**
-    * Inserta el autor cuyos datos se le pasan por parámetro en la base de datos.
+    * Inserta el a utor cuyos datos se le pasan por parámetro en la base de datos.
     * 
     * Excepción si ya existe o no hay permisos.
     * @param nombre - Nombre del autor.
