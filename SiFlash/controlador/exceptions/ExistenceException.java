@@ -7,7 +7,7 @@ package controlador.exceptions;
  * Excepcion que se produce al manipular la base de datos por problemas de 
  * existencia o inexistencia de los objetos a tratar.
  */
-public class ExistenceException extends Exception 
+public class ExistenceException extends BDException 
 {
    
    /**

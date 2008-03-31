@@ -1,7 +1,9 @@
 //Source file: C:\\GENERADO\\database\\ModificadorUsuarios.java
 
-package database;
+package controlador;
 
+import database.BDException;
+import database.BaseDatos;
 import personas.Usuario;
 
 /**
@@ -10,7 +12,6 @@ import personas.Usuario;
  */
 public class ModificadorUsuarios 
 {
-   public BaseDatos theBaseDatos;
    
    /**
     * @roseuid 47C8A71002FD
@@ -40,7 +41,7 @@ public class ModificadorUsuarios
     */
    public void asociaProyecto(Usuario String, String proyecto) throws BDException 
    {
-    
+   
    }
    
    /**

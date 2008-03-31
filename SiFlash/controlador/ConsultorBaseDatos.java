@@ -1,8 +1,11 @@
 //Source file: C:\\GENERADO\\database\\ConsultorBaseDatos.java
 
-package database;
+package controlador;
 
 import java.util.Vector;
+
+import database.BDException;
+import database.BaseDatos;
 
 import publicaciones.Article;
 import publicaciones.Book;
@@ -28,16 +31,9 @@ import publicaciones.Unpublished;
  * datos.
  */
 public class ConsultorBaseDatos 
-{
-   public BaseDatos theBaseDatos;
+{   
    
-   /**
-    * @roseuid 47C8AB160261
-    */
-   public ConsultorBaseDatos(BaseDatos base) 
-   {
-	   this.theBaseDatos=base;
-   }
+
    
    /**
     * Metodo que realiza una consulta sobre la base de datos.
@@ -107,8 +103,7 @@ public class ConsultorBaseDatos
    
    
    private Vector<Article> getArticles(Vector<String> authors, String title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> note, Vector<String> abstracts, String bookTitle){
-	   String consulta = "SELECT * FROM article";
-	   
+	   String consulta = "SELECT * FROM article";	   
 	   consulta += ";";
    }
    

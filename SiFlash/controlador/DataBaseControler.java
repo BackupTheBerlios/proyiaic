@@ -128,8 +128,9 @@ public class DataBaseControler
     * @throws controlador.exceptions.PermisssionException
     * @roseuid 47C5EF62035B
     */
-   public Vector consultaDocumentosProyecto(String proyecto) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException 
+   public Vector<Publicaciones> consultaDocumentosProyecto(String proyecto) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException 
    {
+	   
     return null;
    }
    
@@ -242,7 +243,6 @@ public class DataBaseControler
     */
    public void modificaDocumento(Publication publicacion) throws ConnectionNullException, ConnectionException, PermisssionException, NonExistingElementException 
    {
-    
    }
    
    /**

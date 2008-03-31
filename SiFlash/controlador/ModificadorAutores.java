@@ -1,6 +1,10 @@
 //Source file: C:\\GENERADO\\database\\ModificadorAutores.java
 
-package database;
+package controlador;
+
+import temporal.UnimplementedException;
+import database.BDException;
+import database.BaseDatos;
 
 
 /**
@@ -51,7 +55,9 @@ public class ModificadorAutores
     * @roseuid 47C5A4F702CE
     */
    public void borraAutor(String nombre, String apellidos) throws BDException  
-   {
+   {	
+	   throw new UnimplementedException(); // Primeramente hay que desvincularlo de todos los proyectos en los que participe
+	   
 	   String consulta = "DELETE FROM Autores WHERE nombre = " + nombre + " and apellidos = " + apellidos + ";";
 	   theBaseDatos.exeUpdate(consulta);   
    }

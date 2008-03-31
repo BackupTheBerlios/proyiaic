@@ -7,7 +7,7 @@ package controlador.exceptions;
  * Excepcion que se produce cuando se quiere realizar una operación para la que no 
  * se tienen permisos.
  */
-public class PermisssionException extends Exception 
+public class PermisssionException extends BDException 
 {
    
    /**

@@ -1,6 +1,9 @@
 //Source file: C:\\GENERADO\\database\\ModificadorProyectos.java
 
-package database;
+package controlador;
+
+import database.BDException;
+import database.BaseDatos;
 
 
 /**
@@ -9,14 +12,13 @@ package database;
  */
 public class ModificadorProyectos 
 {
-   public BaseDatos theBaseDatos;
    
    /**
     * @roseuid 47C8A711002E
     */
    public ModificadorProyectos() 
    {
-    
+	       
    }
    
    /**
@@ -28,7 +30,7 @@ public class ModificadorProyectos
     * @throws database.BDException
     * @roseuid 47C5A0FC005D
     */
-   public void insetaProyecto(String nombre_proyecto, String nombre_administrador) throws BDException 
+   public static void insertaProyecto(BaseDatos base,String nombre_proyecto, String nombre_administrador) throws BDException 
    {
     
    }
@@ -51,8 +53,8 @@ public class ModificadorProyectos
     * @param proyecto - Nombre del proyecto a borrar
     * @roseuid 47C5A25B0290
     */
-   public void borraProyecto(String proyecto) 
+   public static void borraProyecto(BaseDatos base,String proyecto) 
    {
-    
+	   
    }
 }

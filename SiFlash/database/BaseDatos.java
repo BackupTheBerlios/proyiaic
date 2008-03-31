@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import controlador.exceptions.ConnectionException;
+
 
 /**
  * Clase que almacena los parámetros necesarios para conectarse a una base de 
@@ -70,7 +72,7 @@ public class BaseDatos
     * @return java.lang.String
     * @roseuid 47C493BC0177
     */
-   public String URL() 
+   private String URL() 
    {
     return new String ("jdbc:mysql://"+ip+"/"+bd);
    }
@@ -131,10 +133,14 @@ public class BaseDatos
 			} catch (InstantiationException e) {
 				throw new BDException("Fallo al instanciar el driver de la conexion.");
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				throw new BDException("Fallo al intentar acceder al driver de la conexión.");
 			}
-			conn = DriverManager.getConnection(URL(),login,password);
+			try{
+				conn = DriverManager.getConnection(URL(),login,password);
+			} catch (Exception e){
+				throw new ConnectionException();
+			}
+			
 			
 			
 			if (conn != null)
@@ -158,7 +164,7 @@ public class BaseDatos
 		}
 		catch(SQLException ex)
 		{
-			throw new BDException("Fallo al ejecutar la modificiación en la base de datos.");
+			throw new BDException("Fallo al ejecutar la consulta en la base de datos.");
 		}
 		catch(ClassNotFoundException ex)
 		{

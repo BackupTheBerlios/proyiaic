@@ -1,7 +1,9 @@
 //Source file: C:\\GENERADO\\database\\ModificadorPublicaciones.java
 
-package database;
+package controlador;
 
+import database.BDException;
+import database.BaseDatos;
 import publicaciones.Publication;
 
 /**
@@ -9,8 +11,7 @@ import publicaciones.Publication;
  * relativas a usuarios
  */
 public class ModificadorPublicaciones 
-{
-   public BaseDatos theBaseDatos;
+   
    
    /**
     * @roseuid 47C8A710038A

@@ -2,11 +2,13 @@
 
 package controlador.exceptions;
 
+import database.BDException;
+
 
 /**
  * Representa un problema al intentar conectar a la base de datos.
  */
-public class ConnectionException extends Exception 
+public class ConnectionException extends BDException 
 {
    
    /**
