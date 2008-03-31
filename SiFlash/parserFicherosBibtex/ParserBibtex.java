@@ -2,6 +2,7 @@ package parserFicherosBibtex;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -49,12 +50,11 @@ public class ParserBibtex
 	 * Intenta abrir el fichero indicado y, si hay éxito, lo procesa.
 	 * @param ruta Ruta del fichero que se quiere procesar.
 	 */
-	public void procesar(String ruta)
+	public void procesar(InputStream is)
 	{
 		try {
-			FileReader fr = new FileReader(ruta);
 			
-			extraerDocumento(fr);
+			extraerDocumento(is);
 			
 			generarXML("miXML.xml");
 			
@@ -95,66 +95,73 @@ public class ParserBibtex
 
 	/**
 	 * Lee el tipo de publicación a procesar, así como sus campos. Después, genera la publicación.
-	 * @param fr Fichero del que se va a leer.
+	 * @param is Fichero del que se va a leer.
 	 * @throws IOException
 	 * @throws ExcepcionLexica
 	 */
-	private void extraerDocumento(FileReader fr) throws IOException, ExcepcionLexica
+	private void extraerDocumento(InputStream is) throws IOException, ExcepcionLexica
 	{
-		char actual = siguienteCaracter(fr);
+		char actual = siguienteCaracter(is);
 		while (actual != '\0')
 		{
 			if (actual == '%')
-				saltarComentario(fr);
+			{
+				saltarComentario(is);
+				actual = siguienteCaracter(is);
+			}
 			else if (actual == '@')
 			{
-				String tipoDoc = extraerTipoDoc(fr);
+				String tipoDoc = extraerTipoDoc(is);
 				if (tipoDoc.equals("string"))
 				{
-					CampoString campoString = extraerCampoString(fr);
+					CampoString campoString = extraerCampoString(is);
 					strings.add(campoString);
 				}
 				else
 				{
-					LinkedList<CampoPublicacion> campos = extraerCampos(fr);
+					LinkedList<CampoPublicacion> campos = extraerCampos(is);
 					generarDocumentoBibtex(tipoDoc, campos);
 				}
+				actual = siguienteCaracter(is);
 			}
-			else
-				throw new ExcepcionLexica("El primer caracter encontrado no es '@' ni '%'.");
-			actual = siguienteCaracter(fr);
+			else //Deben ser bytes que se han metido al cargar el fichero.
+			{
+				//throw new ExcepcionLexica("El primer caracter encontrado no es '@' ni '%'.");
+				while (actual != '%' && actual != '@' && actual != '\0')
+					actual = siguienteCaracter(is);
+			}
 		}
 	}
 
 	/**
 	 * Extrae el contenido de un "@STRING".
-	 * @param fr Fichero desde donde se va a leer.
+	 * @param is Fichero desde donde se va a leer.
 	 * @return El contenido del "@STRING"
 	 * @throws IOException
 	 * @throws ExcepcionLexica
 	 */
-	private CampoString extraerCampoString(FileReader fr) throws IOException, ExcepcionLexica 
+	private CampoString extraerCampoString(InputStream is) throws IOException, ExcepcionLexica 
 	{
-		char actual = siguienteCaracter(fr);
+		char actual = siguienteCaracter(is);
 		String abrev = "";
 		while (actual != '=')
 		{
 			abrev += actual;
-			actual = siguienteCaracter(fr);
+			actual = siguienteCaracter(is);
 		}
 		
 		String texto = "";
-		actual = siguienteCaracter(fr);
+		actual = siguienteCaracter(is);
 		if (actual == '"') //Comienza por comillas.
 		{
-			texto = copiarIntegroDesdeHasta(fr, texto, '"', '"');
-			actual = siguienteCaracter(fr); //Pasamos el caracter '"'.
+			texto = copiarIntegroDesdeHasta(is, texto, '"', '"');
+			actual = siguienteCaracter(is); //Pasamos el caracter '"'.
 		}
 		else
 			if (actual == '{') //Comienza por llave.
 			{
-				texto = copiarIntegroDesdeHasta(fr, texto, '{', '}');
-				actual = siguienteCaracter(fr); //Pasamos el caracter '}'.
+				texto = copiarIntegroDesdeHasta(is, texto, '{', '}');
+				actual = siguienteCaracter(is); //Pasamos el caracter '}'.
 			}
 			else
 				throw new ExcepcionLexica("Caracter \'\"\' o \'{\' esperado.");
@@ -235,12 +242,12 @@ public class ParserBibtex
 
 	/**
 	 * Extrae los campos del documento.
-	 * @param fr Fichero del que se va a leer.
+	 * @param is Fichero del que se va a leer.
 	 * @return La lista de los campos extraídos.
 	 * @throws IOException
 	 * @throws ExcepcionLexica
 	 */
-	private LinkedList<CampoPublicacion> extraerCampos(FileReader fr) throws IOException, ExcepcionLexica 
+	private LinkedList<CampoPublicacion> extraerCampos(InputStream is) throws IOException, ExcepcionLexica 
 	{
 		LinkedList<CampoPublicacion> listaCampos = new LinkedList<CampoPublicacion>();
 		
@@ -249,7 +256,7 @@ public class ParserBibtex
 		CampoPublicacion nuevo;
 		do
 		{
-			nuevo = extraerCampo(fr, posibleReferencia);
+			nuevo = extraerCampo(is, posibleReferencia);
 			nuevo.sustituirTildes();
 			listaCampos.add(nuevo);
 			terminado = nuevo.getEsUltimo();
@@ -262,32 +269,32 @@ public class ParserBibtex
 
 	/**
 	 * Extrae un campo de un documento.
-	 * @param fr Fichero del que se va a leer.
+	 * @param is Fichero del que se va a leer.
 	 * @param posibleReferencia Indica si hay posibilidad de que lo que se extraiga sea la referencia de un documento, y no uno de sus campos.
 	 * @return Un campo de una publicación.
 	 * @throws ExcepcionLexica
 	 * @throws IOException
 	 */
-	private CampoPublicacion extraerCampo(FileReader fr, boolean posibleReferencia) throws ExcepcionLexica, IOException 
+	private CampoPublicacion extraerCampo(InputStream is, boolean posibleReferencia) throws ExcepcionLexica, IOException 
 	{
 		String nombreCampo = "";
 		String valorCampo = "";
 		boolean esReferencia = false;
-		char actual = siguienteCaracter(fr);
+		char actual = siguienteCaracter(is);
 		if (actual != '}') //Hay campo.
 		{
 			if (!posibleReferencia)
 				while (actual != '=')
 				{
 					nombreCampo += actual;
-					actual = siguienteCaracter(fr);
+					actual = siguienteCaracter(is);
 				}
 			else
 			{
 				while (actual != '=' && actual != ',')
 				{
 					nombreCampo += actual;
-					actual = siguienteCaracter(fr);
+					actual = siguienteCaracter(is);
 				}
 				if (actual == ',')
 					esReferencia = true;
@@ -295,17 +302,17 @@ public class ParserBibtex
 			nombreCampo = nombreCampo.toLowerCase();
 			if (!esReferencia)
 			{
-				actual = siguienteCaracter(fr); //Pasamos el '='.
+				actual = siguienteCaracter(is); //Pasamos el '='.
 				if (actual == '"') //Comienza por comillas.
 				{
-					valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '"', '"');
-					actual = siguienteCaracter(fr); //Pasamos el caracter '"'.
+					valorCampo = copiarIntegroDesdeHasta(is, valorCampo, '"', '"');
+					actual = siguienteCaracter(is); //Pasamos el caracter '"'.
 				}
 				else
 					if (actual == '{') //Comienza por llave.
 					{
-						valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
-						actual = siguienteCaracter(fr); //Pasamos el caracter '}'.
+						valorCampo = copiarIntegroDesdeHasta(is, valorCampo, '{', '}');
+						actual = siguienteCaracter(is); //Pasamos el caracter '}'.
 					}
 					else //No comienza ni por '"' ni por '{'.
 					{
@@ -314,12 +321,12 @@ public class ParserBibtex
 							if (actual == '{')
 							{
 								valorCampo += '{';
-								valorCampo = copiarIntegroDesdeHasta(fr, valorCampo, '{', '}');
+								valorCampo = copiarIntegroDesdeHasta(is, valorCampo, '{', '}');
 								valorCampo += '}';
 							}
 							else
 								valorCampo += actual;
-							actual = siguienteCaracter(fr);
+							actual = siguienteCaracter(is);
 						}
 						valorCampo = analizarStrings(valorCampo);
 					}
@@ -364,18 +371,18 @@ public class ParserBibtex
 
 	/**
 	 * Copia íntegramente desde un fichero, hasta que encuentra un caracter determinado.
-	 * @param fr Fichero del que se va a leer.
+	 * @param is Fichero del que se va a leer.
 	 * @param valorCampo String inicial.
 	 * @param desde Caracter anterior al punto desde donde se empezará a copiar. Sirve para permitir niveles.
 	 * @param hasta Caracter que indicará que se tiene que dejar de copiar.
 	 * @return String resultante.
 	 * @throws IOException
 	 */
-	private String copiarIntegroDesdeHasta(FileReader fr, String valorCampo, char desde, char hasta) throws IOException 
+	private String copiarIntegroDesdeHasta(InputStream is, String valorCampo, char desde, char hasta) throws IOException 
 	{
 		String nuevoString = valorCampo;
 		int nivel = 1;
-		char actual = (char)fr.read();
+		char actual = (char)is.read();
 		if (actual == hasta)
 			nivel--;
 		else
@@ -384,7 +391,7 @@ public class ParserBibtex
 		while (!(actual == hasta && nivel == 0))
 		{
 			nuevoString += actual;
-			actual = (char)fr.read();
+			actual = (char)is.read();
 			if (actual == hasta)
 				nivel--;
 			else
@@ -396,36 +403,36 @@ public class ParserBibtex
 
 	/**
 	 * Extrae el tipo de documento.
-	 * @param fr Fichero desde el que se va a leer.
+	 * @param is Fichero desde el que se va a leer.
 	 * @return El tipo de documento.
 	 * @throws IOException
 	 */
-	private String extraerTipoDoc(FileReader fr) throws IOException {
+	private String extraerTipoDoc(InputStream is) throws IOException {
 		String s = "";
-		char actual = siguienteCaracter(fr);
+		char actual = siguienteCaracter(is);
 		while (actual != '{')
 		{
 			s += actual;
-			actual = siguienteCaracter(fr);
+			actual = siguienteCaracter(is);
 		}
 		return s.toLowerCase();
 	}
 
 	/**
 	 * Lee el siguiente caracter desde un fichero. Omite tabulaciones, saltos de línea, espacios, ...
-	 * @param fr Fichero desde el que se va a leer.
+	 * @param is Fichero desde el que se va a leer.
 	 * @return El siguiente caracter.
 	 * @throws IOException
 	 */
-	private char siguienteCaracter(FileReader fr) throws IOException
+	private char siguienteCaracter(InputStream is) throws IOException
 	{
-		int num = fr.read();
+		int num = is.read();
 		char c = (char)num;
 		if (num == -1)
 			return '\0';
 		while (c == ' ' || c == '\t' || c == '\n' || c == '\r')
 		{
-			num = fr.read();
+			num = is.read();
 			c = (char)num;
 			if (num == -1)
 				return '\0';
@@ -435,14 +442,14 @@ public class ParserBibtex
 
 	/**
 	 * Salta los comentarios que hay en un fichero.
-	 * @param fr Fichero desde el que se lee.
+	 * @param is Fichero desde el que se lee.
 	 * @throws IOException
 	 */
-	private void saltarComentario(FileReader fr) throws IOException 
+	private void saltarComentario(InputStream is) throws IOException 
 	{
-		char actual = (char)fr.read();
+		char actual = (char)is.read();
 		while(actual != '\n')
-			actual = (char)fr.read();
+			actual = (char)is.read();
 	}
 	
 	/**
