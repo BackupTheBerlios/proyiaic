@@ -1,5 +1,8 @@
 package parserFicherosBibtex.JUnit;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import junit.framework.TestCase;
 import parserFicherosBibtex.ParserBibtex;
 import personas.AutorEditor;
@@ -13,11 +16,12 @@ public class ParserBibtexTest extends TestCase
 {
 	/**
 	 * Prueba el fichero "prueba1.txt".
+	 * @throws FileNotFoundException 
 	 */
-	public void testPrueba1()
+	public void testPrueba1() throws FileNotFoundException
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba1.txt");
+		pb.procesar(new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba1.txt"));
 
 		boolean esLibro = pb.getUltDoc() instanceof Book;
 		String autorEsperado = "Milton Abramowitz and Irene A. Stegun";
@@ -46,11 +50,13 @@ public class ParserBibtexTest extends TestCase
 	
 	/**
 	 * Prueba el fichero "prueba2.txt".
+	 * @throws FileNotFoundException 
 	 */
-	public void testPrueba2()
+	public void testPrueba2() throws FileNotFoundException
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba2.txt");
+		pb.procesar(new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba2.txt"));
+		
 
 		boolean esArticulo = pb.getUltDoc() instanceof Article;
 		String autorEsperado = "Alfonso";
