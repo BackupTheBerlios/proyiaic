@@ -3,6 +3,7 @@
 package publicaciones;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.jdom.Element;
 
@@ -72,7 +73,7 @@ public abstract class Publication
    /**
     * Contiene todos los proyectos a los que pertenece la aplicación.
     */
-   protected LinkedList proyectos;
+   protected Vector<String> proyectos;
    
    public PublicationException thePublicationException;
    
@@ -143,7 +144,7 @@ public abstract class Publication
     */
    private String dameSeparador(String autoresEditores) 
    {
-	   int posAnd;
+	   //int posAnd;
 	   if (autoresEditores.contains(" and "))
 		   return " and ";
 	   else if (autoresEditores.contains(" and\n"))

@@ -9,6 +9,7 @@ import org.jdom.Element;
 
 import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
+import temporal.UnimplementedException;
 
 
 /**
@@ -20,12 +21,12 @@ public class Unpublished extends Publication
 	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
-   
+
 	/**
-	    * Crea un Unpublished a partir de una lista de campos.
-	    * @param campos Campos a partir de los cuales se quiere crear el objeto.
-	    */
-   public Unpublished(LinkedList<CampoPublicacion> campos)
+	 * Crea un Unpublished a partir de una lista de campos.
+	 * @param campos Campos a partir de los cuales se quiere crear el objeto.
+	 */
+	public Unpublished(LinkedList<CampoPublicacion> campos)
 	{
 		CampoPublicacion campo;
 		Iterator<CampoPublicacion> it = campos.iterator();
@@ -38,11 +39,15 @@ public class Unpublished extends Publication
 		}
 	}
 
-   /**
-    * Inserta el campo.
-    * @param nombreCampo Nombre del campo que se quiere insertar.
-    * @param valorString Valor del campo que se quiere insertar.
-    */
+	public Unpublished(Object[] objects) throws UnimplementedException {
+		throw new UnimplementedException();
+	}
+
+	/**
+	 * Inserta el campo.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valorString Valor del campo que se quiere insertar.
+	 */
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
@@ -73,34 +78,34 @@ public class Unpublished extends Publication
 		elemento.setAttribute ("tipo", "Unpublished");
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
-		
+
 		Element eTitle = new Element("title");
 		eTitle.addContent(title);
 		elemento.addContent(eTitle);
-		
+
 		Element eAuthor = generarAutoresEditoresXML();
 		elemento.addContent(eAuthor);
-		
+
 		Element eNote = new Element("note");
 		eNote.addContent(note);
 		elemento.addContent(eNote);
-		
+
 		Element eMonth = new Element("month");
 		eMonth.addContent(month);
 		elemento.addContent(eMonth);
-		
+
 		Element eYear = new Element("year");
 		eYear.addContent(year);
 		elemento.addContent(eYear);
-		
+
 		Element eAbstract = new Element("_abstract");
 		eAbstract.addContent(_abstract);
 		elemento.addContent(eAbstract);
-		
+
 		Element eKey = new Element("key");
 		eKey.addContent(key);
 		elemento.addContent(eKey);
-		
+
 		return elemento;
 	}
 

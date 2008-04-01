@@ -9,6 +9,7 @@ import org.jdom.Element;
 
 import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
+import temporal.UnimplementedException;
 
 
 /**
@@ -49,7 +50,11 @@ public class Booklet extends Publication
 		}
 	}
    
-   /**
+   public Booklet(Object[] objects) throws UnimplementedException {
+	throw new UnimplementedException();
+}
+
+/**
     * Inserta el campo.
     * @param nombreCampo Nombre del campo que se quiere insertar.
     * @param valorString Valor del campo que se quiere insertar.

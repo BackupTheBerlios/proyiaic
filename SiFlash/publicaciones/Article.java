@@ -9,6 +9,7 @@ import org.jdom.Element;
 
 import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
+import temporal.UnimplementedException;
 
 
 /**
@@ -40,8 +41,9 @@ public class Article extends Publication
     * Longitud en páginas.
     */
    private String pages;
-  
-   /**
+   
+
+/**
     * Crea un Article a partir de una lista de campos.
     * @param campos Campos a partir de los cuales se quiere crear el objeto.
     */
@@ -58,7 +60,11 @@ public class Article extends Publication
 		}
 	}
 
-   /**
+   public Article(Object[] objects) throws UnimplementedException {
+	throw new UnimplementedException();
+}
+
+/**
     * Inserta el campo.
     * @param nombreCampo Nombre del campo que se quiere insertar.
     * @param valorString Valor del campo que se quiere insertar.

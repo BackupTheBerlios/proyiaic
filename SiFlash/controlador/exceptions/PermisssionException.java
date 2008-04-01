@@ -2,6 +2,8 @@
 
 package controlador.exceptions;
 
+import database.BDException;
+
 
 /**
  * Excepcion que se produce cuando se quiere realizar una operación para la que no 
@@ -9,12 +11,28 @@ package controlador.exceptions;
  */
 public class PermisssionException extends BDException 
 {
-   
-   /**
-    * @roseuid 47C8A710003E
-    */
-   public PermisssionException() 
-   {
-    
-   }
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2972861761470064332L;
+
+	/**
+	 * 
+	 */
+	public PermisssionException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param message
+	 */
+	public PermisssionException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 }

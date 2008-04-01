@@ -9,12 +9,54 @@ package controlador.exceptions;
  */
 public class ExistingElementException extends ExistenceException 
 {
-   
-   /**
-    * @roseuid 47C8A710007D
-    */
-   public ExistingElementException() 
-   {
-    
-   }
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 430603106713792544L;
+
+	/* (non-Javadoc)
+	 * @see controlador.exceptions.ExistenceException#getTipo()
+	 */
+	@Override
+	public int getTipo() {
+		// TODO Auto-generated method stub
+		return super.getTipo();
+	}
+
+	/* (non-Javadoc)
+	 * @see controlador.exceptions.ExistenceException#setTipo(int)
+	 */
+	@Override
+	public void setTipo(int tipo) {
+		// TODO Auto-generated method stub
+		super.setTipo(tipo);
+	}
+
+	/* (non-Javadoc)
+	 * @see database.BDException#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+
+	/**
+	 * 
+	 */
+	public ExistingElementException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param tipo
+	 */
+	public ExistingElementException(int tipo) {
+		super(tipo);
+		// TODO Auto-generated constructor stub
+	}
+
+
 }

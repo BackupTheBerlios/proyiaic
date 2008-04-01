@@ -6,6 +6,10 @@ package parserFicherosBibtex.excepciones;
 public class ExcepcionLexica extends Exception 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4991687558205260998L;
+	/**
 	 * Mensaje que se mostrará si se da la excepción.
 	 */
 	String message;

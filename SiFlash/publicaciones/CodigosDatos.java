@@ -3,11 +3,11 @@
 package publicaciones;
 
 
+
 /**
- * Clase que almacena el código para las búsquedas que le corresponde a cada una de 
- * las publicaciones.
+ * Clase que almacena las equivalencias entre distintos codigos y tipos.
  */
-public class Codigos 
+public class CodigosDatos 
 {
    public static final int codArticle = 1;
    public static final int codBook = 2;
@@ -23,4 +23,6 @@ public class Codigos
    public static final int codProceedings = 2048;
    public static final int codTechReport = 4096;
    public static final int codUnpublished = 8192;
+   public static final String[] listaMeses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};   
+
 }

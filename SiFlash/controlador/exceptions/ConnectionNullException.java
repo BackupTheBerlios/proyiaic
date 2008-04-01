@@ -8,12 +8,17 @@ package controlador.exceptions;
  */
 public class ConnectionNullException extends ConnectionException 
 {
-   
-   /**
-    * @roseuid 47C8A70F03D8
-    */
-   public ConnectionNullException() 
-   {
-    
-   }
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1452931856865173401L;
+
+	/**
+	 * @roseuid 47C8A70F03D8
+	 */
+	public ConnectionNullException() 
+	{
+
+	}
 }

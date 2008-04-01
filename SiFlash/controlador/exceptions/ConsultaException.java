@@ -8,14 +8,18 @@ import database.BDException;
  */
 public class ConsultaException extends BDException 
 {
-   
-   /**
+
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-   public ConsultaException() 
-   {
-	   super();
-    
-   }
+	private static final long serialVersionUID = 6915164595673183927L;
+
+	/**
+	 * 
+	 */
+	public ConsultaException() 
+	{
+		super();
+
+	}
 }

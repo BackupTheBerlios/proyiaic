@@ -10,12 +10,17 @@ import database.BDException;
  */
 public class ConnectionException extends BDException 
 {
-   
-   /**
-    * @roseuid 47C8A70F038A
-    */
-   public ConnectionException() 
-   {
-    
-   }
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5341914479710988106L;
+
+	/**
+	 * @roseuid 47C8A70F038A
+	 */
+	public ConnectionException() 
+	{
+
+	}
 }

@@ -9,6 +9,7 @@ import org.jdom.Element;
 
 import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
+import temporal.UnimplementedException;
 
 
 /**
@@ -20,27 +21,27 @@ public class Manual extends Publication
 	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
-   
-   /**
-    * Organización que se encarga de la gestión de la misma.
-    */
-   private String organization;
-   
-   /**
-    * Lugar de publicación.
-    */
-   private String address;
-   
-   /**
-    * Edición del mismo.
-    */
-   private String edition;
-   
-   /**
-    * Crea un Manual a partir de una lista de campos.
-    * @param campos Campos a partir de los cuales se quiere crear el objeto.
-    */
-   public Manual(LinkedList<CampoPublicacion> campos)
+
+	/**
+	 * Organización que se encarga de la gestión de la misma.
+	 */
+	private String organization;
+
+	/**
+	 * Lugar de publicación.
+	 */
+	private String address;
+
+	/**
+	 * Edición del mismo.
+	 */
+	private String edition;
+
+	/**
+	 * Crea un Manual a partir de una lista de campos.
+	 * @param campos Campos a partir de los cuales se quiere crear el objeto.
+	 */
+	public Manual(LinkedList<CampoPublicacion> campos)
 	{
 		CampoPublicacion campo;
 		Iterator<CampoPublicacion> it = campos.iterator();
@@ -53,11 +54,15 @@ public class Manual extends Publication
 		}
 	}
 
-   /**
-    * Inserta el campo.
-    * @param nombreCampo Nombre del campo que se quiere insertar.
-    * @param valorString Valor del campo que se quiere insertar.
-    */
+	public Manual(Object[] objects) throws UnimplementedException {
+		throw new UnimplementedException();
+	}
+
+	/**
+	 * Inserta el campo.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valorString Valor del campo que se quiere insertar.
+	 */
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equals("author") && author == null)
@@ -84,56 +89,56 @@ public class Manual extends Publication
 			year = valorString;
 	}
 
-	   /**
-		 * Genera un elemento XML con la información del objeto.
-		 * @return El elemento generado.
-		 */
+	/**
+	 * Genera un elemento XML con la información del objeto.
+	 * @return El elemento generado.
+	 */
 	public Element generarElementoXML()
 	{
 		Element elemento = new Element("publication");
 		elemento.setAttribute ("tipo", "Manual");
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
-		
+
 		Element eTitle = new Element("title");
 		eTitle.addContent(title);
 		elemento.addContent(eTitle);
-		
+
 		Element eAuthor = generarAutoresEditoresXML();
 		elemento.addContent(eAuthor);
-		
+
 		Element eOrganization = new Element("organization");
 		eOrganization.addContent(organization);
 		elemento.addContent(eOrganization);
-		
+
 		Element eAddress = new Element("address");
 		eAddress.addContent(address);
 		elemento.addContent(eAddress);
-		
+
 		Element eEdition = new Element("edition");
 		eEdition.addContent(edition);
 		elemento.addContent(eEdition);
-		
+
 		Element eMonth = new Element("month");
 		eMonth.addContent(month);
 		elemento.addContent(eMonth);
-		
+
 		Element eYear = new Element("year");
 		eYear.addContent(year);
 		elemento.addContent(eYear);
-		
+
 		Element eNote = new Element("note");
 		eNote.addContent(note);
 		elemento.addContent(eNote);
-		
+
 		Element eAbstract = new Element("abstract");
 		eAbstract.addContent(_abstract);
 		elemento.addContent(eAbstract);
-		
+
 		Element eKey = new Element("key");
 		eKey.addContent(key);
 		elemento.addContent(eKey);
-		
+
 		return elemento;
 	}
 
@@ -152,7 +157,7 @@ public class Manual extends Publication
 		}
 		return eAuthor;
 	}
-	
+
 	@Override
 	public String getBibTeX() {
 		// TODO Auto-generated method stub

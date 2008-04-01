@@ -8,14 +8,18 @@ package controlador.exceptions;
  */
 public class ConsultaPublicacionesException extends ConsultaException 
 {
-   
-   /**
+
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6204028495005835354L;
 
-   public ConsultaPublicacionesException() 
-   {
-    
-   }
+	/**
+	 * 
+	 */
+
+	public ConsultaPublicacionesException() 
+	{
+
+	}
 }
