@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="Librerias/jdom.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="output" path=""/>
+	<classpathentry kind="lib" path="Librerias/jdom.jar"/>
+	<classpathentry kind="lib" path="Librerias/mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

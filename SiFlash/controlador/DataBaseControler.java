@@ -109,9 +109,9 @@ public class DataBaseControler
 	 * @throws BDException 
 	 * @roseuid 47C5A76F02DE
 	 */
-	public Vector<Publication> consultaDocumentos(int tipo_publicaciones, final Vector<String> authors, final boolean parecido_authors, String title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> note, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException 
+	public Vector<Publication> consultaDocumentos(int tipo_publicaciones, final Vector<String> authors, final boolean parecido_authors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> note, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException 
 	{
-		return consultor.getPublicaciones(tipo_publicaciones, authors, parecido_authors, title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, note, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization);
+		return consultor.getPublicaciones(tipo_publicaciones, authors, parecido_authors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, school, parecido_school, note, abstracts, bookTitle, parecido_bookTitle);
 	}
 
 	/**
