@@ -10,13 +10,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import publicaciones.CodigosDatos;
+
 import database.BaseDatos;
 
 
 public class ConsultorBaseDatosTest {
-	String str1,str2,str3,at1,at2,at3;
+	String book,str2,str3;
+	Integer at1,at2,at3;
 	ConsultorBaseDatos consultor;
-	Vector <String> v_str1,v_str2,v_str3;
+	Vector <Integer> v_str1,v_str2,v_str3;
 	
 	
 	@BeforeClass
@@ -29,16 +32,16 @@ public class ConsultorBaseDatosTest {
 
 	@Before
 	public void setUp() throws Exception {
-		str1 = new String("str1");
+		book = new String("book");
 		str2 = new String("str2");
 		str3 = new String("str3");
-		at1 = new String ("at1");
-		at2 = new String ("at2");
-		at3 = new String ("at3");
+		at1 = new Integer (1);
+		at2 = new Integer (2);
+		at3 = new Integer (3);
 		consultor = new ConsultorBaseDatos(new BaseDatos());
-		v_str1 = new Vector <String>();
-		v_str2 = new Vector <String>();
-		v_str3 = new Vector <String>();
+		v_str1 = new Vector <Integer>();
+		v_str2 = new Vector <Integer>();
+		v_str3 = new Vector <Integer>();
 		v_str1.add(at1);
 		v_str2.add(at1);
 		v_str2.add(at2);
@@ -80,14 +83,14 @@ public class ConsultorBaseDatosTest {
 	@Test
 	public final void testCreaConsultaAutores() {
 		String cs1 = new String ("TRUE");
-		String cs2 = new String ("str1.idDoc IN (SELECT DISTINCT editadopor.idDoc FROM editadopor WHERE (editadopor.nombre LIKE ('%at1%') OR editadopor.apellidos LIKE ('%at1%')) UNION SELECT DISTINCT escritopor.idDoc FROM escritopor WHERE (escritopor.nombre LIKE ('%at1%') OR escritopor.apellidos LIKE ('%at1%')))");
-		String cs3 = new String ("str1.idDoc IN (SELECT DISTINCT editadopor.idDoc FROM editadopor WHERE (editadopor.nombre LIKE ('%at1%') OR editadopor.apellidos LIKE ('%at1%')) UNION SELECT DISTINCT escritopor.idDoc FROM escritopor WHERE (escritopor.nombre LIKE ('%at1%') OR escritopor.apellidos LIKE ('%at1%'))) AND str1.idDoc IN (SELECT DISTINCT editadopor.idDoc FROM editadopor WHERE (editadopor.nombre LIKE ('%at2%') OR editadopor.apellidos LIKE ('%at2%')) UNION SELECT DISTINCT escritopor.idDoc FROM escritopor WHERE (escritopor.nombre LIKE ('%at2%') OR escritopor.apellidos LIKE ('%at2%')))");
-		String cs4 = new String ("str1.idDoc IN (SELECT DISTINCT editadopor.idDoc FROM editadopor WHERE (editadopor.nombre LIKE ('at1') OR editadopor.apellidos LIKE ('at1')) UNION SELECT DISTINCT escritopor.idDoc FROM escritopor WHERE (escritopor.nombre LIKE ('at1') OR escritopor.apellidos LIKE ('at1'))) AND str1.idDoc IN (SELECT DISTINCT editadopor.idDoc FROM editadopor WHERE (editadopor.nombre LIKE ('at2') OR editadopor.apellidos LIKE ('at2')) UNION SELECT DISTINCT escritopor.idDoc FROM escritopor WHERE (escritopor.nombre LIKE ('at2') OR escritopor.apellidos LIKE ('at2'))) AND str1.idDoc IN (SELECT DISTINCT editadopor.idDoc FROM editadopor WHERE (editadopor.nombre LIKE ('at3') OR editadopor.apellidos LIKE ('at3')) UNION SELECT DISTINCT escritopor.idDoc FROM escritopor WHERE (escritopor.nombre LIKE ('at3') OR escritopor.apellidos LIKE ('at3')))");
+		String cs2 = new String ("book.idDoc IN (SELECT DISTINCT escrito_editado_por.idDoc FROM escrito_editado_por WHERE (escrito_editado_por.idPer IN (1) AND escrito_editado_por.escrito_o_editado == FALSE))");
+		String cs3 = new String ("book.idDoc IN (SELECT DISTINCT escrito_editado_por.idDoc FROM escrito_editado_por WHERE (escrito_editado_por.idPer IN (1,2) AND escrito_editado_por.escrito_o_editado == TRUE))");
+		String cs4 = new String ("book.idDoc IN (SELECT DISTINCT escrito_editado_por.idDoc FROM escrito_editado_por WHERE (escrito_editado_por.idPer IN (1,2,3)))");		
 		
-		String res1 = consultor.creaConsultaAutores(str1, new Vector<String>(),true);
-		String res2 = consultor.creaConsultaAutores(str1, v_str1, true);
-		String res3 = consultor.creaConsultaAutores(str1, v_str2, true);
-		String res4 = consultor.creaConsultaAutores(str1, v_str3, false);
+		String res1 = consultor.creaConsultaAutores(book, new Vector<Integer>(),CodigosDatos.escritoOEditado);
+		String res2 = consultor.creaConsultaAutores(book, v_str1, CodigosDatos.soloEditado);
+		String res3 = consultor.creaConsultaAutores(book, v_str2, CodigosDatos.soloEscrito);
+		String res4 = consultor.creaConsultaAutores(book, v_str3, CodigosDatos.escritoOEditado);
 		
 		assertEquals(cs1, res1);
 		assertEquals(cs2, res2);
@@ -97,11 +100,11 @@ public class ConsultorBaseDatosTest {
 
 	@Test
 	public final void testCreaConsultaSimple() {
-		assertEquals("TRUE", consultor.creaConsultaSimple(str1, null, str3, true));
+		assertEquals("TRUE", consultor.creaConsultaSimple(book, null, str3, true));
 		assertEquals("TRUE", consultor.creaConsultaSimple(null, str2, str3, true));
-		assertEquals("TRUE", consultor.creaConsultaSimple(str1, str2, null, true));
-		assertEquals("str1.str2 = 'str3'", consultor.creaConsultaSimple(str1, str2, str3, false));
-		assertEquals("str1.str2 LIKE ('%str3%')", consultor.creaConsultaSimple(str1,str2,str3,true));
+		assertEquals("TRUE", consultor.creaConsultaSimple(book, str2, null, true));
+		assertEquals("book.str2 = 'str3'", consultor.creaConsultaSimple(book, str2, str3, false));
+		assertEquals("book.str2 LIKE ('%str3%')", consultor.creaConsultaSimple(book,str2,str3,true));
 	}
 
 }

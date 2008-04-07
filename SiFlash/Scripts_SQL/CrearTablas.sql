@@ -1,4 +1,4 @@
-﻿create table Usuarios (
+create table Usuarios (
 	nombre varchar(10) primary key,
 	password varchar(10) not null,
 	tipo varchar(6));
@@ -14,7 +14,7 @@ create table escrito_editado_por (
 	idDoc integer unsigned not null,
 	idPer integer unsigned not null,
 	escrito_o_editado boolean not null default true,
-	primary key (idDoc, escrito_o_editado),
+	primary key (idDoc, idPer, escrito_o_editado),
 	foreign key (idPer) references AutoresEditores(idAut));
 
 create table Article (
