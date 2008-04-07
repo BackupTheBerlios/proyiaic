@@ -14,9 +14,8 @@ create table escrito_editado_por (
 	idDoc integer unsigned not null,
 	idPer integer unsigned not null,
 	escrito_o_editado boolean not null default true,
-	primary key (idDoc, autor,escrito_o_editado),
+	primary key (idDoc, escrito_o_editado),
 	foreign key (idPer) references AutoresEditores(idAut));
-
 
 create table Article (
 	idDoc integer unsigned primary key, 
@@ -50,7 +49,6 @@ create table Book (
 	user varchar(10) not null,
 	referencia varchar(50),
 	foreign key(user) references Usuarios(nombre));
-
 
 create table Booklet (
 	idDoc integer unsigned primary key, 
@@ -302,3 +300,7 @@ create table participaEn (
 
 create table Id (
 	nextId integer unsigned primary key);
+	
+create table tipoPublicacion (
+	idDoc integer unsigned not null primary key,
+	tipo varchar(30) not null);
