@@ -8,6 +8,10 @@ import org.jdom.Element;
 public class AutorEditor 
 {
 	/**
+	 * Identificador único de autorEditor
+	 */
+	private int idAut = -1;
+	/**
 	 * Nombre del autor.
 	 */
 	private String nombre;
@@ -21,6 +25,37 @@ public class AutorEditor
 	 * Web del autor.
 	 */
 	private String web;
+
+	/**
+	 * @param idAut
+	 * @param nombre
+	 * @param apellidos
+	 * @param web
+	 */
+	public AutorEditor(int idAut, String nombre, String apellidos, String web) {
+		this.idAut = idAut;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.web = web;
+	}
+	
+	public AutorEditor (Object vector_datos[]){
+		if (vector_datos[0] != null) this.idAut = ((Long) vector_datos[0]).intValue();
+		if (vector_datos[1] != null) this.nombre = (String)vector_datos[1];
+		if (vector_datos[2] != null) this.apellidos = (String)vector_datos[2];
+		if (vector_datos[3] != null) this.web = (String)vector_datos[3];
+	}
+
+	/**
+	 * @param nombre
+	 * @param apellidos
+	 * @param web
+	 */
+	public AutorEditor(String nombre, String apellidos, String web) {
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.web = web;
+	}
 
 	/**
 	 * Separa el nombre y apellidos de los autores/editores.
@@ -64,7 +99,8 @@ public class AutorEditor
 			
 		}
 	}
-	
+
+
 	/**
 	 * Asigna un string a el nombre o los apellidos.
 	 * @param substring String que se quiere asignar (tras omitir espacios)
@@ -117,6 +153,10 @@ public class AutorEditor
 
 	public String getWeb() {
 		return web;
+	}
+	
+	public int getId(){
+		return idAut;
 	}
 
 	/**
