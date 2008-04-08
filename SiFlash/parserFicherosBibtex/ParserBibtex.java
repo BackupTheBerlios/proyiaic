@@ -49,13 +49,13 @@ public class ParserBibtex
 	 * Intenta abrir el fichero indicado y, si hay éxito, lo procesa.
 	 * @param ruta Ruta del fichero que se quiere procesar.
 	 */
-	public void procesar(InputStream is)
+	public void procesar(InputStream is, String nombreFichero)
 	{
 		try {
 			
 			extraerDocumento(is);
 			
-			generarXML("miXML.xml");
+			generarXML(nombreFichero);
 			
 		} 
 		catch (ExcepcionLexica e)

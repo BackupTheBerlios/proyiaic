@@ -16,7 +16,7 @@ public class Main
 			InputStream is = new FileInputStream("D:\\Rosa07.bib");
 			//InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
 			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
-			pb.procesar(is);
+			pb.procesar(is, "miXML.xml");
 		}
 		catch (Exception e)
 		{

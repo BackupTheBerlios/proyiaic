@@ -21,7 +21,7 @@ public class ParserBibtexTest extends TestCase
 	public void testPrueba1() throws FileNotFoundException
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar(new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba1.txt"));
+		pb.procesar(new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba1.txt"), "miXML.xml");
 
 		boolean esLibro = pb.getUltDoc() instanceof Book;
 		String autorEsperado = "Milton Abramowitz and Irene A. Stegun";
@@ -55,7 +55,7 @@ public class ParserBibtexTest extends TestCase
 	public void testPrueba2() throws FileNotFoundException
 	{
 		ParserBibtex pb = new ParserBibtex();
-		pb.procesar(new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba2.txt"));
+		pb.procesar(new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba2.txt"), "miXML.xml");
 		
 
 		boolean esArticulo = pb.getUltDoc() instanceof Article;
