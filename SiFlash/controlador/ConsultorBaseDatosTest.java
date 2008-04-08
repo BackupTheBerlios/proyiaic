@@ -12,11 +12,12 @@ import org.junit.Test;
 
 import publicaciones.CodigosDatos;
 
+import database.BDException;
 import database.BaseDatos;
 
 
 public class ConsultorBaseDatosTest {
-	String book,str2,str3;
+	String book,str1,str2,str3;
 	Integer at1,at2,at3;
 	ConsultorBaseDatos consultor;
 	Vector <Integer> v_str1,v_str2,v_str3;
@@ -33,6 +34,7 @@ public class ConsultorBaseDatosTest {
 	@Before
 	public void setUp() throws Exception {
 		book = new String("book");
+		str1 = new String("str1");
 		str2 = new String("str2");
 		str3 = new String("str3");
 		at1 = new Integer (1);
@@ -107,4 +109,17 @@ public class ConsultorBaseDatosTest {
 		assertEquals("book.str2 LIKE ('%str3%')", consultor.creaConsultaSimple(book,str2,str3,true));
 	}
 
+	@Test
+	public final void testBuscaAutores(){
+		Vector <String> vector = new Vector<String>();
+		vector.add(book);
+		vector.add(str1);
+		vector.add(str2);
+		try {
+			consultor.buscaAutores(vector);
+		} catch (BDException e) {
+			fail ("Fallo en la consulta de autores");
+		}
+		assertTrue(true);
+	}
 }

@@ -4,6 +4,7 @@ package controlador;
 
 import java.util.Vector;
 
+import personas.AutorEditor;
 import publicaciones.Article;
 import publicaciones.Book;
 import publicaciones.Booklet;
@@ -540,7 +541,6 @@ class ConsultorBaseDatos
 		}
 
 		if (iniciado) str += ")"; 
-		if (true) throw new UnimplementedException();
 		return str;
 	}
 
@@ -666,4 +666,23 @@ class ConsultorBaseDatos
 
 	} 
 
+	protected Vector <AutorEditor> buscaAutores (final Vector<String> authors) throws BDException{
+		Vector<AutorEditor> v_res = new Vector<AutorEditor>();
+		if (authors== null || authors.size() == 0) return v_res;
+		String cons = new String("SELECT * FROM autoreseditores WHERE (");		
+		for (int i = 0; i<authors.size();i++){
+			String palabra = new String ("'%" + authors.get(i) + "%'");  
+			if (i > 0) cons += " OR ";
+			cons += "nombre LIKE " + palabra + " OR apellidos LIKE " + palabra;
+		}
+		cons += ");";
+		
+		Vector<Object[]> v1 = database.exeQuery(cons);
+		for (int i=0; v1!=null && i<v1.size();i++){
+			Object [] data = v1.get(i);
+			AutorEditor at = new AutorEditor (data);
+			v_res.add(at);
+		}
+		return v_res;
+	}
 }

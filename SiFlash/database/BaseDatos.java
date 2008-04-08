@@ -152,7 +152,7 @@ public class BaseDatos
 				{
 					Object[] fila = new Object[res.getMetaData().getColumnCount()];
 					for (int i = 1; i<= res.getMetaData().getColumnCount(); i++){
-						fila[i] = res.getObject(i);
+						fila[i-1] = res.getObject(i);
 					}								
 					vector.add(fila);					
 				}
