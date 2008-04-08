@@ -5,8 +5,8 @@ create table Usuarios (
 
 create table AutoresEditores (
 	idAut INTEGER UNSIGNED NOT NULL AUTO_INCREMENT primary key,
-	nombre varchar(20) not null,
-	apellidos varchar(50) not null,
+	nombre varchar(20),
+	apellidos varchar(50),
 	web varchar(512));
 
 
