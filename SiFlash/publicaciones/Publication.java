@@ -318,7 +318,11 @@ public abstract class Publication
 
 	private boolean esMayuscula(char actual) 
 	{
-		// TODO Auto-generated method stub
+		// char 'A' = 65.
+		//char 'Z' = 90.
+		//return ((actual > 64) && (actual <91)); 
+		
+		//Mejor no usar todavía...
 		return false;
 	}
 

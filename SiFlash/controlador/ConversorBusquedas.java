@@ -1,7 +1,7 @@
 package controlador;
 
 import java.io.InputStream;
-import java.util.Enumeration;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -11,6 +11,7 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
 import personas.AutorEditor;
+import database.BaseDatos;
 
 public class ConversorBusquedas 
 {
@@ -171,6 +172,9 @@ public class ConversorBusquedas
 	
 	private void realizarConsulta() 
 	{
+		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
+		//Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, null, null, title, false, publisher, journal, year, year, month, month, volume, series, address, pages, pages, organization, school, note, _abstract, booktitle, false, false, false, false, false, false, false, false)
+		
 		
 	}
 	
