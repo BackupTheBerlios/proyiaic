@@ -256,7 +256,6 @@ public class ParserBibtex
 		do
 		{
 			nuevo = extraerCampo(is, posibleReferencia);
-			nuevo.sustituirTildes();
 			listaCampos.add(nuevo);
 			terminado = nuevo.getEsUltimo();
 			posibleReferencia = false;

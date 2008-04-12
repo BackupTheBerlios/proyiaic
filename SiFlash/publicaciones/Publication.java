@@ -293,15 +293,15 @@ public abstract class Publication
 		{
 			actual = cadena2.charAt(i);
 			if (actual == 'á')
-				sinTildes += "\\\\\'a";
+				sinTildes += "\\\'a";
 			else if (actual == 'é')
-				sinTildes += "\\\\\'e";
+				sinTildes += "\\\'e";
 			else if (actual == 'í')
-				sinTildes += "\\\\\'\\\\i";
+				sinTildes += "\\\'{\\i}";
 			else if (actual == 'ó')
-				sinTildes += "\\\\'o";
+				sinTildes += "\\\'o";
 			else if (actual == 'ú')
-				sinTildes += "\\\\\'u";
+				sinTildes += "\\\'u";
 			else
 				sinTildes += actual;
 		}
@@ -330,15 +330,27 @@ public abstract class Publication
 	private String convertirAutorTextoBibtex(AutorEditor ae) 
 	{
 		if (ae.getNombre() == null)
-			if (tieneVariasPalabras(ae.getApellidos()))
-				return ("{" + ae.getApellidos() + "}");
+		{
+			String apellidos = quitarTildes(ae.getApellidos());
+			if (tieneVariasPalabras(apellidos))
+				return ("{" + apellidos + "}");
 			else
-				return ae.getApellidos();
+				return apellidos;
+		}
 		else
-			if (tieneVariasPalabras(ae.getApellidos()))
-				return (ae.getApellidos() + ", " + ae.getNombre());
+		{
+			String nombre = quitarTildes(ae.getNombre());
+			if (ae.getApellidos() != null)
+			{
+				String apellidos = quitarTildes(ae.getApellidos());
+				if (tieneVariasPalabras(apellidos))
+					return (apellidos + ", " + nombre);
+				else
+					return (nombre + " " + apellidos);
+			}
 			else
-				return (ae.getNombre() + " " + ae.getApellidos());
+				return (nombre + " ?");
+		}
 	}
 
 

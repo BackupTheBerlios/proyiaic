@@ -26,7 +26,7 @@ public class Main
 			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
 			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
 			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
-			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orbís} and David García and Ortiz Carrillo, Luis", false);
+			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David García and Ortiz Carrillo, Luis", false);
 			CampoPublicacion c6 = new CampoPublicacion("number", "54", true);
 			
 			LinkedList<CampoPublicacion> listaCampos = new LinkedList<CampoPublicacion>();
@@ -40,6 +40,11 @@ public class Main
 			Article art = new Article(listaCampos);
 			
 			System.out.println(art.getBibTeX());*/
+			
+			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola, me llamo Orb{\\\'{\\i}}s", false);
+			c1.sustituirTildes();
+			System.out.println(c1.getValor());*/
+			
 			
 		}
 		catch (Exception e)
