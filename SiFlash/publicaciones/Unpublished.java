@@ -4,6 +4,7 @@ package publicaciones;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.jdom.Element;
 
@@ -139,5 +140,11 @@ public class Unpublished extends Publication
 
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
+	}
+
+	@Override
+	public Vector<String> generaInserciones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

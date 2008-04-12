@@ -4,6 +4,7 @@ package publicaciones;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.jdom.Element;
 
@@ -340,5 +341,11 @@ public class InCollection extends Publication
 
 	public String getMonth() {
 		return month;
+	}
+
+	@Override
+	public Vector<String> generaInserciones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

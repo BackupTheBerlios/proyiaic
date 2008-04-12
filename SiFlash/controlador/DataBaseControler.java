@@ -254,7 +254,7 @@ public class DataBaseControler
 	 */
 	public void insertaDocumento(Publication publicacion) throws ConnectionNullException, ConnectionException, PermisssionException, ExistingElementException 
 	{
-
+		Vector<String> inserciones = publicacion.generaInserciones();
 	}
 
 	/**

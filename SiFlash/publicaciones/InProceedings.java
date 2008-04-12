@@ -428,4 +428,10 @@ public class InProceedings extends Publication
 		if (!editor.contains(e)) author.add(e);
 	}
 
+	@Override
+	public Vector<String> generaInserciones() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

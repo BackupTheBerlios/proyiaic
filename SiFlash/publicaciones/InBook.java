@@ -4,6 +4,7 @@ package publicaciones;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.jdom.Element;
 
@@ -315,5 +316,11 @@ public class InBook extends Publication
 
 	public String getAddress() {
 		return address;
+	}
+
+	@Override
+	public Vector<String> generaInserciones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

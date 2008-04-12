@@ -4,6 +4,7 @@ package publicaciones;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.jdom.Element;
 
@@ -229,5 +230,11 @@ public class Article extends Publication
 
 	public String getPages() {
 		return pages;
+	}
+
+	@Override
+	public Vector<String> generaInserciones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -507,5 +507,8 @@ public abstract class Publication
 	public final void setKey(Vector<String> key) throws UnimplementedException {
 		throw new UnimplementedException();
 		//this.key = key;
-	}	
+	}
+
+
+	public abstract Vector<String> generaInserciones();	
 }
