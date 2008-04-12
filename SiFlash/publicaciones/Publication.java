@@ -2,6 +2,7 @@
 
 package publicaciones;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -173,10 +174,10 @@ public abstract class Publication
 		LinkedList<AutorEditor> lista = new LinkedList<AutorEditor>();
 		if (autoresEditores != null)
 		{
-			if (autoresEditores.charAt(0) == '{')
+			/*if (autoresEditores.charAt(0) == '{')
 				lista.add(new AutorEditor(autoresEditores));
 			else
-			{
+			{*/
 				String separador = dameSeparador(autoresEditores);
 				if (separador != null)
 				{
@@ -194,7 +195,7 @@ public abstract class Publication
 					AutorEditor nuevo = new AutorEditor(autoresEditores);
 					lista.add(nuevo);
 				}
-			}
+			//}
 			return lista;
 		}
 		else
@@ -245,6 +246,107 @@ public abstract class Publication
 			return null;
 
 	}
+	
+	protected String convertirTextoBibtex(String cadena2)
+	{
+		String salida = "";
+		String cadena = quitarTildes(cadena2);
+		int longit = cadena.length();
+		char actual;
+		boolean mayusculas = false;
+		for (int i=0; i < longit; i++)
+		{
+			actual = cadena.charAt(i);
+			if (esMayuscula(actual))
+			{
+				if (mayusculas)
+					salida += actual;
+				else
+				{
+					mayusculas = true;
+					salida += "{" + actual;
+				}
+			}
+			else
+			{
+				if (mayusculas)
+				{
+					mayusculas = false;
+					salida += "}" + actual;
+				}
+				else
+					salida += actual;
+			}
+		}
+		if (mayusculas)
+			salida += "}";
+		
+		return salida;
+	}
+	
+	private String quitarTildes(String cadena2) 
+	{
+		int longit = cadena2.length();
+		char actual;
+		String sinTildes = "";
+		for (int i=0; i < longit; i++)
+		{
+			actual = cadena2.charAt(i);
+			if (actual == 'á')
+				sinTildes += "\\\\\'a";
+			else if (actual == 'é')
+				sinTildes += "\\\\\'e";
+			else if (actual == 'í')
+				sinTildes += "\\\\\'\\\\i";
+			else if (actual == 'ó')
+				sinTildes += "\\\\'o";
+			else if (actual == 'ú')
+				sinTildes += "\\\\\'u";
+			else
+				sinTildes += actual;
+		}
+		return sinTildes;
+	}
+
+
+	private boolean esMayuscula(char actual) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	protected String convertirTextoBibtex(LinkedList<AutorEditor> autoresEditores)
+	{
+		Iterator<AutorEditor> it = autoresEditores.iterator();
+		String salida = convertirAutorTextoBibtex(it.next());
+		while (it.hasNext())
+		{
+			salida += " and " + convertirAutorTextoBibtex(it.next());
+		}
+		return salida;
+	}
+
+	private String convertirAutorTextoBibtex(AutorEditor ae) 
+	{
+		if (ae.getNombre() == null)
+			if (tieneVariasPalabras(ae.getApellidos()))
+				return ("{" + ae.getApellidos() + "}");
+			else
+				return ae.getApellidos();
+		else
+			if (tieneVariasPalabras(ae.getApellidos()))
+				return (ae.getApellidos() + ", " + ae.getNombre());
+			else
+				return (ae.getNombre() + " " + ae.getApellidos());
+	}
+
+
+	private boolean tieneVariasPalabras(String apellidos) 
+	{
+		return apellidos.contains(" ");
+	}
+
 
 	public String getTitle() {
 		return title;

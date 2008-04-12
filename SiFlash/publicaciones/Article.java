@@ -171,9 +171,37 @@ public class Article extends Publication
 	}
 
 	@Override
-	public String getBibTeX() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getBibTeX() 
+	{
+		String bibtex = "@article{";
+		if (referencia != null)
+			bibtex += referencia;
+		bibtex += "\n";
+		if (title != null)
+			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "}\n";
+		if (year != null)
+			bibtex += "\tyear={" + convertirTextoBibtex(year) + "}\n";
+		if (month != null)
+			bibtex += "\tmonth={" + convertirTextoBibtex(month) + "}\n";
+		if (author != null)
+			bibtex += "\tauthor={" + convertirTextoBibtex(author) + "}\n";
+		if (journal != null)
+			bibtex += "\tjournal={" + convertirTextoBibtex(journal) + "}\n";
+		if (volume != null)
+			bibtex += "\tvolume={" + convertirTextoBibtex(volume) + "}\n";
+		if (number != null)
+			bibtex += "\tnumber={" + convertirTextoBibtex(number) + "}\n";
+		if (pages != null)
+			bibtex += "\tpages={" + convertirTextoBibtex(pages) + "}\n";
+		if (_abstract != null)
+			bibtex += "\tabstract={" + convertirTextoBibtex(_abstract) + "}\n";
+		if (note != null)
+			bibtex += "\tnote={" + convertirTextoBibtex(note) + "}\n";
+		if (key != null)
+			bibtex += "\tkey={" + convertirTextoBibtex(key) + "}\n";
+		bibtex += "}";
+		
+		return bibtex;
 	}
 
 	@Override

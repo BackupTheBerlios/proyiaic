@@ -71,7 +71,7 @@ public class AutorEditor
 		
 		if (ae.charAt(0) == '{') //Encerrado entre llaves --> Todo es apellido.
 		{
-			nombre = "";
+			nombre = null;
 			apellidos = ae.substring(1, ae.length() - 1);
 		}
 		else
@@ -92,7 +92,7 @@ public class AutorEditor
 				}
 				else //Sólo hay una palabra: es el apellido.
 				{
-					nombre = "";
+					nombre = null;
 					apellidos = ae;
 				}
 			}
