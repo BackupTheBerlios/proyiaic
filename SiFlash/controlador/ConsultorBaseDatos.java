@@ -275,7 +275,7 @@ class ConsultorBaseDatos
 
 	private Vector<InProceedings> getInproceedings(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String ("SELECT DISTINCT INP1.idDoc, INP1.title, INP1.booktitle, INP1.year, INP1.crossref, INP1.volume, INP1.number, INP1.series, INP1.pages, INP1.address, INP1.month, INP1.organization, INP1.publisher, INP1.note, INP1.abstract, INP1.URL, INP1.user, INP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM inproceedings AS INP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = INP1.idDoc AND EEX1.idDoc = INP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = INP1.idDoc");
-		consulta += this.creaConsulta("inproceedings", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);	   
+		consulta += this.creaConsulta("INP1", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);	   
 		consulta += " ORDER BY INP1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <InProceedings> vector = InProceedings.generaPub(v);
@@ -400,7 +400,7 @@ class ConsultorBaseDatos
 
 
 
-		String str = null;
+		String str = new String();
 
 		if (authors!= null && !authors.isEmpty()){
 			str += (" AND ");

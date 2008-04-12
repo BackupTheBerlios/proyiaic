@@ -380,8 +380,17 @@ public class InProceedings extends Publication
 				
 				if (proyecto != null) inp1.addProyect(proyecto);
 				if (clave != null) inp1.addKey(clave);
-			}				
-			
+				
+				// Evaluamos el cambio de publicacion
+				i++;
+				if (i>= v.size()) cambio_pub = true;
+				else {
+					array = v.get(i);		
+					idDoc = ((Long) array[0]).intValue();
+					if (idDoc != inp1.getIdDoc()) cambio_pub = true;
+					else cambio_pub = false;
+				}					
+			}							
 		}
 		return vector;
 	}
