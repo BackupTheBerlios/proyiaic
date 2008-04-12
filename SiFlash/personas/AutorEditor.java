@@ -204,4 +204,26 @@ public class AutorEditor
 		
 		return eEditor;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (obj instanceof AutorEditor){
+			AutorEditor at1 = (AutorEditor) obj;
+			if (at1.idAut != this.idAut) return false;
+			if (this.apellidos == null){
+				if (at1.apellidos != null) return false;
+			}
+			else if (!this.apellidos.equalsIgnoreCase(at1.apellidos)) return false;
+			
+			if (this.nombre == null){
+				if (at1.nombre != null) return false;
+			}
+			else if (!this.nombre.equalsIgnoreCase(at1.nombre)) return false;	
+			
+			return true;
+		}
+		else return false;
+	}
+	
 }

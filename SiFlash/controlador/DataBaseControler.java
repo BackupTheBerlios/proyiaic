@@ -111,7 +111,7 @@ public class DataBaseControler
 	 */
 	public Vector<Publication> consultaDocumentos(int tipo_publicaciones, final Vector<String> autores, final Vector<String> editores, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> note, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException 
 	{
-		// Primero localizar a los autores.
+		// Primero localizar a los autores y editores.
 		Vector <AutorEditor> v_autores = consultor.buscaAutores(autores);
 		Vector <AutorEditor> v_editores = consultor.buscaAutores(editores);
 		Vector <Integer> v_authors= new Vector<Integer>();

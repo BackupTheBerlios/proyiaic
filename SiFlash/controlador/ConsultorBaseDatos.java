@@ -274,11 +274,11 @@ class ConsultorBaseDatos
 	}
 
 	private Vector<InProceedings> getInproceedings(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
-		String consulta = new String ("SELECT * FROM inproceedings");
+		String consulta = new String ("SELECT DISTINCT INP1.idDoc, INP1.title, INP1.booktitle, INP1.year, INP1.crossref, INP1.volume, INP1.number, INP1.series, INP1.pages, INP1.address, INP1.month, INP1.organization, INP1.publisher, INP1.note, INP1.abstract, INP1.URL, INP1.user, INP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM inproceedings AS INP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = INP1.idDoc AND EEX1.idDoc = INP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = INP1.idDoc");
 		consulta += this.creaConsulta("inproceedings", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);	   
-		consulta += ";";
+		consulta += " ORDER BY INP1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
-		Vector <InProceedings> vector = new Vector<InProceedings>();
+		Vector <InProceedings> vector = InProceedings.generaPub(v);
 		for (int i = 0; i < v.size() ; i++){
 			InProceedings inproceeding = new InProceedings(v.get(i));
 			vector.add(inproceeding);
@@ -401,69 +401,39 @@ class ConsultorBaseDatos
 
 
 		String str = null;
-		boolean iniciado = false;
-
 
 		if (authors!= null && !authors.isEmpty()){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaAutores(tabla,authors,CodigosDatos.codAutor);			
 		}
 
 		if (editors!= null && !editors.isEmpty()){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaAutores(tabla,editors,CodigosDatos.codEditor);			
 		}		
 		
 		if (title != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaSimple(tabla,"title",title,parecido_title);
 		}
 
 		if (publisher != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaSimple(tabla,"publisher",publisher,parecido_publisher);
 		}
 
 		if (journal != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaSimple(tabla, "journal", journal, parecido_journal);
 		}
 
 		if (year_inicial != -1){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaNumerica(tabla, "year", year_inicial, ">=");
 		}
 
 		if (year_final != -1){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaNumerica(tabla, "year", year_inicial, "<=");
 		}
 
@@ -476,80 +446,47 @@ class ConsultorBaseDatos
 		}
 
 		if (series != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaSimple(tabla, "series", series, parecido_series);
 		}
 
 		if (pages_min != -1){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaNumerica(tabla, "pages", pages_min, ">=");			
 		}
 
 		if (pages_max != -1){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaNumerica(tabla, "pages", pages_max, "<=");
 		}
 
 		if (organization != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str+= creaConsultaSimple(tabla, "organization", organization, parecido_organization);
 		}
 
 		if (school != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaSimple(tabla, "school", school, parecido_school);
 		}
 
 		if (v_key != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaVectorial(tabla, "tienekey", "clave", v_key, false, true);
 		}
 
 		if (abstracts != null){
 			for (int i = 0; i< abstracts.size();i++){
-				if (!iniciado){
-					iniciado = true;
-					str = new String (" WHERE ");
-				}
-				else str += (" AND ");
+				str += (" AND ");
 				str += creaConsultaSimple(tabla, "abstract", abstracts.get(i), true);
 			}
 		}
 
 		if (bookTitle != null){
-			if (!iniciado){
-				iniciado = true;
-				str = new String (" WHERE ");
-			}
-			else str += (" AND ");
+			str += (" AND ");
 			str += creaConsultaSimple(tabla, "booktitle", bookTitle, parecido_bookTitle);				
 		}
-
-		if (iniciado) str += ")"; 
+		
 		return str;
 	}
 
@@ -604,9 +541,9 @@ class ConsultorBaseDatos
 		}
 		cons += ")";		
 		if (autor_editor == CodigosDatos.codEditor) 
-			cons += " AND escrito_editado_por.escrito_o_editado == FALSE";
+			cons += " AND escrito_editado_por.escrito_o_editado = FALSE";
 		if (autor_editor == CodigosDatos.codAutor) 
-			cons += " AND escrito_editado_por.escrito_o_editado == TRUE";		
+			cons += " AND escrito_editado_por.escrito_o_editado = TRUE";		
 		cons += "))";	
 		return cons;
 	}

@@ -127,7 +127,7 @@ public abstract class Publication
 		this.addProyect(un_proyecto);
 	}	
 
-	private void addProyect(String un_proyecto) {
+	protected void addProyect(String un_proyecto) {
 		if (this.proyectos == null){
 			this.proyectos = new Vector<String>();
 		}
@@ -136,7 +136,7 @@ public abstract class Publication
 	}
 
 
-	private void addKey(String un_key) {
+	protected void addKey(String un_key) {
 		if (this.key == null)this.key = new String();
 		if (un_key != null) this.key += un_key;	
 	}

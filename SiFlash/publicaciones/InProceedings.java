@@ -4,6 +4,7 @@ package publicaciones;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.jdom.Element;
 
@@ -303,4 +304,119 @@ public class InProceedings extends Publication
 	public String getPublisher() {
 		return publisher;
 	}
+
+	public static Vector<InProceedings> generaPub(Vector<Object[]> v) throws UnimplementedException {
+		Vector <InProceedings> vector = new Vector <InProceedings>();
+		if (v == null) return vector;
+		for (int i=0; i< v.size();){
+			Object[] array = v.get(i);
+			int idDoc,year,number,id_aut,escrito_edit;
+			String title,booktitle,crossref,volume,series,pages,address;
+			String month,organization,publisher, note, abstracts, URL,user, referencia; 
+			String proyecto,n_aut,ap_aut,web_aut,clave;
+			LinkedList<AutorEditor> autores,editores;
+			Vector<String> proyectos = new Vector<String>();
+			Vector<String> claves = new Vector<String>();
+			autores = new LinkedList<AutorEditor>();
+			editores = new LinkedList<AutorEditor>();
+			boolean cambio_pub;
+			cambio_pub = false;			
+			idDoc = ((Long) array[0]).intValue();
+			if (array[1] != null) title = (String) array[1]; else title = null;
+			if (array[2] != null) booktitle = (String) array[2]; else booktitle = null;
+			if (array[3] != null) year = ((Long) array[3]).intValue(); else year = -1;
+			if (array[4] != null) crossref = (String) array[4]; else crossref = null;
+			if (array[5] != null) volume = (String) array[5]; else volume = null;
+			if (array[6] != null) number = ((Long) array[6]).intValue(); else number = -1;
+			if (array[7] != null) series = (String) array[7]; else series = null;
+			if (array[8] != null) pages = (String) array[8]; else pages = null;
+			if (array[9] != null) address = (String) array[9]; else address = null;
+			if (array[10] != null) month = (String) array[10]; else month = null;
+			if (array[11] != null) organization = (String) array[11]; else organization = null;
+			if (array[12] != null) publisher = (String) array[12]; else publisher = null;
+			if (array[13] != null) note = (String) array[13]; else note = null;
+			if (array[14] != null) abstracts = (String) array[14]; else abstracts = null;
+			if (array[15] != null) URL = (String) array[15]; else URL = null;
+			if (array[16] != null) user = (String) array[16]; else user = null;
+			if (array[17] != null) referencia = (String) array[17]; else referencia = null;
+			if (array[18] != null) proyecto = (String) array[18]; else proyecto = null;
+			id_aut = ((Long) array[19]).intValue();			
+			if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
+			if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
+			if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
+			escrito_edit = ((Long) array[23]).intValue();
+			if (array[24] != null) clave = (String) array[24]; else clave = null;
+			AutorEditor autor = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			if (escrito_edit == 1) autores.add(autor);
+			if (escrito_edit == 0) editores.add(autor);
+			if (proyecto != null) proyectos.add(proyecto);
+			if (clave != null) claves.add(clave);
+			InProceedings inp1 = new InProceedings(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,autores,booktitle,crossref,editores,volume,Integer.toString(number),series,pages,address,organization,publisher);
+			vector.add(inp1);
+			
+			// Evaluamos el cambio_pub
+			i++;
+			if (i>= v.size()) cambio_pub = true;
+			else {
+				array = v.get(i);		
+				idDoc = ((Long) array[0]).intValue();
+				if (idDoc != inp1.getIdDoc()) cambio_pub = true;
+				else cambio_pub = false;
+			}			
+			while (!cambio_pub){
+				if (array[18] != null) proyecto = (String) array[18]; else proyecto = null;
+				id_aut = ((Long) array[19]).intValue();			
+				if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
+				if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
+				if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
+				escrito_edit = ((Long) array[23]).intValue();
+				if (array[24] != null) clave = (String) array[24]; else clave = null;
+			
+				
+				autor = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				if (escrito_edit == 1) inp1.addAutor(autor);
+				if (escrito_edit == 0) inp1.addEditor(autor);
+				
+				
+				if (proyecto != null) inp1.addProyect(proyecto);
+				if (clave != null) inp1.addKey(clave);
+			}				
+			
+		}
+		return vector;
+	}
+
+	/* (non-Javadoc)
+	 * @see publicaciones.Publication#SetAll(int, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Vector, java.lang.String, java.util.Vector)
+	 */
+	public InProceedings(int idDoc, String referencia, String title,
+			String year, String month, String url, String _abstract,
+			String note, Vector<String> key, String user,
+			Vector<String> proyectos,LinkedList<AutorEditor> author, String booktitle,
+			String crossref, LinkedList<AutorEditor> editor, String volume,
+			String number, String series, String pages, String address,
+			String organization, String publisher) throws UnimplementedException {
+		this.author = author;
+		this.booktitle = booktitle;
+		this.crossref = crossref;
+		this.editor = editor;
+		this.volume = volume;
+		this.number = number;
+		this.series = series;
+		this.pages = pages;
+		this.address = address;
+		this.organization = organization;
+		this.publisher = publisher;
+		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
+				user, proyectos);
+	}
+	
+	public void addAutor(AutorEditor e){
+		if (!author.contains(e)) author.add(e);
+	}
+	
+	public void addEditor(AutorEditor e){
+		if (!editor.contains(e)) author.add(e);
+	}
+		
 }
