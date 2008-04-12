@@ -87,12 +87,12 @@ public class ConsultorBaseDatosTest {
 		String cs1 = new String ("TRUE");
 		String cs2 = new String ("book.idDoc IN (SELECT DISTINCT escrito_editado_por.idDoc FROM escrito_editado_por WHERE (escrito_editado_por.idPer IN (1) AND escrito_editado_por.escrito_o_editado == FALSE))");
 		String cs3 = new String ("book.idDoc IN (SELECT DISTINCT escrito_editado_por.idDoc FROM escrito_editado_por WHERE (escrito_editado_por.idPer IN (1,2) AND escrito_editado_por.escrito_o_editado == TRUE))");
-		String cs4 = new String ("book.idDoc IN (SELECT DISTINCT escrito_editado_por.idDoc FROM escrito_editado_por WHERE (escrito_editado_por.idPer IN (1,2,3)))");		
+		String cs4 = new String ("book.idDoc IN (SELECT DISTINCT escrito_editado_por.idDoc FROM escrito_editado_por WHERE (escrito_editado_por.idPer IN (1,2,3) AND escrito_editado_por.escrito_o_editado == FALSE))");		
 		
-		String res1 = consultor.creaConsultaAutores(book, new Vector<Integer>(),CodigosDatos.escritoOEditado);
-		String res2 = consultor.creaConsultaAutores(book, v_str1, CodigosDatos.soloEditado);
-		String res3 = consultor.creaConsultaAutores(book, v_str2, CodigosDatos.soloEscrito);
-		String res4 = consultor.creaConsultaAutores(book, v_str3, CodigosDatos.escritoOEditado);
+		String res1 = consultor.creaConsultaAutores(book, new Vector<Integer>(),CodigosDatos.codAutor);
+		String res2 = consultor.creaConsultaAutores(book, v_str1, CodigosDatos.codEditor);
+		String res3 = consultor.creaConsultaAutores(book, v_str2, CodigosDatos.codAutor);
+		String res4 = consultor.creaConsultaAutores(book, v_str3, CodigosDatos.codEditor);
 		
 		assertEquals(cs1, res1);
 		assertEquals(cs2, res2);

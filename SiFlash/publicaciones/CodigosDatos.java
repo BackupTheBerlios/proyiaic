@@ -9,9 +9,8 @@ package publicaciones;
  */
 public class CodigosDatos 
 {
-	public static final int soloEscrito = 1;
-	public static final int soloEditado = 2;
-	public static final int escritoOEditado = 0;
+	public static final int codAutor = 1;
+	public static final int codEditor = 2;
 	public static final int codArticle = 1;
 	public static final int codBook = 2;
 	public static final int codBookLet = 4;

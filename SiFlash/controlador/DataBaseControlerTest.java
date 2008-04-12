@@ -30,7 +30,7 @@ public class DataBaseControlerTest {
 		Vector <String> v1 = new Vector<String>();
 		v1.add("str1");
 		try {
-			db_controler.consultaDocumentos(CodigosDatos.codMisc, v1, CodigosDatos.escritoOEditado, null, true, null, null, -1, -1, null, null, null, null, null, -1, -1, null, null, null, null, null, true, true, true, true, true, true, true, true);
+			db_controler.consultaDocumentos(CodigosDatos.codMisc, v1, null, null, true, null, null, -1, -1, null, null, null, null, null, -1, -1, null, null, null, null, null, true, true, true, true, true, true, true, true);
 		} catch (BDException e) {
 			fail ("BDException");
 		} catch (UnimplementedException e) {
