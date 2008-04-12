@@ -77,6 +77,8 @@ public abstract class Publication
 	 */
 	protected Vector<String> proyectos;
 
+	private final String separador = new String (", ");
+
 
 	/**
 	 * @param idDoc
@@ -94,7 +96,7 @@ public abstract class Publication
 	 * @throws UnimplementedException 
 	 */
 	protected void SetAll(int idDoc, String referencia, String title, String year,
-			String month, String url, String _abstract, String note, Vector<String> key,
+			String month, String url, String _abstract, String note, Vector<String> keys,
 			String user, Vector<String> proyectos) throws UnimplementedException {
 		this.idDoc = idDoc;
 		this.referencia = referencia;
@@ -104,12 +106,17 @@ public abstract class Publication
 		URL = url;
 		this._abstract = _abstract;
 		this.note = note;
-		if (true)throw new UnimplementedException();
-		//this.key = key;
+		this.key = new String();
+		if (keys != null){
+			for (int i = 0;i<keys.size();i++){
+				if (i>0) key += this.separador;
+				key += keys.get(i);
+			}
+		}
 		this.user = user;
 		this.proyectos = proyectos;
 	}
-	
+
 
 	protected void SetAll(int idDoc, String referencia, String title, String year,
 			String month, String url, String _abstract, String note, String un_key,
@@ -132,7 +139,7 @@ public abstract class Publication
 			this.proyectos = new Vector<String>();
 		}
 		if (un_proyecto != null) this.proyectos.add(un_proyecto);
-		
+
 	}
 
 
@@ -178,25 +185,25 @@ public abstract class Publication
 				lista.add(new AutorEditor(autoresEditores));
 			else
 			{*/
-				String separador = dameSeparador(autoresEditores);
-				if (separador != null)
+			String separador = dameSeparador(autoresEditores);
+			if (separador != null)
+			{
+				String[] separados = autoresEditores.split(separador);
+				int numSeparados = separados.length;
+				LinkedList<AutorEditor> ae = new LinkedList<AutorEditor>();
+				for (int i = 0; i < numSeparados; i++)
 				{
-					String[] separados = autoresEditores.split(separador);
-					int numSeparados = separados.length;
-					LinkedList<AutorEditor> ae = new LinkedList<AutorEditor>();
-					for (int i = 0; i < numSeparados; i++)
-					{
-						ae = extraerAutoresEditores(separados[i]);
-						lista.addAll(ae);
-					}
+					ae = extraerAutoresEditores(separados[i]);
+					lista.addAll(ae);
 				}
-				else
-				{
-					AutorEditor nuevo = new AutorEditor(autoresEditores);
-					lista.add(nuevo);
-				}
+			}
+			else
+			{
+				AutorEditor nuevo = new AutorEditor(autoresEditores);
+				lista.add(nuevo);
+			}
 			//}
-			return lista;
+		return lista;
 		}
 		else
 			return null;
@@ -246,7 +253,7 @@ public abstract class Publication
 			return null;
 
 	}
-	
+
 	protected String convertirTextoBibtex(String cadena2)
 	{
 		String salida = "";
@@ -280,10 +287,10 @@ public abstract class Publication
 		}
 		if (mayusculas)
 			salida += "}";
-		
+
 		return salida;
 	}
-	
+
 	private String quitarTildes(String cadena2) 
 	{
 		int longit = cadena2.length();

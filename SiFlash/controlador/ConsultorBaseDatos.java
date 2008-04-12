@@ -279,10 +279,6 @@ class ConsultorBaseDatos
 		consulta += " ORDER BY INP1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <InProceedings> vector = InProceedings.generaPub(v);
-		for (int i = 0; i < v.size() ; i++){
-			InProceedings inproceeding = new InProceedings(v.get(i));
-			vector.add(inproceeding);
-		}
 		return vector;
 	}
 

@@ -310,7 +310,7 @@ public class InProceedings extends Publication
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
-			int idDoc,year,number,id_aut,escrito_edit;
+			int idDoc,year,number,id_aut;
 			String title,booktitle,crossref,volume,series,pages,address;
 			String month,organization,publisher, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,web_aut,clave;
@@ -319,7 +319,7 @@ public class InProceedings extends Publication
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
-			boolean cambio_pub;
+			boolean cambio_pub,escrito_edit;
 			cambio_pub = false;			
 			idDoc = ((Long) array[0]).intValue();
 			if (array[1] != null) title = (String) array[1]; else title = null;
@@ -344,16 +344,16 @@ public class InProceedings extends Publication
 			if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
 			if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
 			if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-			escrito_edit = ((Long) array[23]).intValue();
+			escrito_edit = ((Boolean) array[23]).booleanValue();
 			if (array[24] != null) clave = (String) array[24]; else clave = null;
-			AutorEditor autor = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
-			if (escrito_edit == 1) autores.add(autor);
-			if (escrito_edit == 0) editores.add(autor);
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			if (escrito_edit == true) autores.add(autor1);
+			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
 			InProceedings inp1 = new InProceedings(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,autores,booktitle,crossref,editores,volume,Integer.toString(number),series,pages,address,organization,publisher);
 			vector.add(inp1);
-			
+
 			// Evaluamos el cambio_pub
 			i++;
 			if (i>= v.size()) cambio_pub = true;
@@ -369,18 +369,18 @@ public class InProceedings extends Publication
 				if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
 				if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
 				if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-				escrito_edit = ((Long) array[23]).intValue();
+				escrito_edit = ((Boolean) array[23]).booleanValue();
 				if (array[24] != null) clave = (String) array[24]; else clave = null;
-			
-				
-				autor = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
-				if (escrito_edit == 1) inp1.addAutor(autor);
-				if (escrito_edit == 0) inp1.addEditor(autor);
-				
-				
+
+
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				if (escrito_edit == true) inp1.addAutor(autor1);
+				else inp1.addEditor(autor1);
+
+
 				if (proyecto != null) inp1.addProyect(proyecto);
 				if (clave != null) inp1.addKey(clave);
-				
+
 				// Evaluamos el cambio de publicacion
 				i++;
 				if (i>= v.size()) cambio_pub = true;
@@ -419,13 +419,13 @@ public class InProceedings extends Publication
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
 				user, proyectos);
 	}
-	
+
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
-	
+
 	public void addEditor(AutorEditor e){
 		if (!editor.contains(e)) author.add(e);
 	}
-		
+
 }
