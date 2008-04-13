@@ -1,11 +1,9 @@
 package principal;
 
-import java.util.Vector;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
-import publicaciones.CodigosDatos;
-import publicaciones.Publication;
-import controlador.DataBaseControler;
-import database.BaseDatos;
+import controlador.ConversorBusquedas;
 
 public class Main 
 {
@@ -20,9 +18,9 @@ public class Main
 			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
 			pb.procesar(is, "miXML.xml");*/
 			
-			/*ConversorBusquedas cb = new ConversorBusquedas();
+			ConversorBusquedas cb = new ConversorBusquedas();
 			InputStream is = new FileInputStream("D:\\datos.xml");
-			cb.procesar(is);*/
+			cb.procesar(is);
 			
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
 			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
@@ -47,12 +45,12 @@ public class Main
 			c1.sustituirTildes();
 			System.out.println(c1.getValor());*/
 			
-			DataBaseControler db_controler = new DataBaseControler(new BaseDatos());
+			/*DataBaseControler db_controler = new DataBaseControler(new BaseDatos());
 			Vector<Publication> vector = db_controler.consultaDocumentos(CodigosDatos.codInproceedings, null, null, null, true, null, null, 1990, 1990, null, null, null, null, null, -1, -1, null, null, null, null, null, true, true, true, true, true, true, true, true);
 
 			int numPublic = vector.size();
 			for (int i = 0; i < numPublic; i++)
-				System.out.println(vector.get(i).getTitle());
+				System.out.println(vector.get(i).getTitle());*/
 			
 		}
 		catch (Exception e)

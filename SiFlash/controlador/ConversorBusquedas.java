@@ -1,5 +1,6 @@
 package controlador;
 
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
@@ -9,8 +10,13 @@ import java.util.Vector;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.XMLOutputter;
 
 import personas.AutorEditor;
+import publicaciones.CodigosDatos;
+import publicaciones.Publication;
+import temporal.UnimplementedException;
+import database.BDException;
 import database.BaseDatos;
 
 public class ConversorBusquedas 
@@ -88,7 +94,8 @@ public class ConversorBusquedas
 			while (it.hasNext())
 				procesarCampo(it.next());
 			
-			imprimir();
+			//imprimir();
+			realizarConsulta();
 		}
 		catch (Exception e)
 		{
@@ -170,12 +177,31 @@ public class ConversorBusquedas
 		return vectorAutoresEditores;
 	}
 	
-	private void realizarConsulta() 
+	private void realizarConsulta() throws BDException, UnimplementedException 
 	{
 		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
-		//Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, null, null, title, false, publisher, journal, year, year, month, month, volume, series, address, pages, pages, organization, school, note, _abstract, booktitle, false, false, false, false, false, false, false, false)
+		//Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, null, null, title, false, publisher, journal, year, year, month, month, volume, series, address, pages, pages, organization, school, note, _abstract, booktitle, false, false, false, false, false, false, false, false);
+		Vector<Publication> vector = dbc.consultaDocumentos(CodigosDatos.codInproceedings, null, null, null, true, null, null, 1990, 1990, null, null, null, null, null, -1, -1, null, null, null, null, null, true, true, true, true, true, true, true, true);
 		
 		
+		int numPublic = vector.size();
+		Publication actual;
+		Element root = new Element("listaPublicaciones");
+		for(int i = 0; i < numPublic; i++)
+		{
+			actual = vector.get(i);
+			Element elemento = actual.generarElementoXML();
+			root.addContent(elemento);
+			
+		}
+		XMLOutputter outputter = new XMLOutputter();
+		try
+		{
+			outputter.output (new Document(root), new FileOutputStream("resultadosBusqueda.xml"));
+		}
+		catch (Exception e){
+		    e.getMessage();
+		}
 	}
 	
 	//Solo sirve para realizar pruebas.
