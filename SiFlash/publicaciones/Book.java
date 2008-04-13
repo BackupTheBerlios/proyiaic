@@ -39,6 +39,11 @@ public class Book extends Publication
    private String volume;
    
    /**
+    * Número del libro.
+    */
+   private String number;
+   
+   /**
     * Serie en la que se encuadra la publicacion.
     */
    private String series;
@@ -93,6 +98,8 @@ public class Book extends Publication
 		   publisher = valorString;
 	   else if (nombreCampo.equals("volume") && volume == null)
 		   volume = valorString;
+	   else if (nombreCampo.equals("number") && number == null)
+		   number = valorString;
 	   else if (nombreCampo.equals("series") && series == null)
 		   series = valorString;
 	   else if (nombreCampo.equals("address") && address == null)
@@ -144,6 +151,10 @@ public class Book extends Publication
 	   eVolume.addContent(volume);
 	   elemento.addContent(eVolume);
 
+	   Element eNumber = new Element("number");
+	   eVolume.addContent(number);
+	   elemento.addContent(eNumber);
+	   
 	   Element eSeries = new Element("series");
 	   eSeries.addContent(series);
 	   elemento.addContent(eSeries);
@@ -231,6 +242,10 @@ public class Book extends Publication
 
    public String getVolume() {
 	   return volume;
+   }
+   
+   public String getNumber() {
+	   return number;
    }
 
    public String getSeries() {

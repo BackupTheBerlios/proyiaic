@@ -33,11 +33,6 @@ public class InBook extends Publication
 	private LinkedList<AutorEditor> editor;
 
 	/**
-	 * Libro al que hace referencia.
-	 */
-	private String booktitle;
-
-	/**
 	 * Capítulo en el que está contenido
 	 */
 	private String chapter;
@@ -276,10 +271,6 @@ public class InBook extends Publication
 
 	public LinkedList<AutorEditor> getEditor() {
 		return editor;
-	}
-
-	public String getBooktitle() {
-		return booktitle;
 	}
 
 	public String getChapter() {
