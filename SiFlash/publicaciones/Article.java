@@ -144,7 +144,7 @@ public class Article extends Publication
 		eNote.addContent(note);
 		elemento.addContent(eNote);
 		
-		Element eAbstract = new Element("_abstract");
+		Element eAbstract = new Element("abstract");
 		eAbstract.addContent(_abstract);
 		elemento.addContent(eAbstract);
 		

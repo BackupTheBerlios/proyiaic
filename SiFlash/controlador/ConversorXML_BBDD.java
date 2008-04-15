@@ -1,5 +1,6 @@
 package controlador;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,15 +20,17 @@ import temporal.UnimplementedException;
 import database.BDException;
 import database.BaseDatos;
 
-public class ConversorBusquedas 
+public class ConversorXML_BBDD 
 {
-	private int tipoPublicaciones;
+	private int tipoPublicaciones; //Solo para consultas.
+	private String tipoPublicacion; //Solo para inserciones.
 	
 	private String referencia;
 	private String title;
 	private String year;
 	private String month;
 	private String URL;
+	private String _abstract;
 	private String note;
 	private String key;
 	private String journal;
@@ -48,10 +51,13 @@ public class ConversorBusquedas
 	private String institution;
 	private Vector<AutorEditor> authors; 
 	private Vector<AutorEditor> editors;
+	private String user;
 	
-	public ConversorBusquedas()
+	public ConversorXML_BBDD()
 	{
 		tipoPublicaciones = -1;
+		tipoPublicacion = null;
+		
 		referencia = null;
 		title = null;
 		year = null;
@@ -79,7 +85,7 @@ public class ConversorBusquedas
 		editors = null;
 	}
 	
-	public void procesar(InputStream input)
+	public String procesarConsulta(InputStream input)
 	{
 		try
 		{
@@ -88,19 +94,47 @@ public class ConversorBusquedas
 			Element root = doc.getRootElement();
 			tipoPublicaciones = Integer.parseInt(root.getAttributeValue("tipoPublicaciones"));
 			referencia = root.getAttributeValue("referencia");
-			List campos = root.getChildren();
+			List<Element> campos = root.getChildren();
 			
 			Iterator<Element> it = campos.iterator();
 			while (it.hasNext())
 				procesarCampo(it.next());
 			
 			//imprimir();
-			realizarConsulta();
+			String salida = realizarConsulta();
+			return salida;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	public String procesarInsercion(InputStream input)
+	{
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			tipoPublicaciones = Integer.parseInt(root.getAttributeValue("tipo"));
+			referencia = root.getAttributeValue("referencia");
+			List<Element> campos = root.getChildren();
+			
+			Iterator<Element> it = campos.iterator();
+			while (it.hasNext())
+				procesarCampo(it.next());
+			
+			//imprimir();
+			String salida = realizarInsercion();
+			return salida;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private void procesarCampo(Element campo) 
@@ -114,6 +148,8 @@ public class ConversorBusquedas
 			month = campo.getValue();
 		else if (nombreCampo.equals("URL"))
 			URL = campo.getValue();
+		else if (nombreCampo.equals("abstract"))
+			_abstract = campo.getValue();
 		else if (nombreCampo.equals("note"))
 			note = campo.getValue();
 		else if (nombreCampo.equals("key"))
@@ -158,7 +194,7 @@ public class ConversorBusquedas
 
 	private Vector<AutorEditor> procesarAutoresEditores(Element campo) 
 	{
-		List autoresEditores = campo.getChildren();
+		List<Element> autoresEditores = campo.getChildren();
 		Vector<AutorEditor> vectorAutoresEditores = new Vector<AutorEditor>();
 		
 		Element autorEditorActual;
@@ -177,7 +213,7 @@ public class ConversorBusquedas
 		return vectorAutoresEditores;
 	}
 	
-	private void realizarConsulta() throws BDException, UnimplementedException 
+	private String realizarConsulta() throws BDException, UnimplementedException 
 	{
 		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
 		//Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, null, null, title, false, publisher, journal, year, year, month, month, volume, series, address, pages, pages, organization, school, note, _abstract, booktitle, false, false, false, false, false, false, false, false);
@@ -195,13 +231,19 @@ public class ConversorBusquedas
 			
 		}
 		XMLOutputter outputter = new XMLOutputter();
-		try
-		{
-			outputter.output (new Document(root), new FileOutputStream("resultadosBusqueda.xml"));
-		}
+		//try
+		//{
+			//outputter.output (new Document(root), new FileOutputStream("resultadosBusqueda.xml"));
+			return (outputter.outputString(new Document(root)));
+		/*}
 		catch (Exception e){
 		    e.getMessage();
-		}
+		}*/
+	}
+	
+	private String realizarInsercion() throws BDException, UnimplementedException 
+	{
+		return null;
 	}
 	
 	//Solo sirve para realizar pruebas.

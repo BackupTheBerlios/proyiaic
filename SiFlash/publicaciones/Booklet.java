@@ -122,7 +122,7 @@ public class Booklet extends Publication
 		eNote.addContent(note);
 		elemento.addContent(eNote);
 		
-		Element eAbstract = new Element("_abstract");
+		Element eAbstract = new Element("abstract");
 		eAbstract.addContent(_abstract);
 		elemento.addContent(eAbstract);
 		
@@ -150,9 +150,33 @@ public class Booklet extends Publication
 	}
 
 	@Override
-	public String getBibTeX() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getBibTeX() 
+	{
+		String bibtex = "@booklet{";
+		if (referencia != null)
+			bibtex += referencia;
+		bibtex += "\n";
+		if (title != null)
+			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "}\n";
+		if (year != null)
+			bibtex += "\tyear={" + convertirTextoBibtex(year) + "}\n";
+		if (month != null)
+			bibtex += "\tmonth={" + convertirTextoBibtex(month) + "}\n";
+		if (author != null)
+			bibtex += "\tauthor={" + convertirTextoBibtex(author) + "}\n";
+		if (howPublished != null)
+			bibtex += "\thowPublished={" + convertirTextoBibtex(howPublished) + "}\n";
+		if (address != null)
+			bibtex += "\taddress={" + convertirTextoBibtex(address) + "}\n";
+		if (_abstract != null)
+			bibtex += "\tabstract={" + convertirTextoBibtex(_abstract) + "}\n";
+		if (note != null)
+			bibtex += "\tnote={" + convertirTextoBibtex(note) + "}\n";
+		if (key != null)
+			bibtex += "\tkey={" + convertirTextoBibtex(key) + "}\n";
+		bibtex += "}";
+		
+		return bibtex;
 	}
 
 	@Override

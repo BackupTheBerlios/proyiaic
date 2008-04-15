@@ -1,9 +1,9 @@
 package principal;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.util.LinkedList;
 
-import controlador.ConversorBusquedas;
+import parserFicherosBibtex.CampoPublicacion;
+import publicaciones.Conference;
 
 public class Main 
 {
@@ -18,16 +18,17 @@ public class Main
 			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
 			pb.procesar(is, "miXML.xml");*/
 			
-			ConversorBusquedas cb = new ConversorBusquedas();
+			/*ConversorXML_BBDD cb = new ConversorXML_BBDD();
 			InputStream is = new FileInputStream("D:\\datos.xml");
-			cb.procesar(is);
+			String salida = cb.procesarConsulta(is);
+			System.out.println(salida);*/
 			
-			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
+			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
 			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
 			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
 			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
 			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David García and Ortiz Carrillo, Luis", false);
-			CampoPublicacion c6 = new CampoPublicacion("number", "54", true);
+			CampoPublicacion c6 = new CampoPublicacion("abstract", "54", true);
 			
 			LinkedList<CampoPublicacion> listaCampos = new LinkedList<CampoPublicacion>();
 			listaCampos.add(c1);
@@ -37,9 +38,9 @@ public class Main
 			listaCampos.add(c5);
 			listaCampos.add(c6);
 			
-			Article art = new Article(listaCampos);
+			Conference conf = new Conference(listaCampos);
 			
-			System.out.println(art.getBibTeX());*/
+			System.out.println(conf.getBibTeX());
 			
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola, me llamo Orb{\\\'{\\i}}s", false);
 			c1.sustituirTildes();

@@ -209,7 +209,7 @@ public class Conference extends Publication
 		eNote.addContent(note);
 		elemento.addContent(eNote);
 
-		Element eAbstract = new Element("_abstract");
+		Element eAbstract = new Element("abstract");
 		eAbstract.addContent(_abstract);
 		elemento.addContent(eAbstract);
 
@@ -251,9 +251,49 @@ public class Conference extends Publication
 	}
 
 	@Override
-	public String getBibTeX() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getBibTeX()
+	{
+		String bibtex = "@conference{";
+		if (referencia != null)
+			bibtex += referencia;
+		bibtex += "\n";
+		if (title != null)
+			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "}\n";
+		if (year != null)
+			bibtex += "\tyear={" + convertirTextoBibtex(year) + "}\n";
+		if (month != null)
+			bibtex += "\tmonth={" + convertirTextoBibtex(month) + "}\n";
+		if (author != null)
+			bibtex += "\tauthor={" + convertirTextoBibtex(author) + "}\n";
+		if (booktitle != null)
+			bibtex += "\tbooktitle={" + convertirTextoBibtex(booktitle) + "}\n";
+		if (crossref != null)
+			bibtex += "\tcrossref={" + convertirTextoBibtex(crossref) + "}\n";
+		if (editor != null)
+			bibtex += "\teditor={" + convertirTextoBibtex(editor) + "}\n";
+		if (volume != null)
+			bibtex += "\tvolume={" + convertirTextoBibtex(volume) + "}\n";
+		if (number != null)
+			bibtex += "\tnumber={" + convertirTextoBibtex(number) + "}\n";
+		if (series != null)
+			bibtex += "\tseries={" + convertirTextoBibtex(series) + "}\n";
+		if (pages != null)
+			bibtex += "\tpages={" + convertirTextoBibtex(pages) + "}\n";
+		if (address != null)
+			bibtex += "\taddress={" + convertirTextoBibtex(address) + "}\n";
+		if (organization != null)
+			bibtex += "\torganization={" + convertirTextoBibtex(organization) + "}\n";
+		if (publisher != null)
+			bibtex += "\tpublisher={" + convertirTextoBibtex(publisher) + "}\n";
+		if (_abstract != null)
+			bibtex += "\tabstract={" + convertirTextoBibtex(_abstract) + "}\n";
+		if (note != null)
+			bibtex += "\tnote={" + convertirTextoBibtex(note) + "}\n";
+		if (key != null)
+			bibtex += "\tkey={" + convertirTextoBibtex(key) + "}\n";
+		bibtex += "}";
+		
+		return bibtex;
 	}
 
 	@Override
