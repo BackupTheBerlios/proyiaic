@@ -431,10 +431,20 @@ class ConsultorBaseDatos
 			if (!alguno) str += "TRUE";
 			str += (")");
 		}
+		
+		if (volume != null){
+			str += (" AND ");
+			str += creaConsultaSimple(tabla, "volume", volume, parecido_series);
+		}		
 
 		if (series != null){
 			str += (" AND ");
 			str += creaConsultaSimple(tabla, "series", series, parecido_series);
+		}		
+		
+		if (address != null){
+			str += (" AND ");
+			str += creaConsultaSimple(tabla, "address", address, parecido_series);
 		}
 
 		if (organization != null){
@@ -574,14 +584,14 @@ class ConsultorBaseDatos
 		else return new String (tabla + "." + campo_de_busqueda + " LIKE ('%" + token + "%')");
 
 	}  
-
+/*
 	protected String creaConsultaNumerica(final String tabla, final String campo_de_busqueda, 
 			final int token_numero, final String comparador){
 		if (tabla == null || comparador == null || token_numero == -1) return new String("TRUE");
 		return new String (tabla + "." + campo_de_busqueda + " " + comparador + " " +  Integer.toString(token_numero));
 
 	} 
-
+*/
 	protected Vector <AutorEditor> buscaAutores (final Vector<AutorEditor> authors) throws BDException{
 		Vector<AutorEditor> v_res = new Vector<AutorEditor>();
 		if (authors== null || authors.size() == 0) return v_res;
