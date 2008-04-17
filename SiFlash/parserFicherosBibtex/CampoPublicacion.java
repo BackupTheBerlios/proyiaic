@@ -4,13 +4,8 @@ package parserFicherosBibtex;
  * Clase que sirve para extraer un campo de una publicación 
  * mediante el ParserBibTeX.
  */
-public class CampoPublicacion
-{
-	/**
-	 * Nombre del campo.
-	 */
-	private String nombre;
-	
+public class CampoPublicacion extends Campo
+{	
 	/**
 	 * Valor del campo.
 	 */
@@ -34,10 +29,6 @@ public class CampoPublicacion
 	public boolean getEsUltimo()
 	{
 		return esUltimo;
-	}
-
-	public String getNombre() {
-		return nombre;
 	}
 
 	public String getValor() {

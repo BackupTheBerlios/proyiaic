@@ -63,6 +63,7 @@ public class ConversorXML_BBDD
 		year = null;
 		month = null;
 		URL = null;
+		_abstract = null;
 		note = null;
 		key = null;
 		journal = null;

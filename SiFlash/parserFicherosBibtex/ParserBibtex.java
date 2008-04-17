@@ -118,7 +118,7 @@ public class ParserBibtex
 				}
 				else
 				{
-					LinkedList<CampoPublicacion> campos = extraerCampos(is);
+					LinkedList<Campo> campos = extraerCampos(is);
 					generarDocumentoBibtex(tipoDoc, campos);
 				}
 				actual = siguienteCaracter(is);
@@ -176,7 +176,7 @@ public class ParserBibtex
 	 * @param campos Campos de la publicación a generar.
 	 * @throws ExcepcionLexica
 	 */
-	private void generarDocumentoBibtex(String tipoDoc, LinkedList<CampoPublicacion> campos) throws ExcepcionLexica 
+	private void generarDocumentoBibtex(String tipoDoc, LinkedList<Campo> campos) throws ExcepcionLexica 
 	{
 		Publication nuevaPublicacion;
 		if (tipoDoc.equals("article")){
@@ -246,9 +246,9 @@ public class ParserBibtex
 	 * @throws IOException
 	 * @throws ExcepcionLexica
 	 */
-	private LinkedList<CampoPublicacion> extraerCampos(InputStream is) throws IOException, ExcepcionLexica 
+	private LinkedList<Campo> extraerCampos(InputStream is) throws IOException, ExcepcionLexica 
 	{
-		LinkedList<CampoPublicacion> listaCampos = new LinkedList<CampoPublicacion>();
+		LinkedList<Campo> listaCampos = new LinkedList<Campo>();
 		
 		boolean terminado;
 		boolean posibleReferencia = true;

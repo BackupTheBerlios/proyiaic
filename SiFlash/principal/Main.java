@@ -1,9 +1,10 @@
 package principal;
 
-import java.util.LinkedList;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
-import parserFicherosBibtex.CampoPublicacion;
-import publicaciones.Conference;
+import parserFicherosBibtex.ConversorXML_Publication;
+import publicaciones.Publication;
 
 public class Main 
 {
@@ -12,18 +13,21 @@ public class Main
 	{
 		try
 		{
+			//-------------------------------------------------------------------------
 			/*ParserBibtex pb = new ParserBibtex();
 			//InputStream is = new FileInputStream("D:\\Rosa07.bib");
 			InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
 			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
 			pb.procesar(is, "miXML.xml");*/
 			
+			//-------------------------------------------------------------------------
 			/*ConversorXML_BBDD cb = new ConversorXML_BBDD();
 			InputStream is = new FileInputStream("D:\\datos.xml");
 			String salida = cb.procesarConsulta(is);
 			System.out.println(salida);*/
-			
-			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
+
+			//-------------------------------------------------------------------------
+			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
 			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
 			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
 			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
@@ -40,19 +44,26 @@ public class Main
 			
 			Conference conf = new Conference(listaCampos);
 			
-			System.out.println(conf.getBibTeX());
-			
+			System.out.println(conf.getBibTeX());*/
+
+			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola, me llamo Orb{\\\'{\\i}}s", false);
 			c1.sustituirTildes();
 			System.out.println(c1.getValor());*/
-			
+
+			//-------------------------------------------------------------------------
 			/*DataBaseControler db_controler = new DataBaseControler(new BaseDatos());
 			Vector<Publication> vector = db_controler.consultaDocumentos(CodigosDatos.codInproceedings, null, null, null, true, null, null, 1990, 1990, null, null, null, null, null, -1, -1, null, null, null, null, null, true, true, true, true, true, true, true, true);
 
 			int numPublic = vector.size();
 			for (int i = 0; i < numPublic; i++)
 				System.out.println(vector.get(i).getTitle());*/
-			
+
+			//-------------------------------------------------------------------------
+			ConversorXML_Publication cp = new ConversorXML_Publication();
+			InputStream is = new FileInputStream("D:\\pruebasConversorXML_Publication\\unpublished.xml");
+			Publication p = cp.convertir(is);
+			System.out.println(p.getBibTeX());
 		}
 		catch (Exception e)
 		{
