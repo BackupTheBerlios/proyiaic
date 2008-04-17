@@ -109,7 +109,7 @@ public class DataBaseControler
 	 * @throws BDException 
 	 * @roseuid 47C5A76F02DE
 	 */
-	public Vector<Publication> consultaDocumentos(int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys) throws BDException, UnimplementedException 
+	public Vector<Publication> consultaDocumentos(int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys) throws BDException, UnimplementedException 
 	{
 		// Primero localizar a los autores y editores.
 		Vector <AutorEditor> v_autores = consultor.buscaAutores(autores);
@@ -124,7 +124,7 @@ public class DataBaseControler
 			v_editors.add(new Integer (v_editores.get(i).getId()));
 		}
 
-		return consultor.getPublicaciones(tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle);
+		return consultor.getPublicaciones(tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle);
 	}
 
 	/**
