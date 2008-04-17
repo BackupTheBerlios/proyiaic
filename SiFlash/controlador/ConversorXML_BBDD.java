@@ -27,7 +27,8 @@ public class ConversorXML_BBDD
 	
 	private String referencia;
 	private String title;
-	private String year;
+	private int yearIni;
+	private int yearFin;
 	private String month;
 	private String URL;
 	private String _abstract;
@@ -60,7 +61,8 @@ public class ConversorXML_BBDD
 		
 		referencia = null;
 		title = null;
-		year = null;
+		yearIni = -1;
+		yearFin = -1;
 		month = null;
 		URL = null;
 		_abstract = null;
@@ -143,8 +145,10 @@ public class ConversorXML_BBDD
 		String nombreCampo = campo.getName();
 		if (nombreCampo.equals("title"))
 			title = campo.getValue();
-		else if (nombreCampo.equals("year"))
-			year = campo.getValue();
+		else if (nombreCampo.equals("yearIni"))
+			yearIni = Integer.parseInt(campo.getValue());
+		else if (nombreCampo.equals("yearFin"))
+			yearFin = Integer.parseInt(campo.getValue());
 		else if (nombreCampo.equals("month"))
 			month = campo.getValue();
 		else if (nombreCampo.equals("URL"))
@@ -216,9 +220,17 @@ public class ConversorXML_BBDD
 	
 	private String realizarConsulta() throws BDException, UnimplementedException 
 	{
+		Vector<String> years = null;
+		if (yearIni != -1 && yearFin != -1)
+		{
+			 years = new Vector<String>();
+			 for (int i = yearIni; i <= yearFin; i++)
+				 years.add("" + i);
+		}
+		
+		
 		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
-		//Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, null, null, title, false, publisher, journal, year, year, month, month, volume, series, address, pages, pages, organization, school, note, _abstract, booktitle, false, false, false, false, false, false, false, false);
-		Vector<Publication> vector = dbc.consultaDocumentos(CodigosDatos.codInproceedings, null, null, null, true, null, null, 1990, 1990, null, null, null, null, null, -1, -1, null, null, null, null, null, true, true, true, true, true, true, true, true);
+		Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, null/*vector keys*/, true, true, true, true, true, true, true, true, true);
 		
 		
 		int numPublic = vector.size();
@@ -232,14 +244,7 @@ public class ConversorXML_BBDD
 			
 		}
 		XMLOutputter outputter = new XMLOutputter();
-		//try
-		//{
-			//outputter.output (new Document(root), new FileOutputStream("resultadosBusqueda.xml"));
-			return (outputter.outputString(new Document(root)));
-		/*}
-		catch (Exception e){
-		    e.getMessage();
-		}*/
+		return (outputter.outputString(new Document(root)));
 	}
 	
 	private String realizarInsercion() throws BDException, UnimplementedException 
@@ -256,8 +261,10 @@ public class ConversorXML_BBDD
 			System.out.println("Referencia: " + referencia);
 		if (title != null)
 			System.out.println("Title: " + title);
-		if (year != null)
-			System.out.println("Year: " + year);
+		if (yearIni != -1)
+			System.out.println("Year inicial: " + yearIni);
+		if (yearFin != -1)
+			System.out.println("Year final: " + yearFin);
 		if (month != null)
 			System.out.println("Month: " + month);
 		if (URL != null)
