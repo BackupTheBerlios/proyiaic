@@ -119,11 +119,11 @@ public class DataBaseControler
 		for (int i = 0; i< v_autores.size();i++){
 			v_authors.add(new Integer (v_autores.get(i).getId()));
 		}
-		
+
 		for (int i = 0; i< v_editores.size();i++){
 			v_editors.add(new Integer (v_editores.get(i).getId()));
 		}
-		
+
 		return consultor.getPublicaciones(tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, school, parecido_school, note, abstracts, bookTitle, parecido_bookTitle);
 	}
 
@@ -246,15 +246,16 @@ public class DataBaseControler
 	/**
 	 * Inserta la publicacion pasada por parámetro en la base de datos.
 	 * @param publicacion - Publicacion a insertar.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.PermisssionException
-	 * @throws controlador.exceptions.ExistingElementException
+	 * @throws BDException 
+	 * @throws BDException 
 	 * @roseuid 47C5AE4A036B
 	 */
-	public void insertaDocumento(Publication publicacion) throws ConnectionNullException, ConnectionException, PermisssionException, ExistingElementException 
+	public void insertaDocumento(Publication publicacion) throws BDException
 	{
 		Vector<String> inserciones = publicacion.generaInserciones();
+		for (int i = 0; i<inserciones.size();i++){
+					database.exeUpdate(inserciones.get(i));
+		}
 	}
 
 	/**
