@@ -100,50 +100,50 @@ class ConsultorBaseDatos
 	 * @throws UnimplementedException 
 	 * @roseuid 47C49FBE0280
 	 */
-	protected Vector<Publication> getPublicaciones(final int tipo_publicaciones, final Vector<Integer> authors, final Vector<Integer> editors, final String title, final boolean parecido_title, final String publisher, final boolean parecido_publisher, final String journal, final boolean parecido_journal, final int yearInicial, final int yearFinal, final String monthInicial, final String monthFinal, final String volume, final boolean parecido_volume, final String series, final boolean parecido_series, final String address, final boolean parecido_address, final int pagesMin, final int pagesMax, final String organization, final boolean parecido_organization, final String school, final boolean parecido_school, final Vector<String> v_key, final Vector<String> abstracts, final String bookTitle, final boolean parecido_bookTitle) throws BDException, UnimplementedException 
+	protected Vector<Publication> getPublicaciones(final int tipo_publicaciones, final Vector<Integer> authors, final Vector<Integer> editors, final String title, final boolean parecido_title, final String publisher, final boolean parecido_publisher, final String journal, final boolean parecido_journal, Vector<String> years, final String volume, final boolean parecido_volume, final String series, final boolean parecido_series, final String address, final boolean parecido_address, final int pagesMin, final int pagesMax, final String organization, final boolean parecido_organization, final String school, final boolean parecido_school, final Vector<String> v_key, final String bookTitle, final boolean parecido_bookTitle) throws BDException, UnimplementedException 
 	{
 		Vector<Publication> vector= new Vector<Publication>();
 		if ((tipo_publicaciones & CodigosDatos.codArticle)== CodigosDatos.codArticle)
-			vector.addAll(this.getArticles(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getArticles(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codBook)== CodigosDatos.codBook)
-			vector.addAll(this.getBooks(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getBooks(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codBookLet)== CodigosDatos.codBookLet)
-			vector.addAll(this.getBooklets(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getBooklets(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codConference) == CodigosDatos.codConference)
-			vector.addAll(this.getConferences(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getConferences(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codInbook) == CodigosDatos.codInbook)
-			vector.addAll(this.getInbooks(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getInbooks(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codIncollection) == CodigosDatos.codIncollection)
-			vector.addAll(this.getIncollection(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getIncollection(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codInproceedings) == CodigosDatos.codInproceedings)
-			vector.addAll(this.getInproceedings(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getInproceedings(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codManual) == CodigosDatos.codManual)
-			vector.addAll(this.getManuals(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getManuals(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codMasterThesis) == CodigosDatos.codMasterThesis)
-			vector.addAll(this.getMasterThesis(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getMasterThesis(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codMisc) == CodigosDatos.codMisc)
-			vector.addAll(this.getMiscs(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getMiscs(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codphdThesis) == CodigosDatos.codphdThesis)
-			vector.addAll(this.getPhdThesis(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getPhdThesis(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codProceedings) == CodigosDatos.codProceedings)
-			vector.addAll(this.getProceedings(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getProceedings(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codTechReport) == CodigosDatos.codTechReport)
-			vector.addAll(this.getTechReports(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getTechReports(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 
 		if ((tipo_publicaciones & CodigosDatos.codUnpublished) == CodigosDatos.codUnpublished)
-			vector.addAll(this.getUnpublisheds(authors, editors, title, parecido_title, publisher, journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, series, address, pagesMin, pagesMax, organization, school, v_key, abstracts, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
+			vector.addAll(this.getUnpublisheds(authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, pagesMin, pagesMax, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization));
 		return vector;
 	}
 
@@ -195,9 +195,9 @@ class ConsultorBaseDatos
 		return null;
 	}
 
-	private Vector<Article> getArticles(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Article> getArticles(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String("SELECT * FROM article");	 
-		consulta += this.creaConsulta("article", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, null, parecido_series, null, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta("article", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, null, parecido_series, null, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector<Object[]> v = database.exeQuery(consulta);
 		Vector<Article> vector = new Vector<Article>();
@@ -208,9 +208,9 @@ class ConsultorBaseDatos
 		return vector;
 	}
 
-	private Vector<Book> getBooks(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Book> getBooks(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String("SELECT * FROM book");	 
-		consulta += this.creaConsulta("book", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta("book", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector<Object[]> v = database.exeQuery(consulta);
 		Vector<Book> vector = new Vector<Book>();
@@ -221,9 +221,9 @@ class ConsultorBaseDatos
 		return vector;
 	}
 
-	private Vector<Booklet> getBooklets(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Booklet> getBooklets(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String("SELECT * FROM booklet");
-		consulta += this.creaConsulta("booklet", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta("booklet", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key,null, parecido_bookTitle);
 		consulta += ";";
 		Vector<Object[]> v = database.exeQuery(consulta);
 		Vector<Booklet> vector = new Vector<Booklet>();
@@ -234,9 +234,9 @@ class ConsultorBaseDatos
 		return vector;
 	}
 
-	private Vector<Conference> getConferences(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Conference> getConferences(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String("SELECT * FROM conference");
-		consulta += this.creaConsulta("conference", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);
+		consulta += this.creaConsulta("conference", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
 		consulta += ";";
 		Vector<Object[]> v = database.exeQuery(consulta);
 		Vector <Conference> vector = new Vector <Conference>();
@@ -247,9 +247,9 @@ class ConsultorBaseDatos
 		return vector;
 	}
 
-	private Vector<InBook> getInbooks(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<InBook> getInbooks(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String("SELECT * FROM inbook");
-		consulta += this.creaConsulta("inbook", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, null, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);
+		consulta += this.creaConsulta("inbook", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, null, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
 		consulta += ";";
 		Vector<Object[]> v = database.exeQuery(consulta);
 		Vector <InBook> vector = new Vector <InBook>();
@@ -260,9 +260,9 @@ class ConsultorBaseDatos
 		return vector;
 	}   
 
-	private Vector<InCollection> getIncollection(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<InCollection> getIncollection(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String("SELECT * FROM incollection");
-		consulta += this.creaConsulta("incollection", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, null, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);
+		consulta += this.creaConsulta("incollection", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, null, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector<InCollection> vector = new Vector<InCollection>();
@@ -273,18 +273,18 @@ class ConsultorBaseDatos
 		return vector;
 	}
 
-	private Vector<InProceedings> getInproceedings(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<InProceedings> getInproceedings(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String ("SELECT DISTINCT INP1.idDoc, INP1.title, INP1.booktitle, INP1.year, INP1.crossref, INP1.volume, INP1.number, INP1.series, INP1.pages, INP1.address, INP1.month, INP1.organization, INP1.publisher, INP1.note, INP1.abstract, INP1.URL, INP1.user, INP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM inproceedings AS INP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = INP1.idDoc AND EEX1.idDoc = INP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = INP1.idDoc");
-		consulta += this.creaConsulta("INP1", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);	   
+		consulta += this.creaConsulta("INP1", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, pagesMin, pagesMax, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);	   
 		consulta += " ORDER BY INP1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <InProceedings> vector = InProceedings.generaPub(v);
 		return vector;
 	}
 
-	private Vector<Manual> getManuals(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Manual> getManuals(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String ("SELECT * FROM manual");
-		consulta += this.creaConsulta("manual", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, organization, parecido_organization, null, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta("manual", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, organization, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector<Manual> vector = new Vector<Manual>();
@@ -295,9 +295,9 @@ class ConsultorBaseDatos
 		return vector;
 	}   
 
-	private Vector<MastersThesis> getMasterThesis(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<MastersThesis> getMasterThesis(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String ("SELECT * FROM mastersthesis");
-		consulta += this.creaConsulta("mastersthesis", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, school, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta("mastersthesis", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <MastersThesis> vector = new Vector<MastersThesis>();
@@ -308,10 +308,10 @@ class ConsultorBaseDatos
 		return vector;
 	}   
 
-	private Vector<Misc> getMiscs(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Misc> getMiscs(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String tabla = "misc";
 		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, null, parecido_volume, null, parecido_series, null, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <Misc> vector = new Vector<Misc>();
@@ -322,10 +322,10 @@ class ConsultorBaseDatos
 		return vector;	   
 	}
 
-	private Vector<PhdThesis> getPhdThesis(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<PhdThesis> getPhdThesis(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String tabla = "phdthesis";
 		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, school, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <PhdThesis> vector = new Vector<PhdThesis>();
@@ -336,10 +336,10 @@ class ConsultorBaseDatos
 		return vector;	 	   
 	}
 
-	private Vector<Proceedings> getProceedings(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Proceedings> getProceedings(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String tabla = "proceedings";
 		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, volume, parecido_volume, series, parecido_series, address, parecido_address, -1, -1, organization, parecido_organization, null, parecido_school, v_key, abstracts, bookTitle, parecido_bookTitle);
+		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, -1, -1, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <Proceedings> vector = new Vector<Proceedings>();
@@ -350,10 +350,10 @@ class ConsultorBaseDatos
 		return vector;	 	   
 	}   
 
-	private Vector<TechReport> getTechReports(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<TechReport> getTechReports(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String tabla = "techreport";
 		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, null, parecido_volume, series, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, series, parecido_series, address, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <TechReport> vector = new Vector<TechReport>();
@@ -364,10 +364,10 @@ class ConsultorBaseDatos
 		return vector;	 	   
 	}
 
-	private Vector<Unpublished> getUnpublisheds(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, int yearInicial, int yearFinal, String monthInicial, String monthFinal, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, Vector<String> abstracts, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
+	private Vector<Unpublished> getUnpublisheds(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, int pagesMin, int pagesMax, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String tabla = "unpublished";
 		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, yearInicial, yearFinal, monthInicial, monthFinal, null, parecido_volume, null, parecido_series, null, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, abstracts, null, parecido_bookTitle);
+		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, -1, -1, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += ";";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <Unpublished> vector = new Vector<Unpublished>();
@@ -384,14 +384,14 @@ class ConsultorBaseDatos
 			final String title, final boolean parecido_title,
 			final String publisher, final boolean parecido_publisher,
 			final String journal, final boolean parecido_journal,		   
-			final int year_inicial, final int year_final, final String month_inicial, 
-			final String month_final, final String volume, final boolean parecido_volume,
+			final Vector<String> years,
+			final String volume, final boolean parecido_volume,
 			final String series, final boolean parecido_series,		   
 			final String address, final boolean parecido_address,
 			final int pages_min, final int pages_max, 
 			final String organization, final boolean parecido_organization,
 			final String school, final boolean parecido_school,
-			final Vector<String> v_key, final Vector<String> abstracts, 
+			final Vector<String> v_key,  
 			final String bookTitle, final boolean parecido_bookTitle) throws UnimplementedException{
 
 
@@ -407,7 +407,7 @@ class ConsultorBaseDatos
 			str += (" AND ");
 			str += creaConsultaAutores(tabla,editors,CodigosDatos.codEditor);			
 		}		
-		
+
 		if (title != null){
 			str += (" AND ");
 			str += creaConsultaSimple(tabla,"title",title,parecido_title);
@@ -422,23 +422,17 @@ class ConsultorBaseDatos
 			str += (" AND ");
 			str += creaConsultaSimple(tabla, "journal", journal, parecido_journal);
 		}
-
-		if (year_inicial != -1){
-			str += (" AND ");
-			str += creaConsultaNumerica(tabla, "year", year_inicial, ">=");
-		}
-
-		if (year_final != -1){
-			str += (" AND ");
-			str += creaConsultaNumerica(tabla, "year", year_inicial, "<=");
-		}
-
-		if (month_inicial != null){
-			throw new UnimplementedException("No implementada busqueda por mes");
-		}
-
-		if (month_final != null){
-			throw new UnimplementedException("No implementada busqueda por mes");
+		
+		if (years!= null && years.size() != 0){
+			str += " AND (";
+			boolean alguno = false;
+			for (int i=0;i<years.size();i++){
+				if (i > 0 ) str += " OR ";
+				str += creaConsultaSimple (tabla,"year",years.get(i),true);
+				alguno = true;
+			}
+			if (!alguno) str += "TRUE";
+			str += (")");
 		}
 
 		if (series != null){
@@ -471,18 +465,11 @@ class ConsultorBaseDatos
 			str += creaConsultaVectorial(tabla, "tienekey", "clave", v_key, false, true);
 		}
 
-		if (abstracts != null){
-			for (int i = 0; i< abstracts.size();i++){
-				str += (" AND ");
-				str += creaConsultaSimple(tabla, "abstract", abstracts.get(i), true);
-			}
-		}
-
 		if (bookTitle != null){
 			str += (" AND ");
 			str += creaConsultaSimple(tabla, "booktitle", bookTitle, parecido_bookTitle);				
 		}
-		
+
 		return str;
 	}
 
@@ -608,17 +595,29 @@ class ConsultorBaseDatos
 
 	} 
 
-	protected Vector <AutorEditor> buscaAutores (final Vector<String> authors) throws BDException{
+	protected Vector <AutorEditor> buscaAutores (final Vector<AutorEditor> authors) throws BDException{
 		Vector<AutorEditor> v_res = new Vector<AutorEditor>();
 		if (authors== null || authors.size() == 0) return v_res;
 		String cons = new String("SELECT * FROM autoreseditores WHERE (");		
 		for (int i = 0; i<authors.size();i++){
-			String palabra = new String ("'%" + authors.get(i) + "%'");  
+			String palabra_nombre = new String ("'%" + authors.get(i).getNombre() + "%'");
+			String palabra_apellidos = new String ("'%" + authors.get(i).getApellidos() + "%'");
 			if (i > 0) cons += " OR ";
-			cons += "nombre LIKE " + palabra + " OR apellidos LIKE " + palabra;
+			if (authors.get(i).getNombre()!=null){
+				cons += "nombre LIKE " + palabra_nombre;
+				if (authors.get(i).getApellidos()!=null)
+					cons += " AND apellidos LIKE " + palabra_apellidos;				
+			}
+			else {
+				if (authors.get(i).getApellidos()!=null)
+					cons += " apellidos LIKE " + palabra_apellidos;
+				else { // Estamos buscando un autor sin nombre ni apellidos, eliminamos el OR
+					if (i > 0) cons = cons.substring(0, cons.length()-4); // Para eliminar el " OR ";				
+				}				
+			}
 		}
-		cons += ");";
-		
+		cons += ");";	
+
 		Vector<Object[]> v1 = database.exeQuery(cons);
 		for (int i=0; v1!=null && i<v1.size();i++){
 			Object [] data = v1.get(i);

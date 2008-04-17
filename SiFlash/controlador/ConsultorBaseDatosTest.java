@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import personas.AutorEditor;
 import publicaciones.CodigosDatos;
 
 import database.BDException;
@@ -111,10 +112,10 @@ public class ConsultorBaseDatosTest {
 
 	@Test
 	public final void testBuscaAutores(){
-		Vector <String> vector = new Vector<String>();
-		vector.add(book);
-		vector.add(str1);
-		vector.add(str2);
+		Vector <AutorEditor> vector = new Vector<AutorEditor>();
+		vector.add(new AutorEditor(book,null,null));
+		vector.add(new AutorEditor(str1,null,null));
+		vector.add(new AutorEditor(str2,null,null));
 		try {
 			consultor.buscaAutores(vector);
 		} catch (BDException e) {
