@@ -96,7 +96,7 @@ public class Manual extends Publication
 		else if (nombreCampo.equalsIgnoreCase("abstract") && _abstract == null)
 			_abstract = valorString;
 		else if (nombreCampo.equalsIgnoreCase("key") && key == null)
-			key = valorString;
+			key = separarKeys(valorString);
 		else if (nombreCampo.equalsIgnoreCase("year") && year == null)
 			year = valorString;
 	}
@@ -154,7 +154,7 @@ public class Manual extends Publication
 		elemento.addContent(eAbstract);
 
 		Element eKey = new Element("key");
-		eKey.addContent(key);
+		eKey.addContent(convertirTextoBibtexKeys(key));
 		elemento.addContent(eKey);
 
 		return elemento;
@@ -202,7 +202,7 @@ public class Manual extends Publication
 		if (note != null)
 			bibtex += "\tnote={" + convertirTextoBibtex(note) + "}\n";
 		if (key != null)
-			bibtex += "\tkey={" + convertirTextoBibtex(key) + "}\n";
+			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "}\n";
 		bibtex += "}";
 		
 		return bibtex;

@@ -65,7 +65,7 @@ public abstract class Publication
 	/**
 	 * Clave/s de la publicación.
 	 */
-	protected String key;
+	protected LinkedList<String> key;
 
 	/**
 	 * Usuario que ha añadido la publicación al sistema.
@@ -77,7 +77,7 @@ public abstract class Publication
 	 */
 	protected Vector<String> proyectos;
 
-	private final String separador = new String (", ");
+	public static final String separador = new String (", ");
 
 
 	/**
@@ -106,11 +106,14 @@ public abstract class Publication
 		URL = url;
 		this._abstract = _abstract;
 		this.note = note;
-		this.key = new String();
-		if (keys != null){
-			for (int i = 0;i<keys.size();i++){
-				if (i>0) key += this.separador;
-				key += keys.get(i);
+		if (keys != null)
+		{
+			if (key == null)
+				key = new LinkedList<String>();
+			for (int i = 0;i<keys.size();i++)
+			{
+				//if (i>0) key += this.separador;
+				key.add(keys.get(i));
 			}
 		}
 		this.user = user;
@@ -144,8 +147,10 @@ public abstract class Publication
 
 
 	protected void addKey(String un_key) {
-		if (this.key == null)this.key = new String();
-		if (un_key != null) this.key += un_key;	
+		if (this.key == null)
+			key = new LinkedList<String>();
+		if (un_key != null) 
+			key.add(un_key);	
 	}
 
 
@@ -207,6 +212,20 @@ public abstract class Publication
 		}
 		else
 			return null;
+	}
+	
+	protected LinkedList<String> separarKeys(String keys)
+	{
+		if (keys != null)
+		{
+			LinkedList<String> claves = new LinkedList<String>();
+			String[] keysSep = keys.split(separador);
+			int numKeys = keysSep.length;
+			for (int i = 0; i < numKeys; i++)
+				claves.add(keysSep[i]);
+			return claves;
+		}
+		else return null;		
 	}
 
 	/**
@@ -337,6 +356,23 @@ public abstract class Publication
 		}
 		return salida;
 	}
+	
+	protected String convertirTextoBibtexKeys(LinkedList<String> keys)
+	{
+		if (keys != null)
+		{
+			Iterator<String> it = keys.iterator();
+			String salida = "";
+			if (it.hasNext())
+			{
+				salida += it.next();
+				while (it.hasNext())
+					salida = salida + separador + it.next();
+			}
+			return salida;
+		}
+		else return null;
+	}
 
 	private String convertirAutorTextoBibtex(AutorEditor ae) 
 	{
@@ -364,7 +400,6 @@ public abstract class Publication
 		}
 	}
 
-
 	private boolean tieneVariasPalabras(String apellidos) 
 	{
 		return apellidos.contains(" ");
@@ -383,8 +418,9 @@ public abstract class Publication
 		return note;
 	}
 
-	public Vector<String> getKeys() throws UnimplementedException {
-		throw new UnimplementedException();
+	public LinkedList<String> getKeys()
+	{
+		return key;
 	}
 
 	public String getMonth() {
@@ -508,9 +544,9 @@ public abstract class Publication
 	 * @param key the key to set
 	 * @throws UnimplementedException 
 	 */
-	public final void setKey(Vector<String> key) throws UnimplementedException {
-		throw new UnimplementedException();
-		//this.key = key;
+	public final void setKey(LinkedList<String> key)
+	{
+		this.key = key;
 	}
 
 

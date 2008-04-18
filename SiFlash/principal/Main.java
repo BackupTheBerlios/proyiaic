@@ -3,8 +3,7 @@ package principal;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import parserFicherosBibtex.ConversorXML_Publication;
-import publicaciones.Publication;
+import parserFicherosBibtex.ParserBibtex;
 
 public class Main 
 {
@@ -14,11 +13,11 @@ public class Main
 		try
 		{
 			//-------------------------------------------------------------------------
-			/*ParserBibtex pb = new ParserBibtex();
-			//InputStream is = new FileInputStream("D:\\Rosa07.bib");
-			InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
+			ParserBibtex pb = new ParserBibtex();
+			InputStream is = new FileInputStream("D:\\pruebaKeys.bib");
+			//InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
 			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
-			pb.procesar(is, "miXML.xml");*/
+			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
 			/*ConversorXML_BBDD cb = new ConversorXML_BBDD();
@@ -60,10 +59,10 @@ public class Main
 				System.out.println(vector.get(i).getTitle());*/
 
 			//-------------------------------------------------------------------------
-			ConversorXML_Publication cp = new ConversorXML_Publication();
+			/*ConversorXML_Publication cp = new ConversorXML_Publication();
 			InputStream is = new FileInputStream("D:\\pruebasConversorXML_Publication\\unpublished.xml");
 			Publication p = cp.convertir(is);
-			System.out.println(p.getBibTeX());
+			System.out.println(p.getBibTeX());*/
 		}
 		catch (Exception e)
 		{

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -33,7 +34,7 @@ public class ConversorXML_BBDD
 	private String URL;
 	private String _abstract;
 	private String note;
-	private String key;
+	private Vector<String> key;
 	private String journal;
 	private String volume;
 	private String number;
@@ -158,7 +159,7 @@ public class ConversorXML_BBDD
 		else if (nombreCampo.equals("note"))
 			note = campo.getValue();
 		else if (nombreCampo.equals("key"))
-			key = campo.getValue();
+			key = separarKeys(campo.getValue());
 		else if (nombreCampo.equals("journal"))
 			journal = campo.getValue();
 		else if (nombreCampo.equals("volume"))
@@ -218,6 +219,20 @@ public class ConversorXML_BBDD
 		return vectorAutoresEditores;
 	}
 	
+	private Vector<String> separarKeys(String keys)
+	{
+		if (keys != null)
+		{
+			Vector<String> claves = new Vector<String>();
+			String[] keysSep = keys.split(Publication.separador);
+			int numKeys = keysSep.length;
+			for (int i = 0; i < numKeys; i++)
+				claves.add(keysSep[i]);
+			return claves;
+		}
+		else return null;		
+	}
+	
 	private String realizarConsulta() throws BDException, UnimplementedException 
 	{
 		Vector<String> years = null;
@@ -230,7 +245,7 @@ public class ConversorXML_BBDD
 		
 		
 		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
-		Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, null/*vector keys*/, true, true, true, true, true, true, true, true, true);
+		Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true);
 		
 		
 		int numPublic = vector.size();
