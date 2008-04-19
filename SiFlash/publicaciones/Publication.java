@@ -550,5 +550,5 @@ public abstract class Publication
 	}
 
 
-	public abstract Vector<String> generaInserciones();	
+	public abstract Vector<String> generaInserciones();
 }

@@ -14,6 +14,7 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
+import parserFicherosBibtex.ConversorXML_Publication;
 import personas.AutorEditor;
 import publicaciones.CodigosDatos;
 import publicaciones.Publication;
@@ -115,30 +116,15 @@ public class ConversorXML_BBDD
 		return null;
 	}
 	
-	public String procesarInsercion(InputStream input)
+	public String procesarInsercion(InputStream input) throws BDException
 	{
-		try
-		{
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(input);
-			Element root = doc.getRootElement();
-			tipoPublicaciones = Integer.parseInt(root.getAttributeValue("tipo"));
-			referencia = root.getAttributeValue("referencia");
-			List<Element> campos = root.getChildren();
-			
-			Iterator<Element> it = campos.iterator();
-			while (it.hasNext())
-				procesarCampo(it.next());
-			
-			//imprimir();
-			String salida = realizarInsercion();
-			return salida;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
+		ConversorXML_Publication conv = new ConversorXML_Publication();
+		Publication p = conv.convertir(input);
+		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
+		dbc.insertaDocumento(p);
+		
+		//Se debe retornar si ha habido éxito o no en la inserción.
+		return "true";
 	}
 
 	private void procesarCampo(Element campo) 
@@ -260,11 +246,6 @@ public class ConversorXML_BBDD
 		}
 		XMLOutputter outputter = new XMLOutputter();
 		return (outputter.outputString(new Document(root)));
-	}
-	
-	private String realizarInsercion() throws BDException, UnimplementedException 
-	{
-		return null;
 	}
 	
 	//Solo sirve para realizar pruebas.
