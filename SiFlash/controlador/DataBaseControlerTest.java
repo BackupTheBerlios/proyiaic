@@ -35,13 +35,14 @@ public class DataBaseControlerTest {
 	public void testConsultaDocumentos() {
 		Vector<Publication> v1 = new Vector<Publication>();
 		try {
-			v1 = db_controler.consultaDocumentos(CodigosDatos.codInproceedings, null, null, null, true, null, null, null, null, null, null, null, null, null, null, true, true, true, true, true, true, true, true, true);
+			v1 = db_controler.consultaDocumentos(CodigosDatos.codInproceedings & CodigosDatos.codArticle, null, null, null, true, null, null, null, null, null, null, null, null, null, null, true, true, true, true, true, true, true, true, true);
 		} catch (BDException e) {
 			fail ("BDException");
 		} catch (UnimplementedException e) {
 			// TODO Auto-generated catch block
 			fail ("UnimplmentedException");
 		}
+		if (v1.size()<1) fail ("ninguna publicacion");
 		assertTrue(true);		
 	}
 

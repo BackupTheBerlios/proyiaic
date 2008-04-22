@@ -47,6 +47,28 @@ public class Article extends Publication
    
 
 /**
+ * @param author
+ * @param journal
+ * @param volume
+ * @param number
+ * @param pages
+ * @throws UnimplementedException 
+ */
+public Article(int idDoc, String referencia, String title,
+		String year, String month, String url, String _abstract,
+		String note, Vector<String> key, String user, Vector<String> proyectos,
+		LinkedList<AutorEditor> author, String journal, String volume,
+		String number, String pages) throws UnimplementedException {
+	this.author = author;
+	this.journal = journal;
+	this.volume = volume;
+	this.number = number;
+	this.pages = pages;
+	super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note,
+			key, user, proyectos);	
+}
+
+/**
     * Crea un Article a partir de una lista de campos.
     * @param campos Campos a partir de los cuales se quiere crear el objeto.
     */
@@ -253,5 +275,95 @@ public Article(Object[] objects) throws UnimplementedException {
 	public Vector<String> generaInserciones() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public static Vector<Article> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
+		Vector <Article> vector = new Vector <Article>();
+		if (v == null) return vector;
+		for (int i=0; i< v.size();){
+			Object[] array = v.get(i);
+			int idDoc,id_aut;
+			String title,journal,volume,pages,number,year;
+			String month, note, abstracts, URL,user, referencia; 
+			String proyecto,n_aut,ap_aut,web_aut,clave;
+			LinkedList<AutorEditor> autores,editores;
+			Vector<String> proyectos = new Vector<String>();
+			Vector<String> claves = new Vector<String>();
+			autores = new LinkedList<AutorEditor>();
+			editores = new LinkedList<AutorEditor>();
+			boolean cambio_pub,escrito_edit;
+			cambio_pub = false;			
+			idDoc = ((Long) array[0]).intValue();
+			if (array[1] != null) title = (String) array[1]; else title = null;
+			if (array[2] != null) journal = (String) array[2]; else journal = null;
+			if (array[3] != null) year = (String) array[3]; else year = null;			
+			if (array[4] != null) volume = (String) array[4]; else volume = null;
+			if (array[5] != null) number = (String) array[5]; else number = null;			
+			if (array[6] != null) pages = (String) array[6]; else pages = null;
+			if (array[7] != null) month = (String) array[7]; else month = null;				
+			if (array[8] != null) note = (String) array[8]; else note = null;
+			if (array[9] != null) abstracts = (String) array[9]; else abstracts = null;
+			if (array[10] != null) URL = (String) array[10]; else URL = null;
+			if (array[11] != null) user = (String) array[11]; else user = null;
+			if (array[12] != null) referencia = (String) array[12]; else referencia = null;
+			if (array[13] != null) proyecto = (String) array[13]; else proyecto = null;
+			id_aut = ((Long) array[14]).intValue();			
+			if (array[15] != null) n_aut = (String) array[15]; else n_aut = null;
+			if (array[16] != null) ap_aut = (String) array[16]; else ap_aut = null;
+			if (array[17] != null) web_aut = (String) array[17]; else web_aut = null;
+			escrito_edit = ((Boolean) array[18]).booleanValue();
+			if (array[19] != null) clave = (String) array[19]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			if (escrito_edit == true) autores.add(autor1);
+			else editores.add(autor1);	
+			if (proyecto != null) proyectos.add(proyecto);
+			if (clave != null) claves.add(clave);
+			Article	art1 = new Article(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,journal,volume,number,pages); 
+					
+					
+
+			// Evaluamos el cambio_pub
+			i++;
+			if (i>= v.size()) cambio_pub = true;
+			else {
+				array = v.get(i);		
+				idDoc = ((Long) array[0]).intValue();
+				if (idDoc != art1.getIdDoc()) cambio_pub = true;
+				else cambio_pub = false;
+			}			
+			while (!cambio_pub){
+				if (array[18] != null) proyecto = (String) array[18]; else proyecto = null;
+				id_aut = ((Long) array[19]).intValue();			
+				if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
+				if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
+				if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
+				escrito_edit = ((Boolean) array[23]).booleanValue();
+				if (array[24] != null) clave = (String) array[24]; else clave = null;
+
+
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				if (escrito_edit == true) art1.addAutor(autor1);
+
+
+				if (proyecto != null) art1.addProyect(proyecto);
+				if (clave != null) art1.addKey(clave);
+
+				// Evaluamos el cambio de publicacion
+				i++;
+				if (i>= v.size()) cambio_pub = true;
+				else {
+					array = v.get(i);		
+					idDoc = ((Long) array[0]).intValue();
+					if (idDoc != art1.getIdDoc()) cambio_pub = true;
+					else cambio_pub = false;
+				}					
+			}							
+		}
+		return vector;
+	}
+	
+	public void addAutor(AutorEditor e){
+		if (!author.contains(e)) author.add(e);
 	}
 }
