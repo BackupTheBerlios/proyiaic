@@ -380,4 +380,10 @@ public class DataBaseControler
 	{
 		if (true)throw new UnimplementedException();
 	}
+	
+	
+	public String verificaUsuario(String nombre, String password) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	{
+		return consultor.getTipoUser(nombre, password);
+	}
 }

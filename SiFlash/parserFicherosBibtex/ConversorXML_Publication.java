@@ -40,7 +40,7 @@ public class ConversorXML_Publication
 			Document doc;
 			doc = builder.build(input);
 			Element root = doc.getRootElement();
-			String tipoPublicacion = root.getAttributeValue("tipoPublicacion");
+			String tipoPublicacion = root.getAttributeValue("tipo");
 			
 			LinkedList<Campo> listaCampos = new LinkedList<Campo>();
 			String referencia = root.getAttributeValue("referencia");

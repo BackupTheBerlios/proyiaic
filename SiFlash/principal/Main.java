@@ -13,11 +13,11 @@ public class Main
 		try
 		{
 			//-------------------------------------------------------------------------
-			ParserBibtex pb = new ParserBibtex();
-			InputStream is = new FileInputStream("D:\\pruebaKeys.bib");
+			/*ParserBibtex pb = new ParserBibtex();
+			InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
 			//InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
 			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
-			pb.procesar(is, "miXML.xml");
+			pb.procesar(is, "miXML.xml");*/
 			
 			//-------------------------------------------------------------------------
 			/*ConversorXML_BBDD cb = new ConversorXML_BBDD();

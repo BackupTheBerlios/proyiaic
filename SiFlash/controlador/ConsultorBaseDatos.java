@@ -623,4 +623,13 @@ class ConsultorBaseDatos
 		}
 		return v_res;
 	}
+
+	public String getTipoUser(String nombre, String password) 
+	{
+		/*Debe comprobar si el usuario y la contraseña son correctos.
+		Si no lo son, debe retornar null.
+		Si lo son, debe retornar una de estas tres cadenas: "usuario_normal", "jefe_de_proyecto" o "administrador"
+		dependiendo del tipo de usuario que sea.*/
+		return null;
+	}
 }
