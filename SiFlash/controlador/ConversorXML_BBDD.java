@@ -103,7 +103,8 @@ public class ConversorXML_BBDD
 			
 			Iterator<Element> it = campos.iterator();
 			while (it.hasNext())
-				procesarCampo(it.next());
+				if (!it.next().getValue().equals(""))
+					procesarCampo(it.next());
 			
 			//imprimir();
 			String salida = realizarConsulta();

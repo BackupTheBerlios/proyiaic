@@ -3,7 +3,7 @@ package principal;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import parserFicherosBibtex.ParserBibtex;
+import controlador.ConversorXML_BBDD;
 
 public class Main 
 {
@@ -20,10 +20,10 @@ public class Main
 			pb.procesar(is, "miXML.xml");*/
 			
 			//-------------------------------------------------------------------------
-			/*ConversorXML_BBDD cb = new ConversorXML_BBDD();
-			InputStream is = new FileInputStream("D:\\datos.xml");
+			ConversorXML_BBDD cb = new ConversorXML_BBDD();
+			InputStream is = new FileInputStream("D:\\prueba.xml");
 			String salida = cb.procesarConsulta(is);
-			System.out.println(salida);*/
+			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
