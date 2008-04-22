@@ -104,8 +104,11 @@ public class ConversorXML_BBDD
 			
 			Iterator<Element> it = campos.iterator();
 			while (it.hasNext())
-				if (!it.next().getValue().equals(""))
-					procesarCampo(it.next());
+			{
+				Element actual = it.next();
+				if (!actual.getValue().equals(""))
+					procesarCampo(actual);
+			}
 			
 			//imprimir();
 			String salida = realizarConsulta();
@@ -169,7 +172,7 @@ public class ConversorXML_BBDD
 		else if (nombreCampo.equals("booktitle"))
 			booktitle = campo.getValue();
 		else if (nombreCampo.equals("crossref"))
-			crossref = campo.getValue();
+			crossref = campo.getValue();//null;
 		else if (nombreCampo.equals("organization"))
 			organization = campo.getValue();
 		else if (nombreCampo.equals("chapter"))

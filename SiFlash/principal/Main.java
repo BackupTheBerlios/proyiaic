@@ -21,7 +21,7 @@ public class Main
 			
 			//-------------------------------------------------------------------------
 			ConversorXML_BBDD cb = new ConversorXML_BBDD();
-			InputStream is = new FileInputStream("D:\\prueba.xml");
+			InputStream is = new FileInputStream("D:\\Archivos de programa\\Apache Software Foundation\\Tomcat 6.0\\prueba.xml");
 			String salida = cb.procesarConsulta(is);
 			System.out.println(salida);
 
