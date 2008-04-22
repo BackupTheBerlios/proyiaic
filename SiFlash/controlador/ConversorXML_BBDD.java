@@ -98,7 +98,8 @@ public class ConversorXML_BBDD
 			Document doc = builder.build(input);
 			Element root = doc.getRootElement();
 			tipoPublicaciones = Integer.parseInt(root.getAttributeValue("tipoPublicaciones"));
-			referencia = root.getAttributeValue("referencia");
+			if (!root.getAttributeValue("referencia").equals(""))
+				referencia = root.getAttributeValue("referencia");
 			List<Element> campos = root.getChildren();
 			
 			Iterator<Element> it = campos.iterator();
