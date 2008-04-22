@@ -12,6 +12,7 @@ import org.junit.Test;
 import personas.AutorEditor;
 import publicaciones.CodigosDatos;
 import publicaciones.InProceedings;
+import publicaciones.Publication;
 import temporal.UnimplementedException;
 
 import database.BDException;
@@ -32,10 +33,9 @@ public class DataBaseControlerTest {
 
 	@Test
 	public void testConsultaDocumentos() {
-		Vector <String> v1 = new Vector<String>();
-		v1.add("str1");
+		Vector<Publication> v1 = new Vector<Publication>();
 		try {
-			db_controler.consultaDocumentos(CodigosDatos.codInproceedings, null, null, null, true, null, null, null, null, null, null, null, null, null, null, true, true, true, true, true, true, true, true, true);
+			v1 = db_controler.consultaDocumentos(CodigosDatos.codInproceedings, null, null, null, true, null, null, null, null, null, null, null, null, null, null, true, true, true, true, true, true, true, true, true);
 		} catch (BDException e) {
 			fail ("BDException");
 		} catch (UnimplementedException e) {
