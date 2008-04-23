@@ -343,7 +343,7 @@ public class Proceedings extends Publication
 			escrito_edit = ((Boolean) array[21]).booleanValue();
 			if (array[22] != null) clave = (String) array[22]; else clave = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
-			if (escrito_edit == false) editores.add(autor1);	
+			if (escrito_edit == true) editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
 			Proceedings pr1 = new Proceedings(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,booktitle,editores,volume,Integer.toString(number),series,address,organization,publisher);

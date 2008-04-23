@@ -348,8 +348,7 @@ public class Book extends Publication
 		return null;
 	}
 
-	public static Vector<Book> generaPub(Vector<Object[]> v) throws UnimplementedException {
-		// BOOK1.idDoc, BOOK1.title, BOOK1.publisher, BOOK1.year, BOOK1.volume, BOOK1.number, BOOK1.series, BOOK1.address, BOOK1.edition, BOOK1.month, BOOK1.note, BOOK1.abstract, BOOK1.URL, BOOK1.user, BOOK1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM book AS BOOK1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = BOOK1.idDoc AND EEX1.idDoc = BOOK1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = BOOK1.idDoc"
+	public static Vector<Book> generaPub(Vector<Object[]> v) throws UnimplementedException {		
 		Vector <Book> vector = new Vector <Book>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){

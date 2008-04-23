@@ -185,8 +185,97 @@ public class Unpublished extends Publication
 		return null;
 	}
 
-	public static Vector<Unpublished> generaPub(Vector<Object[]> v) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Vector<Unpublished> generaPub(Vector<Object[]> v) throws UnimplementedException {
+		//"SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc"
+		//"SELECT DISTINCT UNP1.idDoc, UNP1.title, UNP1.month, UNP1.year, UNP1.note, UNP1.abstract, UNP1.URL, UNP1.user, UNP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM unpublished AS UNP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = UNP1.idDoc AND EEX1.idDoc = UNP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = UNP1.idDoc"
+		Vector <Unpublished> vector = new Vector <Unpublished>();
+		if (v == null) return vector;
+		for (int i=0; i< v.size();){
+			Object[] array = v.get(i);
+			int idDoc,year,id_aut;			
+			String month,title, note, abstracts, URL,user, referencia; 
+			String proyecto,n_aut,ap_aut,web_aut,clave;
+			LinkedList<AutorEditor> autores,editores;
+			Vector<String> proyectos = new Vector<String>();
+			Vector<String> claves = new Vector<String>();
+			autores = new LinkedList<AutorEditor>();
+			editores = new LinkedList<AutorEditor>();
+			boolean cambio_pub,escrito_edit;
+			cambio_pub = false;			
+			idDoc = ((Long) array[0]).intValue();
+			if (array[1] != null) title = (String) array[1]; else title = null;
+			if (array[2] != null) month = (String) array[2]; else month = null;
+			if (array[3] != null) year = ((Long) array[3]).intValue(); else year = -1;						
+			if (array[4] != null) note = (String) array[4]; else note = null;
+			if (array[5] != null) abstracts = (String) array[5]; else abstracts = null;
+			if (array[6] != null) URL = (String) array[6]; else URL = null;
+			if (array[7] != null) user = (String) array[7]; else user = null;
+			if (array[8] != null) referencia = (String) array[8]; else referencia = null;
+			if (array[9] != null) proyecto = (String) array[9]; else proyecto = null;
+			id_aut = ((Long) array[10]).intValue();			
+			if (array[11] != null) n_aut = (String) array[11]; else n_aut = null;
+			if (array[12] != null) ap_aut = (String) array[12]; else ap_aut = null;
+			if (array[13] != null) web_aut = (String) array[13]; else web_aut = null;
+			escrito_edit = ((Boolean) array[14]).booleanValue();
+			if (array[15] != null) clave = (String) array[15]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			if (escrito_edit == true) autores.add(autor1);
+			else editores.add(autor1);	
+			if (proyecto != null) proyectos.add(proyecto);
+			if (clave != null) claves.add(clave);
+			Unpublished unp1 = new Unpublished(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,autores);
+			vector.add(unp1);
+
+			// Evaluamos el cambio_pub
+			i++;
+			if (i>= v.size()) cambio_pub = true;
+			else {
+				array = v.get(i);		
+				idDoc = ((Long) array[0]).intValue();
+				if (idDoc != unp1.getIdDoc()) cambio_pub = true;
+				else cambio_pub = false;
+			}			
+			while (!cambio_pub){
+				if (array[9] != null) proyecto = (String) array[9]; else proyecto = null;
+				id_aut = ((Long) array[10]).intValue();			
+				if (array[11] != null) n_aut = (String) array[11]; else n_aut = null;
+				if (array[12] != null) ap_aut = (String) array[12]; else ap_aut = null;
+				if (array[13] != null) web_aut = (String) array[13]; else web_aut = null;
+				escrito_edit = ((Boolean) array[14]).booleanValue();
+				if (array[15] != null) clave = (String) array[15]; else clave = null;
+
+
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				if (escrito_edit == true) unp1.addAutor(autor1);				
+
+
+				if (proyecto != null) unp1.addProyect(proyecto);
+				if (clave != null) unp1.addKey(clave);
+
+				// Evaluamos el cambio de publicacion
+				i++;
+				if (i>= v.size()) cambio_pub = true;
+				else {
+					array = v.get(i);		
+					idDoc = ((Long) array[0]).intValue();
+					if (idDoc != unp1.getIdDoc()) cambio_pub = true;
+					else cambio_pub = false;
+				}					
+			}							
+		}
+		return vector;
 	}
+	
+	public void addAutor(AutorEditor e){
+		if (!author.contains(e)) author.add(e);
+	}
+	
+	public Unpublished(int idDoc, String referencia, String title,
+			String year, String month, String url, String _abstract,
+			String note, Vector<String> key, String user,
+			Vector<String> proyectos,LinkedList<AutorEditor> author) throws UnimplementedException {
+		this.author = author;
+		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
+				user, proyectos);
+	}	
 }
