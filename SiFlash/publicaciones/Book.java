@@ -416,7 +416,7 @@ public class Book extends Publication
 
 				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
 				if (escrito_edit == true) book1.addAutor(autor1);
-
+				else book1.addEditor(autor1);
 
 				if (proyecto != null) book1.addProyect(proyecto);
 				if (clave != null) book1.addKey(clave);
@@ -438,4 +438,8 @@ public class Book extends Publication
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
+	
+	public void addEditor(AutorEditor e){
+		if (!editor.contains(e)) author.add(e);
+	}	
 }

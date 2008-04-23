@@ -141,15 +141,15 @@ public abstract class Publication
 		if (this.proyectos == null){
 			this.proyectos = new Vector<String>();
 		}
-		if (un_proyecto != null) this.proyectos.add(un_proyecto);
+		if (un_proyecto != null && !proyectos.contains(un_proyecto)) this.proyectos.add(un_proyecto);
 
 	}
 
 
 	protected void addKey(String un_key) {
 		if (this.key == null)
-			key = new LinkedList<String>();
-		if (un_key != null) 
+			key = new LinkedList<String>();			
+		if (un_key != null && !key.contains(un_key)) 			
 			key.add(un_key);	
 	}
 

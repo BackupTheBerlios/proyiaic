@@ -297,10 +297,10 @@ public Article(Object[] objects) throws UnimplementedException {
 			idDoc = ((Long) array[0]).intValue();
 			if (array[1] != null) title = (String) array[1]; else title = null;
 			if (array[2] != null) journal = (String) array[2]; else journal = null;
-			if (array[3] != null) year = (String) array[3]; else year = null;			
+			if (array[3] != null) year = ((Long) array[3]).toString(); else year = null;			
 			if (array[4] != null) volume = (String) array[4]; else volume = null;
-			if (array[5] != null) number = (String) array[5]; else number = null;			
-			if (array[6] != null) pages = (String) array[6]; else pages = null;
+			if (array[5] != null) number = ((Long) array[5]).toString(); else number = null;			
+			if (array[6] != null) pages = ((Long) array[6]).toString(); else pages = null;
 			if (array[7] != null) month = (String) array[7]; else month = null;				
 			if (array[8] != null) note = (String) array[8]; else note = null;
 			if (array[9] != null) abstracts = (String) array[9]; else abstracts = null;
@@ -320,7 +320,7 @@ public Article(Object[] objects) throws UnimplementedException {
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
 			Article	art1 = new Article(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,journal,volume,number,pages); 
-					
+			vector.add(art1);		
 					
 
 			// Evaluamos el cambio_pub
@@ -333,13 +333,13 @@ public Article(Object[] objects) throws UnimplementedException {
 				else cambio_pub = false;
 			}			
 			while (!cambio_pub){
-				if (array[18] != null) proyecto = (String) array[18]; else proyecto = null;
-				id_aut = ((Long) array[19]).intValue();			
-				if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
-				if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
-				if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-				escrito_edit = ((Boolean) array[23]).booleanValue();
-				if (array[24] != null) clave = (String) array[24]; else clave = null;
+				if (array[13] != null) proyecto = (String) array[13]; else proyecto = null;
+				id_aut = ((Long) array[14]).intValue();			
+				if (array[15] != null) n_aut = (String) array[15]; else n_aut = null;
+				if (array[16] != null) ap_aut = (String) array[16]; else ap_aut = null;
+				if (array[17] != null) web_aut = (String) array[17]; else web_aut = null;
+				escrito_edit = ((Boolean) array[18]).booleanValue();
+				if (array[19] != null) clave = (String) array[19]; else clave = null;
 
 
 				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
