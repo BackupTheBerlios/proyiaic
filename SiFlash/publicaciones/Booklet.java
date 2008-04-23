@@ -219,4 +219,9 @@ public class Booklet extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static Vector<Booklet> generaPub(Vector<Object[]> v) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
