@@ -3,7 +3,7 @@ package principal;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import controlador.ConversorXML_BBDD;
+import parserFicherosBibtex.ParserBibtex;
 
 public class Main 
 {
@@ -13,17 +13,17 @@ public class Main
 		try
 		{
 			//-------------------------------------------------------------------------
-			/*ParserBibtex pb = new ParserBibtex();
+			ParserBibtex pb = new ParserBibtex();
 			InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
 			//InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
 			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
-			pb.procesar(is, "miXML.xml");*/
+			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
-			ConversorXML_BBDD cb = new ConversorXML_BBDD();
-			InputStream is = new FileInputStream("D:\\Archivos de programa\\Apache Software Foundation\\Tomcat 6.0\\prueba.xml");
-			String salida = cb.procesarConsulta(is);
-			System.out.println(salida);
+			//ConversorXML_BBDD cb = new ConversorXML_BBDD();
+//			InputStream is = new FileInputStream("D:\\Archivos de programa\\Apache Software Foundation\\Tomcat 6.0\\prueba.xml");
+//			String salida = cb.procesarConsulta(is);
+//			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);

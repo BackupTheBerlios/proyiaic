@@ -388,7 +388,8 @@ public class ParserBibtex
 				nivel++;
 		while (!(actual == hasta && nivel == 0))
 		{
-			nuevoString += actual;
+			if (!(actual == '\n' || actual == '\t' || actual == '\r' || (actual == ' ' && nuevoString.length() > 0 && nuevoString.charAt(nuevoString.length()-1) == ' ')))
+				nuevoString += actual;
 			actual = (char)is.read();
 			if (actual == hasta)
 				nivel--;
