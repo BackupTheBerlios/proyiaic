@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="Scripts_SQL/|jdom/" path="" kind="src"/>
+	<classpathentry excluding="Scripts_SQL/|jdom/|mysql-connector-java-5.1.5-bin/" path="" kind="src"/>
 	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true" kind="con"/>
 	<classpathentry path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4" kind="con"/>
-	<classpathentry path="Librerias/mysql-connector-java-5.1.5-bin.jar" kind="lib"/>
 	<classpathentry path="jdom" kind="lib"/>
+	<classpathentry path="mysql-connector-java-5.1.5-bin" kind="lib"/>
 	<classpathentry path="bin" kind="output"/>
 </classpath>
