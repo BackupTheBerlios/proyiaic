@@ -184,4 +184,9 @@ public class Unpublished extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static Vector<Unpublished> generaPub(Vector<Object[]> v) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
