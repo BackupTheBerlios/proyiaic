@@ -466,7 +466,7 @@ public class Conference extends Publication
 	}
 
 	public void addEditor(AutorEditor e){
-		if (!editor.contains(e)) author.add(e);
+		if (!editor.contains(e)) editor.add(e);
 	}
 	
 	public Conference(int idDoc, String referencia, String title,

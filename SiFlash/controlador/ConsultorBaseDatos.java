@@ -213,7 +213,7 @@ class ConsultorBaseDatos
 
 	private Vector<Booklet> getBooklets(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String ("SELECT DISTINCT BOOK1.idDoc, BOOK1.title, BOOK1.howpublished, BOOK1.address, BOOK1.month, BOOK1.year, BOOK1.note, BOOK1.abstract, BOOK1.URL, BOOK1.user, BOOK1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM bookleet AS BOOK1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = BOOK1.idDoc AND EEX1.idDoc = BOOK1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = BOOK1.idDoc");
-		consulta += this.creaConsulta("BOOK1", authors, null, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
+		consulta += this.creaConsulta("BOOK1", authors, null, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += " ORDER BY BOOK1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <Booklet> vector = Booklet.generaPub(v);		
@@ -231,7 +231,7 @@ class ConsultorBaseDatos
 
 	private Vector<InBook> getInbooks(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
 		String consulta = new String ("SELECT DISTINCT INB1.idDoc, INB1.title, INB1.edition, INB1.year, INB1.type, INB1.volume, INB1.number, INB1.series, INB1.pages, INB1.address, INB1.month, INB1.chapter, INB1.publisher, INB1.note, INB1.abstract, INB1.URL, INB1.user, INB1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM inbook AS INB1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = INB1.idDoc AND EEX1.idDoc = INB1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = INB1.idDoc");
-		consulta += this.creaConsulta("INB1", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);	   
+		consulta += this.creaConsulta("INB1", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
 		consulta += " ORDER BY INB1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
 		Vector <InBook> vector = InBook.generaPub(v);
@@ -239,15 +239,11 @@ class ConsultorBaseDatos
 	}   
 
 	private Vector<InCollection> getIncollection(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
-		String consulta = new String("SELECT * FROM incollection");
-		consulta += this.creaConsulta("incollection", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
-		consulta += ";";
+		String consulta = new String ("SELECT DISTINCT INC1.idDoc, INC1.title, INC1.booktitle, INC1.year, INC1.crossref, INC1.volume, INC1.number, INC1.series, INC1.pages, INC1.address, INC1.month, INC1.organization, INC1.publisher, INC1.note, INC1.abstract, INC1.URL, INC1.user, INC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave, INC1.chapter, INC1.edition FROM incollection AS INC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = INC1.idDoc AND EEX1.idDoc = INC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = INC1.idDoc");
+		consulta += this.creaConsulta("INC1", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);	   
+		consulta += " ORDER BY INC1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
-		Vector<InCollection> vector = new Vector<InCollection>();
-		for (int i= 0; i< v.size();i++){
-			InCollection incollection = new InCollection (v.get(i));
-			vector.add(incollection);
-		}
+		Vector <InCollection> vector = InCollection.generaPub(v);
 		return vector;
 	}
 
@@ -261,71 +257,48 @@ class ConsultorBaseDatos
 	}
 
 	private Vector<Manual> getManuals(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
-		String consulta = new String ("SELECT * FROM manual");
-		consulta += this.creaConsulta("manual", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
-		consulta += ";";
+		String consulta = new String ("SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc");
+		consulta += this.creaConsulta("MAN1", authors, null, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
+		consulta += " ORDER BY MAN1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
-		Vector<Manual> vector = new Vector<Manual>();
-		for (int i= 0; i< v.size();i++){
-			Manual manual = new Manual(v.get(i));
-			vector.add (manual);
-		}
+		Vector <Manual> vector = Manual.generaPub(v);		
 		return vector;
 	}   
 
 	private Vector<MastersThesis> getMasterThesis(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
-		String consulta = new String ("SELECT * FROM mastersthesis");
-		consulta += this.creaConsulta("mastersthesis", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle);
-		consulta += ";";
+		String consulta = new String ("SELECT DISTINCT MAS1.idDoc, MAS1.title, MAS1.type, MAS1.school, MAS1.address, MAS1.month, MAS1.year, MAS1.note, MAS1.abstract, MAS1.URL, MAS1.user, MAS1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM mastersthesis AS MAS1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAS1.idDoc AND EEX1.idDoc = MAS1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAS1.idDoc");
+		consulta += this.creaConsulta("MAS1", authors, null, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle);
+		consulta += " ORDER BY MAS1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
-		Vector <MastersThesis> vector = new Vector<MastersThesis>();
-		for (int i= 0; i< v.size();i++){
-			MastersThesis mastersthesis = new MastersThesis(v.get(i));
-			vector.add(mastersthesis);
-		}
+		Vector <MastersThesis> vector = MastersThesis.generaPub(v);		
 		return vector;
 	}   
 
 	private Vector<Misc> getMiscs(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
-		String tabla = "misc";
-		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
-		consulta += ";";
+		String consulta = new String ("SELECT DISTINCT MISC1.idDoc, MISC1.title, MISC1.howpublished, MISC1.month, MISC1.year, MISC1.note, MISC1.abstract, MISC1.URL, MISC1.user, MISC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM misc AS MISC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MISC1.idDoc AND EEX1.idDoc = MISC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MISC1.idDoc");
+		consulta += this.creaConsulta("MISC1", authors, null, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle);
+		consulta += " ORDER BY MISC1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
-		Vector <Misc> vector = new Vector<Misc>();
-		for (int i= 0; i< v.size();i++){
-			Misc publicacion = new Misc(v.get(i));
-			vector.add(publicacion);
-		}
-		return vector;	   
+		Vector <Misc> vector = Misc.generaPub(v);		
+		return vector;  
 	}
 
 	private Vector<PhdThesis> getPhdThesis(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
-		String tabla = "phdthesis";
-		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle);
-		consulta += ";";
+		String consulta = new String ("SELECT DISTINCT PHD1.idDoc, PHD1.title, PHD1.type, PHD1.school, PHD1.address, PHD1.month, PHD1.year, PHD1.note, PHD1.abstract, PHD1.URL, PHD1.user, PHD1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM phdthesis AS PHD1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = PHD1.idDoc AND EEX1.idDoc = PHD1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = PHD1.idDoc");
+		consulta += this.creaConsulta("PHD1", authors, null, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle);
+		consulta += " ORDER BY PHD1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
-		Vector <PhdThesis> vector = new Vector<PhdThesis>();
-		for (int i= 0; i< v.size();i++){
-			PhdThesis publicacion = new PhdThesis(v.get(i));
-			vector.add(publicacion);
-		}
-		return vector;	 	   
+		Vector <PhdThesis> vector = PhdThesis.generaPub(v);		
+		return vector; 	   
 	}
 
 	private Vector<Proceedings> getProceedings(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{
-		String tabla = "proceedings";
-		String consulta = new String ("SELECT * FROM "+ tabla);
-		consulta += this.creaConsulta(tabla, authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
-		consulta += ";";
+		String consulta = new String ("SELECT DISTINCT PROC1.idDoc, PROC1.title, PROC1.booktitle, PROC1.year, PROC1.volume, PROC1.number, PROC1.series, PROC1.address, PROC1.month, PROC1.organization, PROC1.publisher, PROC1.note, PROC1.abstract, PROC1.URL, PROC1.user, PROC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM proceedings AS PROC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = PROC1.idDoc AND EEX1.idDoc = PROC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = PROC1.idDoc");
+		consulta += this.creaConsulta("PROC1", null, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle);
+		consulta += " ORDER BY PROC1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta);
-		Vector <Proceedings> vector = new Vector<Proceedings>();
-		for (int i= 0; i< v.size();i++){
-			Proceedings publicacion = new Proceedings(v.get(i));
-			vector.add(publicacion);
-		}
-		return vector;	 	   
+		Vector <Proceedings> vector = Proceedings.generaPub(v);
+		return vector; 	   
 	}   
 
 	private Vector<TechReport> getTechReports(final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization) throws BDException, UnimplementedException{

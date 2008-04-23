@@ -201,4 +201,9 @@ public class Misc extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static Vector<Misc> generaPub(Vector<Object[]> v) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

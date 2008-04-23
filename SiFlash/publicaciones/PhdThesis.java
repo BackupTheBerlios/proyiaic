@@ -235,4 +235,9 @@ public class PhdThesis extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static Vector<PhdThesis> generaPub(Vector<Object[]> v) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

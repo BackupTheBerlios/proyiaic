@@ -235,4 +235,9 @@ public class Manual extends Publication
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static Vector<Manual> generaPub(Vector<Object[]> v) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -484,7 +484,7 @@ public class InProceedings extends Publication
 	}
 
 	public void addEditor(AutorEditor e){
-		if (!editor.contains(e)) author.add(e);
+		if (!editor.contains(e)) editor.add(e);
 	}
 
 	@Override
