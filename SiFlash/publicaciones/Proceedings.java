@@ -142,7 +142,7 @@ public class Proceedings extends Publication
 	public Element generarElementoXML()
 	{
 		Element elemento = new Element("publication");
-		elemento.setAttribute ("tipo", "Article");
+		elemento.setAttribute ("tipo", "Proceedings");
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
 
