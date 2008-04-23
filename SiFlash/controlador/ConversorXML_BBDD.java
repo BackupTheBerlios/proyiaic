@@ -116,9 +116,9 @@ public class ConversorXML_BBDD
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			return "</exception tipo=\"" +  e.getMessage() + "\">";
 		}
-		return null;
+		
 	}
 	
 	public String procesarInsercion(InputStream input) throws BDException
