@@ -569,7 +569,7 @@ public abstract class Publication
 		vector.add(str1);
 		while (keysit.hasNext()){
 			String k = keysit.next();
-			if (k != null && k != " "){
+			if (k != null && !k.equals(" ")){
 				str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
 				vector.add(str1);
 			}			

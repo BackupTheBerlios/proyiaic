@@ -252,10 +252,8 @@ public class DataBaseControler
 	 */
 	public void insertaDocumento(Publication publicacion) throws BDException
 	{
-		Vector<String> inserciones = publicacion.generaInserciones();
-		for (int i = 0; i<inserciones.size();i++){
-					database.exeUpdate(inserciones.get(i));
-		}
+		Vector<String> inserciones = publicacion.generaInserciones();		
+		database.exeUpdates(inserciones);
 	}
 
 	/**

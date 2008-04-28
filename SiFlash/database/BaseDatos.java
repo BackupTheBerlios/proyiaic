@@ -179,6 +179,49 @@ public class BaseDatos
     * @throws database.BDException Si se produce un error al realizar la modificación.
     * @roseuid 47C4988C006D
     */
+   public void exeUpdates(Vector<String> sentences) throws BDException 
+   {
+	   Connection conn = null;
+		try
+		{
+			try {
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+			} catch (InstantiationException e) {
+				throw new BDException("Fallo al instanciar el driver de la conexion.");
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				throw new BDException("Fallo al intentar acceder al driver de la conexión.");
+			}
+			conn = DriverManager.getConnection(URL(),login,password);
+			
+			
+			if (conn != null)
+			{
+				Statement stmt = conn.createStatement();
+				if (sentences != null){
+					for (int i=0;i<sentences.size();i++) 
+						stmt.executeUpdate(sentences.get(i));
+				}				
+				stmt.close();
+				conn.close();
+			}
+		}
+		catch(SQLException ex)
+		{
+			throw new BDException("Fallo al ejecutar la modificiación en la base de datos.");
+		}
+		catch(ClassNotFoundException ex)
+		{
+			throw new BDException("Fallo al buscar el driver. ");
+		}	    
+   }   
+   
+   /**
+    * Método para realizar una modificación sobre la base de datos.
+    * @param sentence - String que la operación a realizar.
+    * @throws database.BDException Si se produce un error al realizar la modificación.
+    * @roseuid 47C4988C006D
+    */
    public void exeUpdate(String sentence) throws BDException 
    {
 	   Connection conn = null;

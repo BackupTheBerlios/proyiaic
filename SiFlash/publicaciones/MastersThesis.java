@@ -233,7 +233,7 @@ public class MastersThesis extends Publication
 	@Override
 	public Vector<String> generaInserciones() {
 		Vector <String> vector = new Vector <String>();
-		String str1 = new String ("INSERT INTO masterthesis VALUES (");
+		String str1 = new String ("INSERT INTO mastersthesis VALUES (");
 		str1 += Integer.toString(getIdDoc());
 		
 		if (getTitle()!= null)
