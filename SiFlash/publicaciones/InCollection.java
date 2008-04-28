@@ -107,7 +107,7 @@ public class InCollection extends Publication
 				LinkedList<AutorEditor> valor = ((CampoPublicacionAutorEditor)campo).getValor();
 				insertar(nombreCampo, valor);
 			}
-				
+
 		}
 	}
 
@@ -171,7 +171,7 @@ public class InCollection extends Publication
 		else if (nombreCampo.equalsIgnoreCase("editors") && editor == null)
 			editor = valor;
 	}
-	
+
 	/**
 	 * Genera un elemento XML con la información del objeto.
 	 * @return El elemento generado.
@@ -336,7 +336,7 @@ public class InCollection extends Publication
 		if (key != null)
 			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "}\n";
 		bibtex += "}";
-		
+
 		return bibtex;
 	}
 
@@ -408,10 +408,110 @@ public class InCollection extends Publication
 
 	@Override
 	public Vector<String> generaInserciones() {
-		// TODO Auto-generated method stub
-		return null;
+		Vector <String> vector = new Vector <String>();
+		String str1 = new String ("INSERT INTO incollection VALUES (");
+		str1 += Integer.toString(getIdDoc());
+
+		if (getTitle()!= null)
+			str1 += ",'" + getTitle() + "'";
+		else str1+= ",null";
+
+		if (getBooktitle()!=null)
+			str1 += ",'" + getBooktitle() + "'";
+		else str1+= ",null";
+
+		if(getPublisher()!=null)
+			str1 += ",'" + getPublisher() + "'";
+		else str1+= ",null";
+
+		if (getYear()!=null)
+			str1 += ",'" + getYear() + "'";
+		else str1+= ",null";
+
+		if (getCrossref()!=null)
+			str1 += ",'" + getCrossref() + "'";
+		else str1+= ",null";
+
+		if(getVolume()!=null)
+			str1 += ",'" + getVolume() + "'";
+		else str1+= ",null";
+
+		if(getNumber()!=null)
+			str1 += ",'" + getNumber() + "'";
+		else str1+= ",null";
+
+		if(getSeries()!=null)
+			str1 += ",'" + getSeries() + "'";
+		else str1+= ",null";
+
+		if(getType()!=null)
+			str1 += ",'" + getType() + "'";
+		else str1+= ",null";
+
+		if(getChapter()!=null)
+			str1 += ",'" + getChapter() + "'";
+		else str1+= ",null";		
+
+		if(getPages()!=null)
+			str1 += ",'" + getPages() + "'";
+		else str1+= ",null";
+
+		if(getAddress()!=null)
+			str1 += ",'" + getAddress() + "'";
+		else str1+= ",null";
+
+		if(getEdition()!=null)
+			str1 += ",'" + getEdition() + "'";
+		else str1+= ",null";		
+
+		if(getMonth()!=null)
+			str1 += ",'" + getMonth() + "'";
+		else str1+= ",null";		
+
+		if(getNote()!=null)
+			str1 += ",'" + getNote() + "'";
+		else str1+= ",null";
+
+		if(get_abstract()!=null)
+			str1 += ",'" + get_abstract() + "'";
+		else str1+= ",null";
+
+		if(getURL()!=null)
+			str1 += ",'" + getURL() + "'";
+		else str1+= ",null";
+
+		if(getUser()!=null)
+			str1 += ",'" + getUser() + "'";
+		else str1+= ",null";
+
+		if(getReferencia()!=null)
+			str1 += ",'" + getReferencia() + "'";
+		else str1+= ",null";
+
+		str1+=");";
+
+		vector.add(str1);	
+
+		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'incollection');");
+		vector.add(str1);
+
+		for (int i=0;i<this.author.size();i++){
+			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + author.get(i).getId() + ",TRUE);";
+			vector.add(str);
+		}
+
+		for (int i=0;i<this.editor.size();i++){
+			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + editor.get(i).getId() + ",FALSE);";
+			vector.add(str);
+		}
+
+		vector.addAll(super.generaInserciones());
+
+		return vector; 
 	}
-	
+
 	public static Vector<InCollection> generaPub(Vector<Object[]> v) throws UnimplementedException {
 		Vector <InCollection> vector = new Vector <InCollection>();
 		if (v == null) return vector;
@@ -503,7 +603,7 @@ public class InCollection extends Publication
 		}
 		return vector;
 	}
-	
+
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
@@ -511,7 +611,7 @@ public class InCollection extends Publication
 	public void addEditor(AutorEditor e){
 		if (!editor.contains(e)) editor.add(e);
 	}
-	
+
 	public InCollection(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,

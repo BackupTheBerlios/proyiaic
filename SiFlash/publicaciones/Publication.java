@@ -4,6 +4,7 @@ package publicaciones;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Vector;
 
 import org.jdom.Element;
@@ -106,7 +107,7 @@ public abstract class Publication
 		URL = url;
 		this._abstract = _abstract;
 		this.note = note;
-		if (keys != null)
+		if (keys != null && keys.size() > 0)
 		{
 			if (key == null)
 				key = new LinkedList<String>();
@@ -420,6 +421,10 @@ public abstract class Publication
 
 	public LinkedList<String> getKeys()
 	{
+		if (key == null){
+			key = new LinkedList<String>();
+			key.add (new String (" "));
+		}
 		return key;
 	}
 
@@ -550,5 +555,26 @@ public abstract class Publication
 	}
 
 
-	public abstract Vector<String> generaInserciones();
+	public Vector<String> generaInserciones(){
+		String str1;
+		Vector <String> vector = new Vector<String>();
+		
+		for(int i=0;i<this.proyectos.size();i++){
+			String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
+			str += ",'" + proyectos.get(i) + "');";
+			vector.add(str);
+		}		
+		ListIterator <String> keysit = this.getKeys().listIterator();
+		str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
+		vector.add(str1);
+		while (keysit.hasNext()){
+			String k = keysit.next();
+			if (k != null && k != " "){
+				str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
+				vector.add(str1);
+			}			
+		}
+		
+		return vector;
+	}
 }

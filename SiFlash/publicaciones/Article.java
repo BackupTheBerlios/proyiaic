@@ -273,9 +273,76 @@ public Article(Object[] objects) throws UnimplementedException {
 
 	@Override
 	public Vector<String> generaInserciones() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Vector <String> vector = new Vector <String>();
+		String str1 = new String ("INSERT INTO article VALUES (");
+		str1 += Integer.toString(getIdDoc());
+		
+		if (getTitle()!= null)
+		str1 += ",'" + getTitle() + "'";
+		else str1+= ",null";
+		
+		if (getJournal()!=null)
+		str1 += ",'" + getJournal() + "'";
+		else str1+= ",null";
+		
+		if (getYear()!=null)
+		str1 += ",'" + getYear() + "'";
+		else str1+= ",null";
+		
+		if(getVolume()!=null)
+		str1 += ",'" + getVolume() + "'";
+		else str1+= ",null";
+		
+		if(getNumber()!=null)
+		str1 += ",'" + getNumber() + "'";
+		else str1+= ",null";
+		
+		if(getPages()!=null)
+		str1 += ",'" + getPages() + "'";
+		else str1+= ",null";
+		
+		
+		if(getMonth()!=null)
+		str1 += ",'" + getMonth() + "'";
+		else str1+= ",null";
+		
+		if(getNote()!=null)
+		str1 += ",'" + getNote() + "'";
+		else str1+= ",null";
+		
+		if(get_abstract()!=null)
+		str1 += ",'" + get_abstract() + "'";
+		else str1+= ",null";
+		
+		if(getURL()!=null)
+		str1 += ",'" + getURL() + "'";
+		else str1+= ",null";
+		
+		if(getUser()!=null)
+		str1 += ",'" + getUser() + "'";
+		else str1+= ",null";
+		
+		if(getReferencia()!=null)
+		str1 += ",'" + getReferencia() + "'";
+		else str1+= ",null";
+		
+		str1+=");";
+			
+		vector.add(str1);		
+		
+		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
+		vector.add(str1);		
+				
+		for (int i=0;i<this.author.size();i++){
+			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + author.get(i).getId() + ",TRUE);";
+			vector.add(str);
+		}
+		
+		vector.addAll(super.generaInserciones());
+			
+		return vector; 
+	}	
 
 	public static Vector<Article> generaPub(Vector<Object[]> v) throws UnimplementedException {
 	//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"

@@ -62,7 +62,7 @@ public class Manual extends Publication
 				LinkedList<AutorEditor> valor = ((CampoPublicacionAutorEditor)campo).getValor();
 				insertar(nombreCampo, valor);
 			}
-				
+
 		}
 	}
 
@@ -106,7 +106,7 @@ public class Manual extends Publication
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
 			author = valor;
 	}
-	
+
 	/**
 	 * Genera un elemento XML con la información del objeto.
 	 * @return El elemento generado.
@@ -204,7 +204,7 @@ public class Manual extends Publication
 		if (key != null)
 			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "}\n";
 		bibtex += "}";
-		
+
 		return bibtex;
 	}
 
@@ -232,8 +232,70 @@ public class Manual extends Publication
 
 	@Override
 	public Vector<String> generaInserciones() {
-		// TODO Auto-generated method stub
-		return null;
+		Vector <String> vector = new Vector <String>();
+		String str1 = new String ("INSERT INTO manual VALUES (");
+		str1 += Integer.toString(getIdDoc());
+
+		if (getTitle()!= null)
+			str1 += ",'" + getTitle() + "'";
+		else str1+= ",null";
+
+		if (getOrganization()!=null)
+			str1 += ",'" + getOrganization() + "'";
+		else str1+= ",null";
+
+		if(getAddress()!=null)
+			str1 += ",'" + getAddress() + "'";
+		else str1+= ",null";		
+
+		if(getEdition()!=null)
+			str1 += ",'" + getEdition() + "'";
+		else str1+= ",null";		
+
+		if(getMonth()!=null)
+			str1 += ",'" + getMonth() + "'";
+		else str1+= ",null";
+
+		if (getYear()!=null)
+			str1 += ",'" + getYear() + "'";
+		else str1+= ",null";
+
+		if(getNote()!=null)
+			str1 += ",'" + getNote() + "'";
+		else str1+= ",null";
+
+		if(get_abstract()!=null)
+			str1 += ",'" + get_abstract() + "'";
+		else str1+= ",null";
+
+		if(getURL()!=null)
+			str1 += ",'" + getURL() + "'";
+		else str1+= ",null";
+
+		if(getUser()!=null)
+			str1 += ",'" + getUser() + "'";
+		else str1+= ",null";
+
+		if(getReferencia()!=null)
+			str1 += ",'" + getReferencia() + "'";
+		else str1+= ",null";
+
+		str1+=");";
+
+		vector.add(str1);	
+
+		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'manual');");
+		vector.add(str1);
+
+		for (int i=0;i<this.author.size();i++){
+			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + author.get(i).getId() + ",TRUE);";
+			vector.add(str);
+		}
+
+		vector.addAll(super.generaInserciones());
+
+		return vector; 
 	}
 
 	public static Vector<Manual> generaPub(Vector<Object[]> v) throws UnimplementedException {
@@ -319,11 +381,11 @@ public class Manual extends Publication
 		}
 		return vector;
 	}
-	
+
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
-	
+
 	public Manual(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,

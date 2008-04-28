@@ -563,13 +563,10 @@ public class InProceedings extends Publication
 		
 		str1+=");";
 			
-		vector.add(str1);
+		vector.add(str1);	
 		
-		for(int i=0;i<this.proyectos.size();i++){
-			String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
-			str += ",'" + proyectos.get(i) + "');";
-			vector.add(str);
-		}
+		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'inproceedings');");
+		vector.add(str1);
 				
 		for (int i=0;i<this.author.size();i++){
 			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
@@ -583,9 +580,8 @@ public class InProceedings extends Publication
 			vector.add(str);
 		}
 		
-		str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
-		vector.add(str1);
-		
+		vector.addAll(super.generaInserciones());
+			
 		return vector; 
 	}
 

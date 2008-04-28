@@ -367,8 +367,100 @@ public class Conference extends Publication
 
 	@Override
 	public Vector<String> generaInserciones() {
-		// TODO Auto-generated method stub
-		return null;
+		Vector <String> vector = new Vector <String>();
+		String str1 = new String ("INSERT INTO conference VALUES (");
+		str1 += Integer.toString(getIdDoc());
+		
+		if (getTitle()!= null)
+		str1 += ",'" + getTitle() + "'";
+		else str1+= ",null";
+		
+		if (getBooktitle()!=null)
+		str1 += ",'" + getBooktitle() + "'";
+		else str1+= ",null";
+		
+		if (getYear()!=null)
+		str1 += ",'" + getYear() + "'";
+		else str1+= ",null";
+		
+		if (getCrossref()!=null)
+		str1 += ",'" + getCrossref() + "'";
+		else str1+= ",null";
+		
+		if(getVolume()!=null)
+		str1 += ",'" + getVolume() + "'";
+		else str1+= ",null";
+		
+		if(getNumber()!=null)
+		str1 += ",'" + getNumber() + "'";
+		else str1+= ",null";
+		
+		if(getSeries()!=null)
+		str1 += ",'" + getSeries() + "'";
+		else str1+= ",null";
+		
+		if(getPages()!=null)
+		str1 += ",'" + getPages() + "'";
+		else str1+= ",null";
+		
+		if(getAddress()!=null)
+		str1 += ",'" + getAddress() + "'";
+		else str1+= ",null";
+		
+		if(getMonth()!=null)
+		str1 += ",'" + getMonth() + "'";
+		else str1+= ",null";
+		
+		if(getOrganization()!=null)
+		str1 += ",'" + getOrganization() + "'";
+		else str1+= ",null";
+		
+		if(getPublisher()!=null)
+		str1 += ",'" + getPublisher() + "'";
+		else str1+= ",null";
+		
+		if(getNote()!=null)
+		str1 += ",'" + getNote() + "'";
+		else str1+= ",null";
+		
+		if(get_abstract()!=null)
+		str1 += ",'" + get_abstract() + "'";
+		else str1+= ",null";
+		
+		if(getURL()!=null)
+		str1 += ",'" + getURL() + "'";
+		else str1+= ",null";
+		
+		if(getUser()!=null)
+		str1 += ",'" + getUser() + "'";
+		else str1+= ",null";
+		
+		if(getReferencia()!=null)
+		str1 += ",'" + getReferencia() + "'";
+		else str1+= ",null";
+		
+		str1+=");";
+			
+		vector.add(str1);	
+		
+		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'conference');");
+		vector.add(str1);
+				
+		for (int i=0;i<this.author.size();i++){
+			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + author.get(i).getId() + ",TRUE);";
+			vector.add(str);
+		}
+		
+		for (int i=0;i<this.editor.size();i++){
+			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + editor.get(i).getId() + ",FALSE);";
+			vector.add(str);
+		}
+		
+		vector.addAll(super.generaInserciones());
+			
+		return vector; 
 	}
 
 	public static Vector<Conference> generaPub(Vector<Object[]> v) throws UnimplementedException {
