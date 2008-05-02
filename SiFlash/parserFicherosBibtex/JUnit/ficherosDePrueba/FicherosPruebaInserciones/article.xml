@@ -1,0 +1,26 @@
+<publication tipo="article">
+	<title> El titulo del article </title>
+	<year> El año del article </year>
+	<month> El mes del article </month>
+	<month> El  del article </year>
+	<authors>
+		<author>
+			<nombre> NombreAutor1 </nombre>
+			<apellidos> ApellidosAutor1 </apellidos>
+			<web> Web autor 1 </web>
+		</author>
+		<author>
+			<nombre> NombreAutor2 </nombre>
+			<apellidos> ApellidosAutor2 </apellidos>
+			<web> Web autor 2 </web>
+		</author>
+	</authors>
+	<journal> El journal del article </journal>
+	<volume> El volume del article </volume>
+	<number> El number del article </number>
+	<pages> El pages del article </pages>
+	<url> El url del article </url>
+	<abstract> El abstract del article </abstract>
+	<note> El note del article </note>
+	<key> El key del article </key>
+</publication>
