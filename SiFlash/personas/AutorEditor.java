@@ -10,7 +10,7 @@ public class AutorEditor
 	/**
 	 * Identificador único de autorEditor
 	 */
-	private int idAut = 0;
+	private int idAut;
 	/**
 	 * Nombre del autor.
 	 */
@@ -52,6 +52,7 @@ public class AutorEditor
 	 * @param web
 	 */
 	public AutorEditor(String nombre, String apellidos, String web) {
+		this.idAut = 0;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.web = web;

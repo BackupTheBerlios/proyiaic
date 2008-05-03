@@ -384,4 +384,12 @@ public class DataBaseControler
 	{
 		return consultor.getTipoUser(nombre, password);
 	}
+
+	public int consultaIdAutor() throws BDException 
+	{
+		Vector<Object[]> resultado = database.exeQuery("SELECT nextIdAut FROM id");
+		Object[] array = resultado.get(0);
+		int idAut = ((Long) array[0]).intValue();
+		return idAut;
+	}
 }

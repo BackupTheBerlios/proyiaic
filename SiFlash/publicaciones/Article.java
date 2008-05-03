@@ -13,6 +13,9 @@ import parserFicherosBibtex.CampoPublicacion;
 import parserFicherosBibtex.CampoPublicacionAutorEditor;
 import personas.AutorEditor;
 import temporal.UnimplementedException;
+import controlador.DataBaseControler;
+import database.BDException;
+import database.BaseDatos;
 
 
 /**
@@ -274,7 +277,7 @@ public Article(Object[] objects) throws UnimplementedException {
 	}
 
 	@Override
-	public Vector<String> generaInserciones() {
+	public Vector<String> generaInserciones() throws BDException {
 		idDoc = 1;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO article VALUES (");
@@ -337,8 +340,35 @@ public Article(Object[] objects) throws UnimplementedException {
 		vector.add(str1);		
 				
 		for (int i=0;i<this.author.size();i++){
-			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + author.get(i).getId() + ",TRUE);";
+			int idAutor = author.get(i).getId();
+			String nombre = author.get(i).getNombre();
+			String apellidos = author.get(i).getApellidos();
+			String web = author.get(i).getWeb();
+			String str;
+			if (idAutor == 0) //Hay que insertarlo
+			{
+				str = new String ("INSERT INTO autoreseditores VALUES(0");
+				if(nombre != null)
+					str += ",\"" + nombre + "\"";
+				else str+= ",null";
+					
+				if(apellidos!=null)
+					str += ",\"" + apellidos + "\"";
+				else str+= ",null";
+					
+				if(web!=null)
+					str += ",\"" + web + "\"";
+				else str+= ",null";
+					
+				str+=");";
+				
+				DataBaseControler dbc = new DataBaseControler();
+				BaseDatos db = new BaseDatos();
+				db.exeQuery(str);
+				idAutor = dbc.consultaIdAutor();
+			}
+			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + idAutor + ",TRUE);";
 			vector.add(str);
 		}
 		

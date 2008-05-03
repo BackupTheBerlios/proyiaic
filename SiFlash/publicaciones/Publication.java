@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
+import database.BDException;
+
 import personas.AutorEditor;
 import temporal.UnimplementedException;
 
@@ -555,7 +557,7 @@ public abstract class Publication
 	}
 
 
-	public Vector<String> generaInserciones(){
+	public Vector<String> generaInserciones() throws BDException {
 		String str1;
 		Vector <String> vector = new Vector<String>();
 		

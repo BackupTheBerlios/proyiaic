@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
+import database.BDException;
+
 import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
 import parserFicherosBibtex.CampoPublicacionAutorEditor;
@@ -407,7 +409,7 @@ public class InCollection extends Publication
 	}
 
 	@Override
-	public Vector<String> generaInserciones() {
+	public Vector<String> generaInserciones() throws BDException {
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO incollection VALUES (");
 		str1 += Integer.toString(getIdDoc());

@@ -1,4 +1,4 @@
-INSERT INTO Id VALUES(1);
+INSERT INTO Id VALUES(1,1);
 
 DELIMITER $$
 
@@ -234,6 +234,20 @@ BEGIN
   SET NEW.password = DES_ENCRYPT(NEW.password);
   IF ((NEW.tipo != 'user') and (NEW.tipo != 'jefe') and (NEW.tipo != 'admin')) THEN
     SET NEW.tipo = 'user';  
+  END IF;
+END $$
+
+DROP TRIGGER IF EXISTS insertaAutorEditor $$
+CREATE TRIGGER insertaAutorEditor BEFORE INSERT ON AutoresEditores
+FOR EACH ROW
+BEGIN
+  IF (NEW.idAut = 0) THEN
+    BEGIN
+      DECLARE num INTEGER;
+      SELECT nextIdAut INTO num FROM Id;
+      SET NEW.idAut = num;
+      UPDATE Id SET nextIdAut = nextIdAut + 1;
+    END;
   END IF;
 END $$
 
