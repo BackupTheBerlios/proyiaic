@@ -10,7 +10,7 @@ public class AutorEditor
 	/**
 	 * Identificador único de autorEditor
 	 */
-	private int idAut = -1;
+	private int idAut = 0;
 	/**
 	 * Nombre del autor.
 	 */

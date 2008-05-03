@@ -3,8 +3,9 @@ package principal;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import parserFicherosBibtex.ParserBibtex;
-import controlador.ConversorXML_BBDD;
+import parserFicherosBibtex.ConversorXML_Publication;
+import publicaciones.Publication;
+import controlador.DataBaseControler;
 
 public class Main 
 {
@@ -21,10 +22,10 @@ public class Main
 //			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
-			ConversorXML_BBDD cb = new ConversorXML_BBDD();
+			/*ConversorXML_BBDD cb = new ConversorXML_BBDD();
 			InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba.xml");
 			String salida = cb.procesarConsulta(is);
-			System.out.println(salida);
+			System.out.println(salida);*/
 
 			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
@@ -60,10 +61,12 @@ public class Main
 				System.out.println(vector.get(i).getTitle());*/
 
 			//-------------------------------------------------------------------------
-			/*ConversorXML_Publication cp = new ConversorXML_Publication();
-			InputStream is = new FileInputStream("D:\\pruebasConversorXML_Publication\\unpublished.xml");
+			ConversorXML_Publication cp = new ConversorXML_Publication();
+			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\article.xml");
 			Publication p = cp.convertir(is);
-			System.out.println(p.getBibTeX());*/
+			DataBaseControler cb = new DataBaseControler();
+			cb.insertaDocumento(p);
+			
 		}
 		catch (Exception e)
 		{

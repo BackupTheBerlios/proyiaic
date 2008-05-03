@@ -559,20 +559,26 @@ public abstract class Publication
 		String str1;
 		Vector <String> vector = new Vector<String>();
 		
-		for(int i=0;i<this.proyectos.size();i++){
-			String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
-			str += ",'" + proyectos.get(i) + "');";
-			vector.add(str);
-		}		
-		ListIterator <String> keysit = this.getKeys().listIterator();
-		str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
-		vector.add(str1);
-		while (keysit.hasNext()){
-			String k = keysit.next();
-			if (k != null && !k.equals(" ")){
-				str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
-				vector.add(str1);
-			}			
+		if (proyectos != null)
+		{
+			for(int i=0;i<this.proyectos.size();i++){
+				String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
+				str += ",'" + proyectos.get(i) + "');";
+				vector.add(str);
+			}
+		}
+		if (key != null)
+		{
+			ListIterator <String> keysit = this.getKeys().listIterator();
+			str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
+			vector.add(str1);
+			while (keysit.hasNext()){
+				String k = keysit.next();
+				if (k != null && !k.equals(" ")){
+					str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
+					vector.add(str1);
+				}			
+			}
 		}
 		
 		return vector;

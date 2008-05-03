@@ -124,7 +124,7 @@ public class DataBaseControlerTest {
 		} catch (BDException e) {
 			fail ("fallo en la inserción del articulo: " + idDoc);
 		}
-		assertTrue(true);/**/
+		assertTrue(true);
 		
 		// Insercion de book
 		Book book1 = null;

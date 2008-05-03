@@ -129,6 +129,8 @@ public Article(Object[] objects) throws UnimplementedException {
 				pages = valorString;
 		else if (nombreCampo.equalsIgnoreCase("year") && year == null)
 				year = valorString;
+		else if (nombreCampo.equalsIgnoreCase("user") && user == null)
+				user = valorString;
 	}
 	   
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
@@ -273,6 +275,7 @@ public Article(Object[] objects) throws UnimplementedException {
 
 	@Override
 	public Vector<String> generaInserciones() {
+		idDoc = 1;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO article VALUES (");
 		str1 += Integer.toString(getIdDoc());
@@ -328,7 +331,7 @@ public Article(Object[] objects) throws UnimplementedException {
 		
 		str1+=");";
 			
-		vector.add(str1);		
+		vector.add(str1);
 		
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
 		vector.add(str1);		
