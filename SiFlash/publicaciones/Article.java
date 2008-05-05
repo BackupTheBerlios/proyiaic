@@ -278,7 +278,7 @@ public Article(Object[] objects) throws UnimplementedException {
 
 	@Override
 	public Vector<String> generaInserciones() throws BDException {
-		idDoc = 1;
+		idDoc = 0;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO article VALUES (");
 		str1 += Integer.toString(getIdDoc());
@@ -334,7 +334,10 @@ public Article(Object[] objects) throws UnimplementedException {
 		
 		str1+=");";
 			
-		vector.add(str1);
+		DataBaseControler dbc = new DataBaseControler();
+		BaseDatos db = new BaseDatos();
+		db.exeUpdate(str1);
+		idDoc = dbc.consultaIdDoc();
 		
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
 		vector.add(str1);		
@@ -347,25 +350,27 @@ public Article(Object[] objects) throws UnimplementedException {
 			String str;
 			if (idAutor == 0) //Hay que insertarlo
 			{
-				str = new String ("INSERT INTO autoreseditores VALUES(0");
-				if(nombre != null)
-					str += ",\"" + nombre + "\"";
-				else str+= ",null";
+				idAutor = dbc.consultaIdAutor(nombre, apellidos);
+				if (idAutor == 0)
+				{
+					str = new String ("INSERT INTO autoreseditores VALUES(0");
+					if(nombre != null)
+						str += ",\"" + nombre + "\"";
+					else str+= ",null";
 					
-				if(apellidos!=null)
-					str += ",\"" + apellidos + "\"";
-				else str+= ",null";
+					if(apellidos!=null)
+						str += ",\"" + apellidos + "\"";
+					else str+= ",null";
 					
-				if(web!=null)
-					str += ",\"" + web + "\"";
-				else str+= ",null";
+					if(web!=null)
+						str += ",\"" + web + "\"";
+					else str+= ",null";
 					
-				str+=");";
+					str+=");";
 				
-				DataBaseControler dbc = new DataBaseControler();
-				BaseDatos db = new BaseDatos();
-				db.exeQuery(str);
-				idAutor = dbc.consultaIdAutor();
+					db.exeUpdate(str);
+					idAutor = dbc.consultaIdAutor();
+				}
 			}
 			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
 			str += "," + idAutor + ",TRUE);";

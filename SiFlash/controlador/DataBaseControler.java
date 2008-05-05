@@ -388,8 +388,37 @@ public class DataBaseControler
 	public int consultaIdAutor() throws BDException 
 	{
 		Vector<Object[]> resultado = database.exeQuery("SELECT nextIdAut FROM id");
+		int idAut = 0;
+		if (resultado.size() != 0)
+		{	
+			Object[] array = resultado.get(0);
+			idAut = ((Long) array[0]).intValue()-1;
+		}
+		return idAut;
+	}
+	
+	public int consultaIdAutor(String nombre, String apellidos) throws BDException 
+	{
+		Vector<Object[]> resultado = database.exeQuery("SELECT idAut FROM AutoresEditores WHERE nombre = '" + nombre + "' AND apellidos = '" + apellidos + "'");
 		Object[] array = resultado.get(0);
 		int idAut = ((Long) array[0]).intValue();
+		return idAut;
+	}
+	
+	public boolean consultaExistenciaKey(String key) throws BDException 
+	{
+		Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "'");
+		if (resultado.size() == 0)
+			return false;
+		else
+			return true;
+	}
+
+	public int consultaIdDoc() throws BDException 
+	{
+		Vector<Object[]> resultado = database.exeQuery("SELECT nextId FROM id");
+		Object[] array = resultado.get(0);
+		int idAut = ((Long) array[0]).intValue()-1;
 		return idAut;
 	}
 }

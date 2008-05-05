@@ -164,7 +164,7 @@ public class BaseDatos
 		}
 		catch(SQLException ex)
 		{
-			throw new BDException("Fallo al ejecutar la consulta en la base de datos.");
+			throw new BDException("Fallo al ejecutar la consulta en la base de datos: " + ex.getMessage());
 		}
 		catch(ClassNotFoundException ex)
 		{
@@ -208,7 +208,7 @@ public class BaseDatos
 		}
 		catch(SQLException ex)
 		{
-			throw new BDException("Fallo al ejecutar la modificiación en la base de datos.");
+			throw new BDException("Fallo al ejecutar la modificiación en la base de datos: " + ex.getMessage());
 		}
 		catch(ClassNotFoundException ex)
 		{
@@ -248,7 +248,7 @@ public class BaseDatos
 		}
 		catch(SQLException ex)
 		{
-			throw new BDException("Fallo al ejecutar la modificiación en la base de datos.");
+			throw new BDException("Fallo al ejecutar la modificiación en la base de datos."  + ex.getMessage());
 		}
 		catch(ClassNotFoundException ex)
 		{

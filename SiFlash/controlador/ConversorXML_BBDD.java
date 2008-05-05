@@ -1,11 +1,7 @@
 package controlador;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -16,7 +12,6 @@ import org.jdom.output.XMLOutputter;
 
 import parserFicherosBibtex.ConversorXML_Publication;
 import personas.AutorEditor;
-import publicaciones.CodigosDatos;
 import publicaciones.Publication;
 import temporal.UnimplementedException;
 import database.BDException;

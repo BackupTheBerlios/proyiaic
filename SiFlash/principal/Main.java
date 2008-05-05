@@ -2,10 +2,12 @@ package principal;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Vector;
 
 import parserFicherosBibtex.ConversorXML_Publication;
 import publicaciones.Publication;
 import controlador.DataBaseControler;
+import database.BaseDatos;
 
 public class Main 
 {
@@ -61,12 +63,16 @@ public class Main
 				System.out.println(vector.get(i).getTitle());*/
 
 			//-------------------------------------------------------------------------
+			//DataBaseControler dbc = new DataBaseControler();
+			BaseDatos db = new BaseDatos();
 			ConversorXML_Publication cp = new ConversorXML_Publication();
 			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\article.xml");
 			Publication p = cp.convertir(is);
 			DataBaseControler cb = new DataBaseControler();
 			cb.insertaDocumento(p);
 			
+			Vector<Object[]> v = db.exeQuery("SELECT * FROM article");
+			v.capacity();
 		}
 		catch (Exception e)
 		{

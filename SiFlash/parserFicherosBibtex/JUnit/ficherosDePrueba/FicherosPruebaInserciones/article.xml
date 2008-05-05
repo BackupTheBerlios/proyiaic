@@ -1,6 +1,6 @@
 <publication tipo="article" referencia="la+referencia+del+article">
 	<title>El titulo del article</title>
-	<year>El año</year>
+	<year>2006</year>
 	<month>El mes</month>
 	<authors>
 		<author>
@@ -21,6 +21,6 @@
 	<url>El url</url>
 	<abstract>El abstract</abstract>
 	<note>El note</note>
-	<key>El key</key>
+	<key>The key, Una clave, Mi clave</key>
 	<user>user1</user>
 </publication>
