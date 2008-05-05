@@ -2,6 +2,12 @@
 
 package controlador;
 
+import java.util.Vector;
+
+import controlador.exceptions.ExistenceException;
+import controlador.exceptions.ExistingElementException;
+import controlador.exceptions.NonExistingElementException;
+
 import database.BDException;
 import database.BaseDatos;
 
@@ -28,9 +34,14 @@ public class ModificadorProyectos
 	 * @throws database.BDException
 	 * @roseuid 47C5A0FC005D
 	 */
-	public static void insertaProyecto(BaseDatos base,String nombre_proyecto, String nombre_administrador) throws BDException 
+	public void insertaProyecto(String nombre_proyecto, String nombre_administrador) throws BDException 
 	{
-
+		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + nombre_proyecto + "';";
+		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
+		if (res.size() > 0) throw new ExistingElementException(ExistenceException.PROYECTO);
+		String consulta2 = "INSERT INTO proyectos VALUES ('" +nombre_proyecto + "','";
+		consulta2+= nombre_administrador + "');";
+		theBaseDatos.exeUpdate(consulta2);
 	}
 
 	/**
@@ -43,17 +54,28 @@ public class ModificadorProyectos
 	 */
 	public String setAdmin(String nombre_proyecto, String nuevo_administrador) throws BDException 
 	{
-		return null;
+		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + nombre_proyecto + "';";
+		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
+		if (res == null || res.size() <= 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
+		String consulta2 = "UPDATE proyectos SET nombre = " + nombre_proyecto + ", jefe = " + nuevo_administrador +
+		 "WHERE nombre = " + nombre_proyecto + ";" ;
+		theBaseDatos.exeUpdate(consulta2);
+		return (String)res.firstElement()[0];
 	}
 
 	/**
 	 * Borra el proyecto de la aplicación.
 	 * @param proyecto - Nombre del proyecto a borrar
+	 * @throws BDException 
 	 * @roseuid 47C5A25B0290
 	 */
-	public static void borraProyecto(BaseDatos base,String proyecto) 
+	public void borraProyecto(String proyecto) throws BDException 
 	{
-		//
+		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + proyecto + "';";
+		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
+		if (res == null || res.size() <= 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
+		String consulta2 = "DELETE FROM proyectos WHERE nombre = '" + proyecto + "';";
+		theBaseDatos.exeUpdate(consulta2);
 
 	}
 }
