@@ -22,7 +22,7 @@ import database.BaseDatos;
  * Clase que implementa una operación por cada funcionalidad claramente definida 
  * que tiene que tener la aplicación respecto a la base de datos.
  */
-public class DataBaseControler 
+public class DataBaseControler
 {
 
 	/**

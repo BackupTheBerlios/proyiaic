@@ -8,7 +8,10 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
+import controlador.DataBaseControler;
+
 import database.BDException;
+import database.BaseDatos;
 
 import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
@@ -565,20 +568,81 @@ public class InProceedings extends Publication
 		
 		str1+=");";
 			
-		vector.add(str1);	
+		DataBaseControler dbc = new DataBaseControler();
+		BaseDatos db = new BaseDatos();
+		db.exeUpdate(str1);
+		idDoc = dbc.consultaIdDoc();	
 		
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'inproceedings');");
 		vector.add(str1);
 				
 		for (int i=0;i<this.author.size();i++){
-			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + author.get(i).getId() + ",TRUE);";
+			int idAutor = author.get(i).getId();
+			String nombre = author.get(i).getNombre();
+			String apellidos = author.get(i).getApellidos();
+			String web = author.get(i).getWeb();
+			String str;
+			if (idAutor == 0) //Hay que insertarlo
+			{
+				idAutor = dbc.consultaIdAutor(nombre, apellidos);
+				if (idAutor == 0)
+				{
+					str = new String ("INSERT INTO autoreseditores VALUES(0");
+					if(nombre != null)
+						str += ",\"" + nombre + "\"";
+					else str+= ",null";
+					
+					if(apellidos!=null)
+						str += ",\"" + apellidos + "\"";
+					else str+= ",null";
+					
+					if(web!=null)
+						str += ",\"" + web + "\"";
+					else str+= ",null";
+					
+					str+=");";
+				
+					db.exeUpdate(str);
+					idAutor = dbc.consultaIdAutor();
+				}
+			}
+			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + idAutor + ",TRUE);";
 			vector.add(str);
 		}
-		
+
 		for (int i=0;i<this.editor.size();i++){
-			String str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + editor.get(i).getId() + ",FALSE);";
+			int idEditor = editor.get(i).getId();
+			String nombre = editor.get(i).getNombre();
+			String apellidos = editor.get(i).getApellidos();
+			String web = editor.get(i).getWeb();
+			String str;
+			if (idEditor == 0) //Hay que insertarlo
+			{
+				idEditor = dbc.consultaIdAutor(nombre, apellidos);
+				if (idEditor == 0)
+				{
+					str = new String ("INSERT INTO autoreseditores VALUES(0");
+					if(nombre != null)
+						str += ",\"" + nombre + "\"";
+					else str+= ",null";
+					
+					if(apellidos!=null)
+						str += ",\"" + apellidos + "\"";
+					else str+= ",null";
+					
+					if(web!=null)
+						str += ",\"" + web + "\"";
+					else str+= ",null";
+					
+					str+=");";
+				
+					db.exeUpdate(str);
+					idEditor = dbc.consultaIdAutor();
+				}
+			}
+			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+			str += "," + idEditor + ",FALSE);";
 			vector.add(str);
 		}
 		
