@@ -400,9 +400,14 @@ public class DataBaseControler
 	public int consultaIdAutor(String nombre, String apellidos) throws BDException 
 	{
 		Vector<Object[]> resultado = database.exeQuery("SELECT idAut FROM AutoresEditores WHERE nombre = '" + nombre + "' AND apellidos = '" + apellidos + "'");
-		Object[] array = resultado.get(0);
-		int idAut = ((Long) array[0]).intValue();
-		return idAut;
+		if (resultado.size() != 0)
+		{
+			Object[] array = resultado.get(0);
+			int idAut = ((Long) array[0]).intValue();
+			return idAut;
+		}
+		else
+			return 0;
 	}
 	
 	public boolean consultaExistenciaKey(String key) throws BDException 

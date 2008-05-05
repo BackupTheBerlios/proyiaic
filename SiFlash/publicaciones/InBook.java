@@ -157,6 +157,8 @@ public class InBook extends Publication
 			pages = valorString;
 		else if (nombreCampo.equalsIgnoreCase("year") && year == null)
 			year = valorString;
+		else if (nombreCampo.equalsIgnoreCase("user") && user == null)
+			user = valorString;
 	}
 
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 

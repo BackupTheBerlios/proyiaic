@@ -112,6 +112,8 @@ public class TechReport extends Publication
 			year = valorString;
 		else if (nombreCampo.equalsIgnoreCase("number") && number == null)
 			number = valorString;
+		else if (nombreCampo.equalsIgnoreCase("user") && user == null)
+			user = valorString;
 	}
 
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 

@@ -66,13 +66,13 @@ public class Main
 			//DataBaseControler dbc = new DataBaseControler();
 			BaseDatos db = new BaseDatos();
 			ConversorXML_Publication cp = new ConversorXML_Publication();
-			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\article.xml");
+			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\book.xml");
 			Publication p = cp.convertir(is);
 			DataBaseControler cb = new DataBaseControler();
 			cb.insertaDocumento(p);
 			
-			Vector<Object[]> v = db.exeQuery("SELECT * FROM article");
-			v.capacity();
+			//Vector<Object[]> v = db.exeQuery("SELECT * FROM article");
+			//v.capacity();
 		}
 		catch (Exception e)
 		{
