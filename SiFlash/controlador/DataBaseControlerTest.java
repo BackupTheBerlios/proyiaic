@@ -31,8 +31,10 @@ public class DataBaseControlerTest {
 	@Test
 	public void testConsultaDocumentos() {
 		Vector<Publication> v1 = new Vector<Publication>();
+		Vector<String> keys = new Vector<String>();
+		keys.add("key2");
 		try {
-			v1 = db_controler.consultaDocumentos(CodigosDatos.codArticle, null, null, null, true, null, null, null, null, null, null, null, null, null, null, true, true, true, true, true, true, true, true, true);
+			v1 = db_controler.consultaDocumentos(CodigosDatos.codArticle, null, null, "articulo", true, null, null, null, null, null, null, null, null, null, keys, true, true, true, true, true, true, true, true, true);
 		} catch (BDException e) {
 			fail ("BDException");
 		} catch (UnimplementedException e) {
@@ -78,6 +80,7 @@ public class DataBaseControlerTest {
 		fail("Not yet implemented");
 	}
 
+	//@Test
 	public void testInsertaDocumento() {		
 		AutorEditor at1,at3,ed8;
 		LinkedList<AutorEditor> autores,editores;
@@ -87,7 +90,7 @@ public class DataBaseControlerTest {
 		keys2 = new Vector<String>();
 		keys2.add(new String(" "));
 		keys3 = new Vector<String>();
-		keys3.add("key1");
+		keys3.add("key832");
 		keys3.add("key2");
 		
 		proyectos.add("pr1");
@@ -113,14 +116,14 @@ public class DataBaseControlerTest {
 		idDoc = rnd.nextInt()%100000;
 		if (idDoc < 0) idDoc = idDoc * (-1);
 		try{
-			art1 = new Article(idDoc,"referencia articulo","art1","1995","apr","127.0.0.1","resumen articulo","nota articulo",keys1,"user1",proyectos,autores,"journal","volume1","127","0");
+			art1 = new Article(idDoc,"referencia afirmativa","otro","1992","june","jsp://127.25.25.25","no resumindo","corto note",keys3,"user1",proyectos,autores,"suplemento","32 volumenes","no hay numero","43 paginas");
 		}catch (UnimplementedException e) {
 			fail ("fallo en la creación del article");
 		}
 		try {
 			db_controler.insertaDocumento(art1);
 		} catch (BDException e) {
-			fail ("fallo en la inserción del articulo: " + idDoc);
+			fail ("fallo en la inserción del articulo: " + art1.getIdDoc());
 		}
 		assertTrue(true);
 		

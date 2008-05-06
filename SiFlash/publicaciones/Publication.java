@@ -577,7 +577,9 @@ public abstract class Publication
 			while (keysit.hasNext()){
 				String k = keysit.next();
 				if (k != null && !k.equals(" ")){
+					String str2= new String ("INSERT INTO claves  VALUES ('" + k + "') ON DUPLICATE KEY UPDATE clave=clave;");  
 					str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
+					vector.add(str2);
 					vector.add(str1);
 				}			
 			}
