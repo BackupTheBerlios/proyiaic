@@ -31,10 +31,11 @@ public class DataBaseControlerTest {
 	@Test
 	public void testConsultaDocumentos() {
 		Vector<Publication> v1 = new Vector<Publication>();
-		Vector<String> keys = new Vector<String>();
+		Vector<String> keys = null; 
+		keys = new Vector<String>();
 		keys.add("key2");
 		try {
-			v1 = db_controler.consultaDocumentos(CodigosDatos.codArticle, null, null, "articulo", true, null, null, null, null, null, null, null, null, null, keys, true, true, true, true, true, true, true, true, true);
+			v1 = db_controler.consultaDocumentos(CodigosDatos.codArticle, null, null, "otro", true, null, "suplemento", null, null, null, null, null, null, null, keys, true, true, true, true, true, true, true, true, true);
 		} catch (BDException e) {
 			fail ("BDException");
 		} catch (UnimplementedException e) {
