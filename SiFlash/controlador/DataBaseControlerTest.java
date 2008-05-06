@@ -27,12 +27,12 @@ public class DataBaseControlerTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-/*
+
 	@Test
 	public void testConsultaDocumentos() {
 		Vector<Publication> v1 = new Vector<Publication>();
 		try {
-			v1 = db_controler.consultaDocumentos(CodigosDatos.codBook, null, null, null, true, null, null, null, null, null, null, null, null, null, null, true, true, true, true, true, true, true, true, true);
+			v1 = db_controler.consultaDocumentos(CodigosDatos.codArticle, null, null, null, true, null, null, null, null, null, null, null, null, null, null, true, true, true, true, true, true, true, true, true);
 		} catch (BDException e) {
 			fail ("BDException");
 		} catch (UnimplementedException e) {
@@ -78,9 +78,7 @@ public class DataBaseControlerTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testInsertaDocumento() {
-		
+	public void testInsertaDocumento() {		
 		AutorEditor at1,at3,ed8;
 		LinkedList<AutorEditor> autores,editores;
 		Vector<String> proyectos = new Vector<String>();

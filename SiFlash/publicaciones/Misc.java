@@ -301,9 +301,9 @@ public class Misc extends Publication
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
-			int idDoc,year,id_aut;
+			int idDoc,id_aut;
 			String title, month,howpublished,note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,web_aut,clave,year;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -315,7 +315,7 @@ public class Misc extends Publication
 			if (array[1] != null) title = (String) array[1]; else title = null;
 			if (array[2] != null) howpublished = (String) array[2]; else howpublished = null;			
 			if (array[3] != null) month = (String) array[3]; else month = null;
-			if (array[4] != null) year = ((Long) array[4]).intValue(); else year = -1;						
+			if (array[4] != null) year = ((String) array[4]); else year = null;						
 			if (array[5] != null) note = (String) array[5]; else note = null;
 			if (array[6] != null) abstracts = (String) array[6]; else abstracts = null;
 			if (array[7] != null) URL = (String) array[7]; else URL = null;
@@ -333,7 +333,7 @@ public class Misc extends Publication
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Misc misc1 = new Misc(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,autores,howpublished);
+			Misc misc1 = new Misc(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,howpublished);
 			vector.add(misc1);
 
 			// Evaluamos el cambio_pub

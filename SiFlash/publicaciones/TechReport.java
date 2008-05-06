@@ -366,8 +366,8 @@ public class TechReport extends Publication
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
-			int idDoc,year,id_aut;
-			String title,address,type;
+			int idDoc,id_aut;
+			String title,address,type,year;
 			String month,number,institution, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,web_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
@@ -383,7 +383,7 @@ public class TechReport extends Publication
 			if (array[3] != null) institution = (String) array[3]; else institution = null;
 			if (array[4] != null) address = (String) array[4]; else address = null;
 			if (array[5] != null) month = (String) array[5]; else month = null;
-			if (array[6] != null) year = ((Long) array[6]).intValue(); else year = -1;						
+			if (array[6] != null) year = ((String) array[6]); else year = null;						
 			if (array[7] != null) note = (String) array[7]; else note = null;
 			if (array[8] != null) abstracts = (String) array[8]; else abstracts = null;
 			if (array[9] != null) URL = (String) array[9]; else URL = null;
@@ -402,7 +402,7 @@ public class TechReport extends Publication
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			TechReport tec1 = new TechReport(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,autores,address,institution,type,number);
+			TechReport tec1 = new TechReport(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,address,institution,type,number);
 			vector.add(tec1);
 
 			// Evaluamos el cambio_pub

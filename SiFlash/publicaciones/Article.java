@@ -97,7 +97,7 @@ public Article(int idDoc, String referencia, String title,
 		}
 	}
 
-public Article(Object[] objects) throws UnimplementedException {
+public Article(Object[] datos) throws UnimplementedException {
 	throw new UnimplementedException();
 }
 
@@ -402,10 +402,10 @@ public Article(Object[] objects) throws UnimplementedException {
 			idDoc = ((Long) array[0]).intValue();
 			if (array[1] != null) title = (String) array[1]; else title = null;
 			if (array[2] != null) journal = (String) array[2]; else journal = null;
-			if (array[3] != null) year = ((Long) array[3]).toString(); else year = null;			
+			if (array[3] != null) year = ((String) array[3]); else year = null;			
 			if (array[4] != null) volume = (String) array[4]; else volume = null;
-			if (array[5] != null) number = ((Long) array[5]).toString(); else number = null;			
-			if (array[6] != null) pages = ((Long) array[6]).toString(); else pages = null;
+			if (array[5] != null) number = ((String) array[5]); else number = null;			
+			if (array[6] != null) pages = ((String) array[6]); else pages = null;
 			if (array[7] != null) month = (String) array[7]; else month = null;				
 			if (array[8] != null) note = (String) array[8]; else note = null;
 			if (array[9] != null) abstracts = (String) array[9]; else abstracts = null;

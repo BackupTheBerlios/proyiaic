@@ -582,6 +582,11 @@ public abstract class Publication
 				}			
 			}
 		}
+		else {
+			str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
+			vector.add(str1);
+			key = new LinkedList<String>();
+		}
 		
 		return vector;
 	}

@@ -537,9 +537,9 @@ public class Conference extends Publication
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
-			int idDoc,year,number,id_aut;
-			String title,booktitle,crossref,volume,series,pages,address;
-			String month,organization,publisher, note, abstracts, URL,user, referencia; 
+			int idDoc,id_aut;
+			String title,booktitle,crossref,volume,series,pages,address,number;
+			String month,year,organization,publisher, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,web_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
@@ -551,10 +551,10 @@ public class Conference extends Publication
 			idDoc = ((Long) array[0]).intValue();
 			if (array[1] != null) title = (String) array[1]; else title = null;
 			if (array[2] != null) booktitle = (String) array[2]; else booktitle = null;
-			if (array[3] != null) year = ((Long) array[3]).intValue(); else year = -1;
+			if (array[3] != null) year = ((String) array[3]); else year = null;
 			if (array[4] != null) crossref = (String) array[4]; else crossref = null;
 			if (array[5] != null) volume = (String) array[5]; else volume = null;
-			if (array[6] != null) number = ((Long) array[6]).intValue(); else number = -1;
+			if (array[6] != null) number = ((String) array[6]); else number = null;
 			if (array[7] != null) series = (String) array[7]; else series = null;
 			if (array[8] != null) pages = (String) array[8]; else pages = null;
 			if (array[9] != null) address = (String) array[9]; else address = null;
@@ -578,7 +578,7 @@ public class Conference extends Publication
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Conference conf1 = new Conference(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,autores,booktitle,crossref,editores,volume,Integer.toString(number),series,pages,address,organization,publisher);
+			Conference conf1 = new Conference(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,booktitle,crossref,editores,volume,number,series,pages,address,organization,publisher);
 			vector.add(conf1);
 
 			// Evaluamos el cambio_pub

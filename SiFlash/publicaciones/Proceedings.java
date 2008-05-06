@@ -426,8 +426,8 @@ public class Proceedings extends Publication
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
-			int idDoc,year,number,id_aut;
-			String title,booktitle,volume,series,address;
+			int idDoc,id_aut;
+			String title,booktitle,volume,series,address,year, number;
 			String month,organization,publisher, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,web_aut,clave;
 			LinkedList<AutorEditor> editores;
@@ -439,9 +439,9 @@ public class Proceedings extends Publication
 			idDoc = ((Long) array[0]).intValue();
 			if (array[1] != null) title = (String) array[1]; else title = null;
 			if (array[2] != null) booktitle = (String) array[2]; else booktitle = null;
-			if (array[3] != null) year = ((Long) array[3]).intValue(); else year = -1;	
+			if (array[3] != null) year = ((String) array[3]); else year = null;	
 			if (array[4] != null) volume = (String) array[4]; else volume = null;
-			if (array[5] != null) number = ((Long) array[5]).intValue(); else number = -1;
+			if (array[5] != null) number = ((String) array[5]); else number = null;
 			if (array[6] != null) series = (String) array[6]; else series = null;
 			if (array[7] != null) address = (String) array[7]; else address = null;
 			if (array[8] != null) month = (String) array[8]; else month = null;
@@ -463,7 +463,7 @@ public class Proceedings extends Publication
 			if (escrito_edit == true) editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Proceedings pr1 = new Proceedings(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,booktitle,editores,volume,Integer.toString(number),series,address,organization,publisher);
+			Proceedings pr1 = new Proceedings(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,booktitle,editores,volume,number,series,address,organization,publisher);
 			vector.add(pr1);
 
 			// Evaluamos el cambio_pub

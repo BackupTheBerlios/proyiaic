@@ -517,9 +517,9 @@ public class Book extends Publication
 			idDoc = ((Long) array[0]).intValue();
 			if (array[1] != null) title = (String) array[1]; else title = null;
 			if (array[2] != null) publisher = (String) array[2]; else publisher = null;
-			if (array[3] != null) year = ((Long) array[3]).toString(); else year = null;			
+			if (array[3] != null) year = ((String) array[3]); else year = null;			
 			if (array[4] != null) volume = (String) array[4]; else volume = null;
-			if (array[5] != null) number = ((Long) array[5]).toString(); else number = null;
+			if (array[5] != null) number = ((String) array[5]); else number = null;
 			if (array[6] != null) series = (String) array[6]; else series = null;
 			if (array[7] != null) address = (String) array[7]; else address = null;
 			if (array[8] != null) edition = (String) array[8]; else edition = null;

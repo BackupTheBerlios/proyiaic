@@ -281,8 +281,8 @@ public class Unpublished extends Publication
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
-			int idDoc,year,id_aut;			
-			String month,title, note, abstracts, URL,user, referencia; 
+			int idDoc,id_aut;			
+			String month,title, note, abstracts, URL,user, referencia,year; 
 			String proyecto,n_aut,ap_aut,web_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
@@ -294,7 +294,7 @@ public class Unpublished extends Publication
 			idDoc = ((Long) array[0]).intValue();
 			if (array[1] != null) title = (String) array[1]; else title = null;
 			if (array[2] != null) month = (String) array[2]; else month = null;
-			if (array[3] != null) year = ((Long) array[3]).intValue(); else year = -1;						
+			if (array[3] != null) year = ((String) array[3]); else year = null;						
 			if (array[4] != null) note = (String) array[4]; else note = null;
 			if (array[5] != null) abstracts = (String) array[5]; else abstracts = null;
 			if (array[6] != null) URL = (String) array[6]; else URL = null;
@@ -312,7 +312,7 @@ public class Unpublished extends Publication
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Unpublished unp1 = new Unpublished(idDoc,referencia,title,Integer.toString(year),month,URL,abstracts,note,claves,user,proyectos,autores);
+			Unpublished unp1 = new Unpublished(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores);
 			vector.add(unp1);
 
 			// Evaluamos el cambio_pub
