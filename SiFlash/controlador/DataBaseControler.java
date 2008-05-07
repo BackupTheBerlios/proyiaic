@@ -426,4 +426,29 @@ public class DataBaseControler
 		int idAut = ((Long) array[0]).intValue()-1;
 		return idAut;
 	}
+
+	
+	public void insertaAutorEditor(AutorEditor ae) throws BDException
+	{
+		String str = new String ("INSERT INTO autoreseditores VALUES(0");
+		if(ae.getNombre() != null)
+			str += ",\"" + ae.getNombre() + "\"";
+		else str+= ",null";
+		
+		if(ae.getApellidos()!=null)
+			str += ",\"" + ae.getApellidos() + "\"";
+		else str+= ",null";
+		
+		if(ae.getWeb()!=null)
+			str += ",\"" + ae.getWeb() + "\"";
+		else str+= ",null";
+		
+		str+=");";
+		database.exeUpdate(str);
+	}
+
+	public void ejecutaString(String str1) throws BDException 
+	{
+		database.exeUpdate(str1);
+	}
 }

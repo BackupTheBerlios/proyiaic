@@ -134,6 +134,8 @@ public class Proceedings extends Publication
 			year = valorString;
 		else if (nombreCampo.equalsIgnoreCase("user") && user == null)
 			user = valorString;
+		else if (nombreCampo.equalsIgnoreCase("url") && URL == null)
+			URL = valorString;
 	}
 
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 

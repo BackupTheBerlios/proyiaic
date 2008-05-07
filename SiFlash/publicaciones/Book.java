@@ -8,16 +8,13 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
-import controlador.DataBaseControler;
-
-import database.BDException;
-import database.BaseDatos;
-
 import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
 import parserFicherosBibtex.CampoPublicacionAutorEditor;
 import personas.AutorEditor;
 import temporal.UnimplementedException;
+import controlador.DataBaseControler;
+import database.BDException;
 
 
 /**
@@ -163,6 +160,8 @@ public class Book extends Publication
 			year = valorString;
 		else if (nombreCampo.equalsIgnoreCase("user") && user == null)
 			user = valorString;
+		else if (nombreCampo.equalsIgnoreCase("url") && URL == null)
+			URL = valorString;
 	}
 
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
@@ -351,7 +350,6 @@ public class Book extends Publication
 
 	@Override
 	public Vector<String> generaInserciones() throws BDException {
-		idDoc = 0;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO book VALUES (");
 		str1 += Integer.toString(getIdDoc());
@@ -416,8 +414,7 @@ public class Book extends Publication
 		str1+=");";
 
 		DataBaseControler dbc = new DataBaseControler();
-		BaseDatos db = new BaseDatos();
-		db.exeUpdate(str1);
+		dbc.ejecutaString(str1);
 		idDoc = dbc.consultaIdDoc();	
 
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'book');");
@@ -425,32 +422,14 @@ public class Book extends Publication
 
 		for (int i=0;i<this.author.size();i++){
 			int idAutor = author.get(i).getId();
-			String nombre = author.get(i).getNombre();
-			String apellidos = author.get(i).getApellidos();
-			String web = author.get(i).getWeb();
 			String str;
-			if (idAutor == 0) //Hay que insertarlo
+			if (idAutor == 0) //Hay que insertarlo (o eso ha especificado el usuario)
 			{
-				idAutor = dbc.consultaIdAutor(nombre, apellidos);
+				idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
 				if (idAutor == 0)
 				{
-					str = new String ("INSERT INTO autoreseditores VALUES(0");
-					if(nombre != null)
-						str += ",\"" + nombre + "\"";
-					else str+= ",null";
-					
-					if(apellidos!=null)
-						str += ",\"" + apellidos + "\"";
-					else str+= ",null";
-					
-					if(web!=null)
-						str += ",\"" + web + "\"";
-					else str+= ",null";
-					
-					str+=");";
-				
-					db.exeUpdate(str);
-					idAutor = dbc.consultaIdAutor();
+					dbc.insertaAutorEditor(author.get(i));
+					idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
 				}
 			}
 			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
@@ -460,32 +439,14 @@ public class Book extends Publication
 
 		for (int i=0;i<this.editor.size();i++){
 			int idEditor = editor.get(i).getId();
-			String nombre = editor.get(i).getNombre();
-			String apellidos = editor.get(i).getApellidos();
-			String web = editor.get(i).getWeb();
 			String str;
 			if (idEditor == 0) //Hay que insertarlo
 			{
-				idEditor = dbc.consultaIdAutor(nombre, apellidos);
+				idEditor = dbc.consultaIdAutor(editor.get(i).getNombre(), editor.get(i).getApellidos());
 				if (idEditor == 0)
 				{
-					str = new String ("INSERT INTO autoreseditores VALUES(0");
-					if(nombre != null)
-						str += ",\"" + nombre + "\"";
-					else str+= ",null";
-					
-					if(apellidos!=null)
-						str += ",\"" + apellidos + "\"";
-					else str+= ",null";
-					
-					if(web!=null)
-						str += ",\"" + web + "\"";
-					else str+= ",null";
-					
-					str+=");";
-				
-					db.exeUpdate(str);
-					idEditor = dbc.consultaIdAutor();
+					dbc.insertaAutorEditor(editor.get(i));
+					idEditor = dbc.consultaIdAutor(editor.get(i).getNombre(), editor.get(i).getApellidos());
 				}
 			}
 			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());

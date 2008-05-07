@@ -15,7 +15,6 @@ import personas.AutorEditor;
 import temporal.UnimplementedException;
 import controlador.DataBaseControler;
 import database.BDException;
-import database.BaseDatos;
 
 
 /**
@@ -134,6 +133,8 @@ public Article(Object[] datos) throws UnimplementedException {
 				year = valorString;
 		else if (nombreCampo.equalsIgnoreCase("user") && user == null)
 				user = valorString;
+		else if (nombreCampo.equalsIgnoreCase("url") && URL == null)
+				URL = valorString;
 	}
 	   
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
@@ -278,7 +279,6 @@ public Article(Object[] datos) throws UnimplementedException {
 
 	@Override
 	public Vector<String> generaInserciones() throws BDException {
-		idDoc = 0;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO article VALUES (");
 		str1 += Integer.toString(getIdDoc());
@@ -335,41 +335,22 @@ public Article(Object[] datos) throws UnimplementedException {
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
-		BaseDatos db = new BaseDatos();
-		db.exeUpdate(str1);
+		dbc.ejecutaString(str1);
 		idDoc = dbc.consultaIdDoc();
 		
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
 		vector.add(str1);		
 				
 		for (int i=0;i<this.author.size();i++){
-			int idAutor = author.get(i).getId();
-			String nombre = author.get(i).getNombre();
-			String apellidos = author.get(i).getApellidos();
-			String web = author.get(i).getWeb();
 			String str;
-			if (idAutor == 0) //Hay que insertarlo
+			int idAutor = author.get(i).getId();
+			if (idAutor == 0) //Hay que insertarlo (o así lo ha especificado el usuario)
 			{
-				idAutor = dbc.consultaIdAutor(nombre, apellidos);
+				idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
 				if (idAutor == 0)
 				{
-					str = new String ("INSERT INTO autoreseditores VALUES(0");
-					if(nombre != null)
-						str += ",\"" + nombre + "\"";
-					else str+= ",null";
-					
-					if(apellidos!=null)
-						str += ",\"" + apellidos + "\"";
-					else str+= ",null";
-					
-					if(web!=null)
-						str += ",\"" + web + "\"";
-					else str+= ",null";
-					
-					str+=");";
-				
-					db.exeUpdate(str);
-					idAutor = dbc.consultaIdAutor();
+					dbc.insertaAutorEditor(author.get(i));
+					idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
 				}
 			}
 			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());

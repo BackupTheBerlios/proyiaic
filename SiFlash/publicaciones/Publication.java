@@ -9,7 +9,10 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
+import controlador.DataBaseControler;
+
 import database.BDException;
+import database.BaseDatos;
 
 import personas.AutorEditor;
 import temporal.UnimplementedException;
@@ -572,23 +575,27 @@ public abstract class Publication
 		if (key != null)
 		{
 			ListIterator <String> keysit = this.getKeys().listIterator();
-			str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
-			vector.add(str1);
+			//str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
+			//vector.add(str1);
+			DataBaseControler dbc = new DataBaseControler();
 			while (keysit.hasNext()){
 				String k = keysit.next();
 				if (k != null && !k.equals(" ")){
-					String str2= new String ("INSERT INTO claves  VALUES ('" + k + "') ON DUPLICATE KEY UPDATE clave=clave;");  
+					/*String str2= new String ("INSERT INTO claves  VALUES ('" + k + "') ON DUPLICATE KEY UPDATE clave=clave;");  
 					str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
 					vector.add(str2);
-					vector.add(str1);
+					vector.add(str1);*/
+					if (!dbc.consultaExistenciaKey(k))
+						dbc.ejecutaString("INSERT INTO claves VALUES('" + k + "');");
+					vector.add("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
 				}			
 			}
 		}
-		else {
+		/*else {
 			str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
 			vector.add(str1);
 			key = new LinkedList<String>();
-		}
+		}*/
 		
 		return vector;
 	}

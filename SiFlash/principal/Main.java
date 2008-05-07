@@ -66,7 +66,7 @@ public class Main
 			//DataBaseControler dbc = new DataBaseControler();
 			BaseDatos db = new BaseDatos();
 			ConversorXML_Publication cp = new ConversorXML_Publication();
-			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\book.xml");
+			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\inbook.xml");
 			Publication p = cp.convertir(is);
 			DataBaseControler cb = new DataBaseControler();
 			cb.insertaDocumento(p);
