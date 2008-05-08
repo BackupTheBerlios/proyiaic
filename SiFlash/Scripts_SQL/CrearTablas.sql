@@ -244,7 +244,7 @@ create table Techreport (
 	institution varchar(50) not null,
 	year varchar(50) not null,
 	type varchar(50),
-	number integer unsigned,
+	number varchar(50),
 	address varchar(100),
 	month varchar(50),
 	note text,

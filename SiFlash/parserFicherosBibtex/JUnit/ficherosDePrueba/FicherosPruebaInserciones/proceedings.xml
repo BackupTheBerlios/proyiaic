@@ -1,0 +1,29 @@
+<publication tipo="proceedings" referencia="la+referencia+del+proceedings">
+	<title>El titulo del proceedings</title>
+	<year>2006</year>
+	<month>El mes</month>
+	<editors>
+		<editor>
+			<nombre>NombreEditor1</nombre>
+			<apellidos>ApellidosEditor1</apellidos>
+			<web>Web Editor 1</web>
+		</editor>
+		<editor>
+			<nombre>NombreEditor2</nombre>
+			<apellidos>ApellidosEditor2</apellidos>
+			<web>Web Editor 2</web>
+		</editor>
+	</editors>
+	<booktitle>El booktitle</booktitle>
+	<volume>El volume</volume>
+	<number>El number</number>
+	<series>El series</series>
+	<address>El address</address>
+	<organization>El organization</organization>
+	<publisher>El publisher</publisher>
+	<url>El url</url>
+	<abstract>El abstract</abstract>
+	<note>El note</note>
+	<key>The key, Una clave, Mi clave</key>
+	<user>user1</user>
+</publication>

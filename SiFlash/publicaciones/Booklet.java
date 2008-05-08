@@ -274,23 +274,24 @@ public class Booklet extends Publication
 		
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'booklet');");
 		vector.add(str1);
-				
-		for (int i=0;i<this.author.size();i++){
-			int idAutor = author.get(i).getId();
-			String str;
-			if (idAutor == 0) //Hay que insertarlo
-			{
-				idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
-				if (idAutor == 0)
+
+		if (author != null)		
+			for (int i=0;i<this.author.size();i++){
+				int idAutor = author.get(i).getId();
+				String str;
+				if (idAutor == 0) //Hay que insertarlo
 				{
-					dbc.insertaAutorEditor(author.get(i));
 					idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+					if (idAutor == 0)
+					{
+						dbc.insertaAutorEditor(author.get(i));
+						idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+					}
 				}
+				str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+				str += "," + idAutor + ",TRUE);";
+				vector.add(str);
 			}
-			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + idAutor + ",TRUE);";
-			vector.add(str);
-		}
 		
 		vector.addAll(super.generaInserciones());
 			

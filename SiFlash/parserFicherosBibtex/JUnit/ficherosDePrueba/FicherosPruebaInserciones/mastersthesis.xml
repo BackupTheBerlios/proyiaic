@@ -1,0 +1,25 @@
+<publication tipo="mastersthesis" referencia="la+referencia+del+mastersthesis">
+	<title>El titulo del mastersthesis</title>
+	<year>2006</year>
+	<month>El mes</month>
+	<authors>
+		<author>
+			<nombre>NombreAutor1</nombre>
+			<apellidos>ApellidosAutor1</apellidos>
+			<web>Web autor 1</web>
+		</author>
+		<author>
+			<nombre>NombreAutor2</nombre>
+			<apellidos>ApellidosAutor2</apellidos>
+			<web>Web autor 2</web>
+		</author>
+	</authors>
+	<school>El school</school>
+	<type>El type</type>
+	<address>El address</address>
+	<url>El url</url>
+	<abstract>El abstract</abstract>
+	<note>El note</note>
+	<key>The key, Una clave, Mi clave</key>
+	<user>user1</user>
+</publication>

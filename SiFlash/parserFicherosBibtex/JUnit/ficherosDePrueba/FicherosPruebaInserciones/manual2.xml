@@ -1,0 +1,14 @@
+<publication tipo="manual" referencia="">
+	<title>El titulo del manual</title>
+	<year>2006</year>
+	<month>El mes</month>
+	<authors/>
+	<organization/>
+	<address>El address</address>
+	<edition>El edition</edition>
+	<url>El url</url>
+	<abstract/>
+	<note/>
+	<key>The key, Una clave, Mi clave</key>
+	<user>user1</user>
+</publication>

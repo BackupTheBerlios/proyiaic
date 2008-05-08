@@ -420,39 +420,41 @@ public class Book extends Publication
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'book');");
 		vector.add(str1);
 
-		for (int i=0;i<this.author.size();i++){
-			int idAutor = author.get(i).getId();
-			String str;
-			if (idAutor == 0) //Hay que insertarlo (o eso ha especificado el usuario)
-			{
-				idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
-				if (idAutor == 0)
+		if (author != null)
+			for (int i=0;i<this.author.size();i++){
+				int idAutor = author.get(i).getId();
+				String str;
+				if (idAutor == 0) //Hay que insertarlo (o eso ha especificado el usuario)
 				{
-					dbc.insertaAutorEditor(author.get(i));
 					idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+					if (idAutor == 0)
+					{
+						dbc.insertaAutorEditor(author.get(i));
+						idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+					}
 				}
+				str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+				str += "," + idAutor + ",TRUE);";
+				vector.add(str);
 			}
-			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + idAutor + ",TRUE);";
-			vector.add(str);
-		}
 
-		for (int i=0;i<this.editor.size();i++){
-			int idEditor = editor.get(i).getId();
-			String str;
-			if (idEditor == 0) //Hay que insertarlo
-			{
-				idEditor = dbc.consultaIdAutor(editor.get(i).getNombre(), editor.get(i).getApellidos());
-				if (idEditor == 0)
+		if (editor != null)
+			for (int i=0;i<this.editor.size();i++){
+				int idEditor = editor.get(i).getId();
+				String str;
+				if (idEditor == 0) //Hay que insertarlo
 				{
-					dbc.insertaAutorEditor(editor.get(i));
 					idEditor = dbc.consultaIdAutor(editor.get(i).getNombre(), editor.get(i).getApellidos());
+					if (idEditor == 0)
+					{
+						dbc.insertaAutorEditor(editor.get(i));
+						idEditor = dbc.consultaIdAutor(editor.get(i).getNombre(), editor.get(i).getApellidos());
+					}
 				}
+				str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+				str += "," + idEditor + ",FALSE);";
+				vector.add(str);
 			}
-			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + idEditor + ",FALSE);";
-			vector.add(str);
-		}
 
 		vector.addAll(super.generaInserciones());
 

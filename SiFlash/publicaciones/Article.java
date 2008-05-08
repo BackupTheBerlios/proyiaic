@@ -340,23 +340,24 @@ public Article(Object[] datos) throws UnimplementedException {
 		
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
 		vector.add(str1);		
-				
-		for (int i=0;i<this.author.size();i++){
-			String str;
-			int idAutor = author.get(i).getId();
-			if (idAutor == 0) //Hay que insertarlo (o así lo ha especificado el usuario)
-			{
-				idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
-				if (idAutor == 0)
+		
+		if (author != null)
+			for (int i=0;i<this.author.size();i++){
+				String str;
+				int idAutor = author.get(i).getId();
+				if (idAutor == 0) //Hay que insertarlo (o así lo ha especificado el usuario)
 				{
-					dbc.insertaAutorEditor(author.get(i));
 					idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+					if (idAutor == 0)
+					{
+						dbc.insertaAutorEditor(author.get(i));
+						idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+					}
 				}
+				str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+				str += "," + idAutor + ",TRUE);";
+				vector.add(str);
 			}
-			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + idAutor + ",TRUE);";
-			vector.add(str);
-		}
 		
 		vector.addAll(super.generaInserciones());
 			

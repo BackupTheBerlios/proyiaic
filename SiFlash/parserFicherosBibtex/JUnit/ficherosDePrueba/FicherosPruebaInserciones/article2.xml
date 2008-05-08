@@ -1,0 +1,26 @@
+<publication tipo="article" referencia="la+referencia+del+article2">
+	<title>El titulo del article2</title>
+	<year>2006</year>
+	<month>El mes</month>
+	<authors>
+		<author>
+			<nombre>NombreAutor1</nombre>
+			<apellidos>ApellidosAutor1</apellidos>
+			<web>Web autor 1</web>
+		</author>
+		<author>
+			<nombre>NombreAutor3</nombre>
+			<apellidos>ApellidosAutor3</apellidos>
+			<web>Web autor 3</web>
+		</author>
+	</authors>
+	<journal>El journal</journal>
+	<volume/>
+	<number>El number</number>
+	<pages/>
+	<url>El url</url>
+	<abstract>El abstract</abstract>
+	<note/>
+	<key>The key, Una clave, Mi otra clave</key>
+	<user>user1</user>
+</publication>

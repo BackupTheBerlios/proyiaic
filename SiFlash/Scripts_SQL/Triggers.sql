@@ -61,32 +61,17 @@ BEGIN
   END IF;
 END $$
 
-DROP PROCEDURE IF EXISTS errorHandler $$
-CREATE PROCEDURE errorHandler()
-BEGIN
-  DECLARE EXIT HANDLER FOR SQLSTATE '23000' SET @err=23000;
-  CREATE TABLE errorHandler(i integer primary key);
-  insert into errorHandler values(NULL);
-END $$
-
 
 DROP TRIGGER IF EXISTS insertaInbook $$
 CREATE TRIGGER insertaInbook BEFORE INSERT ON Inbook
 FOR EACH ROW
 BEGIN
-  DECLARE EXIT HANDLER FOR SQLSTATE '23000' SET @err=23000;
   IF (NEW.idDoc = 0) THEN
     BEGIN
-      IF (not((NEW.chapter = null) AND (NEW.pages = null))) THEN
-        BEGIN
-          DECLARE num INTEGER;
-          SELECT nextId INTO num FROM Id;
-          SET NEW.idDoc = num;
-          UPDATE Id SET nextId = nextId + 1;
-        END;
-      ELSE
-        CALL errorHandler();
-      END IF;
+      DECLARE num INTEGER;
+      SELECT nextId INTO num FROM Id;
+      SET NEW.idDoc = num;
+      UPDATE Id SET nextId = nextId + 1;
     END;
   END IF;
 END $$

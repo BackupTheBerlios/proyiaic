@@ -8,16 +8,13 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
-import controlador.DataBaseControler;
-
-import database.BDException;
-import database.BaseDatos;
-
 import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
 import parserFicherosBibtex.CampoPublicacionAutorEditor;
 import personas.AutorEditor;
 import temporal.UnimplementedException;
+import controlador.DataBaseControler;
+import database.BDException;
 
 
 /**
@@ -376,47 +373,29 @@ public class Proceedings extends Publication
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
-		BaseDatos db = new BaseDatos();
-		db.exeUpdate(str1);
+		dbc.ejecutaString(str1);
 		idDoc = dbc.consultaIdDoc();	
 		
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'proceedings');");
 		vector.add(str1);
 
-		for (int i=0;i<this.editor.size();i++){
-			int idEditor = editor.get(i).getId();
-			String nombre = editor.get(i).getNombre();
-			String apellidos = editor.get(i).getApellidos();
-			String web = editor.get(i).getWeb();
-			String str;
-			if (idEditor == 0) //Hay que insertarlo
-			{
-				idEditor = dbc.consultaIdAutor(nombre, apellidos);
-				if (idEditor == 0)
+		if (editor != null)
+			for (int i=0;i<this.editor.size();i++){
+				int idEditor = editor.get(i).getId();
+				String str;
+				if (idEditor == 0) //Hay que insertarlo
 				{
-					str = new String ("INSERT INTO autoreseditores VALUES(0");
-					if(nombre != null)
-						str += ",\"" + nombre + "\"";
-					else str+= ",null";
-					
-					if(apellidos!=null)
-						str += ",\"" + apellidos + "\"";
-					else str+= ",null";
-					
-					if(web!=null)
-						str += ",\"" + web + "\"";
-					else str+= ",null";
-					
-					str+=");";
-				
-					db.exeUpdate(str);
-					idEditor = dbc.consultaIdAutor();
+					idEditor = dbc.consultaIdAutor(editor.get(i).getNombre(), editor.get(i).getApellidos());
+					if (idEditor == 0)
+					{
+						dbc.insertaAutorEditor(editor.get(i));
+						idEditor = dbc.consultaIdAutor(editor.get(i).getNombre(), editor.get(i).getApellidos());
+					}
 				}
+				str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
+				str += "," + idEditor + ",FALSE);";
+				vector.add(str);
 			}
-			str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
-			str += "," + idEditor + ",FALSE);";
-			vector.add(str);
-		}
 		
 		vector.addAll(super.generaInserciones());
 			

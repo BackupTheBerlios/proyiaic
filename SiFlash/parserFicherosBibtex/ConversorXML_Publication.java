@@ -44,7 +44,7 @@ public class ConversorXML_Publication
 			
 			LinkedList<Campo> listaCampos = new LinkedList<Campo>();
 			String referencia = root.getAttributeValue("referencia");
-			if (referencia != null)
+			if (referencia != null && !referencia.equals(""))
 				listaCampos.add(new CampoPublicacion("referencia", referencia, false));
 			
 			List<Element> campos = root.getChildren();
@@ -56,11 +56,16 @@ public class ConversorXML_Publication
 				e = it.next();
 				nombre = e.getName();
 				if (nombre.equalsIgnoreCase("authors") || nombre.equalsIgnoreCase("editors"))
-					listaCampos.add(new CampoPublicacionAutorEditor(nombre, procesarAutorEditor(e)));
+				{
+					LinkedList<AutorEditor> l = procesarAutorEditor(e);
+					if (l != null)
+						listaCampos.add(new CampoPublicacionAutorEditor(nombre, l));
+				}
 				else
 				{
 					valor = e.getValue();
-					listaCampos.add(new CampoPublicacion(nombre, valor, false));
+					if (valor != null && !valor.equals(""))
+						listaCampos.add(new CampoPublicacion(nombre, valor, false));
 				}
 			}
 			
@@ -94,8 +99,10 @@ public class ConversorXML_Publication
 			AutorEditor aeNuevo = new AutorEditor(nombre.getValue(), apellidos.getValue(), web.getValue());
 			listaAutoresEditores.add(aeNuevo);
 		}
-
-		return listaAutoresEditores;
+		if (listaAutoresEditores.isEmpty())
+			return null;
+		else
+			return listaAutoresEditores;
 	}
 
 	private Publication generarPublicacion(String tipoP, LinkedList<Campo> listaCampos) 
