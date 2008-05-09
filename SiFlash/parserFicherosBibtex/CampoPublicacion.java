@@ -296,4 +296,9 @@ public class CampoPublicacion extends Campo
 			valor = nuevoValor;
 		}
 	}
+	
+	public String toString()
+	{
+		return nombre + " " + valor;
+	}
 }

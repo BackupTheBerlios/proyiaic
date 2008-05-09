@@ -2,6 +2,8 @@
 
 package publicaciones;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -26,61 +28,70 @@ public class Article extends Publication
 	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
-	
-   /**
-    * Journal en el que se publicó.
-    */
-   private String journal;
-   
-   /**
-    * Volumen en el que está contenido.
-    */
-   private String volume;
 
-   /**
-    * Número de volumen.
-    */
-   private String number;
-   
-   /**
-    * Longitud en páginas.
-    */
-   private String pages;
-   
+	/**
+	 * Journal en el que se publicó.
+	 */
+	private String journal;
 
-/**
- * @param author
- * @param journal
- * @param volume
- * @param number
- * @param pages
- * @throws UnimplementedException 
- */
-public Article(int idDoc, String referencia, String title,
-		String year, String month, String url, String _abstract,
-		String note, Vector<String> key, String user, Vector<String> proyectos,
-		LinkedList<AutorEditor> author, String journal, String volume,
-		String number, String pages) throws UnimplementedException {
-	this.author = author;
-	this.journal = journal;
-	this.volume = volume;
-	this.number = number;
-	this.pages = pages;
-	super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note,
-			key, user, proyectos);	
-}
+	/**
+	 * Volumen en el que está contenido.
+	 */
+	private String volume;
 
-/**
-    * Crea un Article a partir de una lista de campos.
-    * @param campos Campos a partir de los cuales se quiere crear el objeto.
-    */
-   public Article(LinkedList<Campo> campos)
+	/**
+	 * Número de volumen.
+	 */
+	private String number;
+
+	/**
+	 * Longitud en páginas.
+	 */
+	private String pages;
+
+
+	/**
+	 * @param author
+	 * @param journal
+	 * @param volume
+	 * @param number
+	 * @param pages
+	 * @throws UnimplementedException 
+	 */
+	public Article(int idDoc, String referencia, String title,
+			String year, String month, String url, String _abstract,
+			String note, Vector<String> key, String user, Vector<String> proyectos,
+			LinkedList<AutorEditor> author, String journal, String volume,
+			String number, String pages) throws UnimplementedException {
+		this.author = author;
+		this.journal = journal;
+		this.volume = volume;
+		this.number = number;
+		this.pages = pages;
+		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note,
+				key, user, proyectos);	
+	}
+
+	/**
+	 * Crea un Article a partir de una lista de campos.
+	 * @param campos Campos a partir de los cuales se quiere crear el objeto.
+	 */
+	public Article(LinkedList<Campo> campos)
 	{
 		Campo campo;
 		Iterator<Campo> it = campos.iterator();
+		/*try {
+			FileWriter fw = new FileWriter("log.txt");
+			fw.write("Uououo");
+			fw.close();
+		} catch (IOException e2) 
+		{
+			e2.printStackTrace();
+		}*/
 		while (it.hasNext())
 		{
 			campo = it.next();
+			
 			String nombreCampo = campo.getNombre();
 			if (campo instanceof CampoPublicacion)
 			{
@@ -92,22 +103,22 @@ public Article(int idDoc, String referencia, String title,
 				LinkedList<AutorEditor> valor = ((CampoPublicacionAutorEditor)campo).getValor();
 				insertar(nombreCampo, valor);
 			}
-				
+
 		}
 	}
 
-public Article(Object[] datos) throws UnimplementedException {
-	throw new UnimplementedException();
-}
+	public Article(Object[] datos) throws UnimplementedException {
+		throw new UnimplementedException();
+	}
 
-/**
-    * Inserta el campo.
-    * @param nombreCampo Nombre del campo que se quiere insertar.
-    * @param valorString Valor del campo que se quiere insertar.
-    */
+	/**
+	 * Inserta el campo.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valorString Valor del campo que se quiere insertar.
+	 */
 	private void insertar(String nombreCampo, String valorString)
 	{
-		if (nombreCampo.equalsIgnoreCase("author") && author == null)
+		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
 			author = extraerAutoresEditores(valorString);
 		else if (nombreCampo.equalsIgnoreCase("referencia") && referencia == null)
 			referencia = valorString;
@@ -126,23 +137,23 @@ public Article(Object[] datos) throws UnimplementedException {
 		else if (nombreCampo.equalsIgnoreCase("key") && key == null)
 			key = separarKeys(valorString);
 		else if (nombreCampo.equalsIgnoreCase("number") && number == null)
-				number = valorString;
+			number = valorString;
 		else if (nombreCampo.equalsIgnoreCase("pages") && pages == null)
-				pages = valorString;
+			pages = valorString;
 		else if (nombreCampo.equalsIgnoreCase("year") && year == null)
-				year = valorString;
+			year = valorString;
 		else if (nombreCampo.equalsIgnoreCase("user") && user == null)
-				user = valorString;
+			user = valorString;
 		else if (nombreCampo.equalsIgnoreCase("url") && URL == null)
-				URL = valorString;
+			URL = valorString;
 	}
-	   
+
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
 			author = valor;
 	}
-	
+
 	/**
 	 * Genera un elemento XML con la información del objeto.
 	 * @return El elemento generado.
@@ -153,50 +164,50 @@ public Article(Object[] datos) throws UnimplementedException {
 		elemento.setAttribute ("tipo", "Article");
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
-		
+
 		Element eTitle = new Element("title");
 		eTitle.addContent(title);
 		elemento.addContent(eTitle);
-		
+
 		Element eAuthor = generarAutoresEditoresXML();
 		elemento.addContent(eAuthor);
-		
+
 		Element eJournal = new Element("journal");
 		eJournal.addContent(journal);
 		elemento.addContent(eJournal);
-		
+
 		Element eYear = new Element("year");
 		eYear.addContent(year);
 		elemento.addContent(eYear);
-		
+
 		Element eVolume = new Element("volume");
 		eVolume.addContent(volume);
 		elemento.addContent(eVolume);
-		
+
 		Element eNumber = new Element("number");
 		eNumber.addContent(number);
 		elemento.addContent(eNumber);
-		
+
 		Element ePages = new Element("pages");
 		ePages.addContent(pages);
 		elemento.addContent(ePages);
-		
+
 		Element eMonth = new Element("month");
 		eMonth.addContent(month);
 		elemento.addContent(eMonth);
-		
+
 		Element eNote = new Element("note");
 		eNote.addContent(note);
 		elemento.addContent(eNote);
-		
+
 		Element eAbstract = new Element("abstract");
 		eAbstract.addContent(_abstract);
 		elemento.addContent(eAbstract);
-		
+
 		Element eKey = new Element("key");
 		eKey.addContent(convertirTextoBibtexKeys(key));
 		elemento.addContent(eKey);
-		
+
 		return elemento;
 	}
 
@@ -246,7 +257,7 @@ public Article(Object[] datos) throws UnimplementedException {
 		if (key != null)
 			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "}\n";
 		bibtex += "}";
-		
+
 		return bibtex;
 	}
 
@@ -282,65 +293,65 @@ public Article(Object[] datos) throws UnimplementedException {
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO article VALUES (");
 		str1 += Integer.toString(getIdDoc());
-		
+
 		if (getTitle()!= null)
-		str1 += ",'" + getTitle() + "'";
+			str1 += ",'" + getTitle() + "'";
 		else str1+= ",null";
-		
+
 		if (getJournal()!=null)
-		str1 += ",'" + getJournal() + "'";
+			str1 += ",'" + getJournal() + "'";
 		else str1+= ",null";
-		
+
 		if (getYear()!=null)
-		str1 += ",'" + getYear() + "'";
+			str1 += ",'" + getYear() + "'";
 		else str1+= ",null";
-		
+
 		if(getVolume()!=null)
-		str1 += ",'" + getVolume() + "'";
+			str1 += ",'" + getVolume() + "'";
 		else str1+= ",null";
-		
+
 		if(getNumber()!=null)
-		str1 += ",'" + getNumber() + "'";
+			str1 += ",'" + getNumber() + "'";
 		else str1+= ",null";
-		
+
 		if(getPages()!=null)
-		str1 += ",'" + getPages() + "'";
+			str1 += ",'" + getPages() + "'";
 		else str1+= ",null";
-		
-		
+
+
 		if(getMonth()!=null)
-		str1 += ",'" + getMonth() + "'";
+			str1 += ",'" + getMonth() + "'";
 		else str1+= ",null";
-		
+
 		if(getNote()!=null)
-		str1 += ",'" + getNote() + "'";
+			str1 += ",'" + getNote() + "'";
 		else str1+= ",null";
-		
+
 		if(get_abstract()!=null)
-		str1 += ",'" + get_abstract() + "'";
+			str1 += ",'" + get_abstract() + "'";
 		else str1+= ",null";
-		
+
 		if(getURL()!=null)
-		str1 += ",'" + getURL() + "'";
+			str1 += ",'" + getURL() + "'";
 		else str1+= ",null";
-		
+
 		if(getUser()!=null)
-		str1 += ",'" + getUser() + "'";
+			str1 += ",'" + getUser() + "'";
 		else str1+= ",null";
-		
+
 		if(getReferencia()!=null)
-		str1 += ",'" + getReferencia() + "'";
+			str1 += ",'" + getReferencia() + "'";
 		else str1+= ",null";
-		
+
 		str1+=");";
-			
+
 		DataBaseControler dbc = new DataBaseControler();
 		dbc.ejecutaString(str1);
 		idDoc = dbc.consultaIdDoc();
-		
+
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
 		vector.add(str1);		
-		
+
 		if (author != null)
 			for (int i=0;i<this.author.size();i++){
 				String str;
@@ -358,14 +369,14 @@ public Article(Object[] datos) throws UnimplementedException {
 				str += "," + idAutor + ",TRUE);";
 				vector.add(str);
 			}
-		
+
 		vector.addAll(super.generaInserciones());
-			
+
 		return vector; 
 	}	
 
 	public static Vector<Article> generaPub(Vector<Object[]> v) throws UnimplementedException {
-	//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
+		//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
 		Vector <Article> vector = new Vector <Article>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -408,7 +419,7 @@ public Article(Object[] datos) throws UnimplementedException {
 			if (clave != null) claves.add(clave);
 			Article	art1 = new Article(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,journal,volume,number,pages); 
 			vector.add(art1);		
-					
+
 
 			// Evaluamos el cambio_pub
 			i++;
@@ -449,7 +460,7 @@ public Article(Object[] datos) throws UnimplementedException {
 		}
 		return vector;
 	}
-	
+
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}

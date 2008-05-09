@@ -1,9 +1,0 @@
-0 title El titulo del article3
-1 year 2006
-2 month El mes
-3 authors
-4 journal El journal
-5 number El number
-6 url El url
-7 abstract El abstract
-8 user user1

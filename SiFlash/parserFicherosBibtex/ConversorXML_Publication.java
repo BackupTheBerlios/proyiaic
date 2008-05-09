@@ -1,5 +1,6 @@
 package parserFicherosBibtex;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -31,26 +32,28 @@ import publicaciones.Unpublished;
 public class ConversorXML_Publication 
 {
 	public ConversorXML_Publication() {}
-	
+
 	public Publication convertir(InputStream input)
 	{
-		try 
+		try
 		{
 			SAXBuilder builder = new SAXBuilder();
 			Document doc;
 			doc = builder.build(input);
+
 			Element root = doc.getRootElement();
 			String tipoPublicacion = root.getAttributeValue("tipo");
-			
+
 			LinkedList<Campo> listaCampos = new LinkedList<Campo>();
 			String referencia = root.getAttributeValue("referencia");
 			if (referencia != null && !referencia.equals(""))
 				listaCampos.add(new CampoPublicacion("referencia", referencia, false));
-			
+
 			List<Element> campos = root.getChildren();
 			Iterator<Element> it = campos.iterator();
 			Element e;
 			String nombre, valor;
+
 			while (it.hasNext())
 			{
 				e = it.next();
@@ -68,10 +71,10 @@ public class ConversorXML_Publication
 						listaCampos.add(new CampoPublicacion(nombre, valor, false));
 				}
 			}
-			
+
 			Publication p = generarPublicacion(tipoPublicacion, listaCampos);
 			return p;
-			
+
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

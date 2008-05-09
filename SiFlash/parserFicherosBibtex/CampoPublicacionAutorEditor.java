@@ -20,4 +20,9 @@ public class CampoPublicacionAutorEditor extends Campo
 	public LinkedList<AutorEditor> getValor() {
 		return valor;
 	}
+	
+	public String toString()
+	{
+		return nombre;
+	}
 }
