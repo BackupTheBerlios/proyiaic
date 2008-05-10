@@ -2,7 +2,14 @@
 
 package controlador;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Vector;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 import personas.AutorEditor;
 import personas.Usuario;
@@ -265,7 +272,7 @@ public class DataBaseControler
 	 * @throws controlador.exceptions.ExistingElementException
 	 * @roseuid 47C5B74C001F
 	 */
-	public void insertaUsuario(Usuario publicacion) throws ConnectionNullException, ConnectionException, PermisssionException, ExistingElementException 
+	public void insertaUsuario(Usuario user) throws ConnectionNullException, ConnectionException, PermisssionException, ExistingElementException 
 	{
 
 	}
@@ -450,5 +457,45 @@ public class DataBaseControler
 	public void ejecutaString(String str1) throws BDException 
 	{
 		database.exeUpdate(str1);
+	}
+	
+	public OutputStream obtenerListaAutoresEditores() throws FileNotFoundException, BDException
+	{
+		OutputStream os = new FileOutputStream("listaAutoresEditores.xml");
+		Element root = new Element("listaAutoresEditores");
+		
+		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores;");
+		int numAE = result.size();
+		Object[] actual;
+		int idAut;
+		String nombre, apellidos;
+		for (int i = 0; i < numAE; i++)
+		{
+			actual = result.get(i);
+			idAut = ((Long)actual[0]).intValue();
+			nombre = (String)actual[1];
+			apellidos = (String)actual[2];
+			
+			Element eAutorEditor = new Element("AutorEditor");
+			eAutorEditor.setAttribute("idAut", ((Integer)idAut).toString());
+			Element eNombre = new Element("nombre");
+			eNombre.addContent(nombre);
+			Element eApellidos = new Element("apellidos");
+			eApellidos.addContent(apellidos);
+			eAutorEditor.addContent(eNombre);
+			eAutorEditor.addContent(eApellidos);
+			
+			root.addContent(eAutorEditor);
+		}
+		
+		XMLOutputter outputter = new XMLOutputter();
+		try
+		{
+			outputter.output (new Document(root), os);
+		}
+		catch (Exception e){
+		    e.getMessage();
+		}
+		return os;
 	}
 }

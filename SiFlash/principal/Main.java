@@ -1,10 +1,8 @@
 package principal;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
-import parserFicherosBibtex.ConversorXML_Publication;
-import publicaciones.Publication;
 import controlador.DataBaseControler;
 
 public class Main 
@@ -61,17 +59,15 @@ public class Main
 				System.out.println(vector.get(i).getTitle());*/
 
 			//-------------------------------------------------------------------------
-			//DataBaseControler dbc = new DataBaseControler();
-			//BaseDatos db = new BaseDatos();
 			
-			ConversorXML_Publication cp = new ConversorXML_Publication();
+			/*ConversorXML_Publication cp = new ConversorXML_Publication();
 			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\article3.xml");
 			Publication p = cp.convertir(is);
 			DataBaseControler cb = new DataBaseControler();
-			cb.insertaDocumento(p);
+			cb.insertaDocumento(p);*/
 			
-			//Vector<Object[]> v = db.exeQuery("SELECT * FROM article");
-			//v.capacity();
+			DataBaseControler db_controler = new DataBaseControler();
+			OutputStream os = db_controler.obtenerListaAutoresEditores();
 		}
 		catch (Exception e)
 		{

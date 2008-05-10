@@ -118,7 +118,7 @@ public class Article extends Publication
 	 */
 	private void insertar(String nombreCampo, String valorString)
 	{
-		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
+		if (nombreCampo.equalsIgnoreCase("author") && author == null)
 			author = extraerAutoresEditores(valorString);
 		else if (nombreCampo.equalsIgnoreCase("referencia") && referencia == null)
 			referencia = valorString;
