@@ -10,7 +10,6 @@ import java.util.Vector;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-
 import personas.AutorEditor;
 import personas.Usuario;
 import publicaciones.Publication;
@@ -259,8 +258,7 @@ public class DataBaseControler
 	 */
 	public void insertaDocumento(Publication publicacion) throws BDException
 	{
-		Vector<String> inserciones = publicacion.generaInserciones();		
-		database.exeUpdates(inserciones);
+		modif_pub.insertaPublicación(publicacion);
 	}
 
 	/**
@@ -387,7 +385,7 @@ public class DataBaseControler
 	}
 	
 	
-	public String verificaUsuario(String nombre, String password) throws UnimplementedException, BDException 
+	public String verificaUsuario(String nombre, String password) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException, BDException 
 	{
 		return consultor.getTipoUser(nombre, password);
 	}
@@ -404,17 +402,9 @@ public class DataBaseControler
 		return idAut;
 	}
 	
-	public int consultaIdAutor(String nombre, String apellidos) throws BDException 
+	public int consultaIdAutor(String nombre, String apellidos) throws BDException
 	{
-		Vector<Object[]> resultado = database.exeQuery("SELECT idAut FROM AutoresEditores WHERE nombre = '" + nombre + "' AND apellidos = '" + apellidos + "'");
-		if (resultado.size() != 0)
-		{
-			Object[] array = resultado.get(0);
-			int idAut = ((Long) array[0]).intValue();
-			return idAut;
-		}
-		else
-			return 0;
+		return modif_autores.consultaIdAutor(nombre, apellidos);
 	}
 	
 	public boolean consultaExistenciaKey(String key) throws BDException 
@@ -432,7 +422,7 @@ public class DataBaseControler
 		Object[] array = resultado.get(0);
 		int idAut = ((Long) array[0]).intValue()-1;
 		return idAut;
-	}
+	}		
 
 	
 	public void insertaAutorEditor(AutorEditor ae) throws BDException
@@ -498,4 +488,5 @@ public class DataBaseControler
 		}
 		return os;
 	}
+	
 }
