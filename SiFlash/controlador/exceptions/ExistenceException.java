@@ -19,7 +19,9 @@ public class ExistenceException extends BDException
 	public static final int DOCUMENTO = 2;
 	public static final int USUARIO = 4;
 	public static final int PROYECTO = 8;
-	private static final int[] LISTATIPOS= {1,2,4,8};
+	public static final int AUTOR = 16;
+	public static final int RELACION = 32;
+	private static final int[] LISTATIPOS= {1,2,4,8,16,32};
 
 	/**
 	 * Indica el tipo de elemento que ha producido la excepcion de existencia ( 
