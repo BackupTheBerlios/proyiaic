@@ -4,10 +4,11 @@ package controlador;
 
 import java.util.Vector;
 
+import personas.AutorEditor;
+import temporal.UnimplementedException;
 import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
 import controlador.exceptions.NonExistingElementException;
-
 import database.BDException;
 import database.BaseDatos;
 
@@ -93,9 +94,9 @@ public class ModificadorAutores
 	 * @return
 	 * @throws BDException
 	 */
-	public int consultaIdAutor(String nombre, String apellidos) throws BDException 
-	{
-		Vector<Object[]> resultado = theBaseDatos.exeQuery("SELECT idAut FROM AutoresEditores WHERE nombre = '" + nombre + "' AND apellidos = '" + apellidos + "'");
+	protected int consultaIdAutor(String nombre, String apellidos) throws BDException 
+	{		
+		Vector<Object[]> resultado = theBaseDatos.exeQuery("SELECT idAut FROM AutoresEditores WHERE nombre = '" + nombre + "' AND apellidos = '" + apellidos + "';");
 		if (resultado.size() != 0)
 		{
 			Object[] array = resultado.get(0);
@@ -104,5 +105,6 @@ public class ModificadorAutores
 		}
 		else
 			return 0;
-	}	
+	}		 
+
 }

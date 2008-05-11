@@ -63,9 +63,10 @@ public class ModificadorPublicaciones {
 	 * Excepcion si no hay permisos.
 	 * @param id_doc - IdDoc de la publicación que se desea borrar.
 	 * @throws database.BDException
+	 * @throws NonExistingElementException 
 	 * @roseuid 47C59A7002BF
 	 */
-	public void borraPublicación(int id_doc) throws BDException 
+	public void borraPublicación(int id_doc) throws BDException, NonExistingElementException 
 	{
 		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector <String> borrados = new Vector <String>();
@@ -85,9 +86,10 @@ public class ModificadorPublicaciones {
 	 * @param publicacion - Publicación a desasociar.
 	 * @param proyecto - Proyecto del que desasociar.
 	 * @throws database.BDException
+	 * @throws NonExistingElementException 
 	 * @roseuid 47C59B0E0213
 	 */
-	public void desasociaPublicacion(int publicacion, String proyecto) throws BDException 
+	public void desasociaPublicacion(int publicacion, String proyecto) throws BDException, NonExistingElementException 
 	{
 		String consulta1,consulta2,consulta3;
 		Vector<Object []> res1,res2,res3;

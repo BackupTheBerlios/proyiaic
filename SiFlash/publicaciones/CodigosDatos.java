@@ -25,6 +25,7 @@ public class CodigosDatos
 	public static final int codProceedings = 2048;
 	public static final int codTechReport = 4096;
 	public static final int codUnpublished = 8192;
+	public static final int codTodas = 1&2&4&8&16&32&64&128&256&512&1024&2048&4096&8192;
 	public static final String[] listaMeses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};   
 
 }

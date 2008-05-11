@@ -2,14 +2,13 @@
 
 package controlador.exceptions;
 
-import database.BDException;
 
 
 /**
  * Excepcion que se produce al manipular la base de datos por problemas de 
  * existencia o inexistencia de los objetos a tratar.
  */
-public class ExistenceException extends BDException 
+public class ExistenceException extends Exception 
 {
 	/**
 	 * 

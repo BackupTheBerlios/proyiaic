@@ -12,6 +12,7 @@ import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 import personas.AutorEditor;
 import personas.Usuario;
+import publicaciones.CodigosDatos;
 import publicaciones.Publication;
 import temporal.UnimplementedException;
 import controlador.exceptions.ConnectionException;
@@ -112,25 +113,31 @@ public class DataBaseControler
 	 * @return vector construido con las publicaciones que cumplen los 
 	 * requisitos@throws controlador.exceptions.ConnectionException
 	 * @throws UnimplementedException 
-	 * @throws BDException 
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 * @roseuid 47C5A76F02DE
 	 */
-	public Vector<Publication> consultaDocumentos(int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys) throws BDException, UnimplementedException 
+	public Vector<Publication> consultaDocumentos(int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys) throws UnimplementedException, BDException 
 	{
+		this.abreConexion();
 		// Primero localizar a los autores y editores.
-		Vector <AutorEditor> v_autores = consultor.buscaAutores(autores);
-		Vector <AutorEditor> v_editores = consultor.buscaAutores(editores);
-		Vector <Integer> v_authors= new Vector<Integer>();
-		Vector <Integer> v_editors= new Vector<Integer>();
-		for (int i = 0; i< v_autores.size();i++){
-			v_authors.add(new Integer (v_autores.get(i).getId()));
-		}
+		try{
+			Vector <AutorEditor> v_autores = consultor.buscaAutores(autores);
+			Vector <AutorEditor> v_editores = consultor.buscaAutores(editores);
+			Vector <Integer> v_authors= new Vector<Integer>();
+			Vector <Integer> v_editors= new Vector<Integer>();
+			for (int i = 0; i< v_autores.size();i++){
+				v_authors.add(new Integer (v_autores.get(i).getId()));
+			}
 
-		for (int i = 0; i< v_editores.size();i++){
-			v_editors.add(new Integer (v_editores.get(i).getId()));
-		}
+			for (int i = 0; i< v_editores.size();i++){
+				v_editors.add(new Integer (v_editores.get(i).getId()));
+			}
 
-		return consultor.getPublicaciones(tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle);
+			return consultor.getPublicaciones(tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
 	/**
@@ -140,15 +147,56 @@ public class DataBaseControler
 	 * @param apellido - Apellidos del autor.
 	 * @param web - URL de la web del autor.
 	 * @return java.util.Vector Vector con los autores y/o editores consultados
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.ConnectionNullException
 	 * @throws UnimplementedException 
-	 * @roseuid 47C5ACED0109
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 */
-	public Vector<AutorEditor> consultaAutores(String nombre, String apellido, String web) throws ConnectionException, ConnectionNullException, UnimplementedException 
+	public Vector<AutorEditor> consultaAutores(String nombre, String apellido, String web, boolean total_o_parcial) throws UnimplementedException, BDException 
 	{
-		if (true)throw new UnimplementedException();
-		return null;
+		this.abreConexion();
+		try{
+			Vector<AutorEditor> vector = new Vector<AutorEditor>();
+			String consulta = new String("SELECT * FROM AutoresEditores WHERE ");
+			String cons = null;
+			if (nombre != null){
+				if (cons == null) cons = new String();
+				else cons += " AND ";
+
+				if (total_o_parcial) cons+= "nombre LIKE '%" + nombre + "%'";
+				else cons += "nombre = '" + nombre + "'"; 			
+			}
+
+			if (apellido != null) {
+				if (cons == null) cons = new String();
+				else cons += " AND ";
+
+				if (total_o_parcial) cons += "apellidos LIKE '%" + apellido + "%'";
+				else cons += "apellido = '" + apellido + "'";
+			}
+
+			if (web != null){
+				if (cons == null) cons = new String();
+				else cons+= " AND ";
+
+				if (total_o_parcial) cons += "web LIKE '%" + web + "%'";
+				else cons += "web = '" + web + "'";
+			}
+
+			if (cons == null) cons = new String ("TRUE");
+
+			consulta+= cons + ";";
+
+
+			Vector<Object[]> resultado = database.exeQuery(consulta);
+
+			for (int i=0; resultado != null && i<resultado.size();i++){
+				Object[] array = resultado.get(i);
+				vector.add(new AutorEditor(array));			
+			}
+			return vector;	
+		} finally {
+			this.cierraConexion();
+		}
 	}
 
 	/**
@@ -165,8 +213,6 @@ public class DataBaseControler
 	public Vector<Publication> consultaDocumentosProyecto(String proyecto) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
 	{
 		if (true)throw new UnimplementedException();
-		// Comprobamos la existencia del proyecto, si no existe -->    NonExistingElementException
-		// Consultamos los documentos que pertenecen a ese proyecto. Construimos una publicacion para cada uno.  
 		return null;
 	}
 
@@ -324,34 +370,41 @@ public class DataBaseControler
 	 * Asocia el usuario proporcionado al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea asociar al usuario.
 	 * @param Usuario - Usuario que se desea asociar.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
-	 * @throws controlador.exceptions.ExistingElementException
-	 * @throws UnimplementedException 
-	 * @roseuid 47C5B7D10213
+	 * @throws NonExistingElementException - Si no existe el usuario o el proyecto, 
+	 * se indica en parametro tipo de la excepcion cual es que no existe.   
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 */
-	public void asociaUsuarioProyecto(String proyecto, String Usuario) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, ExistingElementException, UnimplementedException 
+	public void asociaUsuarioProyecto(String proyecto, String usuario) throws NonExistingElementException,BDException 
 	{
-		if (true)throw new UnimplementedException();
+		this.abreConexion();
+		try {
+			modif_user.asociaProyecto(usuario, proyecto);
+		} 	finally {
+			this.cierraConexion();
+		}
 	}
 
 	/**
 	 * Desasocia el usuario proporcionado al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea desasociar al usuario.
 	 * @param usuario - Usuario que se desea desasociar.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
 	 * @throws UnimplementedException 
-	 * @roseuid 47C5B9A2034B
+	 * @throws NonExistingElementException - Si no existe el usuario, el proyecto o la relacion, 
+	 * se indica en parametro tipo de la excepcion cual es que no existe.   
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 */
-	public void desasociaUsuarioProyecto(String proyecto, int usuario) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	public void desasociaUsuarioProyecto(String proyecto, String usuario) throws UnimplementedException, NonExistingElementException, BDException 
 	{
-		if (true)throw new UnimplementedException();
+		this.abreConexion();
+		try {
+			modif_user.desasociaProyecto(usuario, proyecto);
+		} 	finally {
+			this.cierraConexion();
+		}		
 	}
+
 
 	/**
 	 * Desasocia el documento proporcionado al proyecto indicado.
@@ -383,8 +436,8 @@ public class DataBaseControler
 	{
 		if (true)throw new UnimplementedException();
 	}
-	
-	
+
+
 	public String verificaUsuario(String nombre, String password) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException, BDException 
 	{
 		return consultor.getTipoUser(nombre, password);
@@ -401,12 +454,12 @@ public class DataBaseControler
 		}
 		return idAut;
 	}
-	
+
 	public int consultaIdAutor(String nombre, String apellidos) throws BDException
 	{
 		return modif_autores.consultaIdAutor(nombre, apellidos);
 	}
-	
+
 	public boolean consultaExistenciaKey(String key) throws BDException 
 	{
 		Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "'");
@@ -424,22 +477,22 @@ public class DataBaseControler
 		return idAut;
 	}		
 
-	
+
 	public void insertaAutorEditor(AutorEditor ae) throws BDException
 	{
 		String str = new String ("INSERT INTO autoreseditores VALUES(0");
 		if(ae.getNombre() != null)
 			str += ",\"" + ae.getNombre() + "\"";
 		else str+= ",null";
-		
+
 		if(ae.getApellidos()!=null)
 			str += ",\"" + ae.getApellidos() + "\"";
 		else str+= ",null";
-		
+
 		if(ae.getWeb()!=null)
 			str += ",\"" + ae.getWeb() + "\"";
 		else str+= ",null";
-		
+
 		str+=");";
 		database.exeUpdate(str);
 	}
@@ -448,12 +501,12 @@ public class DataBaseControler
 	{
 		database.exeUpdate(str1);
 	}
-	
+
 	public OutputStream obtenerListaAutoresEditores() throws FileNotFoundException, BDException
 	{
 		OutputStream os = new FileOutputStream("listaAutoresEditores.xml");
 		Element root = new Element("listaAutoresEditores");
-		
+
 		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores;");
 		int numAE = result.size();
 		Object[] actual;
@@ -465,7 +518,7 @@ public class DataBaseControler
 			idAut = ((Long)actual[0]).intValue();
 			nombre = (String)actual[1];
 			apellidos = (String)actual[2];
-			
+
 			Element eAutorEditor = new Element("AutorEditor");
 			eAutorEditor.setAttribute("idAut", ((Integer)idAut).toString());
 			Element eNombre = new Element("nombre");
@@ -474,19 +527,33 @@ public class DataBaseControler
 			eApellidos.addContent(apellidos);
 			eAutorEditor.addContent(eNombre);
 			eAutorEditor.addContent(eApellidos);
-			
+
 			root.addContent(eAutorEditor);
 		}
-		
+
 		XMLOutputter outputter = new XMLOutputter();
 		try
 		{
 			outputter.output (new Document(root), os);
 		}
 		catch (Exception e){
-		    e.getMessage();
+			e.getMessage();
 		}
 		return os;
 	}
-	
+
+	/**
+	 * Este método establece la conexión con la base de datos.
+	 */
+	private void abreConexion(){
+
+	}
+
+	/**
+	 * Este método cierra la conexion con la base de datos.
+	 */
+	private void cierraConexion(){
+
+	}
+
 }

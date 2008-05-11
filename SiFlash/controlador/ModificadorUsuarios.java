@@ -28,9 +28,10 @@ public class ModificadorUsuarios
 	 * Inserta en la base de datos es usuario pasado por parámetro.
 	 * @param usuario - Usuario que se debe pasar por parámetro
 	 * @throws database.BDException
+	 * @throws ExistingElementException 
 	 * @roseuid 47C5913A0271
 	 */
-	public void creaUsuario(Usuario usuario) throws BDException 
+	public void creaUsuario(Usuario usuario) throws BDException, ExistingElementException 
 	{
 		String consulta, insercion;
 		consulta = new String ("SELECT * FROM usuarios WHERE nombre = '" + usuario.getNombre() +"';");
@@ -49,7 +50,7 @@ public class ModificadorUsuarios
 	 * @throws database.BDException
 	 * @roseuid 47C5979A01F4
 	 */
-	public void asociaProyecto(String usuario, String proyecto) throws BDException 
+	public void asociaProyecto(String usuario, String proyecto) throws NonExistingElementException,BDException 
 	{
 		String consulta1,consulta2,insercion;
 		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre = '" + usuario +"';");
@@ -67,6 +68,7 @@ public class ModificadorUsuarios
 		theBaseDatos.exeUpdate(insercion);
 	}
 
+	
 	/**
 	 * Elimina el usuario en cuestion del proyecto.
 	 * @param String - Nombre del usuario a desvilcular.
