@@ -34,7 +34,7 @@ public class ModificadorProyectos
 	 * @throws database.BDException
 	 * @roseuid 47C5A0FC005D
 	 */
-	public void insertaProyecto(String nombre_proyecto, String nombre_administrador) throws BDException 
+	public void insertaProyecto(String nombre_proyecto, String nombre_administrador) throws ExistingElementException,BDException 
 	{
 		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + nombre_proyecto + "';";
 		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
@@ -52,7 +52,7 @@ public class ModificadorProyectos
 	 * @return nombre del antiguo administrador.@throws database.BDException
 	 * @roseuid 47C5A19C03D8
 	 */
-	public String setAdmin(String nombre_proyecto, String nuevo_administrador) throws BDException 
+	public String setAdmin(String nombre_proyecto, String nuevo_administrador) throws NonExistingElementException,BDException 
 	{
 		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + nombre_proyecto + "';";
 		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
@@ -69,7 +69,7 @@ public class ModificadorProyectos
 	 * @throws BDException 
 	 * @roseuid 47C5A25B0290
 	 */
-	public void borraProyecto(String proyecto) throws BDException 
+	public void borraProyecto(String proyecto) throws NonExistingElementException,BDException 
 	{
 		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + proyecto + "';";
 		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);

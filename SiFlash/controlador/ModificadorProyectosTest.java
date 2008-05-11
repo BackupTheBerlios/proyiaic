@@ -15,10 +15,14 @@ public class ModificadorProyectosTest {
 	@Before
 	public void setUp() throws Exception {
 		BaseDatos db= new BaseDatos(); 
+		@SuppressWarnings("unused")
 		ModificadorProyectos modif_proyectos = new ModificadorProyectos(db);
+		@SuppressWarnings("unused")
 		ModificadorUsuarios modif_user = new ModificadorUsuarios(db);
 		Random rnd = new Random(System.nanoTime()); 
+		@SuppressWarnings("unused")
 		String proy1,proy2;
+		@SuppressWarnings("unused")
 		String user1_1,user1_2,user2_1,user2_2;
 		proy1 = Float.toString(rnd.nextFloat());
 		proy2 = Float.toString(rnd.nextFloat());

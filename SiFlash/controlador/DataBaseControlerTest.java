@@ -86,6 +86,7 @@ public class DataBaseControlerTest {
 		AutorEditor at1,at3,ed8;
 		LinkedList<AutorEditor> autores,editores;
 		Vector<String> proyectos = new Vector<String>();
+		@SuppressWarnings("unused")
 		Vector <String> keys1,keys2,keys3;
 		keys1 = null;
 		keys2 = new Vector<String>();
