@@ -579,11 +579,20 @@ class ConsultorBaseDatos
 		return v_res;
 	}
 
-	public String getTipoUser(String nombre, String password) {
-		/*Debe comprobar si el usuario y la contraseña son correctos.
-		Si no lo son, debe retornar null.
-		Si lo son, debe retornar una de estas tres cadenas: "usuario_normal", "jefe_de_proyecto" o "administrador"
-		dependiendo del tipo de usuario que sea.*/
-		return null;
+	public String getTipoUser(String nombre, String password) throws BDException {
+		Vector<Object[]> result = database.exeQuery("SELECT password, tipo FROM usuarios WHERE nombre='" + nombre + "';");
+		if (result.size() == 0)
+			return null;
+		else
+		{
+			Object[] datos = result.get(0);
+			String pass = (String)datos[0];
+			String tipo = (String)datos[1];
+			
+			if (password.equals(pass))
+				return tipo;
+			else
+				return "Contraseña errónea";
+		}
 	}
 }

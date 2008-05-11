@@ -67,7 +67,12 @@ public class Main
 			cb.insertaDocumento(p);*/
 			
 			DataBaseControler db_controler = new DataBaseControler();
-			OutputStream os = db_controler.obtenerListaAutoresEditores();
+			//OutputStream os = db_controler.obtenerListaAutoresEditores();
+			String result = db_controler.verificaUsuario("user1", "user1");
+			 if (result != null) 
+				 System.out.println(result);
+			 else
+				 System.out.println("Nulo.");
 		}
 		catch (Exception e)
 		{

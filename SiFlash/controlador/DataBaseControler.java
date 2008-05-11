@@ -387,7 +387,7 @@ public class DataBaseControler
 	}
 	
 	
-	public String verificaUsuario(String nombre, String password) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	public String verificaUsuario(String nombre, String password) throws UnimplementedException, BDException 
 	{
 		return consultor.getTipoUser(nombre, password);
 	}
