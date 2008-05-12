@@ -99,9 +99,9 @@ public class DataBaseControlerTest {
 		proyectos.add("pr2");
 		proyectos.add("prueba3");
 		
-		at1 = new AutorEditor(1,"str1","fdsa",null);
-		at3 = new AutorEditor(3,"nombre",null,null);
-		ed8 = new AutorEditor(8,null,"str1",null);
+		at1 = new AutorEditor(0,"str1","fdsa",null);
+		at3 = new AutorEditor(0,"nombre",null,null);
+		ed8 = new AutorEditor(0,null,"str1",null);
 		
 		autores = new LinkedList<AutorEditor>();
 		editores = new LinkedList<AutorEditor>();

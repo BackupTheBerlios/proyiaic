@@ -96,7 +96,13 @@ public class ModificadorAutores
 	 */
 	protected int consultaIdAutor(String nombre, String apellidos) throws BDException 
 	{		
-		Vector<Object[]> resultado = theBaseDatos.exeQuery("SELECT idAut FROM AutoresEditores WHERE nombre = '" + nombre + "' AND apellidos = '" + apellidos + "';");
+		String consulta = "SELECT idAut FROM AutoresEditores WHERE ";
+		if (nombre != null) consulta += "nombre = '" + nombre + "' AND ";
+		if (apellidos != null) consulta += "apellidos = '" + apellidos + "' AND ";
+		consulta += "TRUE;";
+		
+		
+		Vector<Object[]> resultado = theBaseDatos.exeQuery(consulta);
 		if (resultado.size() != 0)
 		{
 			Object[] array = resultado.get(0);
