@@ -28,7 +28,7 @@ public class DataBaseControlerTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	public void testConsultaDocumentos() {
 		Vector<Publication> v1 = new Vector<Publication>();
 		Vector<String> keys = null; 
@@ -40,7 +40,7 @@ public class DataBaseControlerTest {
 			fail ("BDException");
 		} catch (UnimplementedException e) {
 			// TODO Auto-generated catch block
-			fail ("UnimplmentedException");
+			fail ("UnimplementedException");
 		}
 		if (v1.size()<1) fail ("ninguna publicacion");
 		assertTrue(true);		
@@ -81,7 +81,7 @@ public class DataBaseControlerTest {
 		fail("Not yet implemented");
 	}
 
-	//@Test
+	@Test
 	public void testInsertaDocumento() {		
 		AutorEditor at1,at3,ed8;
 		LinkedList<AutorEditor> autores,editores;
@@ -114,6 +114,7 @@ public class DataBaseControlerTest {
 		
 		
 		// Insercion de articulo
+		
 		Article art1 = null;
 		idDoc = rnd.nextInt()%100000;
 		if (idDoc < 0) idDoc = idDoc * (-1);
@@ -130,6 +131,7 @@ public class DataBaseControlerTest {
 		assertTrue(true);
 		
 		// Insercion de book
+		
 		Book book1 = null;
 		idDoc = rnd.nextInt()%100000;
 		if (idDoc < 0) idDoc = idDoc * (-1);
@@ -144,6 +146,7 @@ public class DataBaseControlerTest {
 			fail ("fallo en la inserción del book: " + idDoc);
 		}
 		assertTrue(true);
+		/**/
 		
 		// Insercion de booklet
 		Booklet bkl1 = null;
