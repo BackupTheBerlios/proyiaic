@@ -568,6 +568,15 @@ BEGIN
   END IF;
 END $$
 
+DROP TRIGGER IF EXISTS insertaUsuario $$
+CREATE TRIGGER insertaUsuario BEFORE INSERT ON Usuarios
+FOR EACH ROW
+BEGIN
+  IF ((NEW.tipo != 'user') and (NEW.tipo != 'jefe') and (NEW.tipo != 'admin')) THEN
+    SET NEW.tipo = 'user';  
+  END IF;
+END $$
+
 DELIMITER ;
 
 
