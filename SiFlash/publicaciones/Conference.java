@@ -373,6 +373,7 @@ public class Conference extends Publication
 
 	@Override
 	public Vector<String> generaInserciones() throws BDException {
+		idDoc = 0;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO conference VALUES (");
 		str1 += Integer.toString(getIdDoc());
