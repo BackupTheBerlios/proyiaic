@@ -80,8 +80,15 @@ public class Usuario
 	/**
 	 * @return the tipo
 	 */
-	public int getTipo() {
-		return tipo;
+	public String getTipo() 
+	{
+		if (tipo == USUARIO)
+			return "user";
+		else if (tipo == JEFE)
+			return "jefe";
+		else if (tipo == ADMINISTRADOR)
+			return "admin";
+		return null;
 	}
 
 	/**

@@ -62,22 +62,22 @@ public class BaseDatos
     */
    public BaseDatos(){
 	   //Datos pc Luis.
-	   /*ip = "80.25.136.115";
+	   ip = "80.25.136.115";
 	   bd = "ssii";
 	   login = "Sistemas";
-	   password = "123456789";*/
+	   password = "123456789";
 	   
 	   //Datos pc David.
-//	   ip = "83.35.89.22:3306";
+//	   ip = "83.45.30.174:3306";
 //	   bd = "ssii";
 //	   login = "Sistemas";
 //	   password = "123456789";
 	   
 	   //Datos pc Alfonso.
-	   ip = "192.168.1.165:3306";
-	   bd = "ssii";
-	   login = "Sistemas";
-	   password = "123456789";
+//	   ip = "192.168.1.165:3306";
+//	   bd = "ssii";
+//	   login = "Sistemas";
+//	   password = "123456789";
    }
    
    /**

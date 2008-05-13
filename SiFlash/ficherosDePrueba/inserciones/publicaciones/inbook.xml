@@ -1,5 +1,5 @@
-<publication tipo="Inbook" referencia="la+referencia+del+article">
-	<title>El titulo del article</title>
+<publication tipo="Inbook" referencia="la+referencia+del+inbook">
+	<title>El titulo del inbook</title>
 	<year>2006</year>
 	<month>El mes</month>
 	<authors>
@@ -14,10 +14,27 @@
 			<web>Web autor 2</web>
 		</author>
 	</authors>
+	<editors>
+		<editor>
+			<nombre>NombreEditor1</nombre>
+			<apellidos>ApellidosEditor1</apellidos>
+			<web>Web Editor 1</web>
+		</editor>
+		<editor>
+			<nombre>NombreEditor2</nombre>
+			<apellidos>ApellidosEditor2</apellidos>
+			<web>Web Editor 2</web>
+		</editor>
+	</editors>
+	<chapter>El chapter</chapter>
+	<pages>El pages</pages>
 	<publisher>El publisher</publisher>
 	<volume>El volume</volume>
 	<number>El number</number>
-	<pages>El pages</pages>
+	<series>El series</series>
+	<type>El type</type>
+	<edition>El edition</edition>
+	<address>El address</address>
 	<url>El url</url>
 	<abstract>El abstract</abstract>
 	<note>El note</note>

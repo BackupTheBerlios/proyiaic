@@ -1,8 +1,8 @@
 package principal;
 
-import java.io.OutputStream;
+import java.io.FileInputStream;
 
-import controlador.DataBaseControler;
+import controlador.ConversorXML_BBDD;
 
 public class Main 
 {
@@ -64,13 +64,25 @@ public class Main
 //			DataBaseControler cb = new DataBaseControler();
 //			cb.insertaDocumento(p);
 			
-			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerListaAutoresEditores());
+			//-------------------------------------------------------------------------
+			
+//			DataBaseControler db_controler = new DataBaseControler();
+//			System.out.println(db_controler.obtenerListaAutoresEditores());
 //			String result = db_controler.verificaUsuario("user1", "user1");
 //			 if (result != null) 
 //				 System.out.println(result);
 //			 else
 //				 System.out.println("Nulo.");
+			
+			//-------------------------------------------------------------------------
+			
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\usuario.xml")));
+		
+			//-------------------------------------------------------------------------
+		
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarEliminarUsuario(new FileInputStream(".\\ficherosDePrueba\\eliminaciones\\eliminaUsuario.xml")));
 		}
 		catch (Exception e)
 		{

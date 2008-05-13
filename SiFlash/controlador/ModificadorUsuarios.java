@@ -105,21 +105,44 @@ public class ModificadorUsuarios
 	 * 
 	 * Excepcion si no existe o no se tienen permisos.
 	 * @param usuario - Nombre del usuario que se quiere eliminar.
+	 * @param nuevoUserPublicaciones - Nombre del usuario al que se le asignarán las publicaciones subidas por el usuario a eliminar.
 	 * @throws database.BDException
 	 * @roseuid 47C599E803C8
 	 */
-	public void eliminaUsuario(String usuario) throws NonExistingElementException,BDException 
+	public void eliminaUsuario(String usuario, String nuevoUserPublicaciones) throws NonExistingElementException,BDException 
 	{
-		String consulta1;
-		Vector<String> borrados = new Vector <String>();
+		String consulta1, consulta2;
+		Vector<String> updates = new Vector <String>();
 		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre ='" + usuario +"';");
-		borrados.add(new String ("DELETE FROM participaen WHERE usuario ='" + usuario +"';"));
-		borrados.add(new String ("DELETE FROM usuarios WHERE nombre ='" + usuario +"';"));
+		consulta2 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre ='" + nuevoUserPublicaciones +"';");
 		
 		Vector<Object []> res1;
 		res1 = theBaseDatos.exeQuery(consulta1);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
 		
-		theBaseDatos.exeUpdates(borrados);
+		Vector<Object []> res2;
+		res2 = theBaseDatos.exeQuery(consulta2);
+		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
+		
+		Vector<String> updatesPublicaciones = updatesPublicaciones(usuario, nuevoUserPublicaciones);
+		updates.addAll(updatesPublicaciones);
+		updates.add(new String ("DELETE FROM participaen WHERE usuario ='" + usuario +"';"));
+		updates.add(new String ("DELETE FROM usuarios WHERE nombre ='" + usuario +"';"));
+		
+		theBaseDatos.exeUpdates(updates);
+	}
+
+	private Vector<String> updatesPublicaciones(String usuario, String nuevoUserPublicaciones)
+	{
+		Vector<String> updatesPublicacion = new Vector<String>();
+		String[] tiposPublicaciones = {"article", "book", "booklet", "conference", "inbook", "incollection", "inproceedings", "manual", "mastersthesis", "misc", "phdthesis", "proceedings", "techreport", "unpublished"};
+		
+		int numPublicaciones = tiposPublicaciones.length;
+		for(int i = 0; i < numPublicaciones; i++)
+		{
+			String nuevo = "UPDATE " + tiposPublicaciones[i] + " SET user='" + nuevoUserPublicaciones + "' WHERE user='" + usuario + "';";
+			updatesPublicacion.add(nuevo);
+		}
+		return updatesPublicacion;
 	}
 }

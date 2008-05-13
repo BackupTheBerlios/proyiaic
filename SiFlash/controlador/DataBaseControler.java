@@ -310,15 +310,15 @@ public class DataBaseControler
 	/**
 	 * Inserta el usuario pasado por parámetro en la base de datos.
 	 * @param publicacion - Usuario a insertar.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.PermisssionException
+	 * @throws BDException 
+	 * @throws ExistingElementException 
 	 * @throws controlador.exceptions.ExistingElementException
+	 * @throws BDException 
 	 * @roseuid 47C5B74C001F
 	 */
-	public void insertaUsuario(Usuario user) throws ConnectionNullException, ConnectionException, PermisssionException, ExistingElementException 
+	public void insertaUsuario(Usuario usuario) throws ExistingElementException, BDException
 	{
-
+		modif_user.creaUsuario(usuario);
 	}
 
 	/**
@@ -424,17 +424,16 @@ public class DataBaseControler
 
 	/**
 	 * Elimina el usuario pasado por parámetro de la base de datos.
-	 * @param user - Código del usuario a eliminar.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
+	 * @param usuario - Código del usuario a eliminar.
+	 * @param nuevoUserPublicaciones 
 	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
 	 * @throws UnimplementedException 
+	 * @throws BDException 
 	 * @roseuid 47C5BAEE0222
 	 */
-	public void eliminaUsuario(int user) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	public void eliminaUsuario(String usuario, String nuevoUserPublicaciones) throws NonExistingElementException, UnimplementedException, BDException 
 	{
-		if (true)throw new UnimplementedException();
+		modif_user.eliminaUsuario(usuario, nuevoUserPublicaciones);
 	}
 
 

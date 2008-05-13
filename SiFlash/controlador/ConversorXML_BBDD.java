@@ -1,5 +1,6 @@
 package controlador;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -7,11 +8,19 @@ import java.util.Vector;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
+import controlador.exceptions.ConnectionException;
+import controlador.exceptions.ConnectionNullException;
+import controlador.exceptions.ExistingElementException;
+import controlador.exceptions.NonExistingElementException;
+import controlador.exceptions.PermisssionException;
+
 import parserFicherosBibtex.ConversorXML_Publication;
 import personas.AutorEditor;
+import personas.Usuario;
 import publicaciones.Publication;
 import temporal.UnimplementedException;
 import database.BDException;
@@ -19,6 +28,8 @@ import database.BaseDatos;
 
 public class ConversorXML_BBDD 
 {
+	private DataBaseControler dbc;
+	
 	private int tipoPublicaciones; //Solo para consultas.
 	private String tipoPublicacion; //Solo para inserciones.
 	
@@ -53,6 +64,8 @@ public class ConversorXML_BBDD
 	
 	public ConversorXML_BBDD()
 	{
+		dbc = new DataBaseControler(new BaseDatos());
+		
 		tipoPublicaciones = -1;
 		tipoPublicacion = null;
 		
@@ -120,7 +133,6 @@ public class ConversorXML_BBDD
 	{
 		ConversorXML_Publication conv = new ConversorXML_Publication();
 		Publication p = conv.convertir(input);
-		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
 		dbc.insertaDocumento(p);
 		
 		//Se debe retornar si ha habido éxito o no en la inserción.
@@ -229,10 +241,7 @@ public class ConversorXML_BBDD
 				 years.add("" + i);
 		}
 		
-		
-		DataBaseControler dbc = new DataBaseControler(new BaseDatos());
 		Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true);
-		
 		
 		int numPublic = vector.size();
 		Publication actual;
@@ -331,5 +340,39 @@ public class ConversorXML_BBDD
 					System.out.println("  - Web: " + editors.elementAt(i).getWeb());
 			}
 		}
+	}
+	
+	public String procesarNuevoUsuario(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException
+	{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(input);
+		Element root = doc.getRootElement();
+		String nombre = root.getChild("nombre").getValue();
+		String pass = root.getChild("password").getValue();
+		String tipo = root.getChild("tipo").getValue();
+		int tipoUser = -1;
+		if (tipo.equals("user"))
+			tipoUser = Usuario.USUARIO;
+		else if (tipo.equals("jefe"))
+			tipoUser = Usuario.JEFE;
+		else if (tipo.equals("admin"))
+			tipoUser = Usuario.ADMINISTRADOR;
+		Usuario usuario = new Usuario(nombre, pass, tipoUser);
+		
+		dbc.insertaUsuario(usuario);
+		
+		return "true";
+	}
+	
+	public String procesarEliminarUsuario(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(input);
+		Element root = doc.getRootElement();
+		String usuario = root.getChild("usuario").getValue();
+		String nuevoUserPublicaciones = root.getChild("hereda").getValue();
+		dbc.eliminaUsuario(usuario, nuevoUserPublicaciones);
+		
+		return "true";
 	}
 }
