@@ -502,9 +502,8 @@ public class DataBaseControler
 		database.exeUpdate(str1);
 	}
 
-	public OutputStream obtenerListaAutoresEditores() throws FileNotFoundException, BDException
+	public String obtenerListaAutoresEditores() throws FileNotFoundException, BDException
 	{
-		OutputStream os = new FileOutputStream("listaAutoresEditores.xml");
 		Element root = new Element("listaAutoresEditores");
 
 		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores;");
@@ -532,14 +531,7 @@ public class DataBaseControler
 		}
 
 		XMLOutputter outputter = new XMLOutputter();
-		try
-		{
-			outputter.output (new Document(root), os);
-		}
-		catch (Exception e){
-			e.getMessage();
-		}
-		return os;
+		return outputter.outputString (new Document(root));
 	}
 
 	/**

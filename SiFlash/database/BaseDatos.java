@@ -65,9 +65,9 @@ public class BaseDatos
 	   /*ip = "80.25.136.115";
 	   bd = "ssii";
 	   login = "Sistemas";
+	   password = "123456789";*/
 	   
 	   //Datos pc David.
-	   password = "123456789";*/
 //	   ip = "83.35.89.22:3306";
 //	   bd = "ssii";
 //	   login = "Sistemas";
