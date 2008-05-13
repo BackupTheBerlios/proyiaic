@@ -458,13 +458,13 @@ public class Proceedings extends Publication
 				else cambio_pub = false;
 			}			
 			while (!cambio_pub){
-				if (array[18] != null) proyecto = (String) array[18]; else proyecto = null;
-				id_aut = ((Long) array[19]).intValue();			
-				if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
-				if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
-				if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-				escrito_edit = ((Boolean) array[23]).booleanValue();
-				if (array[24] != null) clave = (String) array[24]; else clave = null;
+				if (array[17] != null) proyecto = (String) array[18]; else proyecto = null;
+				id_aut = ((Long) array[17]).intValue();			
+				if (array[18] != null) n_aut = (String) array[18]; else n_aut = null;
+				if (array[19] != null) ap_aut = (String) array[19]; else ap_aut = null;
+				if (array[20] != null) web_aut = (String) array[20]; else web_aut = null;
+				escrito_edit = ((Boolean) array[21]).booleanValue();
+				if (array[22] != null) clave = (String) array[22]; else clave = null;
 
 
 				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				

@@ -573,27 +573,28 @@ public class InCollection extends Publication
 			if (array[8] != null) pages = (String) array[8]; else pages = null;
 			if (array[9] != null) address = (String) array[9]; else address = null;
 			if (array[10] != null) month = (String) array[10]; else month = null;
-			if (array[11] != null) type = (String) array[11]; else type = null;
-			if (array[12] != null) publisher = (String) array[12]; else publisher = null;
-			if (array[13] != null) note = (String) array[13]; else note = null;
-			if (array[14] != null) abstracts = (String) array[14]; else abstracts = null;
-			if (array[15] != null) URL = (String) array[15]; else URL = null;
-			if (array[16] != null) user = (String) array[16]; else user = null;
-			if (array[17] != null) referencia = (String) array[17]; else referencia = null;
-			if (array[18] != null) proyecto = (String) array[18]; else proyecto = null;
-			id_aut = ((Long) array[19]).intValue();			
-			if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
-			if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
-			if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-			escrito_edit = ((Boolean) array[23]).booleanValue();
-			if (array[24] != null) clave = (String) array[24]; else clave = null;
-			if (array[25] != null) chapter = (String) array[25]; else chapter = null;
-			if (array[26] != null) edition = (String) array[26]; else edition = null;
+			//if (array[11] != null) type = (String) array[11]; else type = null;
+			if (array[11] != null) publisher = (String) array[11]; else publisher = null;
+			if (array[12] != null) note = (String) array[12]; else note = null;
+			if (array[13] != null) abstracts = (String) array[13]; else abstracts = null;
+			if (array[14] != null) URL = (String) array[14]; else URL = null;
+			if (array[15] != null) user = (String) array[15]; else user = null;
+			if (array[16] != null) referencia = (String) array[16]; else referencia = null;
+			if (array[17] != null) proyecto = (String) array[17]; else proyecto = null;
+			id_aut = ((Long) array[18]).intValue();			
+			if (array[19] != null) n_aut = (String) array[19]; else n_aut = null;
+			if (array[20] != null) ap_aut = (String) array[20]; else ap_aut = null;
+			if (array[21] != null) web_aut = (String) array[21]; else web_aut = null;
+			escrito_edit = ((Boolean) array[22]).booleanValue();
+			if (array[23] != null) clave = (String) array[23]; else clave = null;
+			if (array[24] != null) chapter = (String) array[24]; else chapter = null;
+			if (array[25] != null) edition = (String) array[25]; else edition = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
+			type = null;
 			InCollection inc1 = new InCollection(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,booktitle,crossref,editores,volume,number,series,pages,address,type,publisher,chapter,edition);
 			vector.add(inc1);
 
@@ -607,13 +608,13 @@ public class InCollection extends Publication
 				else cambio_pub = false;
 			}			
 			while (!cambio_pub){
-				if (array[18] != null) proyecto = (String) array[18]; else proyecto = null;
-				id_aut = ((Long) array[19]).intValue();			
-				if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
-				if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
-				if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-				escrito_edit = ((Boolean) array[23]).booleanValue();
-				if (array[24] != null) clave = (String) array[24]; else clave = null;
+				if (array[17] != null) proyecto = (String) array[17]; else proyecto = null;
+				id_aut = ((Long) array[18]).intValue();			
+				if (array[19] != null) n_aut = (String) array[19]; else n_aut = null;
+				if (array[20] != null) ap_aut = (String) array[20]; else ap_aut = null;
+				if (array[21] != null) web_aut = (String) array[21]; else web_aut = null;
+				escrito_edit = ((Boolean) array[22]).booleanValue();
+				if (array[23] != null) clave = (String) array[23]; else clave = null;
 
 
 				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				

@@ -1,0 +1,26 @@
+<publication tipo="Inbook" referencia="la+referencia+del+article">
+	<title>El titulo del article</title>
+	<year>2006</year>
+	<month>El mes</month>
+	<authors>
+		<author>
+			<nombre>NombreAutor1</nombre>
+			<apellidos>ApellidosAutor1</apellidos>
+			<web>Web autor 1</web>
+		</author>
+		<author>
+			<nombre>NombreAutor2</nombre>
+			<apellidos>ApellidosAutor2</apellidos>
+			<web>Web autor 2</web>
+		</author>
+	</authors>
+	<publisher>El publisher</publisher>
+	<volume>El volume</volume>
+	<number>El number</number>
+	<pages>El pages</pages>
+	<url>El url</url>
+	<abstract>El abstract</abstract>
+	<note>El note</note>
+	<key>The key, Una clave, Mi clave</key>
+	<user>user1</user>
+</publication>

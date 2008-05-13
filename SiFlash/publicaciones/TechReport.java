@@ -378,7 +378,7 @@ public class TechReport extends Publication
 			if (array[16] != null) web_aut = (String) array[16]; else web_aut = null;
 			escrito_edit = ((Boolean) array[17]).booleanValue();
 			if (array[18] != null) clave = (String) array[18]; else clave = null;
-			if (array[19] != null) number = ((Integer) array[19]).toString(); else number = null;
+			if (array[19] != null) number = (String) array[19]; else number = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	

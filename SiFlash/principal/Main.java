@@ -1,8 +1,11 @@
 package principal;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
+import parserFicherosBibtex.ConversorXML_Publication;
+import publicaciones.Publication;
+import controlador.ConversorXML_BBDD;
 import controlador.DataBaseControler;
 
 public class Main 
@@ -20,10 +23,10 @@ public class Main
 //			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
-			/*ConversorXML_BBDD cb = new ConversorXML_BBDD();
+			ConversorXML_BBDD cb = new ConversorXML_BBDD();
 			InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\prueba.xml");
 			String salida = cb.procesarConsulta(is);
-			System.out.println(salida);*/
+			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
@@ -61,18 +64,18 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 			/*ConversorXML_Publication cp = new ConversorXML_Publication();
-			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\article3.xml");
+			InputStream is = new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\inbook.xml");
 			Publication p = cp.convertir(is);
 			DataBaseControler cb = new DataBaseControler();
 			cb.insertaDocumento(p);*/
 			
-			DataBaseControler db_controler = new DataBaseControler();
+			/*DataBaseControler db_controler = new DataBaseControler();
 			//OutputStream os = db_controler.obtenerListaAutoresEditores();
 			String result = db_controler.verificaUsuario("user1", "user1");
 			 if (result != null) 
 				 System.out.println(result);
 			 else
-				 System.out.println("Nulo.");
+				 System.out.println("Nulo.");*/
 		}
 		catch (Exception e)
 		{
