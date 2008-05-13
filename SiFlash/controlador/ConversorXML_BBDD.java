@@ -111,7 +111,7 @@ public class ConversorXML_BBDD
 		}
 		catch (Exception e)
 		{
-			return "<exception tipo=\"" +  e.getMessage() + "\">Ha soltado una excepcion</exception>";
+			return "<exception tipo=\"" +  e.getMessage() + "\">Ha saltado una excepcion</exception>";
 		}
 		
 	}

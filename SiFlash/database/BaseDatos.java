@@ -61,11 +61,20 @@ public class BaseDatos
     * Contiene los parámetros del servidor actual en uso.
     */
    public BaseDatos(){
+	   //Datos pc Luis.
 	   /*ip = "80.25.136.115";
 	   bd = "ssii";
 	   login = "Sistemas";
+	   
+	   //Datos pc David.
 	   password = "123456789";*/
-	   ip = "83.35.89.22:3306";
+//	   ip = "83.35.89.22:3306";
+//	   bd = "ssii";
+//	   login = "Sistemas";
+//	   password = "123456789";
+	   
+	   //Datos pc Alfonso.
+	   ip = "192.168.1.165:3306";
 	   bd = "ssii";
 	   login = "Sistemas";
 	   password = "123456789";
