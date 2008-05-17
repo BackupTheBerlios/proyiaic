@@ -1,5 +1,6 @@
 <usuario>
-	<nombre>user4</nombre>
-	<password>user4</password>
+	<nombre>user7</nombre>
+	<password>user7</password>
 	<tipo>jefe</tipo>
+	<proyecto>Proyecto1</proyecto>
 </usuario>

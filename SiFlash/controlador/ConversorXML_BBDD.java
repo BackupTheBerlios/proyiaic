@@ -342,7 +342,7 @@ public class ConversorXML_BBDD
 		}
 	}
 	
-	public String procesarNuevoUsuario(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException
+	public String procesarNuevoUsuario(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException
 	{
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = builder.build(input);
@@ -350,6 +350,7 @@ public class ConversorXML_BBDD
 		String nombre = root.getChild("nombre").getValue();
 		String pass = root.getChild("password").getValue();
 		String tipo = root.getChild("tipo").getValue();
+		String proyecto = root.getChild("proyecto").getValue();
 		int tipoUser = -1;
 		if (tipo.equals("user"))
 			tipoUser = Usuario.USUARIO;
@@ -359,7 +360,9 @@ public class ConversorXML_BBDD
 			tipoUser = Usuario.ADMINISTRADOR;
 		Usuario usuario = new Usuario(nombre, pass, tipoUser);
 		
-		dbc.insertaUsuario(usuario);
+		if (proyecto.length() == 0)
+			proyecto = null;
+		dbc.insertaUsuario(usuario, proyecto);
 		
 		return "true";
 	}
@@ -372,6 +375,56 @@ public class ConversorXML_BBDD
 		String usuario = root.getChild("usuario").getValue();
 		String nuevoUserPublicaciones = root.getChild("hereda").getValue();
 		dbc.eliminaUsuario(usuario, nuevoUserPublicaciones);
+		
+		return "true";
+	}
+	
+	public String procesarAsociarUsuarioAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(input);
+		Element root = doc.getRootElement();
+		String usuario = root.getChild("usuario").getValue();
+		String proyecto = root.getChild("proyecto").getValue();
+		dbc.asociaUsuarioProyecto(proyecto, usuario);
+		
+		return "true";
+	}
+	
+	public String procesarDesasociarUsuarioAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(input);
+		Element root = doc.getRootElement();
+		String usuario = root.getChild("usuario").getValue();
+		String proyecto = root.getChild("proyecto").getValue();
+		dbc.desasociaUsuarioProyecto(proyecto, usuario);
+		
+		return "true";
+	}
+	
+	public String procesarAsociarPublicacionAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(input);
+		Element root = doc.getRootElement();
+		String publicacion = root.getChild("publicacion").getValue();
+		int idDoc = Integer.parseInt(publicacion);
+		String proyecto = root.getChild("proyecto").getValue();
+		dbc.asociaDocumentoProyecto(proyecto, idDoc);
+		
+		return "true";
+	}
+	
+	public String procesarDesasociarPublicacionAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(input);
+		Element root = doc.getRootElement();
+		String publicacion = root.getChild("publicacion").getValue();
+		int idDoc = Integer.parseInt(publicacion);
+		String proyecto = root.getChild("proyecto").getValue();
+		dbc.desasociaDocumentoProyecto(proyecto, idDoc);
 		
 		return "true";
 	}

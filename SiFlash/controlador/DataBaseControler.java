@@ -3,17 +3,29 @@
 package controlador;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.Vector;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+
 import personas.AutorEditor;
 import personas.Usuario;
-import publicaciones.CodigosDatos;
+import publicaciones.Article;
+import publicaciones.Book;
+import publicaciones.Booklet;
+import publicaciones.Conference;
+import publicaciones.InBook;
+import publicaciones.InCollection;
+import publicaciones.InProceedings;
+import publicaciones.Manual;
+import publicaciones.MastersThesis;
+import publicaciones.Misc;
+import publicaciones.PhdThesis;
+import publicaciones.Proceedings;
 import publicaciones.Publication;
+import publicaciones.TechReport;
+import publicaciones.Unpublished;
 import temporal.UnimplementedException;
 import controlador.exceptions.ConnectionException;
 import controlador.exceptions.ConnectionNullException;
@@ -309,16 +321,18 @@ public class DataBaseControler
 
 	/**
 	 * Inserta el usuario pasado por parámetro en la base de datos.
+	 * @param proyecto 
 	 * @param publicacion - Usuario a insertar.
 	 * @throws BDException 
 	 * @throws ExistingElementException 
 	 * @throws controlador.exceptions.ExistingElementException
 	 * @throws BDException 
+	 * @throws NonExistingElementException 
 	 * @roseuid 47C5B74C001F
 	 */
-	public void insertaUsuario(Usuario usuario) throws ExistingElementException, BDException
+	public void insertaUsuario(Usuario usuario, String proyecto) throws ExistingElementException, BDException, NonExistingElementException
 	{
-		modif_user.creaUsuario(usuario);
+		modif_user.creaUsuario(usuario, proyecto);
 	}
 
 	/**
@@ -405,21 +419,43 @@ public class DataBaseControler
 		}		
 	}
 
-
 	/**
-	 * Desasocia el documento proporcionado al proyecto indicado.
-	 * @param proyecto - Proyecto sobre el que se desea desasociar al usuario.
+	 * Asocia el documento proporcionado al proyecto indicado.
+	 * @param proyecto - Proyecto sobre el que se desea asociar el documento.
 	 * @param documento - Documento que se desea desasociar.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
 	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
 	 * @throws UnimplementedException 
+	 * @throws BDException 
+	 * @throws ExistingElementException 
 	 * @roseuid 47C5BBE2006D
 	 */
-	public void desasociaDocumentoProyecto(String proyecto, int documento) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	public void asociaDocumentoProyecto(String proyecto, int documento) throws NonExistingElementException, UnimplementedException, ExistingElementException, BDException 
 	{
-		if (true)throw new UnimplementedException();			
+		this.abreConexion();
+		try {
+			modif_pub.asociaPublicacion(documento, proyecto);
+		} 	finally {
+			this.cierraConexion();
+		}			
+	}
+	
+	/**
+	 * Desasocia el documento proporcionado al proyecto indicado.
+	 * @param proyecto - Proyecto sobre el que se desea desasociar al proyecto.
+	 * @param documento - Documento que se desea desasociar.
+	 * @throws controlador.exceptions.NonExistingElementException
+	 * @throws UnimplementedException 
+	 * @throws BDException 
+	 * @roseuid 47C5BBE2006D
+	 */
+	public void desasociaDocumentoProyecto(String proyecto, int documento) throws NonExistingElementException, UnimplementedException, BDException 
+	{
+		this.abreConexion();
+		try {
+			modif_pub.desasociaPublicacion(documento, proyecto);
+		} 	finally {
+			this.cierraConexion();
+		}			
 	}
 
 	/**
@@ -527,6 +563,201 @@ public class DataBaseControler
 			eAutorEditor.addContent(eApellidos);
 
 			root.addContent(eAutorEditor);
+		}
+
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString (new Document(root));
+	}
+	
+	public String obtenerListaUsuarios(String  user) throws FileNotFoundException, BDException
+	{
+		Element root = new Element("listaUsuarios");
+		String consulta = "SELECT usuarios.nombre, usuarios.tipo FROM usuarios, participaen, proyectos ";
+		consulta += "WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = proyectos.nombre ";
+		consulta += "AND proyectos.jefe = '" + user + "';";
+		Vector<Object[]> result = database.exeQuery(consulta);
+		int numAE = result.size();
+		Object[] actual;
+		String usuario, tipo;
+		for (int i = 0; i < numAE; i++)
+		{
+			actual = result.get(i);
+			usuario = (String)actual[0];
+			tipo = (String)actual[1];
+
+			Element eUsuario = new Element("usuario");
+			Element eNombre = new Element("nombre");
+			eNombre.addContent(usuario);
+			Element eTipo = new Element("tipo");
+			eTipo.addContent(tipo);
+			eUsuario.addContent(eNombre);
+			eUsuario.addContent(eTipo);
+
+			root.addContent(eUsuario);
+		}
+
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString (new Document(root));
+	}
+	
+	public String obtenerListaProyectos(String  user) throws FileNotFoundException, BDException
+	{
+		Element root = new Element("listaProyectos");
+		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "';";
+		Vector<Object[]> result = database.exeQuery(consulta);
+		int numAE = result.size();
+		Object[] actual;
+		String nombre;
+		for (int i = 0; i < numAE; i++)
+		{
+			actual = result.get(i);
+			nombre = (String)actual[0];
+
+			Element eProyecto = new Element("proyecto");
+			eProyecto.addContent(nombre);
+
+			root.addContent(eProyecto);
+		}
+
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString (new Document(root));
+	}
+	
+	public String obtenerListaPublicaciones(String  user) throws FileNotFoundException, BDException, UnimplementedException
+	{
+		String cArticle = "SELECT article.*, proyectos.nombre FROM article, pertenecea, proyectos WHERE article.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cBook = "SELECT book.*, proyectos.nombre FROM book, pertenecea, proyectos WHERE book.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cBooklet = "SELECT booklet.*, proyectos.nombre FROM booklet, pertenecea, proyectos WHERE booklet.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cConference = "SELECT conference.*, proyectos.nombre FROM conference, pertenecea, proyectos WHERE conference.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cInBook = "SELECT inbook.*, proyectos.nombre FROM inbook, pertenecea, proyectos WHERE inbook.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cInCollection = "SELECT incollection.*, proyectos.nombre FROM incollection, pertenecea, proyectos WHERE incollection.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cInProceedings = "SELECT inproceedings.*, proyectos.nombre FROM inproceedings, pertenecea, proyectos WHERE inproceedings.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cManual = "SELECT manual.*, proyectos.nombre FROM manual, pertenecea, proyectos WHERE manual.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cMastersThesis = "SELECT mastersthesis.*, proyectos.nombre FROM mastersthesis, pertenecea, proyectos WHERE mastersthesis.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cMisc = "SELECT misc.*, proyectos.nombre FROM misc, pertenecea, proyectos WHERE misc.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cPhdThesis = "SELECT phdthesis.*, proyectos.nombre FROM phdthesis, pertenecea, proyectos WHERE phdthesis.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cProceedings = "SELECT proceedings.*, proyectos.nombre FROM proceedings, pertenecea, proyectos WHERE proceedings.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cTechReport = "SELECT techreport.*, proyectos.nombre FROM techreport, pertenecea, proyectos WHERE techreport.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		String cUnpublished = "SELECT unpublished.*, proyectos.nombre FROM unpublished, pertenecea, proyectos WHERE unpublished.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
+		
+		Vector<Object[]> rArticle = database.exeQuery(cArticle);
+		Vector<Object[]> rBook = database.exeQuery(cBook);
+		Vector<Object[]> rBooklet = database.exeQuery(cBooklet);
+		Vector<Object[]> rConference = database.exeQuery(cConference);
+		Vector<Object[]> rInBook = database.exeQuery(cInBook);
+		Vector<Object[]> rInCollection = database.exeQuery(cInCollection);
+		Vector<Object[]> rInProceedings = database.exeQuery(cInProceedings);
+		Vector<Object[]> rManual = database.exeQuery(cManual);
+		Vector<Object[]> rMastersThesis = database.exeQuery(cMastersThesis);
+		Vector<Object[]> rMisc = database.exeQuery(cMisc);
+		Vector<Object[]> rPhdThesis = database.exeQuery(cPhdThesis);
+		Vector<Object[]> rProceedings = database.exeQuery(cProceedings);
+		Vector<Object[]> rTechReport = database.exeQuery(cTechReport);
+		Vector<Object[]> rUnpublished = database.exeQuery(cUnpublished);
+		
+		Vector<Publication> publicaciones = new Vector<Publication>();
+		publicaciones.addAll(Article.generaPub(rArticle));
+		publicaciones.addAll(Book.generaPub(rBook));
+		publicaciones.addAll(Booklet.generaPub(rBooklet));
+		publicaciones.addAll(Conference.generaPub(rConference));
+		publicaciones.addAll(InBook.generaPub(rInBook));
+		publicaciones.addAll(InCollection.generaPub(rInCollection));
+		publicaciones.addAll(InProceedings.generaPub(rInProceedings));
+		publicaciones.addAll(Manual.generaPub(rManual));
+		publicaciones.addAll(MastersThesis.generaPub(rMastersThesis));
+		publicaciones.addAll(Misc.generaPub(rMisc));
+		publicaciones.addAll(PhdThesis.generaPub(rPhdThesis));
+		publicaciones.addAll(Proceedings.generaPub(rProceedings));
+		publicaciones.addAll(TechReport.generaPub(rTechReport));
+		publicaciones.addAll(Unpublished.generaPub(rUnpublished));
+		
+		Vector<String> proyectosAsociados = new Vector<String>();
+		Object[] actual;
+		for (int i = 0; i < rArticle.size(); i++)
+		{
+			actual = rArticle.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rBook.size(); i++)
+		{
+			actual = rBook.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rBooklet.size(); i++)
+		{
+			actual = rBooklet.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rConference.size(); i++)
+		{
+			actual = rConference.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rInBook.size(); i++)
+		{
+			actual = rInBook.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rInCollection.size(); i++)
+		{
+			actual = rInCollection.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rInProceedings.size(); i++)
+		{
+			actual = rInProceedings.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rManual.size(); i++)
+		{
+			actual = rManual.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rMastersThesis.size(); i++)
+		{
+			actual = rMastersThesis.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rMisc.size(); i++)
+		{
+			actual = rMisc.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rPhdThesis.size(); i++)
+		{
+			actual = rPhdThesis.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rProceedings.size(); i++)
+		{
+			actual = rProceedings.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rTechReport.size(); i++)
+		{
+			actual = rTechReport.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		for (int i = 0; i < rUnpublished.size(); i++)
+		{
+			actual = rUnpublished.get(i);
+			proyectosAsociados.add((String)actual[actual.length-1]);
+		}
+		
+		
+		Element root = new Element("listaPublicaciones");
+		int numP = publicaciones.size();
+		Publication pActual;
+		for (int i = 0; i < numP; i++)
+		{
+			pActual = publicaciones.get(i);
+			Element ePub = pActual.generarElementoXML();
+
+			Element eProyecto = new Element("proyecto");
+			eProyecto.addContent(proyectosAsociados.get(i));
+			ePub.addContent(eProyecto);
+
+			root.addContent(ePub);
 		}
 
 		XMLOutputter outputter = new XMLOutputter();

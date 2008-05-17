@@ -77,12 +77,21 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\parserFicherosBibtex\\JUnit\\ficherosDePrueba\\FicherosPruebaInserciones\\usuario.xml")));
+//			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\ficherosDePrueba\\inserciones\\usuario.xml")));
 		
 			//-------------------------------------------------------------------------
 		
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarEliminarUsuario(new FileInputStream(".\\ficherosDePrueba\\eliminaciones\\eliminaUsuario.xml")));
+			//-------------------------------------------------------------------------
+			
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarDesasociarUsuarioAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarUsuarioProyecto.xml")));
+			//-------------------------------------------------------------------------
+			
 			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarEliminarUsuario(new FileInputStream(".\\ficherosDePrueba\\eliminaciones\\eliminaUsuario.xml")));
+			System.out.println(conv.procesarAsociarPublicacionAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarPublicacionProyecto.xml")));
+			
 		}
 		catch (Exception e)
 		{

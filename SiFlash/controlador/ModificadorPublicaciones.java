@@ -5,6 +5,7 @@ package controlador;
 import java.util.Vector;
 
 import controlador.exceptions.ExistenceException;
+import controlador.exceptions.ExistingElementException;
 import controlador.exceptions.NonExistingElementException;
 
 import publicaciones.Publication;
@@ -82,6 +83,36 @@ public class ModificadorPublicaciones {
 	}
 
 	/**
+	 * Asocia una publicación a un proyecto.
+	 * @param publicacion - Publicación a asociar.
+	 * @param proyecto - Proyecto del que asociar.
+	 * @throws database.BDException
+	 * @throws NonExistingElementException 
+	 * @throws ExistingElementException 
+	 * @roseuid 47C59B0E0213
+	 */
+	public void asociaPublicacion(int publicacion, String proyecto) throws BDException, NonExistingElementException, ExistingElementException 
+	{
+		String consulta1,consulta2,consulta3;
+		Vector<Object []> res1,res2,res3;
+		consulta1 = new String ("SELECT tipo FROM tipopublicacion WHERE idDoc = " + publicacion + ";");
+		consulta2 = new String ("SELECT COUNT(*) FROM proyectos WHERE nombre = '" + proyecto +"';");
+		consulta3 = new String ("SELECT * FROM pertenecea WHERE idDoc = " + publicacion +" AND proyecto = '" + proyecto + "';");
+		String asociacion = new String ("INSERT INTO pertenecea VALUES('" + publicacion + "', '" + proyecto + "');");
+		
+		res1 = theBaseDatos.exeQuery(consulta1);
+		if (res1 == null || res1.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);
+		
+		res2 = theBaseDatos.exeQuery(consulta2);
+		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
+		
+		res3 = theBaseDatos.exeQuery(consulta3);
+		if (res3 != null && res3.size() > 0) throw new ExistingElementException(ExistenceException.RELACION);
+		
+		theBaseDatos.exeUpdate(asociacion);
+	}
+	
+	/**
 	 * Desasocia la publicacion del proyecto.
 	 * @param publicacion - Publicación a desasociar.
 	 * @param proyecto - Proyecto del que desasociar.
@@ -93,7 +124,7 @@ public class ModificadorPublicaciones {
 	{
 		String consulta1,consulta2,consulta3;
 		Vector<Object []> res1,res2,res3;
-		consulta1 = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + publicacion + ";");
+		consulta1 = new String ("SELECT tipo FROM tipopublicacion WHERE idDoc = " + publicacion + ";");
 		consulta2 = new String ("SELECT COUNT(*) FROM proyectos WHERE nombre = '" + proyecto +"';");
 		consulta3 = new String ("SELECT COUNT(*) FROM pertenecea WHERE idDoc = " + publicacion +" AND proyecto = '" + proyecto + "';");
 		String borrado = new String ("DELETE FROM pertenecea WHERE idDoc = " + publicacion +" AND proyecto = '" + proyecto + "';");

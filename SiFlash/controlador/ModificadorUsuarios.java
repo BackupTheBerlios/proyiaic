@@ -27,11 +27,13 @@ public class ModificadorUsuarios
 	/**
 	 * Inserta en la base de datos es usuario pasado por parámetro.
 	 * @param usuario - Usuario que se debe pasar por parámetro
+	 * @param proyecto 
 	 * @throws database.BDException
 	 * @throws ExistingElementException 
+	 * @throws NonExistingElementException 
 	 * @roseuid 47C5913A0271
 	 */
-	public void creaUsuario(Usuario usuario) throws BDException, ExistingElementException 
+	public void creaUsuario(Usuario usuario, String proyecto) throws BDException, ExistingElementException, NonExistingElementException 
 	{
 		String consulta, insercion;
 		consulta = new String ("SELECT * FROM usuarios WHERE nombre = '" + usuario.getNombre() +"';");
@@ -41,6 +43,16 @@ public class ModificadorUsuarios
 		Vector<Object []> res = theBaseDatos.exeQuery(consulta);
 		if (res != null && res.size() > 0) throw new ExistingElementException(ExistenceException.USUARIO);
 		theBaseDatos.exeUpdate(insercion);
+		
+		if (proyecto != null)
+		{
+			consulta = new String ("SELECT * FROM proyectos WHERE nombre = '" + proyecto +"';");
+			insercion = new String("INSERT INTO participaen VALUES('" + usuario.getNombre() + "', '" + proyecto + "');");
+			
+			res = theBaseDatos.exeQuery(consulta);
+			if (res == null || res.size() == 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
+			theBaseDatos.exeUpdate(insercion);
+		}
 	}
 
 	/**
@@ -55,7 +67,7 @@ public class ModificadorUsuarios
 		String consulta1,consulta2,insercion;
 		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre = '" + usuario +"';");
 		consulta2 = new String ("SELECT COUNT(*) FROM proyectos WHERE nombre = '" + proyecto +"';");
-		insercion = new String ("INSERT INTO participa_en VALUES ('" + usuario + "','" + proyecto +
+		insercion = new String ("INSERT INTO participaen VALUES ('" + usuario + "','" + proyecto +
 				"') ON DUPLICATE KEY UPDATE usuario=usuario;");
 		
 		Vector<Object []> res1,res2;
