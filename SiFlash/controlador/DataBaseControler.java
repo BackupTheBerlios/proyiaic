@@ -537,11 +537,12 @@ public class DataBaseControler
 		database.exeUpdate(str1);
 	}
 
-	public String obtenerListaAutoresEditores() throws FileNotFoundException, BDException
+	public String obtenerListaAutoresEditoresYProyectos() throws FileNotFoundException, BDException
 	{
-		Element root = new Element("listaAutoresEditores");
+		Element root = new Element("AutoresEditoresProyectos");
+		Element eAutoresEditores = new Element("listaAutoresEditores");
 
-		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores;");
+		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;");
 		int numAE = result.size();
 		Object[] actual;
 		int idAut;
@@ -551,7 +552,10 @@ public class DataBaseControler
 			actual = result.get(i);
 			idAut = ((Long)actual[0]).intValue();
 			nombre = (String)actual[1];
+			if (nombre==null) nombre = "-";
 			apellidos = (String)actual[2];
+			if (apellidos==null) apellidos = "-";
+			
 
 			Element eAutorEditor = new Element("AutorEditor");
 			eAutorEditor.setAttribute("idAut", ((Integer)idAut).toString());
@@ -562,8 +566,25 @@ public class DataBaseControler
 			eAutorEditor.addContent(eNombre);
 			eAutorEditor.addContent(eApellidos);
 
-			root.addContent(eAutorEditor);
+			eAutoresEditores.addContent(eAutorEditor);
 		}
+		root.addContent(eAutoresEditores);
+		
+		Element eProyectos = new Element("listaProyectos");
+		result = database.exeQuery("SELECT * FROM proyectos ORDER BY nombre");
+		int numProy = result.size();
+		String proyecto;
+		for (int i = 0; i < numProy; i++)
+		{
+			actual = result.get(i);
+			proyecto = (String)actual[0];
+
+			Element eProyecto = new Element("proyecto");
+			eProyecto.addContent(proyecto);
+
+			eProyectos.addContent(eProyecto);
+		}
+		root.addContent(eProyectos);
 
 		XMLOutputter outputter = new XMLOutputter();
 		return outputter.outputString (new Document(root));
@@ -574,7 +595,7 @@ public class DataBaseControler
 		Element root = new Element("listaUsuarios");
 		String consulta = "SELECT usuarios.nombre, usuarios.tipo FROM usuarios, participaen, proyectos ";
 		consulta += "WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = proyectos.nombre ";
-		consulta += "AND proyectos.jefe = '" + user + "';";
+		consulta += "AND proyectos.jefe = '" + user + "' ORDER BY usuarios.nombre;";
 		Vector<Object[]> result = database.exeQuery(consulta);
 		int numAE = result.size();
 		Object[] actual;
@@ -603,7 +624,7 @@ public class DataBaseControler
 	public String obtenerListaProyectos(String  user) throws FileNotFoundException, BDException
 	{
 		Element root = new Element("listaProyectos");
-		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "';";
+		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "' ORDER BY nombre;";
 		Vector<Object[]> result = database.exeQuery(consulta);
 		int numAE = result.size();
 		Object[] actual;

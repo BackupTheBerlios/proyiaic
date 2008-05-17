@@ -1,8 +1,6 @@
 package principal;
 
-import java.io.FileInputStream;
-
-import controlador.ConversorXML_BBDD;
+import controlador.DataBaseControler;
 
 public class Main 
 {
@@ -66,8 +64,8 @@ public class Main
 			
 			//-------------------------------------------------------------------------
 			
-//			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerListaAutoresEditores());
+			DataBaseControler db_controler = new DataBaseControler();
+			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectos());
 //			String result = db_controler.verificaUsuario("user1", "user1");
 //			 if (result != null) 
 //				 System.out.println(result);
@@ -89,8 +87,8 @@ public class Main
 //			System.out.println(conv.procesarDesasociarUsuarioAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarUsuarioProyecto.xml")));
 			//-------------------------------------------------------------------------
 			
-			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarAsociarPublicacionAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarPublicacionProyecto.xml")));
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarAsociarPublicacionAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarPublicacionProyecto.xml")));
 			
 		}
 		catch (Exception e)
