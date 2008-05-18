@@ -537,7 +537,7 @@ public class DataBaseControler
 		database.exeUpdate(str1);
 	}
 
-	public String obtenerListaAutoresEditoresYProyectos() throws FileNotFoundException, BDException
+	public String obtenerListaAutoresEditoresYProyectosParaBusquedas() throws FileNotFoundException, BDException
 	{
 		Element root = new Element("AutoresEditoresProyectos");
 		Element eAutoresEditores = new Element("listaAutoresEditores");
@@ -589,6 +589,63 @@ public class DataBaseControler
 		XMLOutputter outputter = new XMLOutputter();
 		return outputter.outputString (new Document(root));
 	}
+	
+	
+	public String obtenerListaAutoresEditoresYProyectosParaInserciones(String user) throws FileNotFoundException, BDException
+	{
+		Element root = new Element("AutoresEditoresProyectos");
+		Element eAutoresEditores = new Element("listaAutoresEditores");
+
+		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;");
+		int numAE = result.size();
+		Object[] actual;
+		int idAut;
+		String nombre, apellidos;
+		for (int i = 0; i < numAE; i++)
+		{
+			actual = result.get(i);
+			idAut = ((Long)actual[0]).intValue();
+			nombre = (String)actual[1];
+			if (nombre==null) nombre = "-";
+			apellidos = (String)actual[2];
+			if (apellidos==null) apellidos = "-";
+			
+
+			Element eAutorEditor = new Element("AutorEditor");
+			eAutorEditor.setAttribute("idAut", ((Integer)idAut).toString());
+			Element eNombre = new Element("nombre");
+			eNombre.addContent(nombre);
+			Element eApellidos = new Element("apellidos");
+			eApellidos.addContent(apellidos);
+			eAutorEditor.addContent(eNombre);
+			eAutorEditor.addContent(eApellidos);
+
+			eAutoresEditores.addContent(eAutorEditor);
+		}
+		root.addContent(eAutoresEditores);
+		
+		Element eProyectos = new Element("listaProyectos");
+		String consulta = "SELECT proyectos.nombre FROM proyectos, pertenecea";
+		consulta += "WHERE proyectos.nombre = pertenecea.proyecto AND (proyectos.jefe = '" + user +"' OR )";
+		result = database.exeQuery(consulta);
+		int numProy = result.size();
+		String proyecto;
+		for (int i = 0; i < numProy; i++)
+		{
+			actual = result.get(i);
+			proyecto = (String)actual[0];
+
+			Element eProyecto = new Element("proyecto");
+			eProyecto.addContent(proyecto);
+
+			eProyectos.addContent(eProyecto);
+		}
+		root.addContent(eProyectos);
+
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString (new Document(root));
+	}
+	
 	
 	public String obtenerListaUsuarios(String  user) throws FileNotFoundException, BDException
 	{

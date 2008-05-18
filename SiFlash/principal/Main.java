@@ -65,7 +65,7 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectos());
+//			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectos());
 //			String result = db_controler.verificaUsuario("user1", "user1");
 //			 if (result != null) 
 //				 System.out.println(result);
