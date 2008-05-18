@@ -22,24 +22,24 @@ public class Main
 //			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
-			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
-			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
-			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
-			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
-			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David García and Ortiz Carrillo, Luis", false);
-			CampoPublicacion c6 = new CampoPublicacion("abstract", "54", true);
-			
-			LinkedList<CampoPublicacion> listaCampos = new LinkedList<CampoPublicacion>();
-			listaCampos.add(c1);
-			listaCampos.add(c2);
-			listaCampos.add(c3);
-			listaCampos.add(c4);
-			listaCampos.add(c5);
-			listaCampos.add(c6);
-			
-			Conference conf = new Conference(listaCampos);
-			
-			System.out.println(conf.getBibTeX());*/
+//			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
+//			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
+//			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
+//			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
+//			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David García and Ortiz Carrillo, Luis", false);
+//			CampoPublicacion c6 = new CampoPublicacion("abstract", "54", true);
+//			
+//			LinkedList<Campo> listaCampos = new LinkedList<Campo>();
+//			listaCampos.add(c1);
+//			listaCampos.add(c2);
+//			listaCampos.add(c3);
+//			listaCampos.add(c4);
+//			listaCampos.add(c5);
+//			listaCampos.add(c6);
+//			
+//			Conference conf = new Conference(listaCampos);
+//			
+//			System.out.println(conf.getBibTeX());
 
 			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola, me llamo Orb{\\\'{\\i}}s", false);
@@ -65,7 +65,7 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectos());
+			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaInserciones("user2"));
 //			String result = db_controler.verificaUsuario("user1", "user1");
 //			 if (result != null) 
 //				 System.out.println(result);

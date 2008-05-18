@@ -29,6 +29,7 @@ import publicaciones.Unpublished;
 import temporal.UnimplementedException;
 import controlador.exceptions.ConnectionException;
 import controlador.exceptions.ConnectionNullException;
+import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
 import controlador.exceptions.NonExistingElementException;
 import controlador.exceptions.PermisssionException;
@@ -591,7 +592,7 @@ public class DataBaseControler
 	}
 	
 	
-	public String obtenerListaAutoresEditoresYProyectosParaInserciones(String user) throws FileNotFoundException, BDException
+	public String obtenerListaAutoresEditoresYProyectosParaInserciones(String user) throws FileNotFoundException, BDException, NonExistingElementException
 	{
 		Element root = new Element("AutoresEditoresProyectos");
 		Element eAutoresEditores = new Element("listaAutoresEditores");
@@ -624,10 +625,34 @@ public class DataBaseControler
 		}
 		root.addContent(eAutoresEditores);
 		
+		result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';");
+		if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
+		String tipoUser = (String)result.get(0)[0];
+		String consulta;
+		if (tipoUser.equals("admin"))
+			consulta = "SELECT * FROM proyectos ORDER BY nombre";
+		else if (tipoUser.equals("jefe"))
+		{
+			consulta = "CREATE VIEW ListaProyectos(nombre) AS ";
+			consulta += "SELECT nombre FROM proyectos WHERE jefe='" + user + "' UNION ";
+			consulta += "SELECT proyectos.nombre FROM proyectos, participaen ";
+			consulta += "WHERE proyectos.nombre = participaen.proyecto AND participaen.usuario = '" + user + "' ";
+			database.exeUpdate(consulta);
+			consulta = "SELECT * FROM ListaProyectos ORDER BY nombre;";
+		}
+		else //Usuario normal (user).
+		{
+			consulta = "SELECT proyectos.nombre FROM proyectos, participaen ";
+			consulta += "WHERE proyectos.nombre = participaen.proyecto AND participaen.usuario = '" + user + "' ";
+			consulta += "ORDER BY proyectos.nombre";
+		}
+		
 		Element eProyectos = new Element("listaProyectos");
-		String consulta = "SELECT proyectos.nombre FROM proyectos, pertenecea";
-		consulta += "WHERE proyectos.nombre = pertenecea.proyecto AND (proyectos.jefe = '" + user +"' OR )";
 		result = database.exeQuery(consulta);
+		
+		if (tipoUser.equals("jefe"))
+			database.exeUpdate("DROP VIEW ListaProyectos");
+		
 		int numProy = result.size();
 		String proyecto;
 		for (int i = 0; i < numProy; i++)
