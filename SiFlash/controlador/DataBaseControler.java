@@ -3,6 +3,8 @@
 package controlador;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Vector;
 
 import org.jdom.Document;
@@ -11,21 +13,8 @@ import org.jdom.output.XMLOutputter;
 
 import personas.AutorEditor;
 import personas.Usuario;
-import publicaciones.Article;
-import publicaciones.Book;
-import publicaciones.Booklet;
-import publicaciones.Conference;
-import publicaciones.InBook;
-import publicaciones.InCollection;
-import publicaciones.InProceedings;
-import publicaciones.Manual;
-import publicaciones.MastersThesis;
-import publicaciones.Misc;
-import publicaciones.PhdThesis;
-import publicaciones.Proceedings;
+import publicaciones.CodigosDatos;
 import publicaciones.Publication;
-import publicaciones.TechReport;
-import publicaciones.Unpublished;
 import temporal.UnimplementedException;
 import controlador.exceptions.ConnectionException;
 import controlador.exceptions.ConnectionNullException;
@@ -680,10 +669,10 @@ public class DataBaseControler
 		consulta += "WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = proyectos.nombre ";
 		consulta += "AND proyectos.jefe = '" + user + "' ORDER BY usuarios.nombre;";
 		Vector<Object[]> result = database.exeQuery(consulta);
-		int numAE = result.size();
+		int numU = result.size();
 		Object[] actual;
 		String usuario, tipo;
-		for (int i = 0; i < numAE; i++)
+		for (int i = 0; i < numU; i++)
 		{
 			actual = result.get(i);
 			usuario = (String)actual[0];
@@ -709,10 +698,10 @@ public class DataBaseControler
 		Element root = new Element("listaProyectos");
 		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "' ORDER BY nombre;";
 		Vector<Object[]> result = database.exeQuery(consulta);
-		int numAE = result.size();
+		int numP = result.size();
 		Object[] actual;
 		String nombre;
-		for (int i = 0; i < numAE; i++)
+		for (int i = 0; i < numP; i++)
 		{
 			actual = result.get(i);
 			nombre = (String)actual[0];
@@ -727,143 +716,44 @@ public class DataBaseControler
 		return outputter.outputString (new Document(root));
 	}
 	
-	public String obtenerListaPublicaciones(String  user) throws FileNotFoundException, BDException, UnimplementedException
+	/*public String obtenerListaPublicaciones(String  user) throws BDException, UnimplementedException
 	{
-		String cArticle = "SELECT article.*, proyectos.nombre FROM article, pertenecea, proyectos WHERE article.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cBook = "SELECT book.*, proyectos.nombre FROM book, pertenecea, proyectos WHERE book.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cBooklet = "SELECT booklet.*, proyectos.nombre FROM booklet, pertenecea, proyectos WHERE booklet.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cConference = "SELECT conference.*, proyectos.nombre FROM conference, pertenecea, proyectos WHERE conference.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cInBook = "SELECT inbook.*, proyectos.nombre FROM inbook, pertenecea, proyectos WHERE inbook.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cInCollection = "SELECT incollection.*, proyectos.nombre FROM incollection, pertenecea, proyectos WHERE incollection.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cInProceedings = "SELECT inproceedings.*, proyectos.nombre FROM inproceedings, pertenecea, proyectos WHERE inproceedings.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cManual = "SELECT manual.*, proyectos.nombre FROM manual, pertenecea, proyectos WHERE manual.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cMastersThesis = "SELECT mastersthesis.*, proyectos.nombre FROM mastersthesis, pertenecea, proyectos WHERE mastersthesis.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cMisc = "SELECT misc.*, proyectos.nombre FROM misc, pertenecea, proyectos WHERE misc.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cPhdThesis = "SELECT phdthesis.*, proyectos.nombre FROM phdthesis, pertenecea, proyectos WHERE phdthesis.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cProceedings = "SELECT proceedings.*, proyectos.nombre FROM proceedings, pertenecea, proyectos WHERE proceedings.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cTechReport = "SELECT techreport.*, proyectos.nombre FROM techreport, pertenecea, proyectos WHERE techreport.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		String cUnpublished = "SELECT unpublished.*, proyectos.nombre FROM unpublished, pertenecea, proyectos WHERE unpublished.idDoc = pertenecea.idDoc AND pertenecea.proyecto = proyectos.nombre AND proyectos.jefe ='" + user + "';";
-		
-		Vector<Object[]> rArticle = database.exeQuery(cArticle);
-		Vector<Object[]> rBook = database.exeQuery(cBook);
-		Vector<Object[]> rBooklet = database.exeQuery(cBooklet);
-		Vector<Object[]> rConference = database.exeQuery(cConference);
-		Vector<Object[]> rInBook = database.exeQuery(cInBook);
-		Vector<Object[]> rInCollection = database.exeQuery(cInCollection);
-		Vector<Object[]> rInProceedings = database.exeQuery(cInProceedings);
-		Vector<Object[]> rManual = database.exeQuery(cManual);
-		Vector<Object[]> rMastersThesis = database.exeQuery(cMastersThesis);
-		Vector<Object[]> rMisc = database.exeQuery(cMisc);
-		Vector<Object[]> rPhdThesis = database.exeQuery(cPhdThesis);
-		Vector<Object[]> rProceedings = database.exeQuery(cProceedings);
-		Vector<Object[]> rTechReport = database.exeQuery(cTechReport);
-		Vector<Object[]> rUnpublished = database.exeQuery(cUnpublished);
-		
-		Vector<Publication> publicaciones = new Vector<Publication>();
-		publicaciones.addAll(Article.generaPub(rArticle));
-		publicaciones.addAll(Book.generaPub(rBook));
-		publicaciones.addAll(Booklet.generaPub(rBooklet));
-		publicaciones.addAll(Conference.generaPub(rConference));
-		publicaciones.addAll(InBook.generaPub(rInBook));
-		publicaciones.addAll(InCollection.generaPub(rInCollection));
-		publicaciones.addAll(InProceedings.generaPub(rInProceedings));
-		publicaciones.addAll(Manual.generaPub(rManual));
-		publicaciones.addAll(MastersThesis.generaPub(rMastersThesis));
-		publicaciones.addAll(Misc.generaPub(rMisc));
-		publicaciones.addAll(PhdThesis.generaPub(rPhdThesis));
-		publicaciones.addAll(Proceedings.generaPub(rProceedings));
-		publicaciones.addAll(TechReport.generaPub(rTechReport));
-		publicaciones.addAll(Unpublished.generaPub(rUnpublished));
-		
-		Vector<String> proyectosAsociados = new Vector<String>();
+		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "' ORDER BY nombre;";
+		Vector<Object[]> result = database.exeQuery(consulta);
+		int numP = result.size();
 		Object[] actual;
-		for (int i = 0; i < rArticle.size(); i++)
-		{
-			actual = rArticle.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rBook.size(); i++)
-		{
-			actual = rBook.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rBooklet.size(); i++)
-		{
-			actual = rBooklet.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rConference.size(); i++)
-		{
-			actual = rConference.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rInBook.size(); i++)
-		{
-			actual = rInBook.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rInCollection.size(); i++)
-		{
-			actual = rInCollection.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rInProceedings.size(); i++)
-		{
-			actual = rInProceedings.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rManual.size(); i++)
-		{
-			actual = rManual.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rMastersThesis.size(); i++)
-		{
-			actual = rMastersThesis.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rMisc.size(); i++)
-		{
-			actual = rMisc.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rPhdThesis.size(); i++)
-		{
-			actual = rPhdThesis.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rProceedings.size(); i++)
-		{
-			actual = rProceedings.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rTechReport.size(); i++)
-		{
-			actual = rTechReport.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		for (int i = 0; i < rUnpublished.size(); i++)
-		{
-			actual = rUnpublished.get(i);
-			proyectosAsociados.add((String)actual[actual.length-1]);
-		}
-		
-		
-		Element root = new Element("listaPublicaciones");
-		int numP = publicaciones.size();
-		Publication pActual;
+		String nombre;
+		Vector<Publication> publicaciones = new Vector<Publication>();
 		for (int i = 0; i < numP; i++)
 		{
-			pActual = publicaciones.get(i);
-			Element ePub = pActual.generarElementoXML();
+			actual = result.get(i);
+			nombre = (String)actual[0];
 
-			Element eProyecto = new Element("proyecto");
-			eProyecto.addContent(proyectosAsociados.get(i));
-			ePub.addContent(eProyecto);
-
-			root.addContent(ePub);
+			publicaciones.addAll(consultaDocumentos(nombre, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false));
 		}
 
+		Element root = new Element("listaPublicaciones");
+		numP = publicaciones.size();
+		for (int i = 0;  i < numP; i++)
+		{
+			Element ePublication = publicaciones.get(i).generarElementoXML();
+			root.addContent(ePublication);
+		}
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString (new Document(root));
+	}*/
+	
+	public String obtenerListaPublicaciones(String  proyecto) throws BDException, UnimplementedException
+	{
+		Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false);
+
+		Element root = new Element("listaPublicaciones");
+		int numP = publicaciones.size();
+		for (int i = 0;  i < numP; i++)
+		{
+			Element ePublication = publicaciones.get(i).generarElementoXML();
+			root.addContent(ePublication);
+		}
 		XMLOutputter outputter = new XMLOutputter();
 		return outputter.outputString (new Document(root));
 	}
