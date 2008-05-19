@@ -203,23 +203,6 @@ public class DataBaseControler
 	}
 
 	/**
-	 * Devuelve un vector con los documentos asociados al proyecto indicado.
-	 * @param proyecto - Proyecto sobre el que se desea realizar la consulta.
-	 * @return java.util.Vector
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
-	 * @throws UnimplementedException 
-	 * @roseuid 47C5EF62035B
-	 */
-	public Vector<Publication> consultaDocumentosProyecto(String proyecto) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
-	{
-		if (true)throw new UnimplementedException();
-		return null;
-	}
-
-	/**
 	 * Devuelve un vector con los usuarios que pertenecen al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea realizar la consulta.
 	 * @return java.util.Vector
