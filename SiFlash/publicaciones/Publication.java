@@ -82,6 +82,8 @@ public abstract class Publication
 	 * Contiene todos los proyectos a los que pertenece la aplicación.
 	 */
 	protected Vector<String> proyectos;
+	
+	protected String proyecto;
 
 	public static final String separador = new String (", ");
 
@@ -572,6 +574,14 @@ public abstract class Publication
 				vector.add(str);
 			}
 		}
+		
+		if (proyecto != null)
+		{
+			String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
+			str += ",'" + proyecto + "');";
+			vector.add(str);
+		}
+		
 		if (key != null)
 		{
 			ListIterator <String> keysit = this.getKeys().listIterator();

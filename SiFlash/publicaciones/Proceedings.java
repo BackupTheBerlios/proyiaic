@@ -133,6 +133,8 @@ public class Proceedings extends Publication
 			user = valorString;
 		else if (nombreCampo.equalsIgnoreCase("url") && URL == null)
 			URL = valorString;
+		else if (nombreCampo.equalsIgnoreCase("proyecto") && proyecto == null)
+			proyecto = valorString;
 	}
 
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 

@@ -58,6 +58,7 @@ public class ConversorXML_BBDD
 	private String type;
 	private String school;
 	private String institution;
+	private String proyecto;
 	private Vector<AutorEditor> authors; 
 	private Vector<AutorEditor> editors;
 	private String user;
@@ -94,6 +95,7 @@ public class ConversorXML_BBDD
 		type = null;
 		school = null;
 		institution = null;
+		proyecto = null;
 		authors = null;
 		editors = null;
 	}
@@ -190,6 +192,8 @@ public class ConversorXML_BBDD
 			school = campo.getValue();
 		else if (nombreCampo.equals("institution"))
 			institution = campo.getValue();
+		else if (nombreCampo.equals("proyecto"))
+			proyecto = campo.getValue();
 		else if (nombreCampo.equals("authors"))
 			authors = procesarAutoresEditores(campo);
 		else if (nombreCampo.equals("editors"))
@@ -241,7 +245,7 @@ public class ConversorXML_BBDD
 				 years.add("" + i);
 		}
 		
-		Vector<Publication> vector = dbc.consultaDocumentos(tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true);
+		Vector<Publication> vector = dbc.consultaDocumentos(proyecto, tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true);
 		
 		int numPublic = vector.size();
 		Publication actual;
