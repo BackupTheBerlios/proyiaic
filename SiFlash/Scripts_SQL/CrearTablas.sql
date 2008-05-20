@@ -307,3 +307,10 @@ create table Id (
 create table tipoPublicacion (
 	idDoc integer unsigned not null primary key,
 	tipo varchar(30) not null);
+
+
+create or replace view proyectosAccesiblesJefe(jefe, proyecto) as
+  select jefe, nombre from proyectos
+  union
+  select participaen.usuario, participaen.proyecto from participaen, usuarios
+    where usuarios.tipo = 'jefe' and usuarios.nombre = participaen.usuario;

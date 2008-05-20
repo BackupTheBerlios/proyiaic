@@ -342,16 +342,15 @@ public class DataBaseControler
 	/**
 	 * Elimina el documento cuyo IdDoc se pasa por parámetro de la base de datos.
 	 * @param id_doc - IdDoc del documento a eliminar.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
 	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
 	 * @throws UnimplementedException 
+	 * @throws BDException 
 	 * @roseuid 47C5B46F008C
 	 */
-	public void eliminaDocumento(int id_doc) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	public void eliminaDocumento(String idDoc) throws NonExistingElementException, UnimplementedException, BDException 
 	{
-		if (true)throw new UnimplementedException();
+		int id_doc = Integer.parseInt(idDoc);
+		modif_pub.borraPublicación(id_doc);
 	}
 
 	/**
@@ -637,29 +636,63 @@ public class DataBaseControler
 	}
 	
 	
-	public String obtenerListaUsuarios(String  jefe) throws FileNotFoundException, BDException
+	public String obtenerUsuariosProyecto(String  proyecto) throws FileNotFoundException, BDException
 	{
 		Element root = new Element("listaUsuarios");
-		String consulta = "SELECT usuarios.nombre, usuarios.tipo FROM usuarios, participaen, proyectos ";
-		consulta += "WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = proyectos.nombre ";
-		consulta += "AND proyectos.jefe = '" + jefe + "' ORDER BY usuarios.nombre;";
+		
+		Element pertenecen = new Element("pertenecen");
+		String consulta = "SELECT usuarios.nombre FROM usuarios, participaen WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = '" + proyecto +"' ORDER BY usuarios.nombre;";
 		Vector<Object[]> result = database.exeQuery(consulta);
 		int numU = result.size();
 		Object[] actual;
-		String usuario, tipo;
+		String usuario;
 		for (int i = 0; i < numU; i++)
 		{
 			actual = result.get(i);
 			usuario = (String)actual[0];
-			tipo = (String)actual[1];
 
 			Element eUsuario = new Element("usuario");
-			Element eNombre = new Element("nombre");
-			eNombre.addContent(usuario);
-			Element eTipo = new Element("tipo");
-			eTipo.addContent(tipo);
-			eUsuario.addContent(eNombre);
-			eUsuario.addContent(eTipo);
+			eUsuario.addContent(usuario);
+
+			pertenecen.addContent(eUsuario);
+		}
+		root.addContent(pertenecen);
+		
+		Element noPertenecen = new Element("noPertenecen");
+		consulta = "SELECT usuarios.nombre FROM usuarios WHERE NOT EXISTS(SELECT * FROM participaen WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = '" + proyecto +"') ORDER BY usuarios.nombre;";
+		result = database.exeQuery(consulta);
+		numU = result.size();
+		for (int i = 0; i < numU; i++)
+		{
+			actual = result.get(i);
+			usuario = (String)actual[0];
+
+			Element eUsuario = new Element("usuario");
+			eUsuario.addContent(usuario);
+
+			noPertenecen.addContent(eUsuario);
+		}
+		root.addContent(noPertenecen);
+
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString (new Document(root));
+	}
+	
+	public String obtenerListaTotalUsuarios() throws FileNotFoundException, BDException
+	{
+		Element root = new Element("listaUsuarios");
+		String consulta = "SELECT nombre FROM usuarios ORDER BY nombre";
+		Vector<Object[]> result = database.exeQuery(consulta);
+		int numU = result.size();
+		Object[] actual;
+		String usuario;
+		for (int i = 0; i < numU; i++)
+		{
+			actual = result.get(i);
+			usuario = (String)actual[0];
+
+			Element eUsuario = new Element("usuario");
+			eUsuario.addContent(usuario);
 
 			root.addContent(eUsuario);
 		}
@@ -858,6 +891,11 @@ public class DataBaseControler
 	 */
 	private void cierraConexion(){
 
+	}
+
+	public void insertaProyecto(String proyecto, String jefe) throws ExistingElementException, BDException 
+	{
+		modif_proyectos.insertaProyecto(proyecto, jefe);
 	}
 
 }

@@ -1,10 +1,8 @@
 package principal;
 
 import java.io.FileInputStream;
-import java.io.InputStream;
 
-import parserFicherosBibtex.ConversorXML_Publication;
-import publicaciones.Publication;
+import controlador.ConversorXML_BBDD;
 import controlador.DataBaseControler;
 
 public class Main 
@@ -97,7 +95,12 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerListaVincularDesvincular("user3", "2"));
+			System.out.println(db_controler.obtenerUsuariosProyecto("Proyecto2"));
+			//-------------------------------------------------------------------------
+			
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarNuevoProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\proyecto.xml")));
+		
 			
 		}
 		catch (Exception e)

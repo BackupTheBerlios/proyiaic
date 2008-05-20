@@ -371,6 +371,19 @@ public class ConversorXML_BBDD
 		return "true";
 	}
 	
+	public String procesarNuevoProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException
+	{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(input);
+		Element root = doc.getRootElement();
+		String proyecto = root.getChild("proyecto").getValue();
+		String jefe = root.getChild("jefe").getValue();
+		
+		dbc.insertaProyecto(proyecto, jefe);
+		
+		return "true";
+	}
+	
 	public String procesarEliminarUsuario(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
 	{
 		SAXBuilder builder = new SAXBuilder();

@@ -225,4 +225,37 @@ BEGIN
   END IF;
 END $$
 
+DROP TRIGGER IF EXISTS insertaUsuario $$
+CREATE TRIGGER insertaUsuario BEFORE INSERT ON Usuarios
+FOR EACH ROW
+BEGIN
+  IF ((NEW.tipo != 'user') and (NEW.tipo != 'jefe') and (NEW.tipo != 'admin')) THEN
+    SET NEW.tipo = 'user';  
+  END IF;
+END $$
+
+
+DROP TRIGGER IF EXISTS cambiarUserAJefe $$
+CREATE TRIGGER cambiarUserAJefe BEFORE INSERT ON Proyectos
+FOR EACH ROW
+BEGIN
+  DECLARE tipo VARCHAR(6);
+  SELECT usuarios.tipo INTO tipo FROM Usuarios WHERE Usuarios.nombre = NEW.jefe;
+  IF (tipo = 'user') THEN
+    UPDATE Usuarios SET tipo='jefe' WHERE nombre = NEW.jefe;  
+  END IF;
+END $$
+
+
+DROP TRIGGER IF EXISTS cambiarJefeAUser $$
+CREATE TRIGGER cambiarJefeAUser BEFORE DELETE ON Proyectos
+FOR EACH ROW
+BEGIN
+  DECLARE tipo VARCHAR(6);
+  SELECT usuarios.tipo INTO tipo FROM Usuarios WHERE Usuarios.nombre = OLD.jefe;
+  IF ((tipo = 'jefe') and (NOT EXISTS (SELECT * FROM Proyectos WHERE nombre != OLD.nombre and jefe = OLD.jefe))) THEN
+    UPDATE Usuarios SET tipo='user' WHERE nombre = OLD.jefe;
+  END IF;
+END $$
+
 DELIMITER ;
