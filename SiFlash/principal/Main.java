@@ -69,8 +69,8 @@ public class Main
 			
 			//-------------------------------------------------------------------------
 			
-//			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaInserciones("user2"));
+			DataBaseControler db_controler = new DataBaseControler();
+			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaInserciones("user1"));
 //			String result = db_controler.verificaUsuario("user1", "user1");
 //			 if (result != null) 
 //				 System.out.println(result);
@@ -96,8 +96,8 @@ public class Main
 //			System.out.println(conv.procesarAsociarPublicacionAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarPublicacionProyecto.xml")));
 			//-------------------------------------------------------------------------
 			
-			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerListaPublicaciones("Proyecto2"));
+//			DataBaseControler db_controler = new DataBaseControler();
+//			System.out.println(db_controler.obtenerListaPublicaciones("Proyecto2"));
 			
 		}
 		catch (Exception e)
