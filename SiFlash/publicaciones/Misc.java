@@ -109,6 +109,8 @@ public class Misc extends Publication
 	{
 		Element elemento = new Element("publication");
 		elemento.setAttribute ("tipo", "Misc");
+		if (idDoc != 0)
+			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
 			elemento.setAttribute("referencia", referencia);
 

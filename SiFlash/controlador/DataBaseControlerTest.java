@@ -35,7 +35,7 @@ public class DataBaseControlerTest {
 		keys = new Vector<String>();
 		keys.add("key2");
 		try {
-			v1 = db_controler.consultaDocumentos(null, CodigosDatos.codArticle, null, null, "otro", true, null, "suplemento", null, null, null, null, null, null, null, keys, true, true, true, true, true, true, true, true, true);
+			v1 = db_controler.consultaDocumentos(null, CodigosDatos.codArticle, null, null, "otro", true, null, "suplemento", null, null, null, null, null, null, null, keys, true, true, true, true, true, true, true, true, true, null);
 		} catch (BDException e) {
 			fail ("BDException");
 		} catch (UnimplementedException e) {

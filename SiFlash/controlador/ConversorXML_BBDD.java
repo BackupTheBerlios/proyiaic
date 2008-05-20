@@ -245,7 +245,7 @@ public class ConversorXML_BBDD
 				 years.add("" + i);
 		}
 		
-		Vector<Publication> vector = dbc.consultaDocumentos(proyecto, tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true);
+		Vector<Publication> vector = dbc.consultaDocumentos(proyecto, tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true, null);
 		
 		int numPublic = vector.size();
 		Publication actual;

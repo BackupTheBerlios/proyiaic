@@ -62,7 +62,7 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 //			ConversorXML_Publication cp = new ConversorXML_Publication();
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\manual.xml");
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\article.xml");
 //			Publication p = cp.convertir(is);
 //			DataBaseControler cb = new DataBaseControler();
 //			cb.insertaDocumento(p);
@@ -97,7 +97,7 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerListaProyectosGestionables("user4"));
+			System.out.println(db_controler.obtenerListaVincularDesvincular("user3", "2"));
 			
 		}
 		catch (Exception e)
