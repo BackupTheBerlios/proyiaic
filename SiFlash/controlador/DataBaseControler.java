@@ -668,6 +668,29 @@ public class DataBaseControler
 		return outputter.outputString (new Document(root));
 	}
 	
+	public String obtenerListaProyectosTotales() throws FileNotFoundException, BDException
+	{
+		Element root = new Element("listaProyectos");
+		String consulta = "SELECT nombre FROM proyectos ORDER BY nombre;";
+		Vector<Object[]> result = database.exeQuery(consulta);
+		int numP = result.size();
+		Object[] actual;
+		String nombre;
+		for (int i = 0; i < numP; i++)
+		{
+			actual = result.get(i);
+			nombre = (String)actual[0];
+
+			Element eProyecto = new Element("proyecto");
+			eProyecto.addContent(nombre);
+
+			root.addContent(eProyecto);
+		}
+
+		XMLOutputter outputter = new XMLOutputter();
+		return outputter.outputString (new Document(root));
+	}
+	
 	public String obtenerListaProyectosDirigidos(String  user) throws FileNotFoundException, BDException
 	{
 		Element root = new Element("listaProyectos");
@@ -691,41 +714,17 @@ public class DataBaseControler
 		return outputter.outputString (new Document(root));
 	}
 	
-	public String obtenerListaProyectosGestionables(String  user) throws FileNotFoundException, BDException
+	public String obtenerListaProyectosGestionables(String  user) throws FileNotFoundException, BDException, NonExistingElementException
 	{
-		Element root = new Element("listaProyectos");
-		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "' ORDER BY nombre;";
-		Vector<Object[]> result = database.exeQuery(consulta);
-		int numP = result.size();
-		Object[] actual;
-		String nombre;
-		for (int i = 0; i < numP; i++)
-		{
-			actual = result.get(i);
-			nombre = (String)actual[0];
-
-			Element eProyecto = new Element("proyecto");
-			eProyecto.addContent(nombre);
-
-			root.addContent(eProyecto);
-		}
-
-		XMLOutputter outputter = new XMLOutputter();
-		return outputter.outputString (new Document(root));
-		
-		/*String consulta;
+		Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';");
+		if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
+		String tipoUser = (String)result.get(0)[0];
 		if (tipoUser.equals("admin"))
-			consulta = "SELECT * FROM proyectos ORDER BY nombre";
+			return obtenerListaProyectosTotales();
 		else if (tipoUser.equals("jefe"))
-		{
-			consulta = "SELECT proyecto FROM ProyectosAccesiblesJefe WHERE jefe='" + user + "' ORDER BY proyecto;";
-		}
-		else //Usuario normal (user).
-		{
-			consulta = "SELECT proyectos.nombre FROM proyectos, participaen ";
-			consulta += "WHERE proyectos.nombre = participaen.proyecto AND participaen.usuario = '" + user + "' ";
-			consulta += "ORDER BY proyectos.nombre";
-		}*/
+			return obtenerListaProyectosDirigidos(user);
+		else
+			return null;
 	}
 	
 	/*public String obtenerListaPublicaciones(String  user) throws BDException, UnimplementedException
