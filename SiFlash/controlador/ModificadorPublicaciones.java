@@ -31,9 +31,9 @@ public class ModificadorPublicaciones {
 	 * Excepcion si ya existe o no hay permisos.
 	 * @param publicacion - Publicación a insertar.
 	 * @throws BDException 
-	 * @roseuid 47C5927F006D
+	 * @throws ExistingElementException 
 	 */
-	public void insertaPublicación(Publication publicacion) throws BDException 
+	public void insertaPublicación(Publication publicacion) throws BDException
 	{
 		Vector<String> inserciones = publicacion.generaInserciones();		
 		theBaseDatos.exeUpdates(inserciones);
@@ -42,30 +42,34 @@ public class ModificadorPublicaciones {
 	/**
 	 * Método que se encarga de modificar la publicación pasada por parámetro en la 
 	 * base de datos, cambia los antiguos datos que contenía al respecto de la misma 
-	 * por los que contiene el objeto. Para ello se basa en el idDoc, que no puede 
-	 * cambiar.
-	 * 
-	 * Excepcion si no existe o no hay permisos.
+	 * por los que contiene el objeto. Para ello se basa en el idDoc, y asigna uno nuevo.
 	 * @param publicacion - Nuevos datos de la publicación.
-	 * @throws database.BDException
-	 * @roseuid 47C59446001F
+	 * @return int - Nuevo idDoc asignado al documento.
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
+	 * la base de datos.
+	 * @throws ExistingElementException 
 	 */
-	public void modificaPublicación(Publication publicacion) throws NonExistingElementException,BDException 
+	public int modificaPublicación(Publication publicacion) throws NonExistingElementException,BDException, ExistingElementException 
 	{	
+		int id_doc = publicacion.getIdDoc();
+		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
+		Vector<Object []> res = theBaseDatos.exeQuery(consulta);
+		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);		
 		borraPublicación(publicacion.getIdDoc());
 		insertaPublicación(publicacion);
+		return publicacion.getIdDoc();
 	}
 
 	/**
 	 * Elimina la publicación cuyo id se le pasa por parámetro.
-	 * Para ello la desvincula previamente de todos los proyectos a los que esté 
-	 * asociada.
-	 * 
-	 * Excepcion si no hay permisos.
+	 * Para ello elimina previamente todos los vinculos que tenga, tanto con autores,
+	 * keywords, proyectos, etc. 
 	 * @param id_doc - IdDoc de la publicación que se desea borrar.
-	 * @throws database.BDException
-	 * @throws NonExistingElementException 
-	 * @roseuid 47C59A7002BF
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - En caso que el documento no exista.
 	 */
 	public void borraPublicación(int id_doc) throws BDException, NonExistingElementException 
 	{

@@ -45,6 +45,24 @@ public class ModificadorAutores
 		theBaseDatos.exeUpdate(insercion);
 	}
 
+	private int consultaIdAutor(String nombre, String apellidos, String web) throws BDException {
+		String consulta = "SELECT idAut FROM AutoresEditores WHERE ";
+		consulta += "nombre = '" + nombre + "' AND ";
+		consulta += "apellidos = '" + apellidos + "' AND ";
+		consulta += "web = '" + web + "';";
+		
+		
+		Vector<Object[]> resultado = theBaseDatos.exeQuery(consulta);
+		if (resultado.size() != 0)
+		{
+			Object[] array = resultado.get(0);
+			int idAut = ((Long) array[0]).intValue();
+			return idAut;
+		}
+		else
+			return 0;
+	}
+	
 	/**
 	 * Borra el autor cuyos datos se le pasan por parámetro de la base de datos, 
 	 * desvinculandolo previamente de todas sus operaciones.
@@ -86,6 +104,27 @@ public class ModificadorAutores
 		"' WHERE idAut = "+ idAut + ";") ;
 		theBaseDatos.exeUpdate(consulta);    
 	}
+	
+	/** Modifica los datos del autor cuyo idAutor se ha pasado como parámetro, sustituyendolos por
+	 *  los nuevos datos que se obtienen como parámetro.
+	 *  @param idAutor - Identificador único de Autor del autor que se desea modificar.
+	 *  @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
+	 *  @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
+	 *  @param urlNueva Nueva - dirección Web del autor que se quiere almacenar en la base de datos.
+	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos.
+	 */
+	public void modificaAutor(int idAutor, String nombreNuevo, String apellidosNuevos, String urlNueva) throws NonExistingElementException,BDException 
+	{		
+		String cons1 = new String ("SELECT COUNT(*) FROM autoreseditores WHERE idAut = " + idAutor +";");
+		Vector <Object[]> res1 = theBaseDatos.exeQuery(cons1);
+		if (res1 == null || ((Long)res1.firstElement()[0]).intValue()!=1) throw new NonExistingElementException(ExistenceException.AUTOR);
+		
+		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "', url = '" + urlNueva +
+		"' WHERE idAut = "+ idAutor + ";") ;
+		theBaseDatos.exeUpdate(consulta);    
+	}	
 	
 	/**
 	 * 

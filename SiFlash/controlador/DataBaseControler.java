@@ -1,5 +1,3 @@
-//Source file: C:\\GENERADO\\controlador\\DataBaseControler.java
-
 package controlador;
 
 import java.io.FileNotFoundException;
@@ -75,11 +73,16 @@ public class DataBaseControler
 	/**
 	 * Método que realiza una consulta sobre la base de datos.
 	 * Se le pasan por parámetro los campos sobre los que se puede realizar el 
-	 * filtrado.
-	 * @param proyecto 
+	 * filtrado. Como situación general, si no queremos filtrar por ese campo simplemente hay que ponerlo a null.
+	 * A la hora de realizar la subconsulta correspondiente para cada tipo de documento 
+	 * buscado solo se tendrán en cuenta aquellos parámetros que le afecten. 
+	 * 
+	 * @param proyecto - Proyecto al que deseamos que pertenezca el documento.
 	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
 	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
-	 * @param authors - Vector con un conjunto de Strings que deben estar contenidos 
+	 * @param autores - Vector con un conjunto de AutorEditor que deben estar contenidos 
+	 * entre los autores. null para no filtrar por este campo.
+	 * @param editores - Vector con un conjunto de Strings que deben estar contenidos 
 	 * entre los autores. null para no filtrar por este campo.
 	 * @param title - Titulo o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. null para no filtrar por este campo.
@@ -87,38 +90,36 @@ public class DataBaseControler
 	 * que queremos realizar la búsqueda. null para no filtrar por este campo.
 	 * @param journal - Journal o parte del mismo en que se incluye. null para no 
 	 * filtrar por este campo.
-	 * @param yearInicial - Primer año en que puede estar incluido. -1 Indica que no 
+	 * @param years - Vector con un conjunto de String que indica los años a los que puede pertenecer
+	 * el proyecto, de esta manera podríamos admitir por ejemplo proyectos de 1996 y 1998 sin necesidad
+	 * de admitir aquellos pertenecientes a 1997. null para no filtrar por este parámetro.  
 	 * hay límite.
-	 * @param yearFinal - Ultimo año en el que puede estar incluida. -1 Indica que no 
-	 * hay límite.
-	 * @param monthInicial - Primer mes en el que se desea realizar la búsqueda. null 
-	 * para no filtrar por este campo.
-	 * @param monthFinal - Mes final en que se puede contener. null para no filtrar por 
-	 * este campo.
 	 * @param volume - Volumen o parte de este en que se incluye. null para no filtrar 
 	 * por este campo.
 	 * @param series - Serie o parte de su nombre en que se incluye. null para no 
 	 * filtrar por este campo.
 	 * @param address - Lugar en que se realiza o parte de su nombre. null para no 
 	 * filtrar por este campo.
-	 * @param pagesMin - Longitud mínima en páginas. -1 para no filtrar por este campo.
-	 * @param pagesMax - Maximo de páginas. -1 para no filtrar por este campo.
 	 * @param organization - Organizacion o parte del nombre de la misma a la que 
 	 * pertenece. null para no filtrar por este parámetro
 	 * @param school - Escuela o parte del nombre de la misma en la que se ha 
 	 * realizado. null para no filtrar por este campo.
-	 * @param note - Vector con un conjunto de String que deberán estar contenidos en 
-	 * el campo note de la publicación. null para no filtrar por este campo.
-	 * @param abstracts - Vector con un conjunto de String que deberán estar contenidos 
-	 * en el campo abstract de la publicación. null para no filtrar por este campo.
 	 * @param bookTitle - Título o parte del título del libro en el que se contiene la 
 	 * publicación. null para no filtrar por este campo.
+	 * @param keys - Vector con un conjunto de String que representa keywords que han de describir
+	 * la publicación buscada.
+	 * @param parecido_** - Indica si deseamos buscar exactamente el parametro pasado, o por
+	 * el contrario cualquier palabra que lo contenga. Por Ejemplo: si pasamos como parametro publisher "marc"
+	 * en caso que parecido_publisher == false, buscaía únicamente documentos cuyo publisher sea "marc",
+	 * por contra, si parecido_publisher == true, buscaría documentos cuyo publisher sea del tipo "*marc*",
+	 * representando el * cualquier cadena de caracteres, incluyendo la cadena vacia.
+	 * @param user - Indica el usuario que debe haber subido la publicación.
 	 * @return vector construido con las publicaciones que cumplen los 
-	 * requisitos@throws controlador.exceptions.ConnectionException
-	 * @throws UnimplementedException 
+	 * requisitos.
+	 * 
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @roseuid 47C5A76F02DE
+	 * @throws UnimplementedException 
 	 */
 	public Vector<Publication> consultaDocumentos(String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws UnimplementedException, BDException 
 	{
@@ -203,154 +204,144 @@ public class DataBaseControler
 	}
 
 	/**
-	 * Devuelve un vector con los usuarios que pertenecen al proyecto indicado.
+	 * Devuelve un vector con los usuario que participan en el proyecto pasado por
+	 * parámetro.
 	 * @param proyecto - Proyecto sobre el que se desea realizar la consulta.
-	 * @return java.util.Vector
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
-	 * @throws UnimplementedException 
-	 * @roseuid 47C5B5B8029F
+	 * @return java.util.Vector - Conjunto de String con los nombres de los usuarios
+	 * buscados.
+	 * @throws NonExistingElementException - En caso que el proyecto no exista.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 */
-	public Vector<String> consultaUsuariosProyecto(String proyecto) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	public Vector<String> consultaUsuariosProyecto(String proyecto) 
+	throws NonExistingElementException,BDException 
 	{
-		if (true)throw new UnimplementedException();
-		return null;
+		this.abreConexion();
+		try{
+			return modif_proyectos.consultaUsuarios(proyecto);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
 	/**
 	 * Devuelve un vector con los proyectos a los que pertenece el usuario indicado.
 	 * @param usuario - Usuario sobre el que se desea realizar la consulta.
-	 * @return java.util.Vector
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
-	 * @throws UnimplementedException 
-	 * @roseuid 47C5BB4C007D
+	 * @return java.util.Vector 
+	 * @throws NonExistingElementException - En caso que el usuario no exista.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 */
-	public Vector<String> consultaProyectosUsuario(int usuario) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException 
+	public Vector<String> consultaProyectosUsuario(String usuario) throws BDException,NonExistingElementException
 	{
-		if (true)throw new UnimplementedException();
-		return null;
-	}
-
-	/**
-	 * Devuelve un vector con los proyectos sobre los que puede realizar modificaciones 
-	 * el usuario asociado a la actual conexión.
-	 * @return java.util.Vector
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws UnimplementedException 
-	 * @roseuid 47C5ABAE038A
-	 */
-	public Vector<String> getMyProyects() throws ConnectionNullException, ConnectionException, UnimplementedException 
-	{
-		if (true)throw new UnimplementedException();		
-		return null;
-	}
-
-	/**
-	 * Devuelve un vector con los documentos sobre los que puede realizar 
-	 * modificaciones el usuario asociado a la actual conexión, es decir, los que el ha 
-	 * subido y todos aquellos que pertenecen a un usuario de su proyecto.
-	 * @return java.util.Vector
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws UnimplementedException 
-	 * @roseuid 47C5B28D030D
-	 */
-	public Vector<Publication> getMyDocuments() throws ConnectionNullException, ConnectionException, UnimplementedException 
-	{
-		if (true)throw new UnimplementedException();		
-		return null;
-	}
-
-	/**
-	 * Devuelve un vector con los documentos que ha subido el usuario.
-	 * @return java.util.Vector
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws UnimplementedException 
-	 * @roseuid 47C5B5490290
-	 */
-	public Vector<Publication> getMyUploadDocuments() throws ConnectionNullException, ConnectionException, UnimplementedException 
-	{
-		if (true)throw new UnimplementedException();		
-		return null;
+		this.abreConexion();
+		try{
+			return modif_user.consultaProyectos(usuario);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
 	/**
 	 * Inserta la publicacion pasada por parámetro en la base de datos.
 	 * @param publicacion - Publicacion a insertar.
-	 * @throws BDException 
-	 * @throws BDException 
-	 * @roseuid 47C5AE4A036B
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws ExistingElementException - Si ya existe el documento 
 	 */
 	public void insertaDocumento(Publication publicacion) throws BDException
-	{
-		modif_pub.insertaPublicación(publicacion);
+	{		
+		this.abreConexion();
+		try{
+			modif_pub.insertaPublicación(publicacion);
+		}finally{
+			this.cierraConexion();
+		}
+
 	}
 
 	/**
-	 * Inserta el usuario pasado por parámetro en la base de datos.
-	 * @param proyecto 
+	 * Inserta el usuario pasado por parámetro en la base de datos, y lo relaciona con el
+	 * proyecto cuyo nombre se pasa por parámetro.
 	 * @param publicacion - Usuario a insertar.
-	 * @throws BDException 
-	 * @throws ExistingElementException 
-	 * @throws controlador.exceptions.ExistingElementException
-	 * @throws BDException 
-	 * @throws NonExistingElementException 
-	 * @roseuid 47C5B74C001F
+	 * @param proyecto - Proyecto con el que se encontrará relacionado. 
+	 * @throws NonExistingElementException - Si el proyecto al que se desea asociar no existe.
+	 * @throws ExistingElementException - Si el Usuario ya existe.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 */
 	public void insertaUsuario(Usuario usuario, String proyecto) throws ExistingElementException, BDException, NonExistingElementException
 	{
-		modif_user.creaUsuario(usuario, proyecto);
+		this.abreConexion();
+		try {
+			modif_user.creaUsuario(usuario, proyecto);
+		}finally{
+			this.cierraConexion();
+		}
+
 	}
 
 	/**
-	 * Modifica la publicacion pasada por parámetro en la base de datos.
-	 * @param publicacion - Publicacion a modificar con sus nuevos datos.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.PermisssionException
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @roseuid 47C5B3580196
+	 * Método que se encarga de modificar la publicación pasada por parámetro en la 
+	 * base de datos, cambia los antiguos datos que contenía al respecto de la misma 
+	 * por los que contiene el objeto. Para ello se basa en el idDoc, y asigna uno nuevo.
+	 * <br> <b> Es muy importante tener en cuenta que asigna un nuevo idDoc </b>
+	 * @param publicacion - Nuevos datos de la publicación.
+	 * @return int - Nuevo idDoc asignado al documento.
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
+	 * la base de datos. 
 	 */
-	public void modificaDocumento(Publication publicacion) throws ConnectionNullException, ConnectionException, PermisssionException, NonExistingElementException 
+	public int modificaDocumento(Publication publicacion) throws NonExistingElementException, BDException, ExistingElementException 
 	{
+		this.abreConexion();
+		try{
+			return modif_pub.modificaPublicación(publicacion);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
-	/**
-	 * Método que modifica el autor correspondiente en la base de datos.
-	 * @param id_autor - Identificador único de autor.
-	 * @param nombre - Nombre que se le asignará al autor.
-	 * @param apellidos - Apellidos que se le asignarán al autor.
-	 * @param web - URL de la web que se le asigna al autor.
-	 * @throws controlador.exceptions.ConnectionNullException
-	 * @throws controlador.exceptions.ConnectionException
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws controlador.exceptions.PermisssionException
-	 * @roseuid 47C5B0360177
+	/** Modifica los datos del autor cuyo idAutor se ha pasado como parámetro, sustituyendolos por
+	 *  los nuevos datos que se obtienen como parámetro.
+	 *  @param idAutor - Identificador único de Autor del autor que se desea modificar.
+	 *  @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
+	 *  @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
+	 *  @param urlNueva Nueva - dirección Web del autor que se quiere almacenar en la base de datos.
+	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos. 
 	 */
-	public void modificaAutor(int id_autor, String nombre, String apellidos, String web) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException 
+	public void modificaAutor(int id_autor, String nombre, String apellidos, String web) throws NonExistingElementException, BDException 
 	{
-
+		this.abreConexion();
+		try{
+			modif_autores.modificaAutor(id_autor, nombre, apellidos, web);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
 	/**
-	 * Elimina el documento cuyo IdDoc se pasa por parámetro de la base de datos.
-	 * @param id_doc - IdDoc del documento a eliminar.
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws UnimplementedException 
-	 * @throws BDException 
-	 * @roseuid 47C5B46F008C
+	 * Elimina la publicación cuyo id se le pasa por parámetro.
+	 * Para ello elimina previamente todos los vinculos que tenga, tanto con autores,
+	 * keywords, proyectos, etc. 
+	 * @param id_doc - IdDoc del documento que se desea borrar.
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - En caso que el documento no exista.
 	 */
 	public void eliminaDocumento(String idDoc) throws NonExistingElementException, UnimplementedException, BDException 
 	{
-		int id_doc = Integer.parseInt(idDoc);
-		modif_pub.borraPublicación(id_doc);
+		this.abreConexion();
+		try
+		{
+			int id_doc = Integer.parseInt(idDoc);
+			modif_pub.borraPublicación(id_doc);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
 	/**
@@ -432,17 +423,28 @@ public class DataBaseControler
 	}
 
 	/**
-	 * Elimina el usuario pasado por parámetro de la base de datos.
-	 * @param usuario - Código del usuario a eliminar.
-	 * @param nuevoUserPublicaciones 
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws UnimplementedException 
-	 * @throws BDException 
-	 * @roseuid 47C5BAEE0222
+	 * Elimina al usuario de la aplicacion, y asigna las publicaciones que ha subido
+	 * este al usuario pasado como segundo parámetro.
+	 * 
+	 * @param usuario - Nombre del usuario que se quiere eliminar.
+	 * @param nuevoUserPublicaciones - Nombre del usuario al que se le asignarán 
+	 * las publicaciones subidas por el usuario a eliminar.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - En caso de que no existan alguno de los dos usuarios.
+	 * Si no existe el usuario a eliminar su campo int llevará el valor USUARIO, mientras
+	 * que si el que no existe es el nuevoUserPublicaciones este campo tomará el valor
+	 * INDEFINIDA.
 	 */
 	public void eliminaUsuario(String usuario, String nuevoUserPublicaciones) throws NonExistingElementException, UnimplementedException, BDException 
 	{
-		modif_user.eliminaUsuario(usuario, nuevoUserPublicaciones);
+		this.abreConexion();
+		try{
+			modif_user.eliminaUsuario(usuario, nuevoUserPublicaciones);
+		}finally{
+			this.cierraConexion();
+		}
+
 	}
 
 
@@ -451,63 +453,143 @@ public class DataBaseControler
 		return consultor.getTipoUser(nombre, password);
 	}
 
+	/**
+	 * Método para consultar cual es el idAut que le ha correspondido al ultimo
+	 * AutorEditor en ser insertado en la aplicación.
+	 * @return int - Valor entero buscado.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	public int consultaIdAutor() throws BDException 
 	{
-		Vector<Object[]> resultado = database.exeQuery("SELECT nextIdAut FROM id");
-		int idAut = 0;
-		if (resultado.size() != 0)
-		{	
-			Object[] array = resultado.get(0);
-			idAut = ((Long) array[0]).intValue()-1;
+		this.abreConexion();
+		try{
+			Vector<Object[]> resultado = database.exeQuery("SELECT nextIdAut FROM id;");
+			int idAut = 0;
+			if (resultado.size() != 0)
+			{	
+				Object[] array = resultado.get(0);
+				idAut = ((Long) array[0]).intValue()-1;
+			}
+			return idAut;
+		}finally{
+			this.cierraConexion();
 		}
-		return idAut;
 	}
 
+	/**
+	 * Método que devuelve el id correspondiente al primer autor cuyo nombre y apellidos
+	 * sean iguales a los pasados por parámetro. En caso que el parámetro sea null, no lo
+	 * tendrá en cuenta. Si los dos parametros son null devolvera el primero.
+	 * @param nombre - Nombre que debe corresponder a la persona buscada.
+	 * @param apellidos - Apellidos de la persona buscada.
+	 * @return - Entero correspondiente al idAut de la persona buscada. 0 en caso que
+	 * no exista ningun AutorEditor que se ajuste a lo que se busca.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	public int consultaIdAutor(String nombre, String apellidos) throws BDException
 	{
-		return modif_autores.consultaIdAutor(nombre, apellidos);
+		this.abreConexion();
+		try{
+			return modif_autores.consultaIdAutor(nombre, apellidos);	
+		}finally{
+			this.cierraConexion();
+		}
+
 	}
 
+	/**
+	 * Método que se utiliza para consultar si la keyword que se pasa por parámetro se 
+	 * encuentra ya introducida en la base de datos.
+	 * @param key - Key que deseamos saber si se encuentra en la base de datos.
+	 * @return boolean - True si la keyword se encuentra en la BBDD, false en caso contrario.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	public boolean consultaExistenciaKey(String key) throws BDException 
 	{
-		Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "'");
-		if (resultado.size() == 0)
-			return false;
-		else
-			return true;
+		this.abreConexion();
+		try{		
+			Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "';");
+			if (resultado.size() == 0)
+				return false;
+			else
+				return true;
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
+	/**
+	 * Método para consultar cual es el idDoc que le ha correspondido al documento
+	 * en ser insertado en la aplicación.
+	 * @return int - Valor entero buscado.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	public int consultaIdDoc() throws BDException 
 	{
-		Vector<Object[]> resultado = database.exeQuery("SELECT nextId FROM id");
-		Object[] array = resultado.get(0);
-		int idAut = ((Long) array[0]).intValue()-1;
-		return idAut;
+		this.abreConexion();
+		try{
+			Vector<Object[]> resultado = database.exeQuery("SELECT nextId FROM id;");
+			Object[] array = resultado.get(0);
+			int idAut = ((Long) array[0]).intValue()-1;
+			return idAut;
+		}finally{
+			this.cierraConexion();
+		}
 	}		
 
 
+	/**
+	 * Inserta en la base de datos el AutorEditor que se corresponde con los valores
+	 * que contiene el objeto pasado por parámetro.
+	 * @param ae - Objeto que contiene los datos del AutorEditor pasado por parámetro
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws ExistingElementException - Si un autorEditor con los 3 campos iguales 
+	 * ya se encuentra en la base de datos.
+	 */
 	public void insertaAutorEditor(AutorEditor ae) throws BDException
 	{
-		String str = new String ("INSERT INTO autoreseditores VALUES(0");
-		if(ae.getNombre() != null)
-			str += ",\"" + ae.getNombre() + "\"";
-		else str+= ",null";
-
-		if(ae.getApellidos()!=null)
-			str += ",\"" + ae.getApellidos() + "\"";
-		else str+= ",null";
-
-		if(ae.getWeb()!=null)
-			str += ",\"" + ae.getWeb() + "\"";
-		else str+= ",null";
-
-		str+=");";
-		database.exeUpdate(str);
+		this.abreConexion();
+		try{							
+			String str = new String ("INSERT INTO autoreseditores VALUES(0");
+			if(ae.getNombre() != null)
+				str += ",\"" + ae.getNombre() + "\"";
+			else str+= ",null";
+			
+			if(ae.getApellidos()!=null)
+				str += ",\"" + ae.getApellidos() + "\"";
+			else str+= ",null";
+			
+			if(ae.getWeb()!=null)
+				str += ",\"" + ae.getWeb() + "\"";
+			else str+= ",null";
+			
+			str+=");";
+			database.exeUpdate(str);					
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
-	public void ejecutaString(String str1) throws BDException 
+	/**
+	 * Método para ejecutar la sentencia pasada por parámetro, ha de ser de tipo
+	 * modificadora de la base de datos.
+	 * @param sentence - Sentencia a ejecutar sobre la base de datos.
+	 * @throws BDException  - Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
+	public void ejecutaString(String sentence) throws BDException 
 	{
-		database.exeUpdate(str1);
+		this.abreConexion();
+		try{
+			database.exeUpdate(sentence);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
 	public String obtenerListaAutoresEditoresYProyectosParaBusquedas() throws FileNotFoundException, BDException

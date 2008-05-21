@@ -54,6 +54,36 @@ public class ModificadorUsuarios
 			theBaseDatos.exeUpdate(insercion);
 		}
 	}
+	
+	/**
+	 * Devuelve un vector con los proyectos a los que pertenece el usuario indicado.
+	 * @param usuario - Usuario sobre el que se desea realizar la consulta.
+	 * @return java.util.Vector - Conjunto de String con los nombres de los proyectos
+	 * buscados
+	 * @throws NonExistingElementException - En caso que el usuario no exista.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
+	public Vector <String> consultaProyectos(String usuario) 
+		throws NonExistingElementException,BDException{
+		String cons1,cons2;
+		Vector <Object[]> res1,res2;
+		Vector <String> result;
+		cons1 = new String ("SELECT nombre FROM usuario WHERE nombre = '" + usuario + "';");
+		cons2 = new String ("SELECT proyecto FROM participaen WHERE usuario = '" + usuario + "';");
+		result = new Vector<String>();
+		
+		res1 = theBaseDatos.exeQuery(cons1);
+		if (res1 == null || res1.size() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
+		
+		res2 = theBaseDatos.exeQuery(cons2);
+		for (int i = 0; res2!=null && i<res2.size();i++){
+			String str = (String)res2.get(i)[0];
+			result.add(str);
+		}
+		
+		return result;
+	}
 
 	/**
 	 * Añade un usuario a un proyecto, en caso de que ya estén asociados no ocurre nada.
