@@ -606,7 +606,7 @@ class ConsultorBaseDatos
 			if (password.equals(pass))
 				return tipo;
 			else
-				return "Contraseña errónea";
+				return null;
 		}
 	}
 }
