@@ -12,17 +12,13 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
-import controlador.exceptions.ConnectionException;
-import controlador.exceptions.ConnectionNullException;
-import controlador.exceptions.ExistingElementException;
-import controlador.exceptions.NonExistingElementException;
-import controlador.exceptions.PermisssionException;
-
 import parserFicherosBibtex.ConversorXML_Publication;
 import personas.AutorEditor;
 import personas.Usuario;
 import publicaciones.Publication;
 import temporal.UnimplementedException;
+import controlador.exceptions.ExistingElementException;
+import controlador.exceptions.NonExistingElementException;
 import database.BDException;
 import database.BaseDatos;
 
@@ -31,7 +27,6 @@ public class ConversorXML_BBDD
 	private DataBaseControler dbc;
 	
 	private int tipoPublicaciones; //Solo para consultas.
-	private String tipoPublicacion; //Solo para inserciones.
 	
 	private String referencia;
 	private String title;
@@ -39,7 +34,7 @@ public class ConversorXML_BBDD
 	private int yearFin;
 	private String month;
 	private String URL;
-	private String _abstract;
+	//private String _abstract;
 	private String note;
 	private Vector<String> key;
 	private String journal;
@@ -61,14 +56,13 @@ public class ConversorXML_BBDD
 	private String proyecto;
 	private Vector<AutorEditor> authors; 
 	private Vector<AutorEditor> editors;
-	private String user;
+	//private String user;
 	
 	public ConversorXML_BBDD()
 	{
 		dbc = new DataBaseControler(new BaseDatos());
 		
 		tipoPublicaciones = -1;
-		tipoPublicacion = null;
 		
 		referencia = null;
 		title = null;
@@ -76,7 +70,7 @@ public class ConversorXML_BBDD
 		yearFin = -1;
 		month = null;
 		URL = null;
-		_abstract = null;
+//		_abstract = null;
 		note = null;
 		key = null;
 		journal = null;
@@ -100,6 +94,7 @@ public class ConversorXML_BBDD
 		editors = null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String procesarConsulta(InputStream input)
 	{
 		try
@@ -110,7 +105,7 @@ public class ConversorXML_BBDD
 			tipoPublicaciones = Integer.parseInt(root.getAttributeValue("tipoPublicaciones"));
 			if (!root.getAttributeValue("referencia").equals(""))
 				referencia = root.getAttributeValue("referencia");
-			List<Element> campos = root.getChildren();
+			List<Element> campos = (List<Element>)root.getChildren();
 			
 			Iterator<Element> it = campos.iterator();
 			while (it.hasNext())
@@ -154,8 +149,8 @@ public class ConversorXML_BBDD
 			month = campo.getValue();
 		else if (nombreCampo.equals("URL"))
 			URL = campo.getValue();
-		else if (nombreCampo.equals("abstract"))
-			_abstract = campo.getValue();
+//		else if (nombreCampo.equals("abstract"))
+//			_abstract = campo.getValue();
 		else if (nombreCampo.equals("note"))
 			note = campo.getValue();
 		else if (nombreCampo.equals("key"))
@@ -200,6 +195,7 @@ public class ConversorXML_BBDD
 			editors = procesarAutoresEditores(campo);
 	}
 
+	@SuppressWarnings("unchecked")
 	private Vector<AutorEditor> procesarAutoresEditores(Element campo) 
 	{
 		List<Element> autoresEditores = campo.getChildren();
@@ -262,6 +258,7 @@ public class ConversorXML_BBDD
 	}
 	
 	//Solo sirve para realizar pruebas.
+	@SuppressWarnings("unused")
 	private void imprimir() 
 	{
 		if (tipoPublicaciones != -1)

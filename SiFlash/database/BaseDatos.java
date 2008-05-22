@@ -9,10 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import sun.security.x509.CertAndKeyGen;
-
-import controlador.exceptions.ConnectionException;
-
 
 /**
  * Clase que almacena los parámetros necesarios para conectarse a una base de 
@@ -216,6 +212,9 @@ public class BaseDatos
 		} 
    }
    
+   /**
+	 * Este método establece la conexión con la base de datos.
+	 */
    public Connection abreConexion() throws BDException 
    {
 	   Connection conn = null;	   
@@ -228,7 +227,6 @@ public class BaseDatos
 		   catch (InstantiationException e) {
 			   throw new BDException("Fallo al instanciar el driver de la conexion.");
 		   } catch (IllegalAccessException e) {
-			   // TODO Auto-generated catch block
 			   throw new BDException("Fallo al intentar acceder al driver de la conexión.");
 		   }
 		   conn = DriverManager.getConnection(URL(),login,password);
@@ -244,12 +242,14 @@ public class BaseDatos
 	   }
    }
 
+   /**
+	 * Este método cierra la conexion con la base de datos.
+	 */
 	public void cierraConexion(Connection conn) 
 	{
 		try {
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

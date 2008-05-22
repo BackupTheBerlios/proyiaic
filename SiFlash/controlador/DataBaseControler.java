@@ -986,18 +986,8 @@ public class DataBaseControler
 		return outputter.outputString (new Document(root));
 	}
 
+
 	
-	/**
-	 * Este método establece la conexión con la base de datos.
-	 */
-	private void abreConexion()
-	{
-
-	}
-
-	/**
-	 * Este método cierra la conexion con la base de datos.
-	 */
 	private void cierraConexion(){
 
 	}

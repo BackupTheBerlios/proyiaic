@@ -1,6 +1,5 @@
 package parserFicherosBibtex;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -33,6 +32,7 @@ public class ConversorXML_Publication
 {
 	public ConversorXML_Publication() {}
 
+	@SuppressWarnings("unchecked")
 	public Publication convertir(InputStream input)
 	{
 		try
@@ -85,6 +85,7 @@ public class ConversorXML_Publication
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	private LinkedList<AutorEditor> procesarAutorEditor(Element e) 
 	{
 		List<Element> autoresEditores = e.getChildren();
