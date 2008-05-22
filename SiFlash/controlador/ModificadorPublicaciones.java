@@ -34,7 +34,6 @@ public class ModificadorPublicaciones {
 	 * @param conn 
 	 * @throws BDException 
 	 * @throws ExistingElementException 
-	 * @throws ExistingElementException 
 	 */
 	public void insertaPublicación(Publication publicacion, Connection conn) throws BDException, ExistingElementException
 	{
@@ -48,14 +47,13 @@ public class ModificadorPublicaciones {
 	 * por los que contiene el objeto. Para ello se basa en el idDoc, y asigna uno nuevo.
 	 * @param publicacion - Nuevos datos de la publicación.
 	 * @param conn 
-	 * @return int - Nuevo idDoc asignado al documento.
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
 	 * la base de datos.
 	 * @throws ExistingElementException 
 	 */
-	public int modificaPublicación(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
+	public void modificaPublicación(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
 	{	
 		int id_doc = publicacion.getIdDoc();
 		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
@@ -63,7 +61,6 @@ public class ModificadorPublicaciones {
 		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);		
 		borraPublicación(publicacion.getIdDoc(), conn);
 		insertaPublicación(publicacion, conn);
-		return publicacion.getIdDoc();
 	}
 
 	/**

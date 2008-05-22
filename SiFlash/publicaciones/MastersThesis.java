@@ -326,7 +326,7 @@ public class MastersThesis extends Publication
 		return vector; 		
 	}
 
-	public static Vector<MastersThesis> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<MastersThesis> generaPub(Vector<Object[]> v)  {
 		//"SELECT DISTINCT MAS1.idDoc, MAS1.title, MAS1.type, MAS1.school, MAS1.address, MAS1.month, MAS1.year, MAS1.note, MAS1.abstract, MAS1.URL, MAS1.user, MAS1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM mastersthesis AS MAS1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAS1.idDoc AND EEX1.idDoc = MAS1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAS1.idDoc"
 		Vector <MastersThesis> vector = new Vector <MastersThesis>();
 		if (v == null) return vector;
@@ -418,7 +418,7 @@ public class MastersThesis extends Publication
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			Vector<String> proyectos,LinkedList<AutorEditor> author, 
-			String address, String school,	String type) throws UnimplementedException {
+			String address, String school,	String type) {
 		this.author = author;
 		this.address = address;
 		this.type = type;

@@ -506,7 +506,7 @@ public class InBook extends Publication
 		return vector; 
 	}
 
-	public static Vector<InBook> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<InBook> generaPub(Vector<Object[]> v) {
 		Vector <InBook> vector = new Vector <InBook>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -610,7 +610,7 @@ public class InBook extends Publication
 			Vector<String> proyectos,LinkedList<AutorEditor> author, String edition,
 			String type, LinkedList<AutorEditor> editor, String volume,
 			String number, String series, String pages, String address,
-			String chapter, String publisher) throws UnimplementedException {
+			String chapter, String publisher) {
 		this.author = author;
 		this.edition = edition;
 		this.type = type;

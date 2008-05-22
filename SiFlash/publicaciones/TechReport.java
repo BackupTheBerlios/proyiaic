@@ -349,7 +349,7 @@ public class TechReport extends Publication
 	}
 
 
-	public static Vector<TechReport> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<TechReport> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT TEC1.idDoc, TEC1.title, TEC1.type, TEC1.institution, TEC1.address, TEC1.month, TEC1.year, TEC1.note, TEC1.abstract, TEC1.URL, TEC1.user, TEC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave, TEC1.type FROM techreport AS TEC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = TEC1.idDoc AND EEX1.idDoc = TEC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = TEC1.idDoc"
 		Vector <TechReport> vector = new Vector <TechReport>();
 		if (v == null) return vector;
@@ -442,7 +442,7 @@ public class TechReport extends Publication
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			Vector<String> proyectos,LinkedList<AutorEditor> author, 
-			String address, String institution,	String type, String number) throws UnimplementedException {
+			String address, String institution,	String type, String number) {
 		this.author = author;
 		this.address = address;
 		this.type = type;

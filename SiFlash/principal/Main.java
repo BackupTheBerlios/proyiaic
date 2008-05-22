@@ -1,11 +1,8 @@
 package principal;
 
 import java.io.FileInputStream;
-import java.io.InputStream;
 
-import parserFicherosBibtex.ConversorXML_Publication;
-import publicaciones.Publication;
-import controlador.DataBaseControler;
+import controlador.ConversorXML_BBDD;
 
 public class Main 
 {
@@ -61,11 +58,11 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-			ConversorXML_Publication cp = new ConversorXML_Publication();
-			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\techreport.xml");
-			Publication p = cp.convertir(is);
-			DataBaseControler cb = new DataBaseControler();
-			cb.insertaDocumento(p);
+//			ConversorXML_Publication cp = new ConversorXML_Publication();
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\techreport.xml");
+//			Publication p = cp.convertir(is);
+//			DataBaseControler cb = new DataBaseControler();
+//			cb.insertaDocumento(p);
 			
 			//-------------------------------------------------------------------------
 			
@@ -79,8 +76,8 @@ public class Main
 			
 			//-------------------------------------------------------------------------
 			
-//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\ficherosDePrueba\\inserciones\\usuario.xml")));
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\ficherosDePrueba\\inserciones\\usuario.xml")));
 		
 			//-------------------------------------------------------------------------
 		

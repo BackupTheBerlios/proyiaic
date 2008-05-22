@@ -263,7 +263,7 @@ public class Unpublished extends Publication
 		return vector; 
 	}
 
-	public static Vector<Unpublished> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<Unpublished> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc"
 		//"SELECT DISTINCT UNP1.idDoc, UNP1.title, UNP1.month, UNP1.year, UNP1.note, UNP1.abstract, UNP1.URL, UNP1.user, UNP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM unpublished AS UNP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = UNP1.idDoc AND EEX1.idDoc = UNP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = UNP1.idDoc"
 		Vector <Unpublished> vector = new Vector <Unpublished>();
@@ -351,7 +351,7 @@ public class Unpublished extends Publication
 	public Unpublished(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
-			Vector<String> proyectos,LinkedList<AutorEditor> author) throws UnimplementedException {
+			Vector<String> proyectos,LinkedList<AutorEditor> author) {
 		this.author = author;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
 				user, proyectos);

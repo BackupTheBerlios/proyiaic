@@ -326,7 +326,7 @@ public class PhdThesis extends Publication
 		return vector; 
 	}
 
-	public static Vector<PhdThesis> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<PhdThesis> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT PHD1.idDoc, PHD1.title, PHD1.type, PHD1.school, PHD1.address, PHD1.month, PHD1.year, PHD1.note, PHD1.abstract, PHD1.URL, PHD1.user, PHD1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM phdthesis AS PHD1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = PHD1.idDoc AND EEX1.idDoc = PHD1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = PHD1.idDoc"
 		Vector <PhdThesis> vector = new Vector <PhdThesis>();
 		if (v == null) return vector;
@@ -418,7 +418,7 @@ public class PhdThesis extends Publication
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			Vector<String> proyectos,LinkedList<AutorEditor> author, 
-			String address, String school,	String type) throws UnimplementedException {
+			String address, String school,	String type) {
 		this.author = author;
 		this.address = address;
 		this.type = type;

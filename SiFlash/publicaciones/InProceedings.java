@@ -376,7 +376,7 @@ public class InProceedings extends Publication
 		return publisher;
 	}
 
-	public static Vector<InProceedings> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<InProceedings> generaPub(Vector<Object[]> v) {
 		Vector <InProceedings> vector = new Vector <InProceedings>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -475,7 +475,7 @@ public class InProceedings extends Publication
 			Vector<String> proyectos,LinkedList<AutorEditor> author, String booktitle,
 			String crossref, LinkedList<AutorEditor> editor, String volume,
 			String number, String series, String pages, String address,
-			String organization, String publisher) throws UnimplementedException {
+			String organization, String publisher) {
 		this.author = author;
 		this.booktitle = booktitle;
 		this.crossref = crossref;

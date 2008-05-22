@@ -62,7 +62,7 @@ public class Article extends Publication
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user, Vector<String> proyectos,
 			LinkedList<AutorEditor> author, String journal, String volume,
-			String number, String pages) throws UnimplementedException {
+			String number, String pages) {
 		this.author = author;
 		this.journal = journal;
 		this.volume = volume;
@@ -382,7 +382,7 @@ public class Article extends Publication
 		return vector; 
 	}	
 
-	public static Vector<Article> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<Article> generaPub(Vector<Object[]> v){
 		//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
 		Vector <Article> vector = new Vector <Article>();
 		if (v == null) return vector;

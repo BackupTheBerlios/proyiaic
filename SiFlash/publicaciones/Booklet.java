@@ -306,7 +306,7 @@ public class Booklet extends Publication
 		return vector; 
 	}
 
-	public static Vector<Booklet> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<Booklet> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT BOOK1.idDoc, BOOK1.title, BOOK1.howpublished, BOOK1.address, BOOK1.month, BOOK1.year, BOOK1.note, BOOK1.abstract, BOOK1.URL, BOOK1.user, BOOK1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM bookleet AS BOOK1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = BOOK1.idDoc AND EEX1.idDoc = BOOK1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = BOOK1.idDoc"
 		Vector <Booklet> vector = new Vector <Booklet>();
 		if (v == null) return vector;
@@ -397,7 +397,7 @@ public class Booklet extends Publication
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			Vector<String> proyectos,LinkedList<AutorEditor> author, 
-			String address, String howpublished) throws UnimplementedException {
+			String address, String howpublished) {
 		this.author = author;
 		this.address = address;
 		this.howPublished = howpublished;

@@ -80,7 +80,7 @@ public class Book extends Publication
 			String note, Vector<String> key, String user, Vector<String> proyectos,
 			LinkedList<AutorEditor> author, LinkedList<AutorEditor> editor,
 			String publisher, String volume, String number, String series,
-			String address, String edition) throws UnimplementedException {		
+			String address, String edition)  {		
 		this.author = author;
 		this.editor = editor;
 		this.publisher = publisher;
@@ -469,7 +469,7 @@ public class Book extends Publication
 		return vector; 
 	}
 
-	public static Vector<Book> generaPub(Vector<Object[]> v) throws UnimplementedException {		
+	public static Vector<Book> generaPub(Vector<Object[]> v) {		
 		Vector <Book> vector = new Vector <Book>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){

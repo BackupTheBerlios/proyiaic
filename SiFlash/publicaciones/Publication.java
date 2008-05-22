@@ -104,7 +104,7 @@ public abstract class Publication
 	 */
 	protected void SetAll(int idDoc, String referencia, String title, String year,
 			String month, String url, String _abstract, String note, Vector<String> keys,
-			String user, Vector<String> proyectos) throws UnimplementedException {
+			String user, Vector<String> proyectos) {
 		this.idDoc = idDoc;
 		this.referencia = referencia;
 		this.title = title;

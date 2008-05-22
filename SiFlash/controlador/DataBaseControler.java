@@ -118,7 +118,7 @@ public class DataBaseControler
 	 * analizando la clase concreta de BDException.
 	 * @throws UnimplementedException 
 	 */
-	public Vector<Publication> consultaDocumentos(String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws UnimplementedException, BDException 
+	public Vector<Publication> consultaDocumentos(String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws BDException 
 	{
 		Connection conn = database.abreConexion();
 		// Primero localizar a los autores y editores.
@@ -196,7 +196,7 @@ public class DataBaseControler
 			}
 			return vector;	
 		} finally {
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -217,7 +217,7 @@ public class DataBaseControler
 		try{
 			return modif_proyectos.consultaUsuarios(proyecto, conn);
 		}finally{
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -235,32 +235,37 @@ public class DataBaseControler
 		try{
 			return modif_user.consultaProyectos(usuario, conn);
 		}finally{
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 	}
 
 	/**
 	 * Inserta la publicacion pasada por parámetro en la base de datos.
 	 * @param publicacion - Publicacion a insertar.
-	 * @throws BDException 
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws ExistingElementException 
 	 * @throws ExistingElementException - Si ya existe el documento 
 	 */
-	public void insertaDocumento(Publication publicacion) throws BDException, ExistingElementException
+	public String insertaDocumento(Publication publicacion) throws BDException
 	{		
 		Connection conn = database.abreConexion();
 		try
 		{
 			modif_pub.insertaPublicación(publicacion, conn);
+			return "La publicación se ha insertado correctamente.";
+		}
+		catch (ExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Se ha producido un error: un autor/editor nuevo ya existe";
 		}
 		catch(BDException e)
 		{
 			ejecutaString("ROLLBACK;", conn);
-		}
+			return e.getMessage();
+		} 
 		finally{
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 
 	}
@@ -270,18 +275,39 @@ public class DataBaseControler
 	 * proyecto cuyo nombre se pasa por parámetro.
 	 * @param publicacion - Usuario a insertar.
 	 * @param proyecto - Proyecto con el que se encontrará relacionado. 
+	 * @throws BDException 
 	 * @throws NonExistingElementException - Si el proyecto al que se desea asociar no existe.
 	 * @throws ExistingElementException - Si el Usuario ya existe.
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public void insertaUsuario(Usuario usuario, String proyecto) throws ExistingElementException, BDException, NonExistingElementException
+	public String insertaUsuario(Usuario usuario, String proyecto) throws BDException
 	{
 		Connection conn = database.abreConexion();
-		try {
+		try 
+		{
+			ejecutaString("BEGIN;", conn);
 			modif_user.creaUsuario(usuario, proyecto, conn);
-		}finally{
-			this.cierraConexion();
+			ejecutaString("COMMIT;", conn);
+			return "El nuevo usuario ha sido creado con éxito.";
+		} 
+		catch (BDException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return e.getMessage();
+		} 
+		catch (ExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Error al crear el nuevo usuario: el nick indicado ya está dado de alta.";
+		} 
+		catch (NonExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Error al crear el nuevo usuario: el proyecto indicado no existe.";
+		}
+		finally{
+			database.cierraConexion(conn);
 		}
 
 	}
@@ -292,19 +318,40 @@ public class DataBaseControler
 	 * por los que contiene el objeto. Para ello se basa en el idDoc, y asigna uno nuevo.
 	 * <br> <b> Es muy importante tener en cuenta que asigna un nuevo idDoc </b>
 	 * @param publicacion - Nuevos datos de la publicación.
-	 * @return int - Nuevo idDoc asignado al documento.
+	 * @return Un String indicando el resultado de la modificación.
+	 * @throws BDException 
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
 	 * la base de datos. 
 	 */
-	public int modificaDocumento(Publication publicacion) throws NonExistingElementException, BDException, ExistingElementException 
+	public String modificaDocumento(Publication publicacion) throws BDException
 	{
 		Connection conn = database.abreConexion();
-		try{
-			return modif_pub.modificaPublicación(publicacion, conn);
-		}finally{
-			this.cierraConexion();
+		try
+		{
+			ejecutaString("BEGIN;", conn);
+			modif_pub.modificaPublicación(publicacion, conn);
+			ejecutaString("COMMIT;", conn);
+			return "La modificación del documento se ha realizado correctamente.";
+		} 
+		catch (BDException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return e.getMessage();
+		} 
+		catch (NonExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Error al realizar la modificación: el documento especificado no existe.";
+		} 
+		catch (ExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Error al realizar la modificación."; //No debería darse nunca!!!
+		}
+		finally{
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -314,17 +361,34 @@ public class DataBaseControler
 	 *  @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
 	 *  @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
 	 *  @param urlNueva Nueva - dirección Web del autor que se quiere almacenar en la base de datos.
+	 * @throws BDException 
 	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos. 
 	 */
-	public void modificaAutor(int id_autor, String nombre, String apellidos, String web) throws NonExistingElementException, BDException 
+	public String modificaAutor(int id_autor, String nombre, String apellidos, String web) throws BDException
 	{
 		Connection conn = database.abreConexion();
-		try{
+		try
+		{
+			ejecutaString("BEGIN;", conn);
 			modif_autores.modificaAutor(id_autor, nombre, apellidos, web, conn);
-		}finally{
-			this.cierraConexion();
+			ejecutaString("COMMIT;", conn);
+			return "La modificación del autor/editor se ha realizado correctamente.";
+		}
+		catch (BDException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return e.getMessage();
+		}
+		catch (NonExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Error al realizar la modificación: el autor/editor especificado no existe.";
+		}
+		finally
+		{
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -337,15 +401,30 @@ public class DataBaseControler
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - En caso que el documento no exista.
 	 */
-	public void eliminaDocumento(String idDoc) throws NonExistingElementException, UnimplementedException, BDException 
+	public String eliminaDocumento(String idDoc) throws BDException
 	{
 		Connection conn = database.abreConexion();
 		try
 		{
 			int id_doc = Integer.parseInt(idDoc);
+			ejecutaString("BEGIN;", conn);
 			modif_pub.borraPublicación(id_doc, conn);
-		}finally{
-			this.cierraConexion();
+			ejecutaString("COMMIT;", conn);
+			return "La eliminación del documento se ha realizado correctamente.";
+		}
+		catch (BDException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return e.getMessage();
+		}
+		catch (NonExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Error al realizar la eliminación: el documento especificado no existe.";
+		}
+		finally
+		{
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -364,7 +443,7 @@ public class DataBaseControler
 		try {
 			modif_user.asociaProyecto(usuario, proyecto, conn);
 		} 	finally {
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -384,7 +463,7 @@ public class DataBaseControler
 		try {
 			modif_user.desasociaProyecto(usuario, proyecto, conn);
 		} 	finally {
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}		
 	}
 
@@ -404,7 +483,7 @@ public class DataBaseControler
 		try {
 			modif_pub.asociaPublicacion(documento, proyecto, conn);
 		} 	finally {
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}			
 	}
 	
@@ -423,7 +502,7 @@ public class DataBaseControler
 		try {
 			modif_pub.desasociaPublicacion(documento, proyecto, conn);
 		} 	finally {
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}			
 	}
 
@@ -447,7 +526,7 @@ public class DataBaseControler
 		try{
 			modif_user.eliminaUsuario(usuario, nuevoUserPublicaciones, conn);
 		}finally{
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 
 	}
@@ -459,7 +538,7 @@ public class DataBaseControler
 		try{
 			return consultor.getTipoUser(nombre, password, conn);
 		}finally{
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -561,6 +640,7 @@ public class DataBaseControler
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws ExistingElementException 
+	 * @throws ExistingElementException 
 	 * @throws ExistingElementException - Si un autorEditor con los 3 campos iguales 
 	 * ya se encuentra en la base de datos.
 	 */
@@ -605,7 +685,7 @@ public class DataBaseControler
 			database.exeUpdate(sentence, conn);
 		}finally{
 			if (cerrarDespues)
-				this.cierraConexion();
+				database.cierraConexion(conn);
 		}
 	}
 
@@ -986,12 +1066,6 @@ public class DataBaseControler
 		return outputter.outputString (new Document(root));
 	}
 
-
-	
-	private void cierraConexion(){
-
-	}
-
 	public void insertaProyecto(String proyecto, String jefe) throws ExistingElementException, BDException 
 	{
 		Connection conn = database.abreConexion();
@@ -1004,7 +1078,7 @@ public class DataBaseControler
 			ejecutaString("ROLLBACK;", conn);
 		}
 		finally{
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 	}
 

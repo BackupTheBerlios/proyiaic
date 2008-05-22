@@ -35,9 +35,10 @@ public class ModificadorAutores
 	 * @param web - Dirección de la página web del autor o editor.
 	 * @param conn 
 	 * @throws database.BDException
+	 * @throws ExistingElementException 
 	 * @roseuid 47C5A3B1036B
 	 */
-	public void insertaAutorEditor(String nombre, String apellidos, String web, Connection conn) throws ExistingElementException,BDException 
+	public void insertaAutorEditor(String nombre, String apellidos, String web, Connection conn) throws BDException, ExistingElementException 
 	{
 		int idAut = consultaIdAutor(nombre, apellidos, conn);		
 		if (idAut > 0) throw new ExistingElementException(ExistenceException.AUTOR);

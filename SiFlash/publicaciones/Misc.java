@@ -284,7 +284,7 @@ public class Misc extends Publication
 		return vector; 
 	}
 
-	public static Vector<Misc> generaPub(Vector<Object[]> v) throws UnimplementedException {
+	public static Vector<Misc> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT MISC1.idDoc, MISC1.title, MISC1.howpublished, MISC1.month, MISC1.year, MISC1.note, MISC1.abstract, MISC1.URL, MISC1.user, MISC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM misc AS MISC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MISC1.idDoc AND EEX1.idDoc = MISC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MISC1.idDoc"
 		Vector <Misc> vector = new Vector <Misc>();
 		if (v == null) return vector;
@@ -373,7 +373,7 @@ public class Misc extends Publication
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			Vector<String> proyectos,LinkedList<AutorEditor> author, 
-			String howpublished) throws UnimplementedException {
+			String howpublished) {
 		this.author = author;
 		this.howPublished = howpublished;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
