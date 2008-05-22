@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import sun.security.x509.CertAndKeyGen;
+
 import controlador.exceptions.ConnectionException;
 
 
@@ -94,39 +96,20 @@ public class BaseDatos
     * Método para probar si se puede conectar correctamente a la base de datos.
     * @return boolean que indica si se ha podido conectar con la base de datos en 
     * cuestión.
+ * @throws BDException 
     * @roseuid 47C496CA0119
     */
-   public boolean testConn() 
+   public boolean testConn() throws BDException 
    {
-		Connection conn = null;
-		try
-		{	   
-			try {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			} catch (InstantiationException e) {
-				return false;
-			} catch (IllegalAccessException e) {
-				return false;
-			}
+		Connection conn = abreConexion();
 			
-			conn = DriverManager.getConnection(URL(),login,password);
-			
-			if (conn != null)
-			{
-				System.out.println("Conexión a base de datos "+URL()+" ... Ok");
-				conn.close();
-				return true;
-			}
-		}
-		catch(SQLException ex)
+		if (conn != null)
 		{
-			return false;
+			System.out.println("Conexión a base de datos "+URL()+" ... Ok");
+			cierraConexion(conn);
+			return true;
 		}
-		catch(ClassNotFoundException ex)
-		{
-			return false;
-		}
-		return false;   
+		return false;
    }
    
    /**
@@ -136,25 +119,13 @@ public class BaseDatos
     * @throws BDException 
     * @roseuid 47C496EF007D
     */
-   public Vector<Object[]> exeQuery(String query) throws BDException 
+   public Vector<Object[]> exeQuery(String query, Connection conn) throws BDException 
    {
-	   Connection conn = null;
 		try
 		{
-			try {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			} catch (InstantiationException e) {
-				throw new BDException("Fallo al instanciar el driver de la conexion.");
-			} catch (IllegalAccessException e) {
-				throw new BDException("Fallo al intentar acceder al driver de la conexión.");
-			}
-			try{
-				conn = DriverManager.getConnection(URL(),login,password);
-			} catch (Exception e){
-				throw new ConnectionException();
-			}
-			
-			
+			boolean conexionLocal = conn == null;
+			if (conexionLocal)
+				conn = abreConexion();
 			
 			if (conn != null)
 			{
@@ -171,7 +142,8 @@ public class BaseDatos
 				}
 				res.close();
 				stmt.close();
-				conn.close();	
+				if (conexionLocal)
+					cierraConexion(conn);
 				return vector;
 			}
 		}
@@ -179,35 +151,24 @@ public class BaseDatos
 		{
 			throw new BDException("Fallo al ejecutar la consulta en la base de datos: " + ex.getMessage());
 		}
-		catch(ClassNotFoundException ex)
-		{
-			throw new BDException("Fallo al buscar el driver. ");
-		}
 		return null;					
    }
    
    /**
     * Método para realizar una modificación sobre la base de datos.
+ * @param conn 
     * @param sentence - String que la operación a realizar.
     * @throws database.BDException Si se produce un error al realizar la modificación.
     * @roseuid 47C4988C006D
     */
-   public void exeUpdates(Vector<String> sentences) throws BDException 
+   public void exeUpdates(Vector<String> sentences, Connection conn) throws BDException 
    {
-	   Connection conn = null;
+	   //Connection conn = null;
 		try
 		{
-			try {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			} catch (InstantiationException e) {
-				throw new BDException("Fallo al instanciar el driver de la conexion.");
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				throw new BDException("Fallo al intentar acceder al driver de la conexión.");
-			}
-			conn = DriverManager.getConnection(URL(),login,password);
-			
-			
+			boolean conexionLocal = conn == null;
+			if (conexionLocal)
+				conn = abreConexion();
 			if (conn != null)
 			{
 				Statement stmt = conn.createStatement();
@@ -216,17 +177,14 @@ public class BaseDatos
 						stmt.executeUpdate(sentences.get(i));
 				}				
 				stmt.close();
-				conn.close();
+				if (conexionLocal)
+					conn.close();
 			}
 		}
 		catch(SQLException ex)
 		{
 			throw new BDException("Fallo al ejecutar la modificiación en la base de datos: " + ex.getMessage());
-		}
-		catch(ClassNotFoundException ex)
-		{
-			throw new BDException("Fallo al buscar el driver. ");
-		}	    
+		}   
    }   
    
    /**
@@ -235,37 +193,64 @@ public class BaseDatos
     * @throws database.BDException Si se produce un error al realizar la modificación.
     * @roseuid 47C4988C006D
     */
-   public void exeUpdate(String sentence) throws BDException 
+   public void exeUpdate(String sentence, Connection conn) throws BDException 
    {
-	   Connection conn = null;
-		try
-		{
-			try {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-			} catch (InstantiationException e) {
-				throw new BDException("Fallo al instanciar el driver de la conexion.");
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				throw new BDException("Fallo al intentar acceder al driver de la conexión.");
-			}
-			conn = DriverManager.getConnection(URL(),login,password);
-			
+	   try
+	   {
+		   boolean conexionLocal = conn == null;
+		   if (conexionLocal)
+			   conn = abreConexion();
 			
 			if (conn != null)
 			{
 				Statement stmt = conn.createStatement();		
 				stmt.executeUpdate(sentence);
 				stmt.close();
-				conn.close();
+				if (conexionLocal)
+					conn.close();
 			}
 		}
 		catch(SQLException ex)
 		{
 			throw new BDException("Fallo al ejecutar la modificiación en la base de datos."  + ex.getMessage());
-		}
-		catch(ClassNotFoundException ex)
-		{
-			throw new BDException("Fallo al buscar el driver. ");
-		}	    
+		} 
    }
+   
+   public Connection abreConexion() throws BDException 
+   {
+	   Connection conn = null;	   
+	   try 
+	   {
+		   try
+		   {
+			   Class.forName("com.mysql.jdbc.Driver").newInstance();
+		   }
+		   catch (InstantiationException e) {
+			   throw new BDException("Fallo al instanciar el driver de la conexion.");
+		   } catch (IllegalAccessException e) {
+			   // TODO Auto-generated catch block
+			   throw new BDException("Fallo al intentar acceder al driver de la conexión.");
+		   }
+		   conn = DriverManager.getConnection(URL(),login,password);
+		   return conn;
+	   }
+	   catch(SQLException ex)
+	   {
+		   throw new BDException("Fallo al ejecutar la modificiación en la base de datos."  + ex.getMessage());
+	   }
+	   catch(ClassNotFoundException ex)
+	   {
+		   throw new BDException("Fallo al buscar el driver. ");
+	   }
+   }
+
+	public void cierraConexion(Connection conn) 
+	{
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

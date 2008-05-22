@@ -2,9 +2,9 @@
 
 package controlador;
 
+import java.sql.Connection;
 import java.util.Vector;
 
-import personas.AutorEditor;
 import temporal.UnimplementedException;
 import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
@@ -30,29 +30,39 @@ public class ModificadorAutores
 	 * Inserta el a utor cuyos datos se le pasan por parámetro en la base de datos.
 	 * 
 	 * Excepción si ya existe o no hay permisos.
-	 * @param nombre - Nombre del autor.
-	 * @param apellidos - Apellidos del autor.
-	 * @param web - Dirección de la página web del autor.
+	 * @param nombre - Nombre del autor o editor.
+	 * @param apellidos - Apellidos del autor o editor.
+	 * @param web - Dirección de la página web del autor o editor.
+	 * @param conn 
 	 * @throws database.BDException
 	 * @roseuid 47C5A3B1036B
 	 */
-	public void insertaAutor(String nombre, String apellidos, String web) throws ExistingElementException,BDException 
+	public void insertaAutorEditor(String nombre, String apellidos, String web, Connection conn) throws ExistingElementException,BDException 
 	{
-		int idAut = consultaIdAutor(nombre, apellidos);		
+		int idAut = consultaIdAutor(nombre, apellidos, conn);		
 		if (idAut > 0) throw new ExistingElementException(ExistenceException.AUTOR);
 		
-		String insercion = "INSERT INTO Autores VALUES (0,'" + nombre + "','" + apellidos + "','" + web + "');";
-		theBaseDatos.exeUpdate(insercion);
+		String insercion = "INSERT INTO autoreseditores VALUES (0,'" + nombre + "','" + apellidos + "','" + web + "');";
+		theBaseDatos.exeUpdate(insercion, conn);
 	}
-
-	private int consultaIdAutor(String nombre, String apellidos, String web) throws BDException {
+	
+	/**
+	 * 
+	 * @param nombre
+	 * @param apellidos
+	 * @param conn 
+	 * @return
+	 * @throws BDException
+	 */
+	protected int consultaIdAutor(String nombre, String apellidos, Connection conn) throws BDException 
+	{		
 		String consulta = "SELECT idAut FROM AutoresEditores WHERE ";
-		consulta += "nombre = '" + nombre + "' AND ";
-		consulta += "apellidos = '" + apellidos + "' AND ";
-		consulta += "web = '" + web + "';";
+		if (nombre != null) consulta += "nombre = '" + nombre + "' AND ";
+		if (apellidos != null) consulta += "apellidos = '" + apellidos + "' AND ";
+		consulta += "TRUE;";
 		
 		
-		Vector<Object[]> resultado = theBaseDatos.exeQuery(consulta);
+		Vector<Object[]> resultado = theBaseDatos.exeQuery(consulta, conn);
 		if (resultado.size() != 0)
 		{
 			Object[] array = resultado.get(0);
@@ -62,6 +72,7 @@ public class ModificadorAutores
 		else
 			return 0;
 	}
+
 	
 	/**
 	 * Borra el autor cuyos datos se le pasan por parámetro de la base de datos, 
@@ -74,15 +85,15 @@ public class ModificadorAutores
 	 * @throws UnimplementedException 
 	 * @roseuid 47C5A4F702CE
 	 */
-	public void borraAutor(String nombre, String apellidos) throws NonExistingElementException,BDException  
+	public void borraAutor(String nombre, String apellidos, Connection conn) throws NonExistingElementException,BDException  
 	{			
 		Vector <String> borrados = new Vector<String>();
-		int idAut = consultaIdAutor(nombre, apellidos);
+		int idAut = consultaIdAutor(nombre, apellidos, conn);
 		if (idAut == 0) throw new NonExistingElementException(ExistenceException.AUTOR);
 		
 		borrados.add(new String ("DELETE FROM escrito_editado_por WHERE idPer = " + idAut + ";"));
 		borrados.add(new String ("DELETE FROM autoreseditores WHERE idAut = " + idAut + ";"));
-		theBaseDatos.exeUpdates(borrados);   
+		theBaseDatos.exeUpdates(borrados, conn);   
 	}
 
 	/** Modifica los datos del autor cuyo nombre y apellidos se han pasado como parámetro, sustituyendolos por
@@ -95,14 +106,14 @@ public class ModificadorAutores
 	 * @throws BDException 
 	 * @roseuid 47C5A5EA034B
 	 */
-	public void modificaAutor(String nombreActual, String apellidosActual, String nombreNuevo, String apellidosNuevos, String urlNueva) throws NonExistingElementException,BDException 
+	public void modificaAutor(String nombreActual, String apellidosActual, String nombreNuevo, String apellidosNuevos, String urlNueva, Connection conn) throws NonExistingElementException,BDException 
 	{
-		int idAut = consultaIdAutor(nombreActual, apellidosActual);
+		int idAut = consultaIdAutor(nombreActual, apellidosActual, conn);
 		if (idAut == 0) throw new NonExistingElementException(ExistenceException.AUTOR);
 		
 		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "', url = '" + urlNueva +
 		"' WHERE idAut = "+ idAut + ";") ;
-		theBaseDatos.exeUpdate(consulta);    
+		theBaseDatos.exeUpdate(consulta, conn);    
 	}
 	
 	/** Modifica los datos del autor cuyo idAutor se ha pasado como parámetro, sustituyendolos por
@@ -115,41 +126,17 @@ public class ModificadorAutores
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos.
 	 */
-	public void modificaAutor(int idAutor, String nombreNuevo, String apellidosNuevos, String urlNueva) throws NonExistingElementException,BDException 
+	public void modificaAutor(int idAutor, String nombreNuevo, String apellidosNuevos, String urlNueva, Connection conn) throws NonExistingElementException,BDException 
 	{		
 		String cons1 = new String ("SELECT COUNT(*) FROM autoreseditores WHERE idAut = " + idAutor +";");
-		Vector <Object[]> res1 = theBaseDatos.exeQuery(cons1);
+		Vector <Object[]> res1 = theBaseDatos.exeQuery(cons1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue()!=1) throw new NonExistingElementException(ExistenceException.AUTOR);
 		
 		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "', url = '" + urlNueva +
 		"' WHERE idAut = "+ idAutor + ";") ;
-		theBaseDatos.exeUpdate(consulta);    
+		theBaseDatos.exeUpdate(consulta, conn);    
 	}	
 	
-	/**
-	 * 
-	 * @param nombre
-	 * @param apellidos
-	 * @return
-	 * @throws BDException
-	 */
-	protected int consultaIdAutor(String nombre, String apellidos) throws BDException 
-	{		
-		String consulta = "SELECT idAut FROM AutoresEditores WHERE ";
-		if (nombre != null) consulta += "nombre = '" + nombre + "' AND ";
-		if (apellidos != null) consulta += "apellidos = '" + apellidos + "' AND ";
-		consulta += "TRUE;";
-		
-		
-		Vector<Object[]> resultado = theBaseDatos.exeQuery(consulta);
-		if (resultado.size() != 0)
-		{
-			Object[] array = resultado.get(0);
-			int idAut = ((Long) array[0]).intValue();
-			return idAut;
-		}
-		else
-			return 0;
-	}		 
+			 
 
 }

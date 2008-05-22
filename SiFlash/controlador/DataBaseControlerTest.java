@@ -11,6 +11,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import controlador.exceptions.ExistingElementException;
+
 import personas.AutorEditor;
 import publicaciones.*;
 import temporal.UnimplementedException;
@@ -82,7 +84,7 @@ public class DataBaseControlerTest {
 	}
 
 	@Test
-	public void testInsertaDocumento() {		
+	public void testInsertaDocumento() throws ExistingElementException {		
 		AutorEditor at1,at3,ed8;
 		LinkedList<AutorEditor> autores,editores;
 		Vector<String> proyectos = new Vector<String>();

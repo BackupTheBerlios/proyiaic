@@ -2,6 +2,7 @@
 
 package publicaciones;
 
+import java.sql.Connection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -9,13 +10,11 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
-import controlador.DataBaseControler;
-
-import database.BDException;
-import database.BaseDatos;
-
 import personas.AutorEditor;
 import temporal.UnimplementedException;
+import controlador.DataBaseControler;
+import controlador.exceptions.ExistingElementException;
+import database.BDException;
 
 /**
  * Clase abstracta que agrupa los dos atributos comunes a todos las "publicaciones" 
@@ -562,8 +561,8 @@ public abstract class Publication
 	}
 
 
-	public Vector<String> generaInserciones() throws BDException {
-		String str1;
+	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException
+	{
 		Vector <String> vector = new Vector<String>();
 		
 		if (proyectos != null)
@@ -595,8 +594,8 @@ public abstract class Publication
 					str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
 					vector.add(str2);
 					vector.add(str1);*/
-					if (!dbc.consultaExistenciaKey(k))
-						dbc.ejecutaString("INSERT INTO claves VALUES('" + k + "');");
+					if (!dbc.consultaExistenciaKey(k, conn))
+						dbc.ejecutaString("INSERT INTO claves VALUES('" + k + "');", conn);
 					vector.add("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
 				}			
 			}
@@ -606,6 +605,7 @@ public abstract class Publication
 			vector.add(str1);
 			key = new LinkedList<String>();
 		}*/
+		vector.add("COMMIT;");
 		
 		return vector;
 	}

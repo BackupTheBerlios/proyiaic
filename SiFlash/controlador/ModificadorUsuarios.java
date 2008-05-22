@@ -2,6 +2,7 @@
 
 package controlador;
 
+import java.sql.Connection;
 import java.util.Vector;
 
 import controlador.exceptions.ExistenceException;
@@ -33,25 +34,25 @@ public class ModificadorUsuarios
 	 * @throws NonExistingElementException 
 	 * @roseuid 47C5913A0271
 	 */
-	public void creaUsuario(Usuario usuario, String proyecto) throws BDException, ExistingElementException, NonExistingElementException 
+	public void creaUsuario(Usuario usuario, String proyecto, Connection conn) throws BDException, ExistingElementException, NonExistingElementException 
 	{
 		String consulta, insercion;
 		consulta = new String ("SELECT * FROM usuarios WHERE nombre = '" + usuario.getNombre() +"';");
 		insercion = new String ("INSERT INTO usuarios VALUES ('" + usuario.getNombre() +"','"
 				+ usuario.getPassword() +"','" + usuario.getTipo()+"');");
 		
-		Vector<Object []> res = theBaseDatos.exeQuery(consulta);
+		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
 		if (res != null && res.size() > 0) throw new ExistingElementException(ExistenceException.USUARIO);
-		theBaseDatos.exeUpdate(insercion);
+		theBaseDatos.exeUpdate(insercion, conn);
 		
 		if (proyecto != null)
 		{
 			consulta = new String ("SELECT * FROM proyectos WHERE nombre = '" + proyecto +"';");
 			insercion = new String("INSERT INTO participaen VALUES('" + usuario.getNombre() + "', '" + proyecto + "');");
 			
-			res = theBaseDatos.exeQuery(consulta);
+			res = theBaseDatos.exeQuery(consulta, conn);
 			if (res == null || res.size() == 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
-			theBaseDatos.exeUpdate(insercion);
+			theBaseDatos.exeUpdate(insercion, conn);
 		}
 	}
 	
@@ -64,7 +65,7 @@ public class ModificadorUsuarios
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public Vector <String> consultaProyectos(String usuario) 
+	public Vector <String> consultaProyectos(String usuario, Connection conn) 
 		throws NonExistingElementException,BDException{
 		String cons1,cons2;
 		Vector <Object[]> res1,res2;
@@ -73,10 +74,10 @@ public class ModificadorUsuarios
 		cons2 = new String ("SELECT proyecto FROM participaen WHERE usuario = '" + usuario + "';");
 		result = new Vector<String>();
 		
-		res1 = theBaseDatos.exeQuery(cons1);
+		res1 = theBaseDatos.exeQuery(cons1, conn);
 		if (res1 == null || res1.size() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
 		
-		res2 = theBaseDatos.exeQuery(cons2);
+		res2 = theBaseDatos.exeQuery(cons2, conn);
 		for (int i = 0; res2!=null && i<res2.size();i++){
 			String str = (String)res2.get(i)[0];
 			result.add(str);
@@ -92,7 +93,7 @@ public class ModificadorUsuarios
 	 * @throws database.BDException
 	 * @roseuid 47C5979A01F4
 	 */
-	public void asociaProyecto(String usuario, String proyecto) throws NonExistingElementException,BDException 
+	public void asociaProyecto(String usuario, String proyecto, Connection conn) throws NonExistingElementException,BDException 
 	{
 		String consulta1,consulta2,insercion;
 		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre = '" + usuario +"';");
@@ -101,13 +102,13 @@ public class ModificadorUsuarios
 				"') ON DUPLICATE KEY UPDATE usuario=usuario;");
 		
 		Vector<Object []> res1,res2;
-		res1 = theBaseDatos.exeQuery(consulta1);
+		res1 = theBaseDatos.exeQuery(consulta1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
 		
-		res2 = theBaseDatos.exeQuery(consulta2);
+		res2 = theBaseDatos.exeQuery(consulta2, conn);
 		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		
-		theBaseDatos.exeUpdate(insercion);
+		theBaseDatos.exeUpdate(insercion, conn);
 	}
 
 	
@@ -118,7 +119,7 @@ public class ModificadorUsuarios
 	 * @throws database.BDException
 	 * @roseuid 47C599770186
 	 */
-	public void desasociaProyecto(String usuario, String proyecto) throws NonExistingElementException,BDException 
+	public void desasociaProyecto(String usuario, String proyecto, Connection conn) throws NonExistingElementException,BDException 
 	{
 		String consulta1,consulta2,consulta3,borrado;
 		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre = '" + usuario +"';");
@@ -129,16 +130,16 @@ public class ModificadorUsuarios
 				" AND proyecto = '" +  proyecto +"';");
 		
 		Vector<Object []> res1,res2,res3;
-		res1 = theBaseDatos.exeQuery(consulta1);
+		res1 = theBaseDatos.exeQuery(consulta1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
 		
-		res2 = theBaseDatos.exeQuery(consulta2);
+		res2 = theBaseDatos.exeQuery(consulta2, conn);
 		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		
-		res3 = theBaseDatos.exeQuery(consulta3);
+		res3 = theBaseDatos.exeQuery(consulta3, conn);
 		if (res3 == null || ((Long)res3.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.RELACION);
 		
-		theBaseDatos.exeUpdate(borrado);
+		theBaseDatos.exeUpdate(borrado, conn);
 
 	}
 
@@ -151,7 +152,7 @@ public class ModificadorUsuarios
 	 * @throws database.BDException
 	 * @roseuid 47C599E803C8
 	 */
-	public void eliminaUsuario(String usuario, String nuevoUserPublicaciones) throws NonExistingElementException,BDException 
+	public void eliminaUsuario(String usuario, String nuevoUserPublicaciones, Connection conn) throws NonExistingElementException,BDException 
 	{
 		String consulta1, consulta2;
 		Vector<String> updates = new Vector <String>();
@@ -159,11 +160,11 @@ public class ModificadorUsuarios
 		consulta2 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre ='" + nuevoUserPublicaciones +"';");
 		
 		Vector<Object []> res1;
-		res1 = theBaseDatos.exeQuery(consulta1);
+		res1 = theBaseDatos.exeQuery(consulta1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
 		
 		Vector<Object []> res2;
-		res2 = theBaseDatos.exeQuery(consulta2);
+		res2 = theBaseDatos.exeQuery(consulta2, conn);
 		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
 		
 		Vector<String> updatesPublicaciones = updatesPublicaciones(usuario, nuevoUserPublicaciones);
@@ -171,7 +172,7 @@ public class ModificadorUsuarios
 		updates.add(new String ("DELETE FROM participaen WHERE usuario ='" + usuario +"';"));
 		updates.add(new String ("DELETE FROM usuarios WHERE nombre ='" + usuario +"';"));
 		
-		theBaseDatos.exeUpdates(updates);
+		theBaseDatos.exeUpdates(updates, conn);
 	}
 
 	private Vector<String> updatesPublicaciones(String usuario, String nuevoUserPublicaciones)

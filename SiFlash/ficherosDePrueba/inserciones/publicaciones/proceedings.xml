@@ -4,14 +4,14 @@
 	<month>El mes</month>
 	<editors>
 		<editor>
-			<nombre>NombreEditor1</nombre>
-			<apellidos>ApellidosEditor1</apellidos>
-			<web>Web Editor 1</web>
+			<nombre>NombreEditor6</nombre>
+			<apellidos>ApellidosEditor6</apellidos>
+			<web>Web Editor6</web>
 		</editor>
 		<editor>
-			<nombre>NombreEditor2</nombre>
-			<apellidos>ApellidosEditor2</apellidos>
-			<web>Web Editor 2</web>
+			<nombre>NombreEditor5</nombre>
+			<apellidos>ApellidosEditor5</apellidos>
+			<web>Web Editor5</web>
 		</editor>
 	</editors>
 	<booktitle>El booktitle</booktitle>
@@ -24,6 +24,7 @@
 	<url>El url</url>
 	<abstract>El abstract</abstract>
 	<note>El note</note>
-	<key>The key, Una clave, Mi clave</key>
+	<key>The key2, Una clave2, Mi clave2</key>
 	<user>user1</user>
+	<proyecto>Proyecto2</proyecto>
 </publication>

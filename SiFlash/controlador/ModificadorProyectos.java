@@ -2,6 +2,7 @@
 
 package controlador;
 
+import java.sql.Connection;
 import java.util.Vector;
 
 import controlador.exceptions.ExistenceException;
@@ -34,14 +35,14 @@ public class ModificadorProyectos
 	 * @throws database.BDException
 	 * @roseuid 47C5A0FC005D
 	 */
-	public void insertaProyecto(String nombre_proyecto, String nombre_administrador) throws ExistingElementException,BDException 
+	public void insertaProyecto(String nombre_proyecto, String nombre_administrador, Connection conn) throws ExistingElementException,BDException 
 	{
 		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + nombre_proyecto + "';";
-		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
+		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1, conn);
 		if (res.size() > 0) throw new ExistingElementException(ExistenceException.PROYECTO);
 		String consulta2 = "INSERT INTO proyectos VALUES ('" +nombre_proyecto + "','";
 		consulta2+= nombre_administrador + "');";
-		theBaseDatos.exeUpdate(consulta2);
+		theBaseDatos.exeUpdate(consulta2, conn);
 	}
 
 	/**
@@ -52,14 +53,14 @@ public class ModificadorProyectos
 	 * @return nombre del antiguo administrador.@throws database.BDException
 	 * @roseuid 47C5A19C03D8
 	 */
-	public String setAdmin(String nombre_proyecto, String nuevo_administrador) throws NonExistingElementException,BDException 
+	public String setAdmin(String nombre_proyecto, String nuevo_administrador, Connection conn) throws NonExistingElementException,BDException 
 	{
 		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + nombre_proyecto + "';";
-		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
+		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1, conn);
 		if (res == null || res.size() <= 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		String consulta2 = "UPDATE proyectos SET nombre = " + nombre_proyecto + ", jefe = " + nuevo_administrador +
 		 "WHERE nombre = " + nombre_proyecto + ";" ;
-		theBaseDatos.exeUpdate(consulta2);
+		theBaseDatos.exeUpdate(consulta2, conn);
 		return (String)res.firstElement()[0];
 	}
 
@@ -69,13 +70,13 @@ public class ModificadorProyectos
 	 * @throws BDException 
 	 * @roseuid 47C5A25B0290
 	 */
-	public void borraProyecto(String proyecto) throws NonExistingElementException,BDException 
+	public void borraProyecto(String proyecto, Connection conn) throws NonExistingElementException,BDException 
 	{
 		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + proyecto + "';";
-		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1);
+		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1, conn);
 		if (res == null || res.size() <= 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		String consulta2 = "DELETE FROM proyectos WHERE nombre = '" + proyecto + "';";
-		theBaseDatos.exeUpdate(consulta2);
+		theBaseDatos.exeUpdate(consulta2, conn);
 
 	}
 	
@@ -89,7 +90,7 @@ public class ModificadorProyectos
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public Vector <String> consultaUsuarios(String proyecto) 
+	public Vector <String> consultaUsuarios(String proyecto, Connection conn) 
 		throws NonExistingElementException,BDException{
 		String cons1,cons2;
 		Vector <Object[]> res1,res2;
@@ -98,10 +99,10 @@ public class ModificadorProyectos
 		cons2 = new String ("SELECT usuario FROM participaen WHERE proyecto = '" + proyecto + "';");
 		result = new Vector<String>();
 		
-		res1 = theBaseDatos.exeQuery(cons1);
+		res1 = theBaseDatos.exeQuery(cons1, conn);
 		if (res1 == null || res1.size() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		
-		res2 = theBaseDatos.exeQuery(cons2);
+		res2 = theBaseDatos.exeQuery(cons2, conn);
 		for (int i = 0; res2!=null && i<res2.size();i++){
 			String str = (String)res2.get(i)[0];
 			result.add(str);

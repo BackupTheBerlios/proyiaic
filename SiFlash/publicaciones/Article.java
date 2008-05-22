@@ -2,8 +2,7 @@
 
 package publicaciones;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.Connection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -16,6 +15,7 @@ import parserFicherosBibtex.CampoPublicacionAutorEditor;
 import personas.AutorEditor;
 import temporal.UnimplementedException;
 import controlador.DataBaseControler;
+import controlador.exceptions.ExistingElementException;
 import database.BDException;
 
 
@@ -294,7 +294,8 @@ public class Article extends Publication
 	}
 
 	@Override
-	public Vector<String> generaInserciones() throws BDException {
+	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException
+	{
 		idDoc = 0;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO article VALUES (");
@@ -351,8 +352,9 @@ public class Article extends Publication
 		str1+=");";
 
 		DataBaseControler dbc = new DataBaseControler();
-		dbc.ejecutaString(str1);
-		idDoc = dbc.consultaIdDoc();
+		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
+		dbc.ejecutaString(str1, conn);
+		idDoc = dbc.consultaIdDoc(conn);
 
 		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
 		vector.add(str1);		
@@ -363,11 +365,11 @@ public class Article extends Publication
 				int idAutor = author.get(i).getId();
 				if (idAutor == 0) //Hay que insertarlo (o así lo ha especificado el usuario)
 				{
-					idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+					idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos(), conn);
 					if (idAutor == 0)
 					{
-						dbc.insertaAutorEditor(author.get(i));
-						idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos());
+						dbc.insertaAutorEditor(author.get(i), conn);
+						idAutor = dbc.consultaIdAutor(author.get(i).getNombre(), author.get(i).getApellidos(), conn);
 					}
 				}
 				str = new String ("INSERT INTO escrito_editado_por VALUES(" + getIdDoc());
@@ -375,7 +377,7 @@ public class Article extends Publication
 				vector.add(str);
 			}
 
-		vector.addAll(super.generaInserciones());
+		vector.addAll(super.generaInserciones(conn));
 
 		return vector; 
 	}	

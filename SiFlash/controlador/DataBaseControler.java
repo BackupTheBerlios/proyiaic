@@ -1,8 +1,7 @@
 package controlador;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.sql.Connection;
 import java.util.Vector;
 
 import org.jdom.Document;
@@ -42,10 +41,8 @@ public class DataBaseControler
 	private ModificadorAutores modif_autores;
 	@SuppressWarnings("unused")
 	private ModificadorProyectos modif_proyectos;
-	@SuppressWarnings("unused")
-	private ModificadorPublicaciones modif_pub;
-	@SuppressWarnings("unused")
 	private ModificadorUsuarios modif_user;
+	private ModificadorPublicaciones modif_pub;
 
 	/**
 	 * Constructor por defecto de la clase.
@@ -123,11 +120,11 @@ public class DataBaseControler
 	 */
 	public Vector<Publication> consultaDocumentos(String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws UnimplementedException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		// Primero localizar a los autores y editores.
 		try{
-			Vector <AutorEditor> v_autores = consultor.buscaAutores(autores);
-			Vector <AutorEditor> v_editores = consultor.buscaAutores(editores);
+			Vector <AutorEditor> v_autores = consultor.buscaAutores(autores, conn);
+			Vector <AutorEditor> v_editores = consultor.buscaAutores(editores, conn);
 			Vector <Integer> v_authors= new Vector<Integer>();
 			Vector <Integer> v_editors= new Vector<Integer>();
 			for (int i = 0; i< v_autores.size();i++){
@@ -138,9 +135,9 @@ public class DataBaseControler
 				v_editors.add(new Integer (v_editores.get(i).getId()));
 			}
 
-			return consultor.getPublicaciones(proyecto, tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle, user);
+			return consultor.getPublicaciones(proyecto, tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle, user, conn);
 		}finally{
-			this.cierraConexion();
+			database.cierraConexion(conn);
 		}
 	}
 
@@ -157,7 +154,7 @@ public class DataBaseControler
 	 */
 	public Vector<AutorEditor> consultaAutores(String nombre, String apellido, String web, boolean total_o_parcial) throws UnimplementedException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try{
 			Vector<AutorEditor> vector = new Vector<AutorEditor>();
 			String consulta = new String("SELECT * FROM AutoresEditores WHERE ");
@@ -191,7 +188,7 @@ public class DataBaseControler
 			consulta+= cons + ";";
 
 
-			Vector<Object[]> resultado = database.exeQuery(consulta);
+			Vector<Object[]> resultado = database.exeQuery(consulta, conn);
 
 			for (int i=0; resultado != null && i<resultado.size();i++){
 				Object[] array = resultado.get(i);
@@ -216,9 +213,9 @@ public class DataBaseControler
 	public Vector<String> consultaUsuariosProyecto(String proyecto) 
 	throws NonExistingElementException,BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try{
-			return modif_proyectos.consultaUsuarios(proyecto);
+			return modif_proyectos.consultaUsuarios(proyecto, conn);
 		}finally{
 			this.cierraConexion();
 		}
@@ -234,9 +231,9 @@ public class DataBaseControler
 	 */
 	public Vector<String> consultaProyectosUsuario(String usuario) throws BDException,NonExistingElementException
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try{
-			return modif_user.consultaProyectos(usuario);
+			return modif_user.consultaProyectos(usuario, conn);
 		}finally{
 			this.cierraConexion();
 		}
@@ -245,16 +242,24 @@ public class DataBaseControler
 	/**
 	 * Inserta la publicacion pasada por parámetro en la base de datos.
 	 * @param publicacion - Publicacion a insertar.
+	 * @throws BDException 
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
+	 * @throws ExistingElementException 
 	 * @throws ExistingElementException - Si ya existe el documento 
 	 */
-	public void insertaDocumento(Publication publicacion) throws BDException
+	public void insertaDocumento(Publication publicacion) throws BDException, ExistingElementException
 	{		
-		this.abreConexion();
-		try{
-			modif_pub.insertaPublicación(publicacion);
-		}finally{
+		Connection conn = database.abreConexion();
+		try
+		{
+			modif_pub.insertaPublicación(publicacion, conn);
+		}
+		catch(BDException e)
+		{
+			ejecutaString("ROLLBACK;", conn);
+		}
+		finally{
 			this.cierraConexion();
 		}
 
@@ -272,9 +277,9 @@ public class DataBaseControler
 	 */
 	public void insertaUsuario(Usuario usuario, String proyecto) throws ExistingElementException, BDException, NonExistingElementException
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try {
-			modif_user.creaUsuario(usuario, proyecto);
+			modif_user.creaUsuario(usuario, proyecto, conn);
 		}finally{
 			this.cierraConexion();
 		}
@@ -295,9 +300,9 @@ public class DataBaseControler
 	 */
 	public int modificaDocumento(Publication publicacion) throws NonExistingElementException, BDException, ExistingElementException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try{
-			return modif_pub.modificaPublicación(publicacion);
+			return modif_pub.modificaPublicación(publicacion, conn);
 		}finally{
 			this.cierraConexion();
 		}
@@ -315,9 +320,9 @@ public class DataBaseControler
 	 */
 	public void modificaAutor(int id_autor, String nombre, String apellidos, String web) throws NonExistingElementException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try{
-			modif_autores.modificaAutor(id_autor, nombre, apellidos, web);
+			modif_autores.modificaAutor(id_autor, nombre, apellidos, web, conn);
 		}finally{
 			this.cierraConexion();
 		}
@@ -334,11 +339,11 @@ public class DataBaseControler
 	 */
 	public void eliminaDocumento(String idDoc) throws NonExistingElementException, UnimplementedException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try
 		{
 			int id_doc = Integer.parseInt(idDoc);
-			modif_pub.borraPublicación(id_doc);
+			modif_pub.borraPublicación(id_doc, conn);
 		}finally{
 			this.cierraConexion();
 		}
@@ -355,9 +360,9 @@ public class DataBaseControler
 	 */
 	public void asociaUsuarioProyecto(String proyecto, String usuario) throws NonExistingElementException,BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try {
-			modif_user.asociaProyecto(usuario, proyecto);
+			modif_user.asociaProyecto(usuario, proyecto, conn);
 		} 	finally {
 			this.cierraConexion();
 		}
@@ -375,9 +380,9 @@ public class DataBaseControler
 	 */
 	public void desasociaUsuarioProyecto(String proyecto, String usuario) throws UnimplementedException, NonExistingElementException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try {
-			modif_user.desasociaProyecto(usuario, proyecto);
+			modif_user.desasociaProyecto(usuario, proyecto, conn);
 		} 	finally {
 			this.cierraConexion();
 		}		
@@ -395,9 +400,9 @@ public class DataBaseControler
 	 */
 	public void asociaDocumentoProyecto(String proyecto, int documento) throws NonExistingElementException, UnimplementedException, ExistingElementException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try {
-			modif_pub.asociaPublicacion(documento, proyecto);
+			modif_pub.asociaPublicacion(documento, proyecto, conn);
 		} 	finally {
 			this.cierraConexion();
 		}			
@@ -414,9 +419,9 @@ public class DataBaseControler
 	 */
 	public void desasociaDocumentoProyecto(String proyecto, int documento) throws NonExistingElementException, UnimplementedException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try {
-			modif_pub.desasociaPublicacion(documento, proyecto);
+			modif_pub.desasociaPublicacion(documento, proyecto, conn);
 		} 	finally {
 			this.cierraConexion();
 		}			
@@ -438,9 +443,9 @@ public class DataBaseControler
 	 */
 	public void eliminaUsuario(String usuario, String nuevoUserPublicaciones) throws NonExistingElementException, UnimplementedException, BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try{
-			modif_user.eliminaUsuario(usuario, nuevoUserPublicaciones);
+			modif_user.eliminaUsuario(usuario, nuevoUserPublicaciones, conn);
 		}finally{
 			this.cierraConexion();
 		}
@@ -450,7 +455,12 @@ public class DataBaseControler
 
 	public String verificaUsuario(String nombre, String password) throws ConnectionNullException, ConnectionException, NonExistingElementException, PermisssionException, UnimplementedException, BDException 
 	{
-		return consultor.getTipoUser(nombre, password);
+		Connection conn = database.abreConexion();
+		try{
+			return consultor.getTipoUser(nombre, password, conn);
+		}finally{
+			this.cierraConexion();
+		}
 	}
 
 	/**
@@ -460,11 +470,11 @@ public class DataBaseControler
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public int consultaIdAutor() throws BDException 
+	/*public int consultaIdAutor() throws BDException 
 	{
-		this.abreConexion();
+		Connection conn = database.abreConexion();
 		try{
-			Vector<Object[]> resultado = database.exeQuery("SELECT nextIdAut FROM id;");
+			Vector<Object[]> resultado = database.exeQuery("SELECT nextIdAut FROM id;", conn);
 			int idAut = 0;
 			if (resultado.size() != 0)
 			{	
@@ -475,7 +485,7 @@ public class DataBaseControler
 		}finally{
 			this.cierraConexion();
 		}
-	}
+	}*/
 
 	/**
 	 * Método que devuelve el id correspondiente al primer autor cuyo nombre y apellidos
@@ -488,14 +498,14 @@ public class DataBaseControler
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public int consultaIdAutor(String nombre, String apellidos) throws BDException
+	public int consultaIdAutor(String nombre, String apellidos, Connection conn) throws BDException
 	{
-		this.abreConexion();
-		try{
-			return modif_autores.consultaIdAutor(nombre, apellidos);	
-		}finally{
-			this.cierraConexion();
-		}
+		//this.abreConexion();
+//		try{
+			return modif_autores.consultaIdAutor(nombre, apellidos, conn);	
+//		}finally{
+//			this.cierraConexion();
+//		}
 
 	}
 
@@ -507,18 +517,18 @@ public class DataBaseControler
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public boolean consultaExistenciaKey(String key) throws BDException 
+	public boolean consultaExistenciaKey(String key, Connection conn) throws BDException 
 	{
-		this.abreConexion();
-		try{		
-			Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "';");
+		//this.abreConexion();
+//		try{		
+			Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "';", conn);
 			if (resultado.size() == 0)
 				return false;
 			else
 				return true;
-		}finally{
-			this.cierraConexion();
-		}
+//		}finally{
+//			this.cierraConexion();
+//		}
 	}
 
 	/**
@@ -528,34 +538,37 @@ public class DataBaseControler
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public int consultaIdDoc() throws BDException 
+	public int consultaIdDoc(Connection conn) throws BDException 
 	{
-		this.abreConexion();
-		try{
-			Vector<Object[]> resultado = database.exeQuery("SELECT nextId FROM id;");
+		//this.abreConexion();
+//		try{
+			Vector<Object[]> resultado = database.exeQuery("SELECT nextId FROM id;", conn);
 			Object[] array = resultado.get(0);
 			int idAut = ((Long) array[0]).intValue()-1;
 			return idAut;
-		}finally{
-			this.cierraConexion();
-		}
-	}		
+//		}
+//		finally{
+//			this.cierraConexion();
+//		}
+	}
 
 
 	/**
 	 * Inserta en la base de datos el AutorEditor que se corresponde con los valores
 	 * que contiene el objeto pasado por parámetro.
 	 * @param ae - Objeto que contiene los datos del AutorEditor pasado por parámetro
+	 * @param conn 
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
+	 * @throws ExistingElementException 
 	 * @throws ExistingElementException - Si un autorEditor con los 3 campos iguales 
 	 * ya se encuentra en la base de datos.
 	 */
-	public void insertaAutorEditor(AutorEditor ae) throws BDException
+	public void insertaAutorEditor(AutorEditor ae, Connection conn) throws BDException, ExistingElementException
 	{
-		this.abreConexion();
-		try{							
-			String str = new String ("INSERT INTO autoreseditores VALUES(0");
+		//Connection conn = database.abreConexion();
+//		try{							
+			/*String str = new String ("INSERT INTO autoreseditores VALUES(0");
 			if(ae.getNombre() != null)
 				str += ",\"" + ae.getNombre() + "\"";
 			else str+= ",null";
@@ -569,10 +582,11 @@ public class DataBaseControler
 			else str+= ",null";
 			
 			str+=");";
-			database.exeUpdate(str);					
-		}finally{
-			this.cierraConexion();
-		}
+			database.exeUpdate(str, conn);*/
+			modif_autores.insertaAutorEditor(ae.getNombre(), ae.getApellidos(), ae.getWeb(), conn);
+//		}finally{
+//			this.cierraConexion();
+//		}
 	}
 
 	/**
@@ -582,13 +596,16 @@ public class DataBaseControler
 	 * @throws BDException  - Diversos problemas operando con la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public void ejecutaString(String sentence) throws BDException 
+	public void ejecutaString(String sentence, Connection conn) throws BDException 
 	{
-		this.abreConexion();
+		boolean cerrarDespues = (conn == null);
+		if (cerrarDespues)
+			conn = database.abreConexion();
 		try{
-			database.exeUpdate(sentence);
+			database.exeUpdate(sentence, conn);
 		}finally{
-			this.cierraConexion();
+			if (cerrarDespues)
+				this.cierraConexion();
 		}
 	}
 
@@ -597,7 +614,8 @@ public class DataBaseControler
 		Element root = new Element("AutoresEditoresProyectos");
 		Element eAutoresEditores = new Element("listaAutoresEditores");
 
-		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;");
+		Connection conn = database.abreConexion();
+		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;", conn);
 		int numAE = result.size();
 		Object[] actual;
 		int idAut;
@@ -626,7 +644,7 @@ public class DataBaseControler
 		root.addContent(eAutoresEditores);
 		
 		Element eProyectos = new Element("listaProyectos");
-		result = database.exeQuery("SELECT * FROM proyectos ORDER BY nombre");
+		result = database.exeQuery("SELECT * FROM proyectos ORDER BY nombre", conn);
 		int numProy = result.size();
 		String proyecto;
 		for (int i = 0; i < numProy; i++)
@@ -651,7 +669,8 @@ public class DataBaseControler
 		Element root = new Element("AutoresEditoresProyectos");
 		Element eAutoresEditores = new Element("listaAutoresEditores");
 
-		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;");
+		Connection conn = database.abreConexion();
+		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;", conn);
 		int numAE = result.size();
 		Object[] actual;
 		int idAut;
@@ -679,7 +698,7 @@ public class DataBaseControler
 		}
 		root.addContent(eAutoresEditores);
 		
-		result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';");
+		result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
 		if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
 		String tipoUser = (String)result.get(0)[0];
 		String consulta;
@@ -697,7 +716,7 @@ public class DataBaseControler
 		}
 		
 		Element eProyectos = new Element("listaProyectos");
-		result = database.exeQuery(consulta);
+		result = database.exeQuery(consulta, conn);
 		
 		int numProy = result.size();
 		String proyecto;
@@ -721,10 +740,11 @@ public class DataBaseControler
 	public String obtenerUsuariosProyecto(String  proyecto) throws FileNotFoundException, BDException
 	{
 		Element root = new Element("listaUsuarios");
-		
 		Element pertenecen = new Element("pertenecen");
+		
+		Connection conn = database.abreConexion();
 		String consulta = "SELECT usuarios.nombre FROM usuarios, participaen WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = '" + proyecto +"' ORDER BY usuarios.nombre;";
-		Vector<Object[]> result = database.exeQuery(consulta);
+		Vector<Object[]> result = database.exeQuery(consulta, conn);
 		int numU = result.size();
 		Object[] actual;
 		String usuario;
@@ -742,7 +762,7 @@ public class DataBaseControler
 		
 		Element noPertenecen = new Element("noPertenecen");
 		consulta = "SELECT usuarios.nombre FROM usuarios WHERE NOT EXISTS(SELECT * FROM participaen WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = '" + proyecto +"') ORDER BY usuarios.nombre;";
-		result = database.exeQuery(consulta);
+		result = database.exeQuery(consulta, conn);
 		numU = result.size();
 		for (int i = 0; i < numU; i++)
 		{
@@ -764,7 +784,9 @@ public class DataBaseControler
 	{
 		Element root = new Element("listaUsuarios");
 		String consulta = "SELECT nombre FROM usuarios ORDER BY nombre";
-		Vector<Object[]> result = database.exeQuery(consulta);
+		
+		Connection conn = database.abreConexion();
+		Vector<Object[]> result = database.exeQuery(consulta, conn);
 		int numU = result.size();
 		Object[] actual;
 		String usuario;
@@ -786,8 +808,10 @@ public class DataBaseControler
 	public String obtenerListaProyectosTotales() throws FileNotFoundException, BDException
 	{
 		Element root = new Element("listaProyectos");
+		
+		Connection conn = database.abreConexion();
 		String consulta = "SELECT nombre FROM proyectos ORDER BY nombre;";
-		Vector<Object[]> result = database.exeQuery(consulta);
+		Vector<Object[]> result = database.exeQuery(consulta, conn);
 		int numP = result.size();
 		Object[] actual;
 		String nombre;
@@ -810,7 +834,9 @@ public class DataBaseControler
 	{
 		Element root = new Element("listaProyectos");
 		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "' ORDER BY nombre;";
-		Vector<Object[]> result = database.exeQuery(consulta);
+		
+		Connection conn = database.abreConexion();
+		Vector<Object[]> result = database.exeQuery(consulta, conn);
 		int numP = result.size();
 		Object[] actual;
 		String nombre;
@@ -831,7 +857,8 @@ public class DataBaseControler
 	
 	public String obtenerListaProyectosGestionables(String  user) throws FileNotFoundException, BDException, NonExistingElementException
 	{
-		Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';");
+		Connection conn = database.abreConexion();
+		Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
 		if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
 		String tipoUser = (String)result.get(0)[0];
 		if (tipoUser.equals("admin"))
@@ -872,7 +899,6 @@ public class DataBaseControler
 	public String obtenerListaPublicacionesProyecto(String  proyecto) throws BDException, UnimplementedException
 	{
 		Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
-
 		Element root = new Element("listaPublicaciones");
 		int numP = publicaciones.size();
 		for (int i = 0;  i < numP; i++)
@@ -902,7 +928,8 @@ public class DataBaseControler
 	
 	public String obtenerListaVincularDesvincular(String  user, String idDoc) throws BDException, UnimplementedException, NonExistingElementException
 	{
-		Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';");
+		Connection conn = database.abreConexion();
+		Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
 		if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
 		String tipoUser = (String)result.get(0)[0];
 		String consultaVincular, consultaDesvincular;
@@ -923,9 +950,8 @@ public class DataBaseControler
 		}
 
 		Element root = new Element("listaVincularDesvincularProyectos");
-		
 		Element vincular = new Element("vincular");
-		result = database.exeQuery(consultaVincular);
+		result = database.exeQuery(consultaVincular, conn);
 		int numP = result.size();
 		Object[] actual;
 		String nombre;
@@ -942,7 +968,7 @@ public class DataBaseControler
 		root.addContent(vincular);
 		
 		Element desvincular = new Element("desvincular");
-		result = database.exeQuery(consultaDesvincular);
+		result = database.exeQuery(consultaDesvincular, conn);
 		numP = result.size();
 		for (int i = 0; i < numP; i++)
 		{
@@ -964,7 +990,8 @@ public class DataBaseControler
 	/**
 	 * Este método establece la conexión con la base de datos.
 	 */
-	private void abreConexion(){
+	private void abreConexion()
+	{
 
 	}
 
@@ -977,7 +1004,18 @@ public class DataBaseControler
 
 	public void insertaProyecto(String proyecto, String jefe) throws ExistingElementException, BDException 
 	{
-		modif_proyectos.insertaProyecto(proyecto, jefe);
+		Connection conn = database.abreConexion();
+		try
+		{
+			modif_proyectos.insertaProyecto(proyecto, jefe, conn);
+		}
+		catch(BDException e)
+		{
+			ejecutaString("ROLLBACK;", conn);
+		}
+		finally{
+			this.cierraConexion();
+		}
 	}
 
 }

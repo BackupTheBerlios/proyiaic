@@ -119,7 +119,7 @@ public class ConsultorBaseDatosTest {
 		vector.add(new AutorEditor(str1,null,null));
 		vector.add(new AutorEditor(str2,null,null));
 		try {
-			consultor.buscaAutores(vector);
+			consultor.buscaAutores(vector, null);
 		} catch (BDException e) {
 			fail ("Fallo en la consulta de autores");
 		}

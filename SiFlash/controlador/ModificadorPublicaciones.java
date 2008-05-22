@@ -2,6 +2,7 @@
 
 package controlador;
 
+import java.sql.Connection;
 import java.util.Vector;
 
 import controlador.exceptions.ExistenceException;
@@ -30,13 +31,15 @@ public class ModificadorPublicaciones {
 	 * 
 	 * Excepcion si ya existe o no hay permisos.
 	 * @param publicacion - Publicación a insertar.
+	 * @param conn 
 	 * @throws BDException 
 	 * @throws ExistingElementException 
+	 * @throws ExistingElementException 
 	 */
-	public void insertaPublicación(Publication publicacion) throws BDException
+	public void insertaPublicación(Publication publicacion, Connection conn) throws BDException, ExistingElementException
 	{
-		Vector<String> inserciones = publicacion.generaInserciones();		
-		theBaseDatos.exeUpdates(inserciones);
+		Vector<String> inserciones = publicacion.generaInserciones(conn);		
+		theBaseDatos.exeUpdates(inserciones, conn);
 	}
 
 	/**
@@ -44,6 +47,7 @@ public class ModificadorPublicaciones {
 	 * base de datos, cambia los antiguos datos que contenía al respecto de la misma 
 	 * por los que contiene el objeto. Para ello se basa en el idDoc, y asigna uno nuevo.
 	 * @param publicacion - Nuevos datos de la publicación.
+	 * @param conn 
 	 * @return int - Nuevo idDoc asignado al documento.
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
@@ -51,14 +55,14 @@ public class ModificadorPublicaciones {
 	 * la base de datos.
 	 * @throws ExistingElementException 
 	 */
-	public int modificaPublicación(Publication publicacion) throws NonExistingElementException,BDException, ExistingElementException 
+	public int modificaPublicación(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
 	{	
 		int id_doc = publicacion.getIdDoc();
 		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
-		Vector<Object []> res = theBaseDatos.exeQuery(consulta);
+		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
 		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);		
-		borraPublicación(publicacion.getIdDoc());
-		insertaPublicación(publicacion);
+		borraPublicación(publicacion.getIdDoc(), conn);
+		insertaPublicación(publicacion, conn);
 		return publicacion.getIdDoc();
 	}
 
@@ -71,11 +75,11 @@ public class ModificadorPublicaciones {
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - En caso que el documento no exista.
 	 */
-	public void borraPublicación(int id_doc) throws BDException, NonExistingElementException 
+	public void borraPublicación(int id_doc, Connection conn) throws BDException, NonExistingElementException 
 	{
 		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector <String> borrados = new Vector <String>();
-		Vector<Object []> res = theBaseDatos.exeQuery(consulta);
+		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
 		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);
 		String tabla = (String) res.firstElement()[0];
 		borrados.add(new String ("DELETE FROM tienekey WHERE idDoc = " + id_doc + ";"));
@@ -83,7 +87,7 @@ public class ModificadorPublicaciones {
 		borrados.add(new String ("DELETE FROM escrito_editado_por WHERE idDoc = " + id_doc + ";"));
 		borrados.add(new String ("DELETE FROM tipopublicacion WHERE idDoc = " + id_doc + ";"));
 		borrados.add(new String ("DELETE FROM " + tabla + " WHERE idDoc = " + id_doc + ";"));
-		theBaseDatos.exeUpdates(borrados);
+		theBaseDatos.exeUpdates(borrados, conn);
 	}
 
 	/**
@@ -95,7 +99,7 @@ public class ModificadorPublicaciones {
 	 * @throws ExistingElementException 
 	 * @roseuid 47C59B0E0213
 	 */
-	public void asociaPublicacion(int publicacion, String proyecto) throws BDException, NonExistingElementException, ExistingElementException 
+	public void asociaPublicacion(int publicacion, String proyecto, Connection conn) throws BDException, NonExistingElementException, ExistingElementException 
 	{
 		String consulta1,consulta2,consulta3;
 		Vector<Object []> res1,res2,res3;
@@ -104,16 +108,16 @@ public class ModificadorPublicaciones {
 		consulta3 = new String ("SELECT * FROM pertenecea WHERE idDoc = " + publicacion +" AND proyecto = '" + proyecto + "';");
 		String asociacion = new String ("INSERT INTO pertenecea VALUES('" + publicacion + "', '" + proyecto + "');");
 		
-		res1 = theBaseDatos.exeQuery(consulta1);
+		res1 = theBaseDatos.exeQuery(consulta1, conn);
 		if (res1 == null || res1.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);
 		
-		res2 = theBaseDatos.exeQuery(consulta2);
+		res2 = theBaseDatos.exeQuery(consulta2, conn);
 		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		
-		res3 = theBaseDatos.exeQuery(consulta3);
+		res3 = theBaseDatos.exeQuery(consulta3, conn);
 		if (res3 != null && res3.size() > 0) throw new ExistingElementException(ExistenceException.RELACION);
 		
-		theBaseDatos.exeUpdate(asociacion);
+		theBaseDatos.exeUpdate(asociacion, conn);
 	}
 	
 	/**
@@ -124,7 +128,7 @@ public class ModificadorPublicaciones {
 	 * @throws NonExistingElementException 
 	 * @roseuid 47C59B0E0213
 	 */
-	public void desasociaPublicacion(int publicacion, String proyecto) throws BDException, NonExistingElementException 
+	public void desasociaPublicacion(int publicacion, String proyecto, Connection conn) throws BDException, NonExistingElementException 
 	{
 		String consulta1,consulta2,consulta3;
 		Vector<Object []> res1,res2,res3;
@@ -133,15 +137,15 @@ public class ModificadorPublicaciones {
 		consulta3 = new String ("SELECT COUNT(*) FROM pertenecea WHERE idDoc = " + publicacion +" AND proyecto = '" + proyecto + "';");
 		String borrado = new String ("DELETE FROM pertenecea WHERE idDoc = " + publicacion +" AND proyecto = '" + proyecto + "';");
 		
-		res1 = theBaseDatos.exeQuery(consulta1);
+		res1 = theBaseDatos.exeQuery(consulta1, conn);
 		if (res1 == null || res1.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);
 		
-		res2 = theBaseDatos.exeQuery(consulta2);
+		res2 = theBaseDatos.exeQuery(consulta2, conn);
 		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		
-		res3 = theBaseDatos.exeQuery(consulta3);
+		res3 = theBaseDatos.exeQuery(consulta3, conn);
 		if (res3 == null || ((Long)res3.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.RELACION);
 		
-		theBaseDatos.exeUpdate(borrado);
+		theBaseDatos.exeUpdate(borrado, conn);
 	}
 }

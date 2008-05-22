@@ -131,7 +131,7 @@ public class ConversorXML_BBDD
 		
 	}
 	
-	public String procesarInsercion(InputStream input) throws BDException
+	public String procesarInsercion(InputStream input) throws BDException, ExistingElementException
 	{
 		ConversorXML_Publication conv = new ConversorXML_Publication();
 		Publication p = conv.convertir(input);
