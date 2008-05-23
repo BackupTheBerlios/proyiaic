@@ -16,9 +16,6 @@ import parserFicherosBibtex.ConversorXML_Publication;
 import personas.AutorEditor;
 import personas.Usuario;
 import publicaciones.Publication;
-import temporal.UnimplementedException;
-import controlador.exceptions.ExistingElementException;
-import controlador.exceptions.NonExistingElementException;
 import database.BDException;
 import database.BaseDatos;
 
@@ -106,7 +103,7 @@ public class ConversorXML_BBDD
 			if (!root.getAttributeValue("referencia").equals(""))
 				referencia = root.getAttributeValue("referencia");
 			List<Element> campos = (List<Element>)root.getChildren();
-			
+
 			Iterator<Element> it = campos.iterator();
 			while (it.hasNext())
 			{
@@ -114,26 +111,34 @@ public class ConversorXML_BBDD
 				if (!actual.getValue().equals(""))
 					procesarCampo(actual);
 			}
-			
+
 			//imprimir();
-			String salida = realizarConsulta();
-			return salida;
+			return realizarConsulta();
 		}
-		catch (Exception e)
+		catch(Exception e)
 		{
-			return "<exception tipo=\"" +  e.getMessage() + "\">Ha saltado una excepcion</exception>";
+			Element root = new Element("exception");
+			root.addContent("Excepción de SAXBuilder: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
 		}
-		
 	}
 	
-	public String procesarInsercion(InputStream input) throws BDException, ExistingElementException
+	public String procesarInsercion(InputStream input)
 	{
-		ConversorXML_Publication conv = new ConversorXML_Publication();
-		Publication p = conv.convertir(input);
-		dbc.insertaDocumento(p);
-		
-		//Se debe retornar si ha habido éxito o no en la inserción.
-		return "true";
+		try
+		{
+			ConversorXML_Publication conv = new ConversorXML_Publication();
+			Publication p = conv.convertir(input);
+			return dbc.insertaDocumento(p);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 
 	private void procesarCampo(Element campo) 
@@ -231,30 +236,40 @@ public class ConversorXML_BBDD
 		else return null;		
 	}
 	
-	private String realizarConsulta() throws BDException, UnimplementedException 
+	private String realizarConsulta()
 	{
-		Vector<String> years = null;
-		if (yearIni != -1 && yearFin != -1)
+		try
 		{
-			 years = new Vector<String>();
-			 for (int i = yearIni; i <= yearFin; i++)
-				 years.add("" + i);
+			Vector<String> years = null;
+			if (yearIni != -1 && yearFin != -1)
+			{
+				years = new Vector<String>();
+				for (int i = yearIni; i <= yearFin; i++)
+					years.add("" + i);
+			}
+
+			Vector<Publication> vector = dbc.consultaDocumentos(proyecto, tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true, null);
+
+			int numPublic = vector.size();
+			Publication actual;
+			Element root = new Element("listaPublicaciones");
+			for(int i = 0; i < numPublic; i++)
+			{
+				actual = vector.get(i);
+				Element elemento = actual.generarElementoXML();
+				root.addContent(elemento);
+
+			}
+			XMLOutputter outputter = new XMLOutputter();
+			return (outputter.outputString(new Document(root)));
 		}
-		
-		Vector<Publication> vector = dbc.consultaDocumentos(proyecto, tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true, null);
-		
-		int numPublic = vector.size();
-		Publication actual;
-		Element root = new Element("listaPublicaciones");
-		for(int i = 0; i < numPublic; i++)
+		catch(BDException e)
 		{
-			actual = vector.get(i);
-			Element elemento = actual.generarElementoXML();
-			root.addContent(elemento);
-			
+			Element root = new Element("exception");
+			root.addContent(e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
 		}
-		XMLOutputter outputter = new XMLOutputter();
-		return (outputter.outputString(new Document(root)));
 	}
 	
 	//Solo sirve para realizar pruebas.
@@ -343,103 +358,257 @@ public class ConversorXML_BBDD
 		}
 	}
 	
-	public String procesarNuevoUsuario(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException
+	public String procesarNuevoUsuario(InputStream input)
 	{
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(input);
-		Element root = doc.getRootElement();
-		String nombre = root.getChild("nombre").getValue();
-		String pass = root.getChild("password").getValue();
-		String tipo = root.getChild("tipo").getValue();
-		String proyecto = root.getChild("proyecto").getValue();
-		int tipoUser = -1;
-		if (tipo.equals("user"))
-			tipoUser = Usuario.USUARIO;
-		else if (tipo.equals("jefe"))
-			tipoUser = Usuario.JEFE;
-		else if (tipo.equals("admin"))
-			tipoUser = Usuario.ADMINISTRADOR;
-		Usuario usuario = new Usuario(nombre, pass, tipoUser);
-		
-		if (proyecto.length() == 0)
-			proyecto = null;
-		dbc.insertaUsuario(usuario, proyecto);
-		
-		return "true";
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String nombre = root.getChild("nombre").getValue();
+			String pass = root.getChild("password").getValue();
+			String tipo = root.getChild("tipo").getValue();
+			String proyecto = root.getChild("proyecto").getValue();
+			int tipoUser = -1;
+			if (tipo.equals("user"))
+				tipoUser = Usuario.USUARIO;
+			else if (tipo.equals("jefe"))
+				tipoUser = Usuario.JEFE;
+			else if (tipo.equals("admin"))
+				tipoUser = Usuario.ADMINISTRADOR;
+			Usuario usuario = new Usuario(nombre, pass, tipoUser);
+
+			if (proyecto.length() == 0)
+				proyecto = null;
+			return dbc.insertaUsuario(usuario, proyecto);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 	
-	public String procesarNuevoProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException
+	public String procesarNuevoProyecto(InputStream input)
 	{
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(input);
-		Element root = doc.getRootElement();
-		String proyecto = root.getChild("proyecto").getValue();
-		String jefe = root.getChild("jefe").getValue();
-		
-		dbc.insertaProyecto(proyecto, jefe);
-		
-		return "true";
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String proyecto = root.getChild("proyecto").getValue();
+			String jefe = root.getChild("jefe").getValue();
+
+			return dbc.insertaProyecto(proyecto, jefe);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 	
-	public String procesarEliminarUsuario(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	public String procesarEliminarUsuario(InputStream input)
 	{
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(input);
-		Element root = doc.getRootElement();
-		String usuario = root.getChild("usuario").getValue();
-		String nuevoUserPublicaciones = root.getChild("hereda").getValue();
-		dbc.eliminaUsuario(usuario, nuevoUserPublicaciones);
-		
-		return "true";
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String usuario = root.getChild("usuario").getValue();
+			String nuevoUserPublicaciones = root.getChild("hereda").getValue();
+			return dbc.eliminaUsuario(usuario, nuevoUserPublicaciones);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 	
-	public String procesarAsociarUsuarioAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	public String procesarAsociarUsuarioAProyecto(InputStream input)
 	{
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(input);
-		Element root = doc.getRootElement();
-		String usuario = root.getChild("usuario").getValue();
-		String proyecto = root.getChild("proyecto").getValue();
-		dbc.asociaUsuarioProyecto(proyecto, usuario);
-		
-		return "true";
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String usuario = root.getChild("usuario").getValue();
+			String proyecto = root.getChild("proyecto").getValue();
+			return dbc.asociaUsuarioProyecto(proyecto, usuario);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 	
-	public String procesarDesasociarUsuarioAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	public String procesarDesasociarUsuarioAProyecto(InputStream input)
 	{
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(input);
-		Element root = doc.getRootElement();
-		String usuario = root.getChild("usuario").getValue();
-		String proyecto = root.getChild("proyecto").getValue();
-		dbc.desasociaUsuarioProyecto(proyecto, usuario);
-		
-		return "true";
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String usuario = root.getChild("usuario").getValue();
+			String proyecto = root.getChild("proyecto").getValue();
+			return dbc.desasociaUsuarioProyecto(proyecto, usuario);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 	
-	public String procesarAsociarPublicacionAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	public String procesarAsociarPublicacionAProyecto(InputStream input)
 	{
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(input);
-		Element root = doc.getRootElement();
-		String publicacion = root.getChild("publicacion").getValue();
-		int idDoc = Integer.parseInt(publicacion);
-		String proyecto = root.getChild("proyecto").getValue();
-		dbc.asociaDocumentoProyecto(proyecto, idDoc);
-		
-		return "true";
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String publicacion = root.getChild("publicacion").getValue();
+			int idDoc = Integer.parseInt(publicacion);
+			String proyecto = root.getChild("proyecto").getValue();
+			return dbc.asociaDocumentoProyecto(proyecto, idDoc);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 	
-	public String procesarDesasociarPublicacionAProyecto(InputStream input) throws JDOMException, IOException, ExistingElementException, BDException, NonExistingElementException, UnimplementedException
+	public String procesarDesasociarPublicacionAProyecto(InputStream input)
 	{
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(input);
-		Element root = doc.getRootElement();
-		String publicacion = root.getChild("publicacion").getValue();
-		int idDoc = Integer.parseInt(publicacion);
-		String proyecto = root.getChild("proyecto").getValue();
-		dbc.desasociaDocumentoProyecto(proyecto, idDoc);
-		
-		return "true";
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String publicacion = root.getChild("publicacion").getValue();
+			int idDoc = Integer.parseInt(publicacion);
+			String proyecto = root.getChild("proyecto").getValue();
+			return dbc.desasociaDocumentoProyecto(proyecto, idDoc);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
 	}
 }

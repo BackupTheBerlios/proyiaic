@@ -1,8 +1,11 @@
 package principal;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 
-import controlador.ConversorXML_BBDD;
+import parserFicherosBibtex.ConversorXML_Publication;
+import publicaciones.Publication;
+import controlador.DataBaseControler;
 
 public class Main 
 {
@@ -59,7 +62,7 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 //			ConversorXML_Publication cp = new ConversorXML_Publication();
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\techreport.xml");
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\manual.xml");
 //			Publication p = cp.convertir(is);
 //			DataBaseControler cb = new DataBaseControler();
 //			cb.insertaDocumento(p);
@@ -76,8 +79,8 @@ public class Main
 			
 			//-------------------------------------------------------------------------
 			
-			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\ficherosDePrueba\\inserciones\\usuario.xml")));
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\ficherosDePrueba\\inserciones\\usuario.xml")));
 		
 			//-------------------------------------------------------------------------
 		
@@ -93,14 +96,12 @@ public class Main
 //			System.out.println(conv.procesarAsociarPublicacionAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarPublicacionProyecto.xml")));
 			//-------------------------------------------------------------------------
 			
-//			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerUsuariosProyecto("Proyecto2"));
+			DataBaseControler db_controler = new DataBaseControler();
+			System.out.println(db_controler.obtenerUsuariosYPublicacionesProyecto("Proyecto2"));
 			//-------------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarNuevoProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\proyecto.xml")));
-		
-			
 		}
 		catch (Exception e)
 		{

@@ -35,8 +35,9 @@ public class ExistenceException extends Exception
 		this.tipo = INDEFINIDA;
 	}
 
-	public ExistenceException(int tipo){
-
+	public ExistenceException(int tipo)
+	{
+		this.tipo = tipo;
 	}
 
 	private boolean existeTipo(int prueba){

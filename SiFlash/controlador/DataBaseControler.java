@@ -997,11 +997,11 @@ public class DataBaseControler
 	}
 	
 	
-	public String obtenerUsuariosProyecto(String  proyecto)
+	public String obtenerUsuariosYPublicacionesProyecto(String  proyecto)
 	{
 		try
 		{
-			Element root = new Element("listaUsuarios");
+			Element root = new Element("listaUsuariosYPublicaciones");
 			Element pertenecen = new Element("pertenecen");
 
 			Connection conn = database.abreConexion();
@@ -1039,6 +1039,16 @@ public class DataBaseControler
 				noPertenecen.addContent(eUsuario);
 			}
 			root.addContent(noPertenecen);
+			
+			Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
+			Element ePublicaciones = new Element("listaPublicaciones");
+			int numP = publicaciones.size();
+			for (int i = 0;  i < numP; i++)
+			{
+				Element ePublication = publicaciones.get(i).generarElementoXML();
+				ePublicaciones.addContent(ePublication);
+			}
+			root.addContent(ePublicaciones);
 
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
@@ -1228,33 +1238,53 @@ public class DataBaseControler
 		return outputter.outputString (new Document(root));
 	}*/
 	
-	public String obtenerListaPublicacionesProyecto(String  proyecto) throws BDException, UnimplementedException
+	public String obtenerListaPublicacionesProyecto(String  proyecto)
 	{
-		Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
-		Element root = new Element("listaPublicaciones");
-		int numP = publicaciones.size();
-		for (int i = 0;  i < numP; i++)
+		try
 		{
-			Element ePublication = publicaciones.get(i).generarElementoXML();
-			root.addContent(ePublication);
+			Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
+			Element root = new Element("listaPublicaciones");
+			int numP = publicaciones.size();
+			for (int i = 0;  i < numP; i++)
+			{
+				Element ePublication = publicaciones.get(i).generarElementoXML();
+				root.addContent(ePublication);
+			}
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
 		}
-		XMLOutputter outputter = new XMLOutputter();
-		return outputter.outputString (new Document(root));
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent(e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		} 
 	}
 	
-	public String obtenerListaPublicacionesUsuario(String  user) throws BDException, UnimplementedException
+	public String obtenerListaPublicacionesUsuario(String  user)
 	{
-		Vector<Publication> publicaciones = consultaDocumentos(null, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, user);
-
-		Element root = new Element("listaPublicaciones");
-		int numP = publicaciones.size();
-		for (int i = 0;  i < numP; i++)
+		try
 		{
-			Element ePublication = publicaciones.get(i).generarElementoXML();
-			root.addContent(ePublication);
+			Vector<Publication> publicaciones = consultaDocumentos(null, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, user);
+
+			Element root = new Element("listaPublicaciones");
+			int numP = publicaciones.size();
+			for (int i = 0;  i < numP; i++)
+			{
+				Element ePublication = publicaciones.get(i).generarElementoXML();
+				root.addContent(ePublication);
+			}
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
 		}
-		XMLOutputter outputter = new XMLOutputter();
-		return outputter.outputString (new Document(root));
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent(e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		} 
 	}
 	
 	
