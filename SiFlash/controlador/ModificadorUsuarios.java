@@ -91,22 +91,27 @@ public class ModificadorUsuarios
 	 * @param String - Nombre del usuario a añadir.
 	 * @param proyecto - Nombre del proyecto al cual se quiere añadir.
 	 * @throws database.BDException
+	 * @throws ExistingElementException 
 	 * @roseuid 47C5979A01F4
 	 */
-	public void asociaProyecto(String usuario, String proyecto, Connection conn) throws NonExistingElementException,BDException 
+	public void asociaProyecto(String usuario, String proyecto, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
 	{
-		String consulta1,consulta2,insercion;
+		String consulta1, consulta2, consulta3, insercion;
 		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre = '" + usuario +"';");
 		consulta2 = new String ("SELECT COUNT(*) FROM proyectos WHERE nombre = '" + proyecto +"';");
+		consulta3 = new String ("SELECT COUNT(*) FROM participaen WHERE usuario = '" + usuario +"' AND proyecto = '" + proyecto + "';");
 		insercion = new String ("INSERT INTO participaen VALUES ('" + usuario + "','" + proyecto +
 				"') ON DUPLICATE KEY UPDATE usuario=usuario;");
 		
-		Vector<Object []> res1,res2;
+		Vector<Object []> res1, res2, res3;
 		res1 = theBaseDatos.exeQuery(consulta1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);
 		
 		res2 = theBaseDatos.exeQuery(consulta2, conn);
 		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
+		
+		res3 = theBaseDatos.exeQuery(consulta3, conn);
+		if (res3 == null || ((Long)res3.firstElement()[0]).intValue() < 1) throw new ExistingElementException(ExistenceException.RELACION);
 		
 		theBaseDatos.exeUpdate(insercion, conn);
 	}
