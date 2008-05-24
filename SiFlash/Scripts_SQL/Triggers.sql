@@ -12,6 +12,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'article');
     END;
   END IF;
 END $$
@@ -27,6 +28,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'book');
     END;
   END IF;
 END $$
@@ -42,6 +44,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'booklet');
     END;
   END IF;
 END $$
@@ -57,6 +60,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'conference');
     END;
   END IF;
 END $$
@@ -72,6 +76,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inbook');
     END;
   END IF;
 END $$
@@ -87,6 +92,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'incollection');
     END;
   END IF;
 END $$
@@ -102,6 +108,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inproceedings');
     END;
   END IF;
 END $$
@@ -117,6 +124,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'manual');
     END;
   END IF;
 END $$
@@ -132,6 +140,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'mastersthesis');
     END;
   END IF;
 END $$
@@ -147,6 +156,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'misc');
     END;
   END IF;
 END $$
@@ -162,6 +172,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'phdthesis');
     END;
   END IF;
 END $$
@@ -177,6 +188,8 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'proceedings');
     END;
   END IF;
 END $$
@@ -192,6 +205,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'techreport');
     END;
   END IF;
 END $$
@@ -207,6 +221,7 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
+      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'unpublished');
     END;
   END IF;
 END $$
@@ -257,5 +272,161 @@ BEGIN
     UPDATE Usuarios SET tipo='user' WHERE nombre = OLD.jefe;
   END IF;
 END $$
+
+
+DROP TRIGGER IF EXISTS borraArticle $$
+CREATE TRIGGER borraArticle BEFORE DELETE ON Article
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraBook $$
+CREATE TRIGGER borraBook BEFORE DELETE ON Book
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraBooklet $$
+CREATE TRIGGER borraBooklet BEFORE DELETE ON Booklet
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraConference $$
+CREATE TRIGGER borraConference BEFORE DELETE ON Conference
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraInbook $$
+CREATE TRIGGER borraInbook BEFORE DELETE ON Inbook
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraIncollection $$
+CREATE TRIGGER borraIncollection BEFORE DELETE ON Incollection
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraInproceedings $$
+CREATE TRIGGER borraInproceedings BEFORE DELETE ON Inproceedings
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraManual $$
+CREATE TRIGGER borraManual BEFORE DELETE ON Manual
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+DROP TRIGGER IF EXISTS borraMastersthesis $$
+CREATE TRIGGER borraMastersthesis BEFORE DELETE ON Mastersthesis
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraMisc $$
+CREATE TRIGGER borraMisc BEFORE DELETE ON Misc
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraPhdthesis $$
+CREATE TRIGGER borraPhdthesis BEFORE DELETE ON Phdthesis
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraProceedings $$
+CREATE TRIGGER borraProceedings BEFORE DELETE ON Proceedings
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraTechreport $$
+CREATE TRIGGER borraTechreport BEFORE DELETE ON Techreport
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DROP TRIGGER IF EXISTS borraUnpublished $$
+CREATE TRIGGER borraUnpublished BEFORE DELETE ON Unpublished
+FOR EACH ROW
+BEGIN
+  DELETE FROM tienekey WHERE idDoc = OLD.idDoc;
+  DELETE FROM pertenecea WHERE idDoc = OLD.idDoc;
+  DELETE FROM escrito_editado_por WHERE idDoc = OLD.idDoc;
+  DELETE FROM tipopublicacion WHERE idDoc = OLD.idDoc;
+END $$
+
+
+DELIMITER ;
 
 DELIMITER ;
