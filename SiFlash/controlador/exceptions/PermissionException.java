@@ -9,7 +9,7 @@ import database.BDException;
  * Excepcion que se produce cuando se quiere realizar una operación para la que no 
  * se tienen permisos.
  */
-public class PermisssionException extends BDException 
+public class PermissionException extends BDException 
 {
 
 	/**
@@ -20,7 +20,7 @@ public class PermisssionException extends BDException
 	/**
 	 * 
 	 */
-	public PermisssionException() {
+	public PermissionException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -28,7 +28,7 @@ public class PermisssionException extends BDException
 	/**
 	 * @param message
 	 */
-	public PermisssionException(String message) {
+	public PermissionException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}

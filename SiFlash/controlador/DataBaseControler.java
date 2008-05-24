@@ -15,6 +15,7 @@ import temporal.UnimplementedException;
 import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
 import controlador.exceptions.NonExistingElementException;
+import controlador.exceptions.PermissionException;
 import database.BDException;
 import database.BaseDatos;
 
@@ -112,13 +113,25 @@ public class DataBaseControler
 	 * 
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException 
 	 * @throws UnimplementedException 
 	 */
-	public Vector<Publication> consultaDocumentos(String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws BDException 
+	public Vector<Publication> consultaDocumentos(String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws BDException, NonExistingElementException 
 	{
 		Connection conn = database.abreConexion();
 		// Primero localizar a los autores y editores.
 		try{
+			Vector<Object[]> result;
+			if (user != null)
+			{
+				result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
+				if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
+			}
+			if (proyecto != null)
+			{
+				result = database.exeQuery("SELECT nombre FROM proyectos WHERE nombre = '" + proyecto + "';", conn);
+				if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
+			}
 			Vector <AutorEditor> v_autores = consultor.buscaAutores(autores, conn);
 			Vector <AutorEditor> v_editores = consultor.buscaAutores(editores, conn);
 			Vector <Integer> v_authors= new Vector<Integer>();
@@ -1190,14 +1203,7 @@ public class DataBaseControler
 			else if (tipoUser.equals("jefe"))
 				return obtenerListaProyectosDirigidos(user);
 			else
-				return null;
-		}
-		catch(BDException e)
-		{
-			Element root = new Element("exception");
-			root.addContent(e.getMessage());
-			XMLOutputter outputter = new XMLOutputter();
-			return outputter.outputString (new Document(root));
+				throw new PermissionException("Error: el usuario no es jefe ni administrador.");
 		} 
 		catch (NonExistingElementException e) 
 		{
@@ -1206,6 +1212,13 @@ public class DataBaseControler
 				root.addContent("Error: el usuario no existe.");
 			else
 				root.addContent("Error desconocido al obtener lista de proyectos gestionables.");
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent(e.getMessage());
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		}
@@ -1260,6 +1273,16 @@ public class DataBaseControler
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		} 
+		catch (NonExistingElementException e) 
+		{
+			Element root = new Element("exception");
+			if (e.getTipo() == ExistenceException.PROYECTO)
+				root.addContent("Error: El proyecto no existe.");
+			else
+				root.addContent("Error desconocido al obtener la lista de publicaciones de un proyecto.");
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		} 
 	}
 	
 	public String obtenerListaPublicacionesUsuario(String  user)
@@ -1285,6 +1308,16 @@ public class DataBaseControler
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		} 
+		catch (NonExistingElementException e) 
+		{
+			Element root = new Element("exception");
+			if (e.getTipo() == ExistenceException.USUARIO)
+				root.addContent("Error: El usuario no existe.");
+			else
+				root.addContent("Error desconocido al obtener la lista de publicaciones de un usuario.");
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		} 
 	}
 	
 	
@@ -1295,8 +1328,8 @@ public class DataBaseControler
 			Connection conn = database.abreConexion();
 			Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
 			if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
-			result = database.exeQuery("SELECT * FROM tipopublicacion WHERE idDoc = '" + idDoc + "';", conn);
-			if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.DOCUMENTO);
+			Vector<Object[]> result2 = database.exeQuery("SELECT * FROM tipopublicacion WHERE idDoc = '" + idDoc + "';", conn);
+			if (result2 == null || result2.size() == 0) throw new NonExistingElementException(ExistenceException.DOCUMENTO);
 			String tipoUser = (String)result.get(0)[0];
 			String consultaVincular, consultaDesvincular;
 			if (tipoUser.equals("admin"))

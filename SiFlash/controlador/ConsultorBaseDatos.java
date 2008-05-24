@@ -23,7 +23,9 @@ import publicaciones.Publication;
 import publicaciones.TechReport;
 import publicaciones.Unpublished;
 import temporal.UnimplementedException;
-//import temporal.UnimplementedException;
+import controlador.exceptions.AuthenticationException;
+import controlador.exceptions.ExistenceException;
+import controlador.exceptions.NonExistingElementException;
 import database.BDException;
 import database.BaseDatos;
 
@@ -594,20 +596,31 @@ class ConsultorBaseDatos
 		return v_res;
 	}
 
-	public String getTipoUser(String nombre, String password, Connection conn) throws BDException {
-		Vector<Object[]> result = database.exeQuery("SELECT password, tipo FROM usuarios WHERE nombre='" + nombre + "';", conn);
-		if (result.size() == 0)
-			return null;
-		else
+	public String getTipoUser(String nombre, String password, Connection conn) throws BDException
+	{
+		try
 		{
-			Object[] datos = result.get(0);
-			String pass = (String)datos[0];
-			String tipo = (String)datos[1];
-			
-			if (password.equals(pass))
-				return tipo;
+			Vector<Object[]> result = database.exeQuery("SELECT password, tipo FROM usuarios WHERE nombre='" + nombre + "';", conn);
+			if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
 			else
-				return null;
+			{
+				Object[] datos = result.get(0);
+				String pass = (String)datos[0];
+				String tipo = (String)datos[1];
+
+				if (password.equals(pass))
+					return tipo;
+				else
+					throw new AuthenticationException("Password incorrecto: inténtelo de nuevo.");
+			}
+		}
+		catch(NonExistingElementException e)
+		{
+			return "Error: El usuario no existe.";
+		}
+		catch(AuthenticationException e)
+		{
+			return e.getMessage();
 		}
 	}
 }

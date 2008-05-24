@@ -12,6 +12,9 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
+import controlador.exceptions.ExistenceException;
+import controlador.exceptions.NonExistingElementException;
+
 import parserFicherosBibtex.ConversorXML_Publication;
 import personas.AutorEditor;
 import personas.Usuario;
@@ -267,6 +270,16 @@ public class ConversorXML_BBDD
 		{
 			Element root = new Element("exception");
 			root.addContent(e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch (NonExistingElementException e) 
+		{
+			Element root = new Element("exception");
+			if (e.getTipo() == ExistenceException.PROYECTO)
+				root.addContent("Error: El proyecto no existe.");
+			else
+				root.addContent("Error desconocido al realizar la consulta.");
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		}

@@ -1,11 +1,5 @@
 package principal;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-
-import parserFicherosBibtex.ConversorXML_Publication;
-import publicaciones.Publication;
-import controlador.DataBaseControler;
 
 public class Main 
 {
@@ -61,21 +55,15 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-//			ConversorXML_Publication cp = new ConversorXML_Publication();
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\manual.xml");
-//			Publication p = cp.convertir(is);
-//			DataBaseControler cb = new DataBaseControler();
-//			cb.insertaDocumento(p);
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\misc.xml");
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarInsercion(is));
 			
 			//-------------------------------------------------------------------------
 			
 //			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaInserciones("user1"));
-//			String result = db_controler.verificaUsuario("user1", "user1");
-//			 if (result != null) 
-//				 System.out.println(result);
-//			 else
-//				 System.out.println("Nulo.");
+////			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaInserciones("user1"));
+//			System.out.println(db_controler.verificaUsuario("user3", "user3"));
 			
 			//-------------------------------------------------------------------------
 			
@@ -93,12 +81,16 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarAsociarPublicacionAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarPublicacionProyecto.xml")));
+//			System.out.println(conv.procesarDesasociarPublicacionAProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\asociarPublicacionProyecto.xml")));
 			//-------------------------------------------------------------------------
 			
-			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerUsuariosYPublicacionesProyecto("Proyecto2"));
+//			DataBaseControler db_controler = new DataBaseControler();
+//			System.out.println(db_controler.obtenerUsuariosYPublicacionesProyecto("Proyecto1"));
 			//-------------------------------------------------------------------------
+			
+//			DataBaseControler db_controler = new DataBaseControler();
+//			System.out.println(db_controler.eliminaDocumento("4"));
+			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarNuevoProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\proyecto.xml")));

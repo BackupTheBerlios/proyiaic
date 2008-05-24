@@ -1,5 +1,5 @@
 <publication tipo="misc" referencia="la+referencia+del+misc">
-	<title>El titulo del misc</title>
+	<title>El título del misc</title>
 	<year>2006</year>
 	<month>El mes</month>
 	<authors>
@@ -20,4 +20,5 @@
 	<note>El note</note>
 	<key>The key, Una clave, Mi clave</key>
 	<user>user1</user>
+	<proyecto>Proyecto1</proyecto>
 </publication>

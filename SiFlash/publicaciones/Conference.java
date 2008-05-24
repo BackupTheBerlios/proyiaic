@@ -459,8 +459,8 @@ public class Conference extends Publication
 		dbc.ejecutaString(str1, conn);
 		idDoc = dbc.consultaIdDoc(conn);	
 		
-		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'conference');");
-		vector.add(str1);
+//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'conference');");
+//		vector.add(str1);
 
 		if (author != null)		
 			for (int i=0;i<this.author.size();i++){

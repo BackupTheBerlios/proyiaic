@@ -51,8 +51,8 @@ public class DataBaseControlerTest {
 		keys.add("key2");
 		try {
 			v1 = db_controler.consultaDocumentos(null, CodigosDatos.codArticle, null, null, "otro", true, null, "suplemento", null, null, null, null, null, null, null, keys, true, true, true, true, true, true, true, true, true, null);
-		} catch (BDException e) {
-			fail ("BDException");
+		} catch (Exception e) {
+			fail ("Exception");
 		}
 		if (v1.size()<1) fail ("ninguna publicacion");
 		assertTrue(true);		

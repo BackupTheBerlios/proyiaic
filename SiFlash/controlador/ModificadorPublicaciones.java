@@ -74,17 +74,35 @@ public class ModificadorPublicaciones {
 	 */
 	public void borraPublicación(int id_doc, Connection conn) throws BDException, NonExistingElementException 
 	{
-		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
-		Vector <String> borrados = new Vector <String>();
+		String consulta = new String ("SELECT tipo FROM tipopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
 		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);
+		
+		Vector<Object[]> guardaAutoresEditores = theBaseDatos.exeQuery("SELECT idPer FROM escrito_editado_por WHERE idDoc = '" + id_doc + "';", conn);
+		Vector<Object[]> guardaClaves = theBaseDatos.exeQuery("SELECT clave FROM tienekey WHERE idDoc = '" + id_doc + "';", conn);
+		
 		String tabla = (String) res.firstElement()[0];
-		borrados.add(new String ("DELETE FROM tienekey WHERE idDoc = " + id_doc + ";"));
-		borrados.add(new String ("DELETE FROM pertenecea WHERE idDoc = " + id_doc + ";"));
-		borrados.add(new String ("DELETE FROM escrito_editado_por WHERE idDoc = " + id_doc + ";"));
-		borrados.add(new String ("DELETE FROM tipopublicacion WHERE idDoc = " + id_doc + ";"));
-		borrados.add(new String ("DELETE FROM " + tabla + " WHERE idDoc = " + id_doc + ";"));
-		theBaseDatos.exeUpdates(borrados, conn);
+		theBaseDatos.exeUpdate("DELETE FROM " + tabla + " WHERE idDoc = " + id_doc + ";", conn);
+		
+		int numAE = guardaAutoresEditores.size();
+		String idAut;
+		for (int i = 0; i < numAE; i++)
+		{
+			idAut = ((Long)guardaAutoresEditores.get(i)[0]).toString();
+			res = theBaseDatos.exeQuery("SELECT * FROM escrito_editado_por WHERE idPer = '" + idAut + "';", conn);
+			if (res.size() == 0)
+				theBaseDatos.exeUpdate("DELETE FROM autoreseditores WHERE idAut = '" + idAut + "';", conn);
+		}
+		
+		int numClaves = guardaClaves.size();
+		String nombreClave;
+		for (int i = 0; i < numClaves; i++)
+		{
+			nombreClave = (String)guardaClaves.get(i)[0];
+			res = theBaseDatos.exeQuery("SELECT * FROM tienekey WHERE clave = '" + nombreClave + "';", conn);
+			if (res.size() == 0)
+				theBaseDatos.exeUpdate("DELETE FROM claves WHERE clave = '" + nombreClave + "';", conn);
+		}
 	}
 
 	/**

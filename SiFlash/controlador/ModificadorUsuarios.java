@@ -99,7 +99,7 @@ public class ModificadorUsuarios
 		String consulta1, consulta2, consulta3, insercion;
 		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre = '" + usuario +"';");
 		consulta2 = new String ("SELECT COUNT(*) FROM proyectos WHERE nombre = '" + proyecto +"';");
-		consulta3 = new String ("SELECT COUNT(*) FROM participaen WHERE usuario = '" + usuario +"' AND proyecto = '" + proyecto + "';");
+		consulta3 = new String ("SELECT * FROM participaen WHERE usuario = '" + usuario +"' AND proyecto = '" + proyecto + "';");
 		insercion = new String ("INSERT INTO participaen VALUES ('" + usuario + "','" + proyecto +
 				"') ON DUPLICATE KEY UPDATE usuario=usuario;");
 		
@@ -111,7 +111,7 @@ public class ModificadorUsuarios
 		if (res2 == null || ((Long)res2.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		
 		res3 = theBaseDatos.exeQuery(consulta3, conn);
-		if (res3 == null || ((Long)res3.firstElement()[0]).intValue() < 1) throw new ExistingElementException(ExistenceException.RELACION);
+		if (res3.size() > 0) throw new ExistingElementException(ExistenceException.RELACION);
 		
 		theBaseDatos.exeUpdate(insercion, conn);
 	}

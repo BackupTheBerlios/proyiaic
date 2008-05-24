@@ -384,8 +384,8 @@ public class Proceedings extends Publication
 		dbc.ejecutaString(str1, conn);
 		idDoc = dbc.consultaIdDoc(conn);	
 		
-		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'proceedings');");
-		vector.add(str1);
+//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'proceedings');");
+//		vector.add(str1);
 
 		if (editor != null)
 			for (int i=0;i<this.editor.size();i++){
