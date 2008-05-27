@@ -1,5 +1,10 @@
 package principal;
 
+import java.io.FileInputStream;
+
+import controlador.ConversorXML_BBDD;
+import controlador.DataBaseControler;
+
 
 public class Main 
 {
@@ -89,11 +94,11 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 //			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.eliminaDocumento("4"));
-			//-------------------------------------------------------------------
+//			System.out.println(db_controler.eliminaDocumento("1"));
+//			//-------------------------------------------------------------------
 			
-//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarNuevoProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\proyecto.xml")));
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarNuevoProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\proyecto.xml")));
 		}
 		catch (Exception e)
 		{

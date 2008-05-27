@@ -697,7 +697,7 @@ public class DataBaseControler
 		} 
 		catch (BDException e) 
 		{
-			return e.getMessage();
+			return null;
 		}
 		finally
 		{
@@ -1410,9 +1410,9 @@ public class DataBaseControler
 		Connection conn = database.abreConexion();
 		try
 		{
-			database.exeQuery("BEGIN;", conn);
+			ejecutaString("BEGIN;", conn); //database.exeQuery("BEGIN;", conn);
 			modif_proyectos.insertaProyecto(proyecto, jefe, conn);
-			database.exeQuery("COMMIT;", conn);
+			ejecutaString("COMMIT;", conn); //database.exeQuery("COMMIT;", conn);
 			return "El proyecto ha sido creado satisfactoriamente.";
 		}
 		catch (ExistingElementException e) {
