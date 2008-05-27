@@ -418,7 +418,7 @@ public class Proceedings extends Publication
 			int idDoc,id_aut;
 			String title,booktitle,volume,series,address,year, number;
 			String month,organization,publisher, note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -445,10 +445,9 @@ public class Proceedings extends Publication
 			id_aut = ((Long) array[17]).intValue();			
 			if (array[18] != null) n_aut = (String) array[18]; else n_aut = null;
 			if (array[19] != null) ap_aut = (String) array[19]; else ap_aut = null;
-			if (array[20] != null) web_aut = (String) array[20]; else web_aut = null;
-			escrito_edit = ((Boolean) array[21]).booleanValue();
-			if (array[22] != null) clave = (String) array[22]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[20]).booleanValue();
+			if (array[21] != null) clave = (String) array[21]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
@@ -469,12 +468,11 @@ public class Proceedings extends Publication
 				id_aut = ((Long) array[17]).intValue();			
 				if (array[18] != null) n_aut = (String) array[18]; else n_aut = null;
 				if (array[19] != null) ap_aut = (String) array[19]; else ap_aut = null;
-				if (array[20] != null) web_aut = (String) array[20]; else web_aut = null;
-				escrito_edit = ((Boolean) array[21]).booleanValue();
-				if (array[22] != null) clave = (String) array[22]; else clave = null;
+				escrito_edit = ((Boolean) array[20]).booleanValue();
+				if (array[21] != null) clave = (String) array[21]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == false) pr1.addEditor(autor1);
 
 

@@ -32,18 +32,17 @@ public class ModificadorAutores
 	 * Excepción si ya existe o no hay permisos.
 	 * @param nombre - Nombre del autor o editor.
 	 * @param apellidos - Apellidos del autor o editor.
-	 * @param web - Dirección de la página web del autor o editor.
 	 * @param conn 
 	 * @throws database.BDException
 	 * @throws ExistingElementException 
 	 * @roseuid 47C5A3B1036B
 	 */
-	public void insertaAutorEditor(String nombre, String apellidos, String web, Connection conn) throws BDException, ExistingElementException 
+	public void insertaAutorEditor(String nombre, String apellidos, Connection conn) throws BDException, ExistingElementException 
 	{
 		int idAut = consultaIdAutor(nombre, apellidos, conn);		
 		if (idAut > 0) throw new ExistingElementException(ExistenceException.AUTOR);
 		
-		String insercion = "INSERT INTO autoreseditores VALUES (0,'" + nombre + "','" + apellidos + "','" + web + "');";
+		String insercion = "INSERT INTO autoreseditores VALUES (0,'" + nombre + "','" + apellidos + "');";
 		theBaseDatos.exeUpdate(insercion, conn);
 	}
 	
@@ -103,17 +102,15 @@ public class ModificadorAutores
 	 *  @param apellidosActual Apellidos actuales del autor.
 	 *  @param nombreNuevo Nuevo nombre que se quiere almacenar en la base de datos.
 	 *  @param apellidosNuevos Apellidos nuevos del autor que se quieren almacenar en la base de datos.
-	 *  @param urlNueva Nueva dirección Web del autor que se quiere almacenar en la base de datos.
 	 * @throws BDException 
 	 * @roseuid 47C5A5EA034B
 	 */
-	public void modificaAutor(String nombreActual, String apellidosActual, String nombreNuevo, String apellidosNuevos, String urlNueva, Connection conn) throws NonExistingElementException,BDException 
+	public void modificaAutor(String nombreActual, String apellidosActual, String nombreNuevo, String apellidosNuevos, Connection conn) throws NonExistingElementException,BDException 
 	{
 		int idAut = consultaIdAutor(nombreActual, apellidosActual, conn);
 		if (idAut == 0) throw new NonExistingElementException(ExistenceException.AUTOR);
 		
-		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "', url = '" + urlNueva +
-		"' WHERE idAut = "+ idAut + ";") ;
+		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "' WHERE idAut = "+ idAut + ";") ;
 		theBaseDatos.exeUpdate(consulta, conn);    
 	}
 	
@@ -122,19 +119,17 @@ public class ModificadorAutores
 	 *  @param idAutor - Identificador único de Autor del autor que se desea modificar.
 	 *  @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
 	 *  @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
-	 *  @param urlNueva Nueva - dirección Web del autor que se quiere almacenar en la base de datos.
 	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos.
 	 */
-	public void modificaAutor(int idAutor, String nombreNuevo, String apellidosNuevos, String urlNueva, Connection conn) throws NonExistingElementException,BDException 
+	public void modificaAutor(int idAutor, String nombreNuevo, String apellidosNuevos, Connection conn) throws NonExistingElementException,BDException 
 	{		
 		String cons1 = new String ("SELECT COUNT(*) FROM autoreseditores WHERE idAut = " + idAutor +";");
 		Vector <Object[]> res1 = theBaseDatos.exeQuery(cons1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue()!=1) throw new NonExistingElementException(ExistenceException.AUTOR);
 		
-		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "', url = '" + urlNueva +
-		"' WHERE idAut = "+ idAutor + ";") ;
+		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "' WHERE idAut = "+ idAutor + ";") ;
 		theBaseDatos.exeUpdate(consulta, conn);    
 	}	
 	

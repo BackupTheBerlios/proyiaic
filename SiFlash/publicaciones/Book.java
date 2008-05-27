@@ -477,7 +477,7 @@ public class Book extends Publication
 			int idDoc,id_aut;
 			String title,publisher,volume,number,year,series, address, edition;
 			String month, note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -504,10 +504,9 @@ public class Book extends Publication
 			id_aut = ((Long) array[16]).intValue();			
 			if (array[17] != null) n_aut = (String) array[17]; else n_aut = null;
 			if (array[18] != null) ap_aut = (String) array[18]; else ap_aut = null;
-			if (array[19] != null) web_aut = (String) array[19]; else web_aut = null;
-			escrito_edit = ((Boolean) array[20]).booleanValue();
-			if (array[21] != null) clave = (String) array[21]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[19]).booleanValue();
+			if (array[20] != null) clave = (String) array[20]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -529,12 +528,11 @@ public class Book extends Publication
 				id_aut = ((Long) array[16]).intValue();			
 				if (array[17] != null) n_aut = (String) array[17]; else n_aut = null;
 				if (array[18] != null) ap_aut = (String) array[18]; else ap_aut = null;
-				if (array[19] != null) web_aut = (String) array[19]; else web_aut = null;
 				escrito_edit = ((Boolean) array[20]).booleanValue();
 				if (array[21] != null) clave = (String) array[21]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) book1.addAutor(autor1);
 				else book1.addEditor(autor1);
 

@@ -285,14 +285,14 @@ public class Misc extends Publication
 	}
 
 	public static Vector<Misc> generaPub(Vector<Object[]> v) {
-		//"SELECT DISTINCT MISC1.idDoc, MISC1.title, MISC1.howpublished, MISC1.month, MISC1.year, MISC1.note, MISC1.abstract, MISC1.URL, MISC1.user, MISC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM misc AS MISC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MISC1.idDoc AND EEX1.idDoc = MISC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MISC1.idDoc"
+		//"SELECT DISTINCT MISC1.idDoc, MISC1.title, MISC1.howpublished, MISC1.month, MISC1.year, MISC1.note, MISC1.abstract, MISC1.URL, MISC1.user, MISC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM misc AS MISC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MISC1.idDoc AND EEX1.idDoc = MISC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MISC1.idDoc"
 		Vector <Misc> vector = new Vector <Misc>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
 			int idDoc,id_aut;
 			String title, month,howpublished,note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave,year;
+			String proyecto,n_aut,ap_aut,clave,year;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -314,10 +314,9 @@ public class Misc extends Publication
 			id_aut = ((Long) array[11]).intValue();			
 			if (array[12] != null) n_aut = (String) array[12]; else n_aut = null;
 			if (array[13] != null) ap_aut = (String) array[13]; else ap_aut = null;
-			if (array[14] != null) web_aut = (String) array[14]; else web_aut = null;
-			escrito_edit = ((Boolean) array[15]).booleanValue();
-			if (array[16] != null) clave = (String) array[16]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[14]).booleanValue();
+			if (array[15] != null) clave = (String) array[15]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -339,12 +338,11 @@ public class Misc extends Publication
 				id_aut = ((Long) array[11]).intValue();			
 				if (array[12] != null) n_aut = (String) array[12]; else n_aut = null;
 				if (array[13] != null) ap_aut = (String) array[13]; else ap_aut = null;
-				if (array[14] != null) web_aut = (String) array[14]; else web_aut = null;
-				escrito_edit = ((Boolean) array[15]).booleanValue();
-				if (array[16] != null) clave = (String) array[16]; else clave = null;
+				escrito_edit = ((Boolean) array[14]).booleanValue();
+				if (array[15] != null) clave = (String) array[15]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) misc1.addAutor(autor1);				
 
 

@@ -307,7 +307,7 @@ public class Booklet extends Publication
 	}
 
 	public static Vector<Booklet> generaPub(Vector<Object[]> v) {
-		//"SELECT DISTINCT BOOK1.idDoc, BOOK1.title, BOOK1.howpublished, BOOK1.address, BOOK1.month, BOOK1.year, BOOK1.note, BOOK1.abstract, BOOK1.URL, BOOK1.user, BOOK1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM bookleet AS BOOK1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = BOOK1.idDoc AND EEX1.idDoc = BOOK1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = BOOK1.idDoc"
+		//"SELECT DISTINCT BOOK1.idDoc, BOOK1.title, BOOK1.howpublished, BOOK1.address, BOOK1.month, BOOK1.year, BOOK1.note, BOOK1.abstract, BOOK1.URL, BOOK1.user, BOOK1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM bookleet AS BOOK1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = BOOK1.idDoc AND EEX1.idDoc = BOOK1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = BOOK1.idDoc"
 		Vector <Booklet> vector = new Vector <Booklet>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -315,7 +315,7 @@ public class Booklet extends Publication
 			int idDoc,id_aut;
 			String title,address,year;
 			String month,howpublished,note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -338,10 +338,9 @@ public class Booklet extends Publication
 			id_aut = ((Long) array[12]).intValue();			
 			if (array[13] != null) n_aut = (String) array[13]; else n_aut = null;
 			if (array[14] != null) ap_aut = (String) array[14]; else ap_aut = null;
-			if (array[15] != null) web_aut = (String) array[15]; else web_aut = null;
-			escrito_edit = ((Boolean) array[16]).booleanValue();
-			if (array[17] != null) clave = (String) array[17]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[15]).booleanValue();
+			if (array[16] != null) clave = (String) array[16]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -363,12 +362,11 @@ public class Booklet extends Publication
 				id_aut = ((Long) array[12]).intValue();			
 				if (array[13] != null) n_aut = (String) array[13]; else n_aut = null;
 				if (array[14] != null) ap_aut = (String) array[14]; else ap_aut = null;
-				if (array[15] != null) web_aut = (String) array[15]; else web_aut = null;
-				escrito_edit = ((Boolean) array[16]).booleanValue();
-				if (array[17] != null) clave = (String) array[17]; else clave = null;
+				escrito_edit = ((Boolean) array[15]).booleanValue();
+				if (array[16] != null) clave = (String) array[16]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) bkl1.addAutor(autor1);				
 
 

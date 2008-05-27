@@ -66,16 +66,16 @@ public class BaseDatos
 //	   password = "123456789";
 	   
 	   //Datos pc David.
-	   ip = "81.34.73.17:3306";
-	   bd = "ssii";
-	   login = "Sistemas";
-	   password = "123456789";
-	   
-	   //Datos pc Alfonso.
-//	   ip = "localhost:3306";
+//	   ip = "81.34.73.17:3306";
 //	   bd = "ssii";
 //	   login = "Sistemas";
 //	   password = "123456789";
+	   
+	   //Datos pc Alfonso.
+	   ip = "localhost:3306";
+	   bd = "ssii";
+	   login = "Sistemas";
+	   password = "123456789";
    }
    
    /**

@@ -383,7 +383,7 @@ public class Article extends Publication
 	}	
 
 	public static Vector<Article> generaPub(Vector<Object[]> v){
-		//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
+		//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
 		Vector <Article> vector = new Vector <Article>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -391,7 +391,7 @@ public class Article extends Publication
 			int idDoc,id_aut;
 			String title,journal,volume,pages,number,year;
 			String month, note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -413,13 +413,12 @@ public class Article extends Publication
 			if (array[11] != null) user = (String) array[11]; else user = null;
 			if (array[12] != null) referencia = (String) array[12]; else referencia = null;
 			if (array[13] != null) proyecto = (String) array[13]; else proyecto = null;
-			id_aut = ((Long) array[14]).intValue();			
+			id_aut = ((Long) array[14]).intValue();
 			if (array[15] != null) n_aut = (String) array[15]; else n_aut = null;
 			if (array[16] != null) ap_aut = (String) array[16]; else ap_aut = null;
-			if (array[17] != null) web_aut = (String) array[17]; else web_aut = null;
-			escrito_edit = ((Boolean) array[18]).booleanValue();
-			if (array[19] != null) clave = (String) array[19]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[17]).booleanValue();
+			if (array[18] != null) clave = (String) array[18]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -442,12 +441,11 @@ public class Article extends Publication
 				id_aut = ((Long) array[14]).intValue();			
 				if (array[15] != null) n_aut = (String) array[15]; else n_aut = null;
 				if (array[16] != null) ap_aut = (String) array[16]; else ap_aut = null;
-				if (array[17] != null) web_aut = (String) array[17]; else web_aut = null;
-				escrito_edit = ((Boolean) array[18]).booleanValue();
-				if (array[19] != null) clave = (String) array[19]; else clave = null;
+				escrito_edit = ((Boolean) array[17]).booleanValue();
+				if (array[18] != null) clave = (String) array[18]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) art1.addAutor(autor1);
 
 

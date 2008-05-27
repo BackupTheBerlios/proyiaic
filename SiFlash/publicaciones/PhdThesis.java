@@ -327,7 +327,7 @@ public class PhdThesis extends Publication
 	}
 
 	public static Vector<PhdThesis> generaPub(Vector<Object[]> v) {
-		//"SELECT DISTINCT PHD1.idDoc, PHD1.title, PHD1.type, PHD1.school, PHD1.address, PHD1.month, PHD1.year, PHD1.note, PHD1.abstract, PHD1.URL, PHD1.user, PHD1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM phdthesis AS PHD1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = PHD1.idDoc AND EEX1.idDoc = PHD1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = PHD1.idDoc"
+		//"SELECT DISTINCT PHD1.idDoc, PHD1.title, PHD1.type, PHD1.school, PHD1.address, PHD1.month, PHD1.year, PHD1.note, PHD1.abstract, PHD1.URL, PHD1.user, PHD1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM phdthesis AS PHD1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = PHD1.idDoc AND EEX1.idDoc = PHD1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = PHD1.idDoc"
 		Vector <PhdThesis> vector = new Vector <PhdThesis>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -335,7 +335,7 @@ public class PhdThesis extends Publication
 			int idDoc,id_aut;
 			String title,address,year;
 			String month,type,school, note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -359,10 +359,9 @@ public class PhdThesis extends Publication
 			id_aut = ((Long) array[13]).intValue();			
 			if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
 			if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
-			if (array[16] != null) web_aut = (String) array[16]; else web_aut = null;
-			escrito_edit = ((Boolean) array[17]).booleanValue();
-			if (array[18] != null) clave = (String) array[18]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[16]).booleanValue();
+			if (array[17] != null) clave = (String) array[17]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -384,12 +383,11 @@ public class PhdThesis extends Publication
 				id_aut = ((Long) array[13]).intValue();			
 				if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
 				if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
-				if (array[16] != null) web_aut = (String) array[16]; else web_aut = null;
-				escrito_edit = ((Boolean) array[17]).booleanValue();
-				if (array[18] != null) clave = (String) array[18]; else clave = null;
+				escrito_edit = ((Boolean) array[16]).booleanValue();
+				if (array[17] != null) clave = (String) array[17]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) phd1.addAutor(autor1);				
 
 

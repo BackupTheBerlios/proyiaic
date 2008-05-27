@@ -115,9 +115,9 @@ public class ConsultorBaseDatosTest {
 	@Test
 	public final void testBuscaAutores(){
 		Vector <AutorEditor> vector = new Vector<AutorEditor>();
-		vector.add(new AutorEditor(book,null,null));
-		vector.add(new AutorEditor(str1,null,null));
-		vector.add(new AutorEditor(str2,null,null));
+		vector.add(new AutorEditor(book,null));
+		vector.add(new AutorEditor(str1,null));
+		vector.add(new AutorEditor(str2,null));
 		try {
 			consultor.buscaAutores(vector, null);
 		} catch (BDException e) {

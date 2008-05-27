@@ -1,2 +1,8 @@
 <listaCampos tipoPublicaciones="1" referencia="">
+<authors>
+	<author>
+		<nombre>NombreAutor2</nombre>
+		<apellidos/>
+	</author>
+</authors>
 </listaCampos>

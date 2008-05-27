@@ -264,15 +264,15 @@ public class Unpublished extends Publication
 	}
 
 	public static Vector<Unpublished> generaPub(Vector<Object[]> v) {
-		//"SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc"
-		//"SELECT DISTINCT UNP1.idDoc, UNP1.title, UNP1.month, UNP1.year, UNP1.note, UNP1.abstract, UNP1.URL, UNP1.user, UNP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM unpublished AS UNP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = UNP1.idDoc AND EEX1.idDoc = UNP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = UNP1.idDoc"
+		//"SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc"
+		//"SELECT DISTINCT UNP1.idDoc, UNP1.title, UNP1.month, UNP1.year, UNP1.note, UNP1.abstract, UNP1.URL, UNP1.user, UNP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM unpublished AS UNP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = UNP1.idDoc AND EEX1.idDoc = UNP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = UNP1.idDoc"
 		Vector <Unpublished> vector = new Vector <Unpublished>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
 			int idDoc,id_aut;			
 			String month,title, note, abstracts, URL,user, referencia,year; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -293,10 +293,9 @@ public class Unpublished extends Publication
 			id_aut = ((Long) array[10]).intValue();			
 			if (array[11] != null) n_aut = (String) array[11]; else n_aut = null;
 			if (array[12] != null) ap_aut = (String) array[12]; else ap_aut = null;
-			if (array[13] != null) web_aut = (String) array[13]; else web_aut = null;
-			escrito_edit = ((Boolean) array[14]).booleanValue();
-			if (array[15] != null) clave = (String) array[15]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[13]).booleanValue();
+			if (array[14] != null) clave = (String) array[14]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -318,12 +317,11 @@ public class Unpublished extends Publication
 				id_aut = ((Long) array[10]).intValue();			
 				if (array[11] != null) n_aut = (String) array[11]; else n_aut = null;
 				if (array[12] != null) ap_aut = (String) array[12]; else ap_aut = null;
-				if (array[13] != null) web_aut = (String) array[13]; else web_aut = null;
-				escrito_edit = ((Boolean) array[14]).booleanValue();
-				if (array[15] != null) clave = (String) array[15]; else clave = null;
+				escrito_edit = ((Boolean) array[13]).booleanValue();
+				if (array[14] != null) clave = (String) array[14]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) unp1.addAutor(autor1);				
 
 

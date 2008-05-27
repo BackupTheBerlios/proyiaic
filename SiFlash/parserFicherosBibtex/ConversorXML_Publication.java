@@ -98,9 +98,8 @@ public class ConversorXML_Publication
 			autorEditorActual = it.next();
 			Element nombre = autorEditorActual.getChild("nombre");
 			Element apellidos = autorEditorActual.getChild("apellidos");
-			Element web = autorEditorActual.getChild("web");
 
-			AutorEditor aeNuevo = new AutorEditor(nombre.getValue(), apellidos.getValue(), web.getValue());
+			AutorEditor aeNuevo = new AutorEditor(nombre.getValue(), apellidos.getValue());
 			listaAutoresEditores.add(aeNuevo);
 		}
 		if (listaAutoresEditores.isEmpty())

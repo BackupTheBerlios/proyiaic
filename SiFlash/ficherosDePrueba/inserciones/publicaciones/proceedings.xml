@@ -6,12 +6,10 @@
 		<editor>
 			<nombre>NombreEditor6</nombre>
 			<apellidos>ApellidosEditor6</apellidos>
-			<web>Web Editor6</web>
 		</editor>
 		<editor>
 			<nombre>NombreEditor5</nombre>
 			<apellidos>ApellidosEditor5</apellidos>
-			<web>Web Editor5</web>
 		</editor>
 	</editors>
 	<booktitle>El booktitle</booktitle>

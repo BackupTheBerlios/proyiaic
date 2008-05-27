@@ -216,9 +216,8 @@ public class ConversorXML_BBDD
 			autorEditorActual = it.next();
 			Element nombre = autorEditorActual.getChild("nombre");
 			Element apellidos = autorEditorActual.getChild("apellidos");
-			Element web = autorEditorActual.getChild("web");
 			
-			AutorEditor aeNuevo = new AutorEditor(nombre.getValue(), apellidos.getValue(), web.getValue());
+			AutorEditor aeNuevo = new AutorEditor(nombre.getValue(), apellidos.getValue());
 			vectorAutoresEditores.add(aeNuevo);
 		}
 		
@@ -350,8 +349,6 @@ public class ConversorXML_BBDD
 					System.out.println("  - Nombre: " + authors.elementAt(i).getNombre());
 				if (authors.elementAt(i).getApellidos() != null)
 					System.out.println("  - Apellidos: " + authors.elementAt(i).getApellidos());
-				if (authors.elementAt(i).getWeb() != null)
-					System.out.println("  - Web: " + authors.elementAt(i).getWeb());
 			}
 		}
 		if (editors != null)
@@ -365,8 +362,6 @@ public class ConversorXML_BBDD
 					System.out.println("  - Nombre: " + editors.elementAt(i).getNombre());
 				if (authors.elementAt(i).getApellidos() != null)
 					System.out.println("  - Apellidos: " + editors.elementAt(i).getApellidos());
-				if (authors.elementAt(i).getWeb() != null)
-					System.out.println("  - Web: " + editors.elementAt(i).getWeb());
 			}
 		}
 	}

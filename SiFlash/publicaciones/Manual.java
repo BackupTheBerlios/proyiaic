@@ -327,7 +327,7 @@ public class Manual extends Publication
 	}
 
 	public static Vector<Manual> generaPub(Vector<Object[]> v) {
-		//"SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc"
+		//"SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc"
 		Vector <Manual> vector = new Vector <Manual>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -335,7 +335,7 @@ public class Manual extends Publication
 			int idDoc,id_aut;
 			String title,address;
 			String month,organization,edition, note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave,year;
+			String proyecto,n_aut,ap_aut,clave,year;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -359,10 +359,9 @@ public class Manual extends Publication
 			id_aut = ((Long) array[13]).intValue();			
 			if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
 			if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
-			if (array[16] != null) web_aut = (String) array[16]; else web_aut = null;
-			escrito_edit = ((Boolean) array[17]).booleanValue();
-			if (array[18] != null) clave = (String) array[18]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[16]).booleanValue();
+			if (array[17] != null) clave = (String) array[17]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -384,12 +383,11 @@ public class Manual extends Publication
 				id_aut = ((Long) array[13]).intValue();			
 				if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
 				if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
-				if (array[16] != null) web_aut = (String) array[16]; else web_aut = null;
-				escrito_edit = ((Boolean) array[17]).booleanValue();
-				if (array[18] != null) clave = (String) array[18]; else clave = null;
+				escrito_edit = ((Boolean) array[16]).booleanValue();
+				if (array[17] != null) clave = (String) array[17]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) man1.addAutor(autor1);				
 
 

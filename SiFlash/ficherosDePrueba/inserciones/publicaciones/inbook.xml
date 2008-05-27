@@ -6,24 +6,20 @@
 		<author>
 			<nombre>NombreAutor1</nombre>
 			<apellidos>ApellidosAutor1</apellidos>
-			<web>Web autor 1</web>
 		</author>
 		<author>
 			<nombre>NombreAutor2</nombre>
 			<apellidos>ApellidosAutor2</apellidos>
-			<web>Web autor 2</web>
 		</author>
 	</authors>
 	<editors>
 		<editor>
 			<nombre>NombreEditor1</nombre>
 			<apellidos>ApellidosEditor1</apellidos>
-			<web>Web Editor 1</web>
 		</editor>
 		<editor>
 			<nombre>NombreEditor2</nombre>
 			<apellidos>ApellidosEditor2</apellidos>
-			<web>Web Editor 2</web>
 		</editor>
 	</editors>
 	<chapter>El chapter</chapter>

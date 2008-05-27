@@ -350,7 +350,7 @@ public class TechReport extends Publication
 
 
 	public static Vector<TechReport> generaPub(Vector<Object[]> v) {
-		//"SELECT DISTINCT TEC1.idDoc, TEC1.title, TEC1.type, TEC1.institution, TEC1.address, TEC1.month, TEC1.year, TEC1.note, TEC1.abstract, TEC1.URL, TEC1.user, TEC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, AUT1.web, EEX1.escrito_o_editado, KEY1.clave, TEC1.type FROM techreport AS TEC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = TEC1.idDoc AND EEX1.idDoc = TEC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = TEC1.idDoc"
+		//"SELECT DISTINCT TEC1.idDoc, TEC1.title, TEC1.type, TEC1.institution, TEC1.address, TEC1.month, TEC1.year, TEC1.note, TEC1.abstract, TEC1.URL, TEC1.user, TEC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave, TEC1.type FROM techreport AS TEC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = TEC1.idDoc AND EEX1.idDoc = TEC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = TEC1.idDoc"
 		Vector <TechReport> vector = new Vector <TechReport>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){
@@ -358,7 +358,7 @@ public class TechReport extends Publication
 			int idDoc,id_aut;
 			String title,address,type,year;
 			String month,number,institution, note, abstracts, URL,user, referencia; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -382,11 +382,10 @@ public class TechReport extends Publication
 			id_aut = ((Long) array[13]).intValue();			
 			if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
 			if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
-			if (array[16] != null) web_aut = (String) array[16]; else web_aut = null;
-			escrito_edit = ((Boolean) array[17]).booleanValue();
-			if (array[18] != null) clave = (String) array[18]; else clave = null;
-			if (array[19] != null) number = (String) array[19]; else number = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[16]).booleanValue();
+			if (array[17] != null) clave = (String) array[17]; else clave = null;
+			if (array[18] != null) number = (String) array[18]; else number = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -408,12 +407,11 @@ public class TechReport extends Publication
 				id_aut = ((Long) array[13]).intValue();			
 				if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
 				if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
-				if (array[16] != null) web_aut = (String) array[16]; else web_aut = null;
-				escrito_edit = ((Boolean) array[17]).booleanValue();
-				if (array[18] != null) clave = (String) array[18]; else clave = null;
+				escrito_edit = ((Boolean) array[16]).booleanValue();
+				if (array[17] != null) clave = (String) array[17]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) tec1.addAutor(autor1);				
 
 

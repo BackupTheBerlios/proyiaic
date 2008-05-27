@@ -155,13 +155,12 @@ public class DataBaseControler
 	 * con los datos parámetro.
 	 * @param nombre - Nombre del autor.
 	 * @param apellido - Apellidos del autor.
-	 * @param web - URL de la web del autor.
 	 * @return java.util.Vector Vector con los autores y/o editores consultados
 	 * @throws UnimplementedException 
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
-	public Vector<AutorEditor> consultaAutores(String nombre, String apellido, String web, boolean total_o_parcial) throws BDException 
+	public Vector<AutorEditor> consultaAutores(String nombre, String apellido, boolean total_o_parcial) throws BDException 
 	{
 		Connection conn = database.abreConexion();
 		try{
@@ -182,14 +181,6 @@ public class DataBaseControler
 
 				if (total_o_parcial) cons += "apellidos LIKE '%" + apellido + "%'";
 				else cons += "apellido = '" + apellido + "'";
-			}
-
-			if (web != null){
-				if (cons == null) cons = new String();
-				else cons+= " AND ";
-
-				if (total_o_parcial) cons += "web LIKE '%" + web + "%'";
-				else cons += "web = '" + web + "'";
 			}
 
 			if (cons == null) cons = new String ("TRUE");
@@ -384,19 +375,18 @@ public class DataBaseControler
 	 *  @param idAutor - Identificador único de Autor del autor que se desea modificar.
 	 *  @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
 	 *  @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
-	 *  @param urlNueva Nueva - dirección Web del autor que se quiere almacenar en la base de datos.
 	 * @throws BDException 
 	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos. 
 	 */
-	public String modificaAutor(int id_autor, String nombre, String apellidos, String web) throws BDException
+	public String modificaAutor(int id_autor, String nombre, String apellidos) throws BDException
 	{
 		Connection conn = database.abreConexion();
 		try
 		{
 			ejecutaString("BEGIN;", conn);
-			modif_autores.modificaAutor(id_autor, nombre, apellidos, web, conn);
+			modif_autores.modificaAutor(id_autor, nombre, apellidos, conn);
 			ejecutaString("COMMIT;", conn);
 			return "La modificación del autor/editor se ha realizado correctamente.";
 		}
@@ -820,13 +810,9 @@ public class DataBaseControler
 				str += ",\"" + ae.getApellidos() + "\"";
 			else str+= ",null";
 			
-			if(ae.getWeb()!=null)
-				str += ",\"" + ae.getWeb() + "\"";
-			else str+= ",null";
-			
 			str+=");";
 			database.exeUpdate(str, conn);*/
-			modif_autores.insertaAutorEditor(ae.getNombre(), ae.getApellidos(), ae.getWeb(), conn);
+			modif_autores.insertaAutorEditor(ae.getNombre(), ae.getApellidos(), conn);
 //		}finally{
 //			this.cierraConexion();
 //		}

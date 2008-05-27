@@ -561,7 +561,7 @@ public class InCollection extends Publication
 			int idDoc,id_aut;
 			String title,booktitle,crossref,volume,series,pages,address,year, number;
 			String month,type,publisher, note, abstracts, URL,user, referencia,chapter, edition; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -591,12 +591,11 @@ public class InCollection extends Publication
 			id_aut = ((Long) array[18]).intValue();			
 			if (array[19] != null) n_aut = (String) array[19]; else n_aut = null;
 			if (array[20] != null) ap_aut = (String) array[20]; else ap_aut = null;
-			if (array[21] != null) web_aut = (String) array[21]; else web_aut = null;
-			escrito_edit = ((Boolean) array[22]).booleanValue();
-			if (array[23] != null) clave = (String) array[23]; else clave = null;
-			if (array[24] != null) chapter = (String) array[24]; else chapter = null;
-			if (array[25] != null) edition = (String) array[25]; else edition = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[21]).booleanValue();
+			if (array[22] != null) clave = (String) array[22]; else clave = null;
+			if (array[23] != null) chapter = (String) array[23]; else chapter = null;
+			if (array[24] != null) edition = (String) array[24]; else edition = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -619,12 +618,11 @@ public class InCollection extends Publication
 				id_aut = ((Long) array[18]).intValue();			
 				if (array[19] != null) n_aut = (String) array[19]; else n_aut = null;
 				if (array[20] != null) ap_aut = (String) array[20]; else ap_aut = null;
-				if (array[21] != null) web_aut = (String) array[21]; else web_aut = null;
-				escrito_edit = ((Boolean) array[22]).booleanValue();
-				if (array[23] != null) clave = (String) array[23]; else clave = null;
+				escrito_edit = ((Boolean) array[21]).booleanValue();
+				if (array[22] != null) clave = (String) array[22]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) inc1.addAutor(autor1);
 				else inc1.addEditor(autor1);
 

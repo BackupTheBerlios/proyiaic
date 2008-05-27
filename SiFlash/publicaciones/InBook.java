@@ -514,7 +514,7 @@ public class InBook extends Publication
 			int idDoc,id_aut;
 			String title,volume,series,pages,address,year,number;
 			String month,type,publisher, note, abstracts, URL,user, referencia,chapter,edition; 
-			String proyecto,n_aut,ap_aut,web_aut,clave;
+			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
 			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
@@ -544,10 +544,9 @@ public class InBook extends Publication
 			id_aut = ((Long) array[19]).intValue();			
 			if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
 			if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
-			if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-			escrito_edit = ((Boolean) array[23]).booleanValue();
-			if (array[24] != null) clave = (String) array[24]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);
+			escrito_edit = ((Boolean) array[22]).booleanValue();
+			if (array[23] != null) clave = (String) array[23]; else clave = null;
+			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
 			if (proyecto != null) proyectos.add(proyecto);
@@ -569,12 +568,11 @@ public class InBook extends Publication
 				id_aut = ((Long) array[19]).intValue();			
 				if (array[20] != null) n_aut = (String) array[20]; else n_aut = null;
 				if (array[21] != null) ap_aut = (String) array[21]; else ap_aut = null;
-				if (array[22] != null) web_aut = (String) array[22]; else web_aut = null;
-				escrito_edit = ((Boolean) array[23]).booleanValue();
-				if (array[24] != null) clave = (String) array[24]; else clave = null;
+				escrito_edit = ((Boolean) array[22]).booleanValue();
+				if (array[23] != null) clave = (String) array[23]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut,web_aut);				
+				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) inb1.addAutor(autor1);
 				else inb1.addEditor(autor1);
 

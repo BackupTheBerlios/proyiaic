@@ -6,8 +6,7 @@ create table Usuarios (
 create table AutoresEditores (
 	idAut INTEGER UNSIGNED NOT NULL AUTO_INCREMENT primary key,
 	nombre varchar(20),
-	apellidos varchar(50),
-	web varchar(512));
+	apellidos varchar(50));
 
 
 create table escrito_editado_por (

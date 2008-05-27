@@ -6,12 +6,10 @@
 		<author>
 			<nombre>NombreAutor1</nombre>
 			<apellidos>ApellidosAutor1</apellidos>
-			<web>Web autor 1</web>
 		</author>
 		<author>
 			<nombre>NombreAutor3</nombre>
 			<apellidos>ApellidosAutor3</apellidos>
-			<web>Web autor 3</web>
 		</author>
 	</authors>
 	<journal>El journal</journal>
