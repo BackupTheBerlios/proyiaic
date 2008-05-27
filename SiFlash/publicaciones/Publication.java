@@ -13,7 +13,9 @@ import org.jdom.Element;
 import personas.AutorEditor;
 import temporal.UnimplementedException;
 import controlador.DataBaseControler;
+import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
+import controlador.exceptions.NonExistingElementException;
 import database.BDException;
 
 /**

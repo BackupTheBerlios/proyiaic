@@ -72,12 +72,11 @@ public class ModificadorProyectos
 	 */
 	public void borraProyecto(String proyecto, Connection conn) throws NonExistingElementException,BDException 
 	{
-		String consulta1 = "SELECT jefe FROM proyectos WHERE nombre = '" + proyecto + "';";
+		String consulta1 = "SELECT * FROM proyectos WHERE nombre = '" + proyecto + "';";
 		Vector<Object[]> res = theBaseDatos.exeQuery(consulta1, conn);
 		if (res == null || res.size() <= 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
 		String consulta2 = "DELETE FROM proyectos WHERE nombre = '" + proyecto + "';";
 		theBaseDatos.exeUpdate(consulta2, conn);
-
 	}
 	
 	/**

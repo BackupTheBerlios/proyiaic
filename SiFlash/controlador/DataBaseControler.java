@@ -251,7 +251,9 @@ public class DataBaseControler
 		Connection conn = database.abreConexion();
 		try
 		{
+			ejecutaString("BEGIN;", conn);
 			modif_pub.insertaPublicación(publicacion, conn);
+			ejecutaString("COMMIT;", conn);
 			return "La publicación se ha insertado correctamente.";
 		}
 		catch (ExistingElementException e) 
@@ -799,23 +801,7 @@ public class DataBaseControler
 	 */
 	public void insertaAutorEditor(AutorEditor ae, Connection conn) throws BDException, ExistingElementException
 	{
-		//Connection conn = database.abreConexion();
-//		try{							
-			/*String str = new String ("INSERT INTO autoreseditores VALUES(0");
-			if(ae.getNombre() != null)
-				str += ",\"" + ae.getNombre() + "\"";
-			else str+= ",null";
-			
-			if(ae.getApellidos()!=null)
-				str += ",\"" + ae.getApellidos() + "\"";
-			else str+= ",null";
-			
-			str+=");";
-			database.exeUpdate(str, conn);*/
-			modif_autores.insertaAutorEditor(ae.getNombre(), ae.getApellidos(), conn);
-//		}finally{
-//			this.cierraConexion();
-//		}
+		modif_autores.insertaAutorEditor(ae.getNombre(), ae.getApellidos(), conn);
 	}
 
 	/**
@@ -838,57 +824,110 @@ public class DataBaseControler
 		}
 	}
 
+	private Element generaElementoAutoresEditores(Connection conn) throws BDException
+	{
+		Element eAutoresEditores = new Element("listaAutoresEditores");
+
+		Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;", conn);
+		int numAE = result.size();
+		Object[] actual;
+		int idAut;
+		String nombre, apellidos;
+		for (int i = 0; i < numAE; i++)
+		{
+			actual = result.get(i);
+			idAut = ((Long)actual[0]).intValue();
+			nombre = (String)actual[1];
+			if (nombre==null) nombre = "-";
+			apellidos = (String)actual[2];
+			if (apellidos==null) apellidos = "-";
+
+
+			Element eAutorEditor = new Element("AutorEditor");
+			eAutorEditor.setAttribute("idAut", ((Integer)idAut).toString());
+			Element eNombre = new Element("nombre");
+			eNombre.addContent(nombre);
+			Element eApellidos = new Element("apellidos");
+			eApellidos.addContent(apellidos);
+			eAutorEditor.addContent(eNombre);
+			eAutorEditor.addContent(eApellidos);
+
+			eAutoresEditores.addContent(eAutorEditor);
+		}
+		return eAutoresEditores;
+	}
+	
+	private Element generaElementoProyectos(Connection conn) throws BDException
+	{
+		Element eProyectos = new Element("listaProyectos");
+		Vector<Object[]> result = database.exeQuery("SELECT * FROM proyectos ORDER BY nombre", conn);
+		int numProy = result.size();
+		String proyecto;
+		Object[] actual;
+		for (int i = 0; i < numProy; i++)
+		{
+			actual = result.get(i);
+			proyecto = (String)actual[0];
+
+			Element eProyecto = new Element("proyecto");
+			eProyecto.addContent(proyecto);
+
+			eProyectos.addContent(eProyecto);
+		}
+		return eProyectos;
+	}
+	
+	private Element generaElementoProyectos(String user, Connection conn) throws BDException, NonExistingElementException
+	{
+		Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
+		if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
+		String tipoUser = (String)result.get(0)[0];
+		String consulta;
+		if (tipoUser.equals("admin"))
+			consulta = "SELECT * FROM proyectos ORDER BY nombre";
+		else if (tipoUser.equals("jefe"))
+		{
+			consulta = "SELECT proyecto FROM ProyectosAccesiblesJefe WHERE jefe='" + user + "' ORDER BY proyecto;";
+		}
+		else //Usuario normal (user).
+		{
+			consulta = "SELECT proyectos.nombre FROM proyectos, participaen ";
+			consulta += "WHERE proyectos.nombre = participaen.proyecto AND participaen.usuario = '" + user + "' ";
+			consulta += "ORDER BY proyectos.nombre";
+		}
+		
+		Element eProyectos = new Element("listaProyectos");
+		result = database.exeQuery(consulta, conn);
+
+		int numProy = result.size();
+		String proyecto;
+		Object[] actual;
+		for (int i = 0; i < numProy; i++)
+		{
+			actual = result.get(i);
+			proyecto = (String)actual[0];
+
+			Element eProyecto = new Element("proyecto");
+			eProyecto.addContent(proyecto);
+
+			eProyectos.addContent(eProyecto);
+		}
+		return eProyectos;
+	}
+	
 	public String obtenerListaAutoresEditoresYProyectosParaBusquedas()
 	{
 		try
 		{
-			Element root = new Element("AutoresEditoresProyectos");
-			Element eAutoresEditores = new Element("listaAutoresEditores");
-
 			Connection conn = database.abreConexion();
-			Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;", conn);
-			int numAE = result.size();
-			Object[] actual;
-			int idAut;
-			String nombre, apellidos;
-			for (int i = 0; i < numAE; i++)
-			{
-				actual = result.get(i);
-				idAut = ((Long)actual[0]).intValue();
-				nombre = (String)actual[1];
-				if (nombre==null) nombre = "-";
-				apellidos = (String)actual[2];
-				if (apellidos==null) apellidos = "-";
-
-
-				Element eAutorEditor = new Element("AutorEditor");
-				eAutorEditor.setAttribute("idAut", ((Integer)idAut).toString());
-				Element eNombre = new Element("nombre");
-				eNombre.addContent(nombre);
-				Element eApellidos = new Element("apellidos");
-				eApellidos.addContent(apellidos);
-				eAutorEditor.addContent(eNombre);
-				eAutorEditor.addContent(eApellidos);
-
-				eAutoresEditores.addContent(eAutorEditor);
-			}
+			Element root = new Element("AutoresEditoresProyectos");
+			Element eAutoresEditores = generaElementoAutoresEditores(conn);
 			root.addContent(eAutoresEditores);
-
-			Element eProyectos = new Element("listaProyectos");
-			result = database.exeQuery("SELECT * FROM proyectos ORDER BY nombre", conn);
-			int numProy = result.size();
-			String proyecto;
-			for (int i = 0; i < numProy; i++)
-			{
-				actual = result.get(i);
-				proyecto = (String)actual[0];
-
-				Element eProyecto = new Element("proyecto");
-				eProyecto.addContent(proyecto);
-
-				eProyectos.addContent(eProyecto);
-			}
+			
+			Element eProyectos = generaElementoProyectos(conn);
 			root.addContent(eProyectos);
+			
+			database.cierraConexion(conn);
 
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
@@ -907,72 +946,16 @@ public class DataBaseControler
 	{
 		try
 		{
-			Element root = new Element("AutoresEditoresProyectos");
-			Element eAutoresEditores = new Element("listaAutoresEditores");
-
 			Connection conn = database.abreConexion();
-			Vector<Object[]> result = database.exeQuery("SELECT idAut, nombre, apellidos FROM autoreseditores ORDER BY apellidos, nombre;", conn);
-			int numAE = result.size();
-			Object[] actual;
-			int idAut;
-			String nombre, apellidos;
-			for (int i = 0; i < numAE; i++)
-			{
-				actual = result.get(i);
-				idAut = ((Long)actual[0]).intValue();
-				nombre = (String)actual[1];
-				if (nombre==null) nombre = "-";
-				apellidos = (String)actual[2];
-				if (apellidos==null) apellidos = "-";
-
-
-				Element eAutorEditor = new Element("AutorEditor");
-				eAutorEditor.setAttribute("idAut", ((Integer)idAut).toString());
-				Element eNombre = new Element("nombre");
-				eNombre.addContent(nombre);
-				Element eApellidos = new Element("apellidos");
-				eApellidos.addContent(apellidos);
-				eAutorEditor.addContent(eNombre);
-				eAutorEditor.addContent(eApellidos);
-
-				eAutoresEditores.addContent(eAutorEditor);
-			}
+			Element root = new Element("AutoresEditoresProyectos");
+			Element eAutoresEditores = generaElementoAutoresEditores(conn);
 			root.addContent(eAutoresEditores);
 
-			result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
-			if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
-			String tipoUser = (String)result.get(0)[0];
-			String consulta;
-			if (tipoUser.equals("admin"))
-				consulta = "SELECT * FROM proyectos ORDER BY nombre";
-			else if (tipoUser.equals("jefe"))
-			{
-				consulta = "SELECT proyecto FROM ProyectosAccesiblesJefe WHERE jefe='" + user + "' ORDER BY proyecto;";
-			}
-			else //Usuario normal (user).
-			{
-				consulta = "SELECT proyectos.nombre FROM proyectos, participaen ";
-				consulta += "WHERE proyectos.nombre = participaen.proyecto AND participaen.usuario = '" + user + "' ";
-				consulta += "ORDER BY proyectos.nombre";
-			}
-
-			Element eProyectos = new Element("listaProyectos");
-			result = database.exeQuery(consulta, conn);
-
-			int numProy = result.size();
-			String proyecto;
-			for (int i = 0; i < numProy; i++)
-			{
-				actual = result.get(i);
-				proyecto = (String)actual[0];
-
-				Element eProyecto = new Element("proyecto");
-				eProyecto.addContent(proyecto);
-
-				eProyectos.addContent(eProyecto);
-			}
+			Element eProyectos = generaElementoProyectos(user, conn);
 			root.addContent(eProyectos);
 
+			database.cierraConexion(conn);
+			
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		}
@@ -995,6 +978,19 @@ public class DataBaseControler
 		}
 	}
 	
+	
+	private Element generaElementoPublicacionesProyecto(String proyecto) throws NonExistingElementException, BDException
+	{
+		Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
+		Element ePublicaciones = new Element("listaPublicaciones");
+		int numP = publicaciones.size();
+		for (int i = 0;  i < numP; i++)
+		{
+			Element ePublication = publicaciones.get(i).generarElementoXML();
+			ePublicaciones.addContent(ePublication);
+		}
+		return ePublicaciones;
+	}
 	
 	public String obtenerUsuariosYPublicacionesProyecto(String  proyecto)
 	{
@@ -1039,16 +1035,11 @@ public class DataBaseControler
 			}
 			root.addContent(noPertenecen);
 			
-			Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
-			Element ePublicaciones = new Element("listaPublicaciones");
-			int numP = publicaciones.size();
-			for (int i = 0;  i < numP; i++)
-			{
-				Element ePublication = publicaciones.get(i).generarElementoXML();
-				ePublicaciones.addContent(ePublication);
-			}
+			Element ePublicaciones = generaElementoPublicacionesProyecto(proyecto);
 			root.addContent(ePublicaciones);
-
+			
+			database.cierraConexion(conn);
+			
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		}
@@ -1071,28 +1062,36 @@ public class DataBaseControler
 		}
 	}
 	
+	private Element generaElementoUsuarios(Connection conn) throws BDException
+	{
+		Element root = new Element("listaUsuarios");
+		String consulta = "SELECT nombre FROM usuarios ORDER BY nombre";
+
+		Vector<Object[]> result = database.exeQuery(consulta, conn);
+		int numU = result.size();
+		Object[] actual;
+		String usuario;
+		for (int i = 0; i < numU; i++)
+		{
+			actual = result.get(i);
+			usuario = (String)actual[0];
+
+			Element eUsuario = new Element("usuario");
+			eUsuario.addContent(usuario);
+
+			root.addContent(eUsuario);
+		}
+		
+		return root;
+	}
+	
 	public String obtenerListaTotalUsuarios()
 	{
 		try
 		{
-			Element root = new Element("listaUsuarios");
-			String consulta = "SELECT nombre FROM usuarios ORDER BY nombre";
-
 			Connection conn = database.abreConexion();
-			Vector<Object[]> result = database.exeQuery(consulta, conn);
-			int numU = result.size();
-			Object[] actual;
-			String usuario;
-			for (int i = 0; i < numU; i++)
-			{
-				actual = result.get(i);
-				usuario = (String)actual[0];
-
-				Element eUsuario = new Element("usuario");
-				eUsuario.addContent(usuario);
-
-				root.addContent(eUsuario);
-			}
+			Element root = generaElementoUsuarios(conn);
+			database.cierraConexion(conn);
 
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
@@ -1110,27 +1109,11 @@ public class DataBaseControler
 	{
 		try
 		{
-			Element root = new Element("listaProyectos");
-
 			Connection conn = database.abreConexion();
-			String consulta = "SELECT nombre FROM proyectos ORDER BY nombre;";
-			Vector<Object[]> result = database.exeQuery(consulta, conn);
-			int numP = result.size();
-			Object[] actual;
-			String nombre;
-			for (int i = 0; i < numP; i++)
-			{
-				actual = result.get(i);
-				nombre = (String)actual[0];
-
-				Element eProyecto = new Element("proyecto");
-				eProyecto.addContent(nombre);
-
-				root.addContent(eProyecto);
-			}
-
+			Element proyectos = generaElementoProyectos(conn);
+			database.cierraConexion(conn);
 			XMLOutputter outputter = new XMLOutputter();
-			return outputter.outputString (new Document(root));
+			return outputter.outputString (new Document(proyectos));
 		}
 		catch(BDException e)
 		{
@@ -1163,6 +1146,8 @@ public class DataBaseControler
 
 				root.addContent(eProyecto);
 			}
+			
+			database.cierraConexion(conn);
 
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
@@ -1182,6 +1167,7 @@ public class DataBaseControler
 		{
 			Connection conn = database.abreConexion();
 			Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
+			database.cierraConexion(conn);
 			if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.USUARIO);
 			String tipoUser = (String)result.get(0)[0];
 			if (tipoUser.equals("admin"))
@@ -1241,14 +1227,7 @@ public class DataBaseControler
 	{
 		try
 		{
-			Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
-			Element root = new Element("listaPublicaciones");
-			int numP = publicaciones.size();
-			for (int i = 0;  i < numP; i++)
-			{
-				Element ePublication = publicaciones.get(i).generarElementoXML();
-				root.addContent(ePublication);
-			}
+			Element root = generaElementoPublicacionesProyecto(proyecto);
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		}
@@ -1367,6 +1346,8 @@ public class DataBaseControler
 			}
 			root.addContent(desvincular);
 
+			database.cierraConexion(conn);
+			
 			XMLOutputter outputter = new XMLOutputter();
 			return outputter.outputString (new Document(root));
 		}
@@ -1414,6 +1395,62 @@ public class DataBaseControler
 		}
 		finally{
 			database.cierraConexion(conn);
+		}
+	}
+	
+	public String eliminaProyecto(String proyecto) throws BDException
+	{
+		Connection conn = database.abreConexion();
+		try
+		{
+			ejecutaString("BEGIN;", conn); //database.exeQuery("BEGIN;", conn);
+			modif_proyectos.borraProyecto(proyecto, conn);
+			ejecutaString("COMMIT;", conn); //database.exeQuery("COMMIT;", conn);
+			return "El proyecto ha sido eliminado satisfactoriamente.";
+		}
+		catch (NonExistingElementException e) {
+			ejecutaString("ROLLBACK;", conn);
+			if (e.getTipo() == ExistenceException.PROYECTO)
+				return "Error al eliminar: el proyecto no existe.";
+			else
+				return "Error desconocido al eliminar un proyecto.";
+		} 
+		catch (BDException e) {
+			ejecutaString("ROLLBACK;", conn);
+			return e.getMessage();
+		}
+		finally{
+			database.cierraConexion(conn);
+		}
+	}
+	
+	
+	public String obtenerListaProyectosUsuariosYAutores()
+	{
+		try
+		{
+			Connection conn = database.abreConexion();
+			Element root = new Element("listaProyectosUsuariosYAutores");
+			Element eProyectos = generaElementoProyectos(conn);
+			root.addContent(eProyectos);
+			
+			Element eUsuarios = generaElementoUsuarios(conn);
+			root.addContent(eUsuarios);
+			
+			Element eAutores = generaElementoAutoresEditores(conn);
+			root.addContent(eAutores);
+			
+			database.cierraConexion(conn);
+			
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent(e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
 		}
 	}
 

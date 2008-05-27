@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import controlador.ConversorXML_BBDD;
+import controlador.DataBaseControler;
 
 
 public class Main 
@@ -60,9 +61,9 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\misc.xml");
-			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarInsercion(is));
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\misc.xml");
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarInsercion(is));
 			
 			//-------------------------------------------------------------------------
 			
@@ -90,11 +91,11 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 //			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerUsuariosYPublicacionesProyecto("Proyecto1"));
+//			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaBusquedas());
 			//-------------------------------------------------------------------------
 			
 //			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.eliminaDocumento("1"));
+//			System.out.println(db_controler.eliminaProyecto("Proyecto1"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
