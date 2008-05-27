@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import controlador.ConversorXML_BBDD;
-import controlador.DataBaseControler;
 
 
 public class Main 
@@ -15,10 +14,10 @@ public class Main
 		try
 		{
 			//-------------------------------------------------------------------------
-			/*ParserBibtex pb = new ParserBibtex();
-			InputStream is = new FileInputStream("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\total-ordenado.bib");
-			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
-			pb.procesar(is, "miXML.xml");*/
+//			ParserBibtex pb = new ParserBibtex();
+//			InputStream is = new FileInputStream("ficherosDePrueba\\parserBibtex\\prueba1.txt");
+//			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
+//			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
 //			ConversorXML_BBDD cb = new ConversorXML_BBDD();
@@ -98,8 +97,8 @@ public class Main
 //			System.out.println(db_controler.eliminaProyecto("Proyecto1"));
 //			//-------------------------------------------------------------------
 			
-//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarNuevoProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\proyecto.xml")));
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarFusionarAutoresEditores(new FileInputStream(".\\ficherosDePrueba\\inserciones\\fusionarAutores.xml")));
 		}
 		catch (Exception e)
 		{

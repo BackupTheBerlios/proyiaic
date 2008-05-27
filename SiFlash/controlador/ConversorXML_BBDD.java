@@ -619,4 +619,38 @@ public class ConversorXML_BBDD
 			return outputter.outputString (new Document(root));
 		}
 	}
+	
+	public String procesarFusionarAutoresEditores(InputStream input)
+	{
+		try
+		{
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = builder.build(input);
+			Element root = doc.getRootElement();
+			String autor1 = root.getChild("autorEditor1").getValue();
+			String autor2 = root.getChild("autorEditor2").getValue();
+			return dbc.fusionarAutoresEditores(autor1, autor2);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(IOException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de entrada/salida: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+		catch(JDOMException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción de JDOM: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+	}
 }

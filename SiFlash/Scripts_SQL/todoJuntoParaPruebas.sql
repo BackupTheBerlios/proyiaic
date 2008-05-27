@@ -618,6 +618,7 @@ BEGIN
   IF ((tipo = 'jefe') and (NOT EXISTS (SELECT * FROM Proyectos WHERE nombre != OLD.nombre and jefe = OLD.jefe))) THEN
     UPDATE Usuarios SET tipo='user' WHERE nombre = OLD.jefe;
   END IF;
+  DELETE FROM pertenecea WHERE proyecto = OLD.nombre;
 END $$
 
 

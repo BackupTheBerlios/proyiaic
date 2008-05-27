@@ -1454,4 +1454,44 @@ public class DataBaseControler
 		}
 	}
 
+	//Sustituye autor1 por autor2.
+	public String fusionarAutoresEditores(String autor1, String autor2) throws BDException 
+	{
+		Connection conn = database.abreConexion();
+		
+		try
+		{
+			Vector<Object[]> result1 = database.exeQuery("SELECT * FROM autoreseditores WHERE idAut=" + autor1 + ";", conn);
+			if (result1 == null || result1.size() < 1)
+				throw new NonExistingElementException(ExistenceException.AUTOR);
+			Vector<Object[]> result2 = database.exeQuery("SELECT * FROM autoreseditores WHERE idAut=" + autor2 + ";", conn);
+			if (result2 == null || result2.size() < 1)
+				throw new NonExistingElementException(ExistenceException.AUTOR);
+			
+			long idAut1 = (Long)result1.get(0)[0];
+			long idAut2 = (Long)result2.get(0)[0];
+			Vector<String> updates = new Vector<String>();
+			updates.add("UPDATE escrito_editado_por SET idPer = " + idAut2 + " WHERE idPer = " + idAut1 + ";");
+			updates.add("DELETE FROM autoreseditores WHERE idAut = " + idAut1 + ";");
+			ejecutaString("BEGIN;", conn);
+			database.exeUpdates(updates, conn);
+			ejecutaString("COMMIT;", conn);
+			return "Los autores/editores han sido fusionados correctamente.";
+		}
+		catch (NonExistingElementException e) {
+			ejecutaString("ROLLBACK;", conn);
+			if (e.getTipo() == ExistenceException.AUTOR)
+				return "Error al fusionar: uno de los autores/editores no existe.";
+			else
+				return "Error desconocido al fusionar autores/editores.";
+		} 
+		catch (BDException e) {
+			ejecutaString("ROLLBACK;", conn);
+			return e.getMessage();
+		}
+		finally{
+			database.cierraConexion(conn);
+		}
+	}
+
 }
