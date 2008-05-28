@@ -161,7 +161,7 @@ class ConsultorBaseDatos
 	 * @throws UnimplementedException 
 	 * @roseuid 47C5961C0148
 	 */
-	protected Publication getPublicacionIddoc(int id_doc) throws BDException, UnimplementedException 
+	/*protected Publication getPublicacionIddoc(int id_doc) throws BDException, UnimplementedException 
 	{
 		String c_filtro = new String ("SELECT DISTINCT tabla FROM tipopublication WHERE idDoc = " + id_doc +";");
 		Vector <Object[]> res= database.exeQuery(c_filtro, null);
@@ -177,9 +177,9 @@ class ConsultorBaseDatos
 		}
 
 		return construyePub(tabla, res.firstElement());
-	}
+	}*/
 
-	private Publication construyePub(String tipo,Object[] datos) throws UnimplementedException{
+	/*private Publication construyePub(String tipo,Object[] datos) throws UnimplementedException{
 		if (tipo == null) return null;
 		if (tipo.equalsIgnoreCase("Article")) return new Article(datos);
 		if (tipo.equalsIgnoreCase("Book")) return new Book(datos);
@@ -196,7 +196,7 @@ class ConsultorBaseDatos
 		if (tipo.equalsIgnoreCase("TechReport")) return new TechReport(datos);
 		if (tipo.equalsIgnoreCase("Unpublished")) return new TechReport(datos);
 		return null;
-	}
+	}*/
 
 	private Vector<Article> getArticles(final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.month, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM article ART1 LEFT OUTER JOIN tienekey KEY1 ON ART1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON ART1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON ART1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");

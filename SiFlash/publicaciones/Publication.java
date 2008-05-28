@@ -11,26 +11,19 @@ import java.util.Vector;
 import org.jdom.Element;
 
 import personas.AutorEditor;
-import temporal.UnimplementedException;
 import controlador.DataBaseControler;
-import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
-import controlador.exceptions.NonExistingElementException;
 import database.BDException;
 
 /**
- * Clase abstracta que agrupa los dos atributos comunes a todos las "publicaciones" 
- * 
- * 
- * 
- * existentes, su idDoc y su título.
- * Nos servirá para realizar las operaciones genéricas sobre ellas.
+ * Agrupa los atributos comunes a todos los tipos de publicación. 
+ * Usada para realizar las operaciones genéricas sobre ellas.
  */
 public abstract class Publication 
 {
 
 	/**
-	 * Valor que le corresponde al Id del documento
+	 * Identificador de la publicación en la base de datos (unívoco).
 	 */
 	protected int idDoc;
 
@@ -65,7 +58,7 @@ public abstract class Publication
 	protected String _abstract;
 
 	/**
-	 * Comentarios al respecto.
+	 * Comentarios de la publicación.
 	 */
 	protected String note;
 
@@ -82,31 +75,35 @@ public abstract class Publication
 	/**
 	 * Contiene todos los proyectos a los que pertenece la aplicación.
 	 */
-	protected Vector<String> proyectos;
+//	protected Vector<String> proyectos;
 	
+	/**
+	 * Proyecto al que está asociado la publicación.
+	 */
 	protected String proyecto;
 
+	/**
+	 * Separador de claves.
+	 */
 	public static final String separador = new String (", ");
 
 
 	/**
-	 * @param idDoc
-	 * @param referencia
-	 * @param title
-	 * @param year
-	 * @param month
-	 * @param url
-	 * @param _abstract
-	 * @param note
-	 * @param key
-	 * @param user
-	 * @param proyectos
-	 * @param thePublicationException
-	 * @throws UnimplementedException 
+	 * @param idDoc Identificador de la publicación.
+	 * @param referencia Referencia de la publicación.
+	 * @param title Título de la publicación.
+	 * @param year Año de la publicación.
+	 * @param month Mes de la publicación.
+	 * @param url Dirección URL de la publicación.
+	 * @param _abstract Resumen de la publicación.
+	 * @param note Notas de la publicación.
+	 * @param keys Claves de la publicación.
+	 * @param user Usuario que ha subido la publicación al sistema.
+	 * @param proyectos Proyectos a los que pertenece la publicación.
 	 */
 	protected void SetAll(int idDoc, String referencia, String title, String year,
 			String month, String url, String _abstract, String note, Vector<String> keys,
-			String user, Vector<String> proyectos) {
+			String user, String proyecto) {
 		this.idDoc = idDoc;
 		this.referencia = referencia;
 		this.title = title;
@@ -126,11 +123,11 @@ public abstract class Publication
 			}
 		}
 		this.user = user;
-		this.proyectos = proyectos;
+		this.proyecto = proyecto;
 	}
 
 
-	protected void SetAll(int idDoc, String referencia, String title, String year,
+	/*protected void SetAll(int idDoc, String referencia, String title, String year,
 			String month, String url, String _abstract, String note, String un_key,
 			String user, String un_proyecto) {
 		this.idDoc = idDoc;
@@ -144,17 +141,24 @@ public abstract class Publication
 		this.addKey(un_key);
 		this.user = user;
 		this.addProyect(un_proyecto);
-	}	
+	}	*/
 
-	protected void addProyect(String un_proyecto) {
-		if (this.proyectos == null){
-			this.proyectos = new Vector<String>();
-		}
-		if (un_proyecto != null && !proyectos.contains(un_proyecto)) this.proyectos.add(un_proyecto);
+	/**
+	 * Añade un proyecto nuevo al que pertenece la publicación.
+	 * @param un_proyecto Proyecto a añadir.
+	 */
+//	protected void addProyect(String un_proyecto) {
+//		if (this.proyectos == null){
+//			this.proyectos = new Vector<String>();
+//		}
+//		if (un_proyecto != null && !proyectos.contains(un_proyecto)) this.proyectos.add(un_proyecto);
+//
+//	}
 
-	}
-
-
+	/**
+	 * Añade una clave nueva a la publicación.
+	 * @param un_key La clave nueva a insertar.
+	 */
 	protected void addKey(String un_key) {
 		if (this.key == null)
 			key = new LinkedList<String>();			
@@ -162,26 +166,15 @@ public abstract class Publication
 			key.add(un_key);	
 	}
 
-
 	/**
-	 * Devuelve el String correspondiente al código HTML de la publicación 
-	 * correspondiente.
-	 * @return java.lang.String
-	 * @roseuid 47C5AA3D006D
-	 */
-	public abstract String getHTML();
-
-	/**
-	 * Devuelve el String correspondiente al código BibTeX de la publicación 
-	 * correspondiente.
-	 * @return java.lang.String
-	 * @roseuid 47C5AA3F0213
+	 * Genera el código BibTeX asociado al artículo.
+	 * @return El código BibTeX generado.
 	 */
 	public abstract String getBibTeX();
 
 	/**
-	 * Genera un elemento XML con la información almacenada.
-	 * @return El elemento XML generado.
+	 * Genera un elemento XML con la información del objeto.
+	 * @return El elemento generado.
 	 */
 	public abstract Element generarElementoXML();
 
@@ -223,6 +216,11 @@ public abstract class Publication
 			return null;
 	}
 	
+	/**
+	 * Separa las claves, para guardarlas como una lista.
+	 * @param keys Claves a separar.
+	 * @return Lista de claves ya separadas.
+	 */
 	protected LinkedList<String> separarKeys(String keys)
 	{
 		if (keys != null)
@@ -282,6 +280,11 @@ public abstract class Publication
 
 	}
 
+	/**
+	 * Convierte una cadena de caracteres a código BibTeX, insertando llaves y sustituyendo tildes.
+	 * @param cadena2 Cadena de caracteres a procesar.
+	 * @return El código BibTeX generado.
+	 */
 	protected String convertirTextoBibtex(String cadena2)
 	{
 		String salida = "";
@@ -319,6 +322,12 @@ public abstract class Publication
 		return salida;
 	}
 
+	/**
+	 * Sustituye las tildes existentes en una cadena
+	 * por sus correspondientes "sustitutos" en código LaTeX.
+	 * @param cadena2 Cadena a procesar.
+	 * @return El resultado, tras sustituir las tildes.
+	 */
 	private String quitarTildes(String cadena2) 
 	{
 		int longit = cadena2.length();
@@ -346,15 +355,20 @@ public abstract class Publication
 
 	private boolean esMayuscula(char actual) 
 	{
-		// char 'A' = 65.
-		//char 'Z' = 90.
-		//return ((actual > 64) && (actual <91)); 
+//		char 'A' = 65.
+//		char 'Z' = 90.
+//		return ((actual > 64) && (actual <91)); 
 		
 		//Mejor no usar todavía...
 		return false;
 	}
 
 
+	/**
+	 * Convierte una lista de autores/editores en código LaTeX.
+	 * @param autoresEditores Lista de autores/editores a procesar.
+	 * @return El código LaTeX resultante.
+	 */
 	protected String convertirTextoBibtex(LinkedList<AutorEditor> autoresEditores)
 	{
 		Iterator<AutorEditor> it = autoresEditores.iterator();
@@ -366,6 +380,11 @@ public abstract class Publication
 		return salida;
 	}
 	
+	/**
+	 * Convierte una lista de claves en código LaTeX.
+	 * @param keys Lista de claves a procesar.
+	 * @return El código LaTeX resultante.
+	 */
 	protected String convertirTextoBibtexKeys(LinkedList<String> keys)
 	{
 		if (keys != null)
@@ -383,6 +402,11 @@ public abstract class Publication
 		else return null;
 	}
 
+	/**
+	 * Convierte un autor/editor en código LaTeX.
+	 * @param ae Autor/editor a procesar.
+	 * @return El código LaTeX resultante.
+	 */
 	private String convertirAutorTextoBibtex(AutorEditor ae) 
 	{
 		if (ae.getNombre() == null)
@@ -409,24 +433,40 @@ public abstract class Publication
 		}
 	}
 
+	/**
+	 * Indica si una cadena está formada por varias palabras.
+	 * @param apellidos Cadena a procesar.
+	 * @return El resultado de la evaluación.
+	 */
 	private boolean tieneVariasPalabras(String apellidos) 
 	{
 		return apellidos.contains(" ");
 	}
 
-
+	/**
+	 * @return El título de la publicación.
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * @return El resumen de la publicación.
+	 */
 	public String get_abstract() {
 		return _abstract;
 	}
 
+	/**
+	 * @return La nota de la publicación.
+	 */
 	public String getNote() {
 		return note;
 	}
 
+	/**
+	 * @return Las claves de la publicación.
+	 */
 	public LinkedList<String> getKeys()
 	{
 		if (key == null){
@@ -436,29 +476,37 @@ public abstract class Publication
 		return key;
 	}
 
+	/**
+	 * @return El mes de la publicación.
+	 */
 	public String getMonth() {
 		return month;
 	}
 
+	/**
+	 * @return El año de la publicación.
+	 */
 	public String getYear() {
 		return year;
 	}
 
+	/**
+	 * @return La referencia de la publicación.
+	 */
 	public String getReferencia() {
 		return referencia;
 	}
 
 
 	/**
-	 * @return the uRL
+	 * @return La URL de la publicación.
 	 */
 	public final String getURL() {
 		return URL;
 	}
 
-
 	/**
-	 * @param url the uRL to set
+	 * @param URL de la publicación.
 	 */
 	public final void setURL(String url) {
 		URL = url;
@@ -466,7 +514,7 @@ public abstract class Publication
 
 
 	/**
-	 * @return the user
+	 * @return El usuario de la publicación.
 	 */
 	public final String getUser() {
 		return user;
@@ -474,7 +522,7 @@ public abstract class Publication
 
 
 	/**
-	 * @param user the user to set
+	 * @param El usuario de la publicación.
 	 */
 	public final void setUser(String user) {
 		this.user = user;
@@ -482,23 +530,23 @@ public abstract class Publication
 
 
 	/**
-	 * @return the proyectos
+	 * @return Los proyectos de la publicación.
 	 */
-	public final Vector<String> getProyectos() {
-		return proyectos;
-	}
+//	public final Vector<String> getProyectos() {
+//		return proyectos;
+//	}
 
 
 	/**
-	 * @param proyectos the proyectos to set
+	 * @param Los proyectos de la publicación.
 	 */
-	public final void setProyectos(Vector<String> proyectos) {
-		this.proyectos = proyectos;
-	}
+//	public final void setProyectos(Vector<String> proyectos) {
+//		this.proyectos = proyectos;
+//	}
 
 
 	/**
-	 * @return the idDoc
+	 * @return El identificador de la publicación.
 	 */
 	public final int getIdDoc() {
 		return idDoc;
@@ -506,7 +554,7 @@ public abstract class Publication
 
 
 	/**
-	 * @param referencia the referencia to set
+	 * @param  La referencia de la publicación.
 	 */
 	public final void setReferencia(String referencia) {
 		this.referencia = referencia;
@@ -514,7 +562,7 @@ public abstract class Publication
 
 
 	/**
-	 * @param title the title to set
+	 * @param El título de la publicación.
 	 */
 	public final void setTitle(String title) {
 		this.title = title;
@@ -522,7 +570,7 @@ public abstract class Publication
 
 
 	/**
-	 * @param year the year to set
+	 * @param El año de la publicación.
 	 */
 	public final void setYear(String year) {
 		this.year = year;
@@ -530,7 +578,7 @@ public abstract class Publication
 
 
 	/**
-	 * @param month the month to set
+	 * @param El mes de la publicación.
 	 */
 	public final void setMonth(String month) {
 		this.month = month;
@@ -538,7 +586,7 @@ public abstract class Publication
 
 
 	/**
-	 * @param _abstract the _abstract to set
+	 * @param El resumen de la publicación.
 	 */
 	public final void set_abstract(String _abstract) {
 		this._abstract = _abstract;
@@ -546,7 +594,7 @@ public abstract class Publication
 
 
 	/**
-	 * @param note the note to set
+	 * @param La nota de la publicación.
 	 */
 	public final void setNote(String note) {
 		this.note = note;
@@ -554,27 +602,32 @@ public abstract class Publication
 
 
 	/**
-	 * @param key the key to set
-	 * @throws UnimplementedException 
+	 * @param Las claves de la publicación.
 	 */
 	public final void setKey(LinkedList<String> key)
 	{
 		this.key = key;
 	}
 
-
+	/**
+	 * Genera una serie de sentencias SQL que se deberán ejecutar para
+	 * que la publicación quede correctamente insertada.
+	 * @return Vector con todas las sentencias SQL.
+	 * @throws BDException Si hay algún problema relacionado con la conexión a la base de datos.
+	 * @throws ExistingElementException Si hay algún problema relacionado con la existencia de tuplas en la base de datos.
+	 */
 	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException
 	{
 		Vector <String> vector = new Vector<String>();
 		
-		if (proyectos != null)
-		{
-			for(int i=0;i<this.proyectos.size();i++){
-				String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
-				str += ",'" + proyectos.get(i) + "');";
-				vector.add(str);
-			}
-		}
+//		if (proyectos != null)
+//		{
+//			for(int i=0;i<this.proyectos.size();i++){
+//				String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
+//				str += ",'" + proyectos.get(i) + "');";
+//				vector.add(str);
+//			}
+//		}
 		
 		if (proyecto != null)
 		{

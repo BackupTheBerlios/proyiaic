@@ -77,7 +77,7 @@ public class Book extends Publication
 	 */
 	public Book(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
-			String note, Vector<String> key, String user, Vector<String> proyectos,
+			String note, Vector<String> key, String user, String proyecto,
 			LinkedList<AutorEditor> author, LinkedList<AutorEditor> editor,
 			String publisher, String volume, String number, String series,
 			String address, String edition)  {		
@@ -90,7 +90,7 @@ public class Book extends Publication
 		this.address = address;
 		this.edition = edition;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note,
-				key, user, proyectos);
+				key, user, proyecto);
 	}
 
 	/**
@@ -316,12 +316,6 @@ public class Book extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -479,7 +473,7 @@ public class Book extends Publication
 			String month, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
@@ -509,9 +503,9 @@ public class Book extends Publication
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+//			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Book book1 = new Book(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,editores,publisher,volume,number,series,address,edition);
+			Book book1 = new Book(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,editores,publisher,volume,number,series,address,edition);
 			vector.add(book1);
 
 			// Evaluamos el cambio_pub
@@ -536,7 +530,7 @@ public class Book extends Publication
 				if (escrito_edit == true) book1.addAutor(autor1);
 				else book1.addEditor(autor1);
 
-				if (proyecto != null) book1.addProyect(proyecto);
+//				if (proyecto != null) book1.addProyect(proyecto);
 				if (clave != null) book1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion

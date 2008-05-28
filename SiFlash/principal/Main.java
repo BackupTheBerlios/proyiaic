@@ -20,10 +20,10 @@ public class Main
 //			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
-//			ConversorXML_BBDD cb = new ConversorXML_BBDD();
-//			InputStream is = new FileInputStream("ficherosDePrueba\\consultas\\consulta1.xml");
-//			String salida = cb.procesarConsulta(is);
-//			System.out.println(salida);
+			ConversorXML_BBDD cb = new ConversorXML_BBDD();
+			InputStream is = new FileInputStream("ficherosDePrueba\\consultas\\consulta1.xml");
+			String salida = cb.procesarConsulta(is);
+			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
 //			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
@@ -60,7 +60,7 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\misc.xml");
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\article.xml");
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarInsercion(is));
 			
@@ -97,8 +97,8 @@ public class Main
 //			System.out.println(db_controler.eliminaProyecto("Proyecto1"));
 //			//-------------------------------------------------------------------
 			
-			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarFusionarAutoresEditores(new FileInputStream(".\\ficherosDePrueba\\inserciones\\fusionarAutores.xml")));
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarFusionarAutoresEditores(new FileInputStream(".\\ficherosDePrueba\\inserciones\\fusionarAutores.xml")));
 		}
 		catch (Exception e)
 		{

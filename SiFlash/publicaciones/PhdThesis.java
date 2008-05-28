@@ -220,12 +220,6 @@ public class PhdThesis extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -337,7 +331,7 @@ public class PhdThesis extends Publication
 			String month,type,school, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
@@ -364,9 +358,9 @@ public class PhdThesis extends Publication
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+//			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			PhdThesis phd1 = new PhdThesis(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,address,school,type);
+			PhdThesis phd1 = new PhdThesis(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,school,type);
 			vector.add(phd1);
 
 			// Evaluamos el cambio_pub
@@ -391,7 +385,7 @@ public class PhdThesis extends Publication
 				if (escrito_edit == true) phd1.addAutor(autor1);				
 
 
-				if (proyecto != null) phd1.addProyect(proyecto);
+//				if (proyecto != null) phd1.addProyect(proyecto);
 				if (clave != null) phd1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion
@@ -415,13 +409,13 @@ public class PhdThesis extends Publication
 	public PhdThesis(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
-			Vector<String> proyectos,LinkedList<AutorEditor> author, 
+			String proyecto,LinkedList<AutorEditor> author, 
 			String address, String school,	String type) {
 		this.author = author;
 		this.address = address;
 		this.type = type;
 		this.school = school;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
-				user, proyectos);
+				user, proyecto);
 	}	
 }

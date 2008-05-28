@@ -272,12 +272,6 @@ public class Proceedings extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public String getBooktitle() {
 		return booktitle;
 	}
@@ -420,7 +414,7 @@ public class Proceedings extends Publication
 			String month,organization,publisher, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			editores = new LinkedList<AutorEditor>();
 			boolean cambio_pub,escrito_edit;
@@ -449,9 +443,9 @@ public class Proceedings extends Publication
 			if (array[21] != null) clave = (String) array[21]; else clave = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+//			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Proceedings pr1 = new Proceedings(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,booktitle,editores,volume,number,series,address,organization,publisher);
+			Proceedings pr1 = new Proceedings(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,booktitle,editores,volume,number,series,address,organization,publisher);
 			vector.add(pr1);
 
 			// Evaluamos el cambio_pub
@@ -476,7 +470,7 @@ public class Proceedings extends Publication
 				if (escrito_edit == false) pr1.addEditor(autor1);
 
 
-				if (proyecto != null) pr1.addProyect(proyecto);
+//				if (proyecto != null) pr1.addProyect(proyecto);
 				if (clave != null) pr1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion
@@ -500,7 +494,7 @@ public class Proceedings extends Publication
 	public Proceedings(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
-			Vector<String> proyectos, String booktitle,
+			String proyecto, String booktitle,
 			LinkedList<AutorEditor> editor, String volume,
 			String number, String series, String address,
 			String organization, String publisher) {		
@@ -513,6 +507,6 @@ public class Proceedings extends Publication
 		this.organization = organization;
 		this.publisher = publisher;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
-				user, proyectos);
+				user, proyecto);
 	}		
 }

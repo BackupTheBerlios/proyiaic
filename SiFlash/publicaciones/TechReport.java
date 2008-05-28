@@ -234,12 +234,6 @@ public class TechReport extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -360,7 +354,7 @@ public class TechReport extends Publication
 			String month,number,institution, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
@@ -388,9 +382,9 @@ public class TechReport extends Publication
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+//			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			TechReport tec1 = new TechReport(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,address,institution,type,number);
+			TechReport tec1 = new TechReport(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,institution,type,number);
 			vector.add(tec1);
 
 			// Evaluamos el cambio_pub
@@ -415,7 +409,7 @@ public class TechReport extends Publication
 				if (escrito_edit == true) tec1.addAutor(autor1);				
 
 
-				if (proyecto != null) tec1.addProyect(proyecto);
+//				if (proyecto != null) tec1.addProyect(proyecto);
 				if (clave != null) tec1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion
@@ -439,7 +433,7 @@ public class TechReport extends Publication
 	public TechReport(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
-			Vector<String> proyectos,LinkedList<AutorEditor> author, 
+			String proyecto,LinkedList<AutorEditor> author, 
 			String address, String institution,	String type, String number) {
 		this.author = author;
 		this.address = address;
@@ -447,6 +441,6 @@ public class TechReport extends Publication
 		this.institution = institution;
 		this.number = number;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
-				user, proyectos);
+				user, proyecto);
 	}	
 }

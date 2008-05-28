@@ -352,12 +352,6 @@ public class InCollection extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -563,7 +557,7 @@ public class InCollection extends Publication
 			String month,type,publisher, note, abstracts, URL,user, referencia,chapter, edition; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
@@ -598,10 +592,10 @@ public class InCollection extends Publication
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+//			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
 			type = null;
-			InCollection inc1 = new InCollection(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,booktitle,crossref,editores,volume,number,series,pages,address,type,publisher,chapter,edition);
+			InCollection inc1 = new InCollection(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,booktitle,crossref,editores,volume,number,series,pages,address,type,publisher,chapter,edition);
 			vector.add(inc1);
 
 			// Evaluamos el cambio_pub
@@ -627,7 +621,7 @@ public class InCollection extends Publication
 				else inc1.addEditor(autor1);
 
 
-				if (proyecto != null) inc1.addProyect(proyecto);
+//				if (proyecto != null) inc1.addProyect(proyecto);
 				if (clave != null) inc1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion
@@ -655,7 +649,7 @@ public class InCollection extends Publication
 	public InCollection(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
-			Vector<String> proyectos,LinkedList<AutorEditor> author, String booktitle,
+			String proyecto,LinkedList<AutorEditor> author, String booktitle,
 			String crossref, LinkedList<AutorEditor> editor, String volume,
 			String number, String series, String pages, String address,
 			String type, String publisher, String chapter, String edition) {
@@ -673,6 +667,6 @@ public class InCollection extends Publication
 		this.chapter = chapter;
 		this.edition = edition;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
-				user, proyectos);
+				user, proyecto);
 	}	
 }

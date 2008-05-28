@@ -13,63 +13,74 @@ import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
 import parserFicherosBibtex.CampoPublicacionAutorEditor;
 import personas.AutorEditor;
-import temporal.UnimplementedException;
 import controlador.DataBaseControler;
 import controlador.exceptions.ExistingElementException;
 import database.BDException;
 
 
 /**
- * Clase que representa un artículo publicado en un periódico o revista.
+ * Clase que representa un artículo publicado en una revista.
  */
 public class Article extends Publication 
 {
 	/**
-	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
+	 * Contiene los autores que han colaborado en la creación del artículo.
 	 */
 	private LinkedList<AutorEditor> author;
 
 	/**
-	 * Journal en el que se publicó.
+	 * Journal del artículo.
 	 */
 	private String journal;
 
 	/**
-	 * Volumen en el que está contenido.
+	 * Volumen del artículo.
 	 */
 	private String volume;
 
 	/**
-	 * Número de volumen.
+	 * Número del artículo.
 	 */
 	private String number;
 
 	/**
-	 * Longitud en páginas.
+	 * Longitud en páginas del artículo.
 	 */
 	private String pages;
 
 
 	/**
-	 * @param author
-	 * @param journal
-	 * @param volume
-	 * @param number
-	 * @param pages
-	 * @throws UnimplementedException 
+	 * Crea un artículo a partir de una serie de atributos.
+	 * @param idDoc Identificador del artículo.
+	 * @param referencia Referencia del artículo.
+	 * @param title Título del artículo.
+	 * @param year Año del artículo.
+	 * @param month Mes del artículo.
+	 * @param url Dirección URL del artículo.
+	 * @param _abstract Abstract del artículo.
+	 * @param note Nota del artículo.
+	 * @param key Claves del artículo.
+	 * @param user Usuario que ha subido el artículo.
+	 * @param proyectos Proyectos a los que pertenece el artículo.
+	 * @param author Autores del artículo.
+	 * @param journal Journal del artículo.
+	 * @param volume Volumen del artículo.
+	 * @param number Number del artículo.
+	 * @param pages Longitud en páginas del artículo.
 	 */
 	public Article(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
-			String note, Vector<String> key, String user, Vector<String> proyectos,
+			String note, Vector<String> key, String user, String proyectos,
 			LinkedList<AutorEditor> author, String journal, String volume,
-			String number, String pages) {
+			String number, String pages)
+	{
 		this.author = author;
 		this.journal = journal;
 		this.volume = volume;
 		this.number = number;
 		this.pages = pages;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note,
-				key, user, proyectos);	
+				key, user, proyecto);	
 	}
 
 	/**
@@ -80,14 +91,6 @@ public class Article extends Publication
 	{
 		Campo campo;
 		Iterator<Campo> it = campos.iterator();
-		/*try {
-			FileWriter fw = new FileWriter("log.txt");
-			fw.write("Uououo");
-			fw.close();
-		} catch (IOException e2) 
-		{
-			e2.printStackTrace();
-		}*/
 		while (it.hasNext())
 		{
 			campo = it.next();
@@ -107,12 +110,8 @@ public class Article extends Publication
 		}
 	}
 
-	public Article(Object[] datos) throws UnimplementedException {
-		throw new UnimplementedException();
-	}
-
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del artículo.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
 	 */
@@ -151,16 +150,18 @@ public class Article extends Publication
 		
 	}
 
+	/**
+	 * Establece el valor de un atributo(lista) del artículo.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Valor del campo que se quiere insertar.
+	 */
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
 			author = valor;
 	}
 
-	/**
-	 * Genera un elemento XML con la información del objeto.
-	 * @return El elemento generado.
-	 */
+	@Override
 	public Element generarElementoXML()
 	{
 		Element elemento = new Element("publication");
@@ -266,34 +267,49 @@ public class Article extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	/**
+	 * @return La lista de autores.
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
+	/**
+	 * @return El Journal del artículo.
+	 */
 	public String getJournal() {
 		return journal;
 	}
 
-
+	/**
+	 * @return El volumen del artículo.
+	 */
 	public String getVolume() {
 		return volume;
 	}
 
+	/**
+	 * @return El número del artículo.
+	 */
 	public String getNumber() {
 		return number;
 	}
 
+	/**
+	 * @return Las páginas del artículo.
+	 */
 	public String getPages() {
 		return pages;
 	}
 
 	@Override
+	/**
+	 * Genera una serie de sentencias SQL que se deberán ejecutar para
+	 * que el artículo quede correctamente insertado.
+	 * @return Vector con todas las sentencias SQL.
+	 * @throws BDException Si hay algún problema relacionado con la conexión a la base de datos.
+	 * @throws ExistingElementException Si hay algún problema relacionado con la existencia de tuplas en la base de datos.
+	 */
 	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException
 	{
 		idDoc = 0;
@@ -354,10 +370,7 @@ public class Article extends Publication
 		DataBaseControler dbc = new DataBaseControler();
 		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
-		idDoc = dbc.consultaIdDoc(conn);
-
-//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'article');");
-//		vector.add(str1);		
+		idDoc = dbc.consultaIdDoc(conn);	
 
 		if (author != null)
 			for (int i=0;i<this.author.size();i++){
@@ -382,6 +395,12 @@ public class Article extends Publication
 		return vector; 
 	}	
 
+	/**
+	 * Genera una serie de artículos a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos.
+	 * @return Vector de artículos resultante.
+	 */
 	public static Vector<Article> generaPub(Vector<Object[]> v){
 		//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
 		Vector <Article> vector = new Vector <Article>();
@@ -393,7 +412,7 @@ public class Article extends Publication
 			String month, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
@@ -421,9 +440,9 @@ public class Article extends Publication
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+			//if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Article	art1 = new Article(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,journal,volume,number,pages); 
+			Article	art1 = new Article(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,journal,volume,number,pages); 
 			vector.add(art1);		
 
 
@@ -449,7 +468,7 @@ public class Article extends Publication
 				if (escrito_edit == true) art1.addAutor(autor1);
 
 
-				if (proyecto != null) art1.addProyect(proyecto);
+//				if (proyecto != null) art1.addProyect(proyecto);
 				if (clave != null) art1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion
@@ -466,6 +485,10 @@ public class Article extends Publication
 		return vector;
 	}
 
+	/**
+	 * Añade un autor nuevo al artículo.
+	 * @param e Autor nuevo a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}

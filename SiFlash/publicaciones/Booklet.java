@@ -208,12 +208,6 @@ public class Booklet extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -317,7 +311,7 @@ public class Booklet extends Publication
 			String month,howpublished,note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
@@ -343,9 +337,9 @@ public class Booklet extends Publication
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+//			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Booklet bkl1 = new Booklet(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores,address,howpublished);
+			Booklet bkl1 = new Booklet(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,howpublished);
 			vector.add(bkl1);
 
 			// Evaluamos el cambio_pub
@@ -370,7 +364,7 @@ public class Booklet extends Publication
 				if (escrito_edit == true) bkl1.addAutor(autor1);				
 
 
-				if (proyecto != null) bkl1.addProyect(proyecto);
+//				if (proyecto != null) bkl1.addProyect(proyecto);
 				if (clave != null) bkl1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion
@@ -394,12 +388,12 @@ public class Booklet extends Publication
 	public Booklet(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
-			Vector<String> proyectos,LinkedList<AutorEditor> author, 
+			String proyecto,LinkedList<AutorEditor> author, 
 			String address, String howpublished) {
 		this.author = author;
 		this.address = address;
 		this.howPublished = howpublished;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
-				user, proyectos);
+				user, proyecto);
 	}	
 }

@@ -181,12 +181,6 @@ public class Unpublished extends Publication
 		return bibtex;
 	}
 
-	@Override
-	public String getHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -274,7 +268,7 @@ public class Unpublished extends Publication
 			String month,title, note, abstracts, URL,user, referencia,year; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
-			Vector<String> proyectos = new Vector<String>();
+//			Vector<String> proyectos = new Vector<String>();
 			Vector<String> claves = new Vector<String>();
 			autores = new LinkedList<AutorEditor>();
 			editores = new LinkedList<AutorEditor>();
@@ -298,9 +292,9 @@ public class Unpublished extends Publication
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
-			if (proyecto != null) proyectos.add(proyecto);
+//			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
-			Unpublished unp1 = new Unpublished(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyectos,autores);
+			Unpublished unp1 = new Unpublished(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores);
 			vector.add(unp1);
 
 			// Evaluamos el cambio_pub
@@ -325,7 +319,7 @@ public class Unpublished extends Publication
 				if (escrito_edit == true) unp1.addAutor(autor1);				
 
 
-				if (proyecto != null) unp1.addProyect(proyecto);
+//				if (proyecto != null) unp1.addProyect(proyecto);
 				if (clave != null) unp1.addKey(clave);
 
 				// Evaluamos el cambio de publicacion
@@ -349,9 +343,9 @@ public class Unpublished extends Publication
 	public Unpublished(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
-			Vector<String> proyectos,LinkedList<AutorEditor> author) {
+			String proyectos,LinkedList<AutorEditor> author) {
 		this.author = author;
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
-				user, proyectos);
+				user, proyecto);
 	}	
 }
