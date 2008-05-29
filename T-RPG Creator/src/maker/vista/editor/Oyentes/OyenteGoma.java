@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import maker.vista.editor.Editor;
-import maker.vista.editor.Acciones.AcciónGoma;
+import maker.vista.editor.Acciones.AccionGoma;
 
 public class OyenteGoma implements ActionListener 
 {
@@ -17,7 +17,7 @@ public class OyenteGoma implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		editor.cambiarEscucha(new AcciónGoma(editor));
+		editor.cambiarEscucha(new AccionGoma(editor));
 	}
 
 }

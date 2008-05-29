@@ -2,8 +2,9 @@ package maker.vista.editor.Oyentes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import maker.vista.editor.Acciones.AcciónRectángulo;
+
 import maker.vista.editor.Editor;
+import maker.vista.editor.Acciones.AccionRectangulo;
 
 /**
  * @author  David García
@@ -19,7 +20,7 @@ public class OyenteRectangulo implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		editor.cambiarEscucha(new AcciónRectángulo(editor));
+		editor.cambiarEscucha(new AccionRectangulo(editor));
 	}
 
 }

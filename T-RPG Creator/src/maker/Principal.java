@@ -7,14 +7,10 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import maker.controlador.Controlador;
 import maker.modelo.Modelo;
 import maker.vista.Vista;
-
-import org.jvnet.substance.SubstanceLookAndFeel;
 
 public class Principal {
 
@@ -40,16 +36,16 @@ public class Principal {
 				path = new File(acum.toString());
 			}
 		}
-		try 
-		{
-			new SubstanceLookAndFeel();
+		//try 
+		/*{
+			/*new SubstanceLookAndFeel();
 			SubstanceLookAndFeel.setCurrentTheme(new org.jvnet.substance.theme.SubstanceSteelBlueTheme());
-			UIManager.setLookAndFeel(new SubstanceLookAndFeel());
-		} 
-		catch (UnsupportedLookAndFeelException e) 
+			UIManager.setLookAndFeel(new SubstanceLookAndFeel());*/
+		//} 
+		/*catch (UnsupportedLookAndFeelException e) 
 		{
 			e.printStackTrace();
-		}
+		}*/
 		
 		Controlador con = new Controlador();
 		Modelo mod = new Modelo(con);

@@ -2,11 +2,11 @@ package maker.vista.editor.Oyentes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import maker.vista.editor.Acciones.AcciónLápiz;
+import maker.vista.editor.Acciones.AccionLapiz;
 import maker.vista.editor.Editor;
 
 /**
- * @author  David García
+ * @author  David Garcï¿½a
  */
 public class OyenteLapiz implements ActionListener {
 
@@ -19,7 +19,7 @@ public class OyenteLapiz implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		editor.cambiarEscucha(new AcciónLápiz(editor));
+		editor.cambiarEscucha(new AccionLapiz(editor));
 	}
 
 }

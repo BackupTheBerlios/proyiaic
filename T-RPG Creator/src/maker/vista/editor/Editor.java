@@ -30,7 +30,7 @@ import maker.controlador.IControlador;
 import maker.controlador.IHerramienta;
 import maker.modelo.MapaEscenario;
 import maker.recursos.SistemaCarga;
-import maker.vista.editor.Acciones.EscuchaRatón;
+import maker.vista.editor.Acciones.EscuchaRaton;
 import maker.vista.editor.Oyentes.OyenteAbrir;
 import maker.vista.editor.Oyentes.OyenteCerrar;
 import maker.vista.editor.Oyentes.OyenteDeshacer;
@@ -402,7 +402,7 @@ public class Editor extends JFrame
 		getContentPane().add(panel_mapa, BorderLayout.CENTER);
 	}
 
-	public void cambiarEscucha(EscuchaRatón escucha) 
+	public void cambiarEscucha(EscuchaRaton escucha) 
 	{
 		panel_mapa.cambiarEscucha(escucha);
 	}

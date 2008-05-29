@@ -7,9 +7,9 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
-import maker.vista.editor.Acciones.AcciónDesplazar;
-import maker.vista.editor.Acciones.AcciónLápiz;
-import maker.vista.editor.Acciones.EscuchaRatón;
+import maker.vista.editor.Acciones.AccionDesplazar;
+import maker.vista.editor.Acciones.AccionLapiz;
+import maker.vista.editor.Acciones.EscuchaRaton;
 
 
 /**
@@ -29,7 +29,7 @@ public class PanelMapa extends JPanel
 
 	private Editor editor;
 
-	private EscuchaRatón acción;
+	private EscuchaRaton accion;
 
 	private Point seleccionada;
 	
@@ -40,11 +40,11 @@ public class PanelMapa extends JPanel
 		this.editor = editor;
 
 		seleccionada = new Point(0,0);
-		acción = new AcciónLápiz(editor);
-		addMouseListener(acción);
-		addMouseMotionListener(acción);
+		accion = new AccionLapiz(editor);
+		addMouseListener(accion);
+		addMouseMotionListener(accion);
 
-		addMouseMotionListener(new AcciónDesplazar(this));
+		addMouseMotionListener(new AccionDesplazar(this));
 		setBackground(Color.GRAY);
 		
 		sel = new Selección();
@@ -68,11 +68,11 @@ public class PanelMapa extends JPanel
 		seleccionada = new Point(x, y);
 	}
 
-	public void cambiarEscucha(EscuchaRatón escucha) 
+	public void cambiarEscucha(EscuchaRaton escucha) 
 	{
-		removeMouseListener(acción);
-		removeMouseMotionListener(acción);
-		acción = escucha;
+		removeMouseListener(accion);
+		removeMouseMotionListener(accion);
+		accion = escucha;
 		addMouseListener(escucha);
 		addMouseMotionListener(escucha);
 	}
