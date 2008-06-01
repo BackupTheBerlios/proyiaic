@@ -13,7 +13,6 @@ import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
 import parserFicherosBibtex.CampoPublicacionAutorEditor;
 import personas.AutorEditor;
-import temporal.UnimplementedException;
 import controlador.DataBaseControler;
 import controlador.exceptions.ExistingElementException;
 import database.BDException;
@@ -117,10 +116,6 @@ public class Book extends Publication
 			}
 
 		}
-	}
-
-	public Book(Object[] objects) throws UnimplementedException {
-		throw new UnimplementedException();
 	}
 
 	/**

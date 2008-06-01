@@ -13,7 +13,6 @@ import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
 import parserFicherosBibtex.CampoPublicacionAutorEditor;
 import personas.AutorEditor;
-import temporal.UnimplementedException;
 import controlador.DataBaseControler;
 import controlador.exceptions.ExistingElementException;
 import database.BDException;
@@ -88,10 +87,6 @@ public class Proceedings extends Publication
 			}
 				
 		}
-	}
-
-	public Proceedings(Object[] objects) throws UnimplementedException {
-		throw new UnimplementedException();
 	}
 
 	/**

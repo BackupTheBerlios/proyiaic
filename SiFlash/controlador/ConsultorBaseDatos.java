@@ -22,7 +22,6 @@ import publicaciones.Proceedings;
 import publicaciones.Publication;
 import publicaciones.TechReport;
 import publicaciones.Unpublished;
-import temporal.UnimplementedException;
 import controlador.exceptions.AuthenticationException;
 import controlador.exceptions.ExistenceException;
 import controlador.exceptions.NonExistingElementException;

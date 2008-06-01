@@ -5,7 +5,6 @@ package controlador;
 import java.sql.Connection;
 import java.util.Vector;
 
-import temporal.UnimplementedException;
 import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
 import controlador.exceptions.NonExistingElementException;
