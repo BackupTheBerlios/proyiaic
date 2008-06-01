@@ -251,7 +251,7 @@ public class DataBaseControler
 		try
 		{
 			ejecutaString("BEGIN;", conn);
-			modif_pub.insertaPublicación(publicacion, conn);
+			modif_pub.insertaPublicacion(publicacion, conn);
 			ejecutaString("COMMIT;", conn);
 			return "La publicación se ha insertado correctamente.";
 		}
@@ -341,7 +341,7 @@ public class DataBaseControler
 		try
 		{
 			ejecutaString("BEGIN;", conn);
-			modif_pub.modificaPublicación(publicacion, conn);
+			modif_pub.modificaPublicacion(publicacion, conn);
 			ejecutaString("COMMIT;", conn);
 			return "La modificación del documento se ha realizado correctamente.";
 		} 
@@ -427,7 +427,7 @@ public class DataBaseControler
 		{
 			int id_doc = Integer.parseInt(idDoc);
 			ejecutaString("BEGIN;", conn);
-			modif_pub.borraPublicación(id_doc, conn);
+			modif_pub.borraPublicacion(id_doc, conn);
 			ejecutaString("COMMIT;", conn);
 			return "La eliminación del documento se ha realizado correctamente.";
 		}

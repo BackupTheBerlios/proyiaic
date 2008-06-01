@@ -35,7 +35,7 @@ public class ModificadorPublicaciones {
 	 * @throws BDException 
 	 * @throws ExistingElementException 
 	 */
-	public void insertaPublicación(Publication publicacion, Connection conn) throws BDException, ExistingElementException
+	public void insertaPublicacion(Publication publicacion, Connection conn) throws BDException, ExistingElementException
 	{
 		Vector<String> inserciones = publicacion.generaInserciones(conn);		
 		theBaseDatos.exeUpdates(inserciones, conn);
@@ -53,14 +53,14 @@ public class ModificadorPublicaciones {
 	 * la base de datos.
 	 * @throws ExistingElementException 
 	 */
-	public void modificaPublicación(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
+	public void modificaPublicacion(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
 	{	
 		int id_doc = publicacion.getIdDoc();
 		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
 		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);		
-		borraPublicación(publicacion.getIdDoc(), conn);
-		insertaPublicación(publicacion, conn);
+		borraPublicacion(publicacion.getIdDoc(), conn);
+		insertaPublicacion(publicacion, conn);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ModificadorPublicaciones {
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - En caso que el documento no exista.
 	 */
-	public void borraPublicación(int id_doc, Connection conn) throws BDException, NonExistingElementException 
+	public void borraPublicacion(int id_doc, Connection conn) throws BDException, NonExistingElementException 
 	{
 		String consulta = new String ("SELECT tipo FROM tipopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
