@@ -182,23 +182,25 @@ public class Booklet extends Publication
 			bibtex += referencia;
 		bibtex += "\n";
 		if (title != null)
-			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "}\n";
+			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";
 		if (year != null)
-			bibtex += "\tyear={" + convertirTextoBibtex(year) + "}\n";
+			bibtex += "\tyear={" + convertirTextoBibtex(year) + "},\n";
 		if (month != null)
-			bibtex += "\tmonth={" + convertirTextoBibtex(month) + "}\n";
+			bibtex += "\tmonth={" + convertirTextoBibtex(month) + "},\n";
 		if (author != null)
-			bibtex += "\tauthor={" + convertirTextoBibtex(author) + "}\n";
+			bibtex += "\tauthor={" + convertirTextoBibtex(author) + "},\n";
 		if (howPublished != null)
-			bibtex += "\thowPublished={" + convertirTextoBibtex(howPublished) + "}\n";
+			bibtex += "\thowPublished={" + convertirTextoBibtex(howPublished) + "},\n";
 		if (address != null)
-			bibtex += "\taddress={" + convertirTextoBibtex(address) + "}\n";
+			bibtex += "\taddress={" + convertirTextoBibtex(address) + "},\n";
 		if (_abstract != null)
-			bibtex += "\tabstract={" + convertirTextoBibtex(_abstract) + "}\n";
+			bibtex += "\tabstract={" + convertirTextoBibtex(_abstract) + "},\n";
 		if (note != null)
-			bibtex += "\tnote={" + convertirTextoBibtex(note) + "}\n";
+			bibtex += "\tnote={" + convertirTextoBibtex(note) + "},\n";
 		if (key != null)
-			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "}\n";
+			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "},\n";
+		if (bibtex.charAt(bibtex.length()-2) == ',') //Sobra la última coma.
+				bibtex = bibtex.substring(0, bibtex.length()-2);
 		bibtex += "}";
 
 		return bibtex;

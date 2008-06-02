@@ -235,33 +235,35 @@ public class Proceedings extends Publication
 			bibtex += referencia;
 		bibtex += "\n";
 		if (title != null)
-			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "}\n";
+			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";
 		if (year != null)
-			bibtex += "\tyear={" + convertirTextoBibtex(year) + "}\n";
+			bibtex += "\tyear={" + convertirTextoBibtex(year) + "},\n";
 		if (month != null)
-			bibtex += "\tmonth={" + convertirTextoBibtex(month) + "}\n";
+			bibtex += "\tmonth={" + convertirTextoBibtex(month) + "},\n";
 		if (booktitle != null)
-			bibtex += "\tbooktitle={" + convertirTextoBibtex(booktitle) + "}\n";
+			bibtex += "\tbooktitle={" + convertirTextoBibtex(booktitle) + "},\n";
 		if (editor != null)
-			bibtex += "\teditor={" + convertirTextoBibtex(editor) + "}\n";
+			bibtex += "\teditor={" + convertirTextoBibtex(editor) + "},\n";
 		if (volume != null)
-			bibtex += "\tvolume={" + convertirTextoBibtex(volume) + "}\n";
+			bibtex += "\tvolume={" + convertirTextoBibtex(volume) + "},\n";
 		if (number != null)
-			bibtex += "\tnumber={" + convertirTextoBibtex(number) + "}\n";
+			bibtex += "\tnumber={" + convertirTextoBibtex(number) + "},\n";
 		if (series != null)
-			bibtex += "\tseries={" + convertirTextoBibtex(series) + "}\n";
+			bibtex += "\tseries={" + convertirTextoBibtex(series) + "},\n";
 		if (address != null)
-			bibtex += "\taddress={" + convertirTextoBibtex(address) + "}\n";
+			bibtex += "\taddress={" + convertirTextoBibtex(address) + "},\n";
 		if (organization != null)
-			bibtex += "\torganization={" + convertirTextoBibtex(organization) + "}\n";
+			bibtex += "\torganization={" + convertirTextoBibtex(organization) + "},\n";
 		if (publisher != null)
-			bibtex += "\tpublisher={" + convertirTextoBibtex(publisher) + "}\n";
+			bibtex += "\tpublisher={" + convertirTextoBibtex(publisher) + "},\n";
 		if (_abstract != null)
-			bibtex += "\tabstract={" + convertirTextoBibtex(_abstract) + "}\n";
+			bibtex += "\tabstract={" + convertirTextoBibtex(_abstract) + "},\n";
 		if (note != null)
-			bibtex += "\tnote={" + convertirTextoBibtex(note) + "}\n";
+			bibtex += "\tnote={" + convertirTextoBibtex(note) + "},\n";
 		if (key != null)
-			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "}\n";
+			bibtex += "\tkey={" + convertirTextoBibtexKeys(key) + "},\n";
+		if (bibtex.charAt(bibtex.length()-2) == ',') //Sobra la última coma.
+			bibtex = bibtex.substring(0, bibtex.length()-2);
 		bibtex += "}";
 		
 		return bibtex;
