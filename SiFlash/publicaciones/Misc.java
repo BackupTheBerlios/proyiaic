@@ -19,7 +19,7 @@ import database.BDException;
 
 
 /**
- * Para uso cuando los demás tipos no corresponden.
+ * Clase para usar cuando los demás tipos de documento no corresponden.
  */
 public class Misc extends Publication 
 {
@@ -60,10 +60,10 @@ public class Misc extends Publication
 	}
 
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
-	 */
+	 */	
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
@@ -92,6 +92,12 @@ public class Misc extends Publication
 			proyecto = valorString;
 	}
 
+	
+	/**
+	 * Establece el valor de un atributo(lista) del documento.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
+	 */	
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
@@ -191,10 +197,17 @@ public class Misc extends Publication
 		return bibtex;
 	}
 
+	/**
+	 * @return Los autores del documento.
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
+	
+	/**
+	 * @return Forma en la que ha sido publicado el documento.
+	 */
 	public String getHowPublished() {
 		return howPublished;
 	}
@@ -275,6 +288,14 @@ public class Misc extends Publication
 		return vector; 
 	}
 
+	
+	/**
+	 * Genera una conjunto de Misc a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de Object 
+	 * contenido en  representa una fila del resultado obtenido al consultar la base de datos.
+	 * @return Vector de documentos resultante.
+	 */			
 	public static Vector<Misc> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT MISC1.idDoc, MISC1.title, MISC1.howpublished, MISC1.month, MISC1.year, MISC1.note, MISC1.abstract, MISC1.URL, MISC1.user, MISC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM misc AS MISC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MISC1.idDoc AND EEX1.idDoc = MISC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MISC1.idDoc"
 		Vector <Misc> vector = new Vector <Misc>();
@@ -354,10 +375,30 @@ public class Misc extends Publication
 		return vector;
 	}
 
+	/**
+	 * Añade un autor al documento.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
 
+	/**
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyecto Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 * @param howpublished Forma en la que ha sido publicado el documento.
+	 */		
 	public Misc(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,

@@ -19,7 +19,9 @@ import database.BDException;
 
 
 /**
- * Una tesis de maestría o proyecto fin de carrera.
+ * Clase que representa una tesis de maestría o proyecto fin de carrera.
+ * Contiene todos sus posibles campos, así como los métodos necesarios
+ * para su correcto manejo.
  */
 public class MastersThesis extends Publication 
 {
@@ -70,10 +72,10 @@ public class MastersThesis extends Publication
 	}
 	
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
-	 */
+	 */		
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
@@ -106,6 +108,11 @@ public class MastersThesis extends Publication
 			proyecto = valorString;
 	}
 
+	/**
+	 * Establece el valor de un atributo(lista) del documento.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
+	 */			
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
@@ -217,18 +224,31 @@ public class MastersThesis extends Publication
 		return bibtex;
 	}
 
+	
+	/**
+	 * @return Los autores del documento.
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
+	/**
+	 * @return La escuela en la que se elaboró el documento.
+	 */
 	public String getSchool() {
 		return school;
 	}
 
+	/**
+	 * @return El tipo del documento.
+	 */
 	public String getType() {
 		return type;
 	}
 
+	/**
+	 * @return El address del documento.
+	 */
 	public String getAddress() {
 		return address;
 	}
@@ -317,6 +337,14 @@ public class MastersThesis extends Publication
 		return vector; 		
 	}
 
+	
+	/**
+	 * Genera una conjunto de MastersThesis a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de Object 
+	 * contenido en  representa una fila del resultado obtenido al consultar la base de datos.
+	 * @return Vector de documentos resultante.
+	 */		
 	public static Vector<MastersThesis> generaPub(Vector<Object[]> v)  {
 		//"SELECT DISTINCT MAS1.idDoc, MAS1.title, MAS1.type, MAS1.school, MAS1.address, MAS1.month, MAS1.year, MAS1.note, MAS1.abstract, MAS1.URL, MAS1.user, MAS1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM mastersthesis AS MAS1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAS1.idDoc AND EEX1.idDoc = MAS1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAS1.idDoc"
 		Vector <MastersThesis> vector = new Vector <MastersThesis>();
@@ -399,10 +427,35 @@ public class MastersThesis extends Publication
 		return vector;
 	}
 	
+	
+
+	/**
+	 * Añade un autor al documento.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
+
 	
+	/**
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyecto Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 * @param address Dirección que le corresponde al documento.
+	 * @param school Escuela en la que se elaboró el documento.
+	 * @param type Tipo del documento.
+	 */		
 	public MastersThesis(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
