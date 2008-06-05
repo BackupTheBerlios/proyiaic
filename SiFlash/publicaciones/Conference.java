@@ -19,8 +19,10 @@ import database.BDException;
 
 
 /**
- * Lo mismo que inproceedings, incluido para compatibilidad con el lenguaje de 
- * markup Scribe en:Scribe (markup language).
+ * Clase qeu representa los Conference, dicho tipo de documento equivale a un inproceedings,
+ *  incluido para compatibilidad con el lenguaje de markup Scribe en:Scribe (markup language).
+ * Contiene todos sus posibles campos, así como los métodos necesarios
+ * para su correcto manejo.
  */
 public class Conference extends Publication 
 {
@@ -106,10 +108,10 @@ public class Conference extends Publication
 	}
 
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
-	 */
+	 */	
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
@@ -156,6 +158,11 @@ public class Conference extends Publication
 			proyecto = valorString;
 	}
 
+	/**
+	 * Establece el valor de un atributo(lista) del documento.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
+	 */		
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
@@ -324,46 +331,79 @@ public class Conference extends Publication
 		return bibtex;
 	}
 
+	/**
+	 * @return Los autores del documento.
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
+	/**
+	 * @return El titulo del documento.
+	 */
 	public String getBooktitle() {
 		return booktitle;
 	}
 
+	/**
+	 * @return El crossref del documento.
+	 */
 	public String getCrossref() {
 		return crossref;
 	}
 
+	/**
+	 * @return Los editores del documento.
+	 */
 	public LinkedList<AutorEditor> getEditor() {
 		return editor;
 	}
 
+	/**
+	 * @return El volumen del documento.
+	 */
 	public String getVolume() {
 		return volume;
 	}
 
+	/**
+	 * @return El number del documento.
+	 */
 	public String getNumber() {
 		return number;
 	}
 
+	/**
+	 * @return La serie a la que pertenece el documento.
+	 */
 	public String getSeries() {
 		return series;
 	}
 
+	/**
+	 * @return Las páginas del documento.
+	 */
 	public String getPages() {
 		return pages;
 	}
 
+	/**
+	 * @return El address del documento.
+	 */
 	public String getAddress() {
 		return address;
 	}
 
+	/**
+	 * @return La organización del documento.
+	 */
 	public String getOrganization() {
 		return organization;
 	}
 
+	/**
+	 * @return El publisher del documento.
+	 */
 	public String getPublisher() {
 		return publisher;
 	}
@@ -495,6 +535,13 @@ public class Conference extends Publication
 		return vector; 
 	}
 
+	/**
+	 * Genera una conjunto de Conference a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de Object 
+	 * contenido en  representa una fila del resultado obtenido al consultar la base de datos.
+	 * @return Vector de documentos resultante.
+	 */	
 	public static Vector<Conference> generaPub(Vector<Object[]> v)  {
 		Vector <Conference> vector = new Vector <Conference>();
 		if (v == null) return vector;
@@ -583,14 +630,47 @@ public class Conference extends Publication
 		return vector;
 	}
 	
+	/**
+	 * Añade un autor al documento.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
 
+	/**
+	 * Añade un editor al documento.
+	 * @param e Editor a añadir
+	 */
 	public void addEditor(AutorEditor e){
 		if (!editor.contains(e)) editor.add(e);
 	}
 	
+	/**
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyecto Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 * @param booktitle Booktitle para el documento.
+	 * @param crossref Crossref del documento.
+	 * @param editor Editores del documento.
+	 * @param volume Volumen del documento.
+	 * @param number Number del documento.
+	 * @param series Serie a la que pertenece el documento.
+	 * @param pages Longitud en páginas del documento. 
+	 * @param address Dirección que le corresponde al documento.
+	 * @param organization Organization del documento.
+	 * @param publisher Publisher del documento.
+	 */	
 	public Conference(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
