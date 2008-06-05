@@ -20,6 +20,8 @@ import database.BDException;
 
 /**
  * Clase para usar cuando los demás tipos de documento no corresponden.
+ * Contiene todos sus posibles campos, así como los métodos necesarios
+ * para su correcto manejo.
  */
 public class Misc extends Publication 
 {

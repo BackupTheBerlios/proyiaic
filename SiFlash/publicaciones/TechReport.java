@@ -19,8 +19,10 @@ import database.BDException;
 
 
 /**
- * Un reporte publicado por una escuela u otra institución, usualmente numerado 
- * dentro de una serie.
+ * Clase que representa un reporte publicado por una escuela u otra institución, 
+ * usualmente numerado dentro de una serie.
+ * Contiene todos sus posibles campos, así como los métodos necesarios
+ * para su correcto manejo.
  */
 public class TechReport extends Publication 
 {
@@ -76,10 +78,10 @@ public class TechReport extends Publication
 	}
 
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
-	 */
+	 */	
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
@@ -114,6 +116,11 @@ public class TechReport extends Publication
 			proyecto = valorString;
 	}
 
+	/**
+	 * Establece el valor de un atributo(lista) del documento.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
+	 */			
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
@@ -231,22 +238,37 @@ public class TechReport extends Publication
 		return bibtex;
 	}
 
+	/**
+	 * @return Los autores del documento.
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
+	/**
+	 * @return La institucion que realiza el documento.
+	 */
 	public String getInstitution() {
 		return institution;
 	}
 
+	/**
+	 * @return Tipo de contenido del documento.
+	 */
 	public String getType() {
 		return type;
 	}
 
+	/**
+	 * @return Numero que le corresponde al documento.
+	 */
 	public String getNumber() {
 		return number;
 	}
 
+	/**
+	 * @return Lugar de publicación de documento.
+	 */
 	public String getAddress() {
 		return address;
 	}
@@ -340,6 +362,14 @@ public class TechReport extends Publication
 	}
 
 
+	
+	/**
+	 * Genera una conjunto de TechReport a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de Object 
+	 * contenido en  representa una fila del resultado obtenido al consultar la base de datos.
+	 * @return Vector de documentos resultante.
+	 */				
 	public static Vector<TechReport> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT TEC1.idDoc, TEC1.title, TEC1.type, TEC1.institution, TEC1.address, TEC1.month, TEC1.year, TEC1.note, TEC1.abstract, TEC1.URL, TEC1.user, TEC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave, TEC1.type FROM techreport AS TEC1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = TEC1.idDoc AND EEX1.idDoc = TEC1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = TEC1.idDoc"
 		Vector <TechReport> vector = new Vector <TechReport>();
@@ -423,10 +453,35 @@ public class TechReport extends Publication
 		return vector;
 	}
 
+	
+	/**
+	 * Añade un autor al documento.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
 
+	
+	/**
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyecto Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 * @param address Dirección que le corresponde al documento.
+	 * @param institution Intitucion encargada del documento.
+	 * @param type Tipo del documento.
+	 * @param number Number del documento.
+	 */			
 	public TechReport(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,

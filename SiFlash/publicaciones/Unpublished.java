@@ -19,7 +19,9 @@ import database.BDException;
 
 
 /**
- * Un documento que tiene un autor y título, pero que no fue formalmente publicado.
+ * Clase que representa un documento que tiene un autor y título, 
+ * pero que no fue formalmente publicado.
+ * Contiene los métodos necesarios para su correcto manejo.
  */
 public class Unpublished extends Publication 
 {
@@ -55,10 +57,10 @@ public class Unpublished extends Publication
 	}
 
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
-	 */
+	 */	
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
@@ -85,6 +87,11 @@ public class Unpublished extends Publication
 			proyecto = valorString;
 	}
 
+	/**
+	 * Establece el valor de un atributo(lista) del documento.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
+	 */		
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
@@ -178,6 +185,9 @@ public class Unpublished extends Publication
 		return bibtex;
 	}
 
+	/**
+	 * @return Los autores del documento.
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -254,6 +264,14 @@ public class Unpublished extends Publication
 		return vector; 
 	}
 
+	
+	/**
+	 * Genera una conjunto de Unpublished a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de Object 
+	 * contenido en  representa una fila del resultado obtenido al consultar la base de datos.
+	 * @return Vector de documentos resultante.
+	 */		
 	public static Vector<Unpublished> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM manual AS MAN1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = MAN1.idDoc AND EEX1.idDoc = MAN1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = MAN1.idDoc"
 		//"SELECT DISTINCT UNP1.idDoc, UNP1.title, UNP1.month, UNP1.year, UNP1.note, UNP1.abstract, UNP1.URL, UNP1.user, UNP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM unpublished AS UNP1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = UNP1.idDoc AND EEX1.idDoc = UNP1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = UNP1.idDoc"
@@ -333,10 +351,31 @@ public class Unpublished extends Publication
 		return vector;
 	}
 
+	
+	/**
+	 * Añade un autor al documento.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
 
+	
+	/**
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyecto Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 */		
 	public Unpublished(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,

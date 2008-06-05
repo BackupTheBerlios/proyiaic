@@ -19,7 +19,9 @@ import database.BDException;
 
 
 /**
- * Una tesis de doctorado.
+ * Clase que representa una tesis de doctorado.
+ * Contiene todos sus posibles campos, así como los métodos necesarios
+ * para su correcto manejo.
  */
 public class PhdThesis extends Publication 
 {
@@ -69,11 +71,12 @@ public class PhdThesis extends Publication
 		}
 	}
 
+
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
-	 */
+	 */	
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
@@ -106,6 +109,12 @@ public class PhdThesis extends Publication
 			proyecto = valorString;
 	}
 
+	
+	/**
+	 * Establece el valor de un atributo(lista) del documento.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
+	 */		
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
@@ -217,18 +226,31 @@ public class PhdThesis extends Publication
 		return bibtex;
 	}
 
+	
+	/**
+	 * @return Autores del documento.
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
+	/**
+	 * @return Escuela en la que se realizó el documento.
+	 */
 	public String getSchool() {
 		return school;
 	}
 
+	/**
+	 * @return Tipo de contenido.
+	 */
 	public String getType() {
 		return type;
 	}
 
+	/**
+	 * @return Adress del documento.
+	 */
 	public String getAddress() {
 		return address;
 	}
@@ -317,6 +339,14 @@ public class PhdThesis extends Publication
 		return vector; 
 	}
 
+	
+	/**
+	 * Genera una conjunto de PhdThesis a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de Object 
+	 * contenido en  representa una fila del resultado obtenido al consultar la base de datos.
+	 * @return Vector de documentos resultante.
+	 */		
 	public static Vector<PhdThesis> generaPub(Vector<Object[]> v) {
 		//"SELECT DISTINCT PHD1.idDoc, PHD1.title, PHD1.type, PHD1.school, PHD1.address, PHD1.month, PHD1.year, PHD1.note, PHD1.abstract, PHD1.URL, PHD1.user, PHD1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM phdthesis AS PHD1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = PHD1.idDoc AND EEX1.idDoc = PHD1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = PHD1.idDoc"
 		Vector <PhdThesis> vector = new Vector <PhdThesis>();
@@ -399,10 +429,33 @@ public class PhdThesis extends Publication
 		return vector;
 	}
 	
+	
+	/**
+	 * Añade un autor al documento.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
 	
+	/**
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyecto Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 * @param address Lugar de publicación del documento.
+	 * @param school Escuela en la que se elaboró el documento.
+	 * @param type Tipo del contenido del documento.
+	 */			
 	public PhdThesis(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
