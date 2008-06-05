@@ -20,6 +20,8 @@ import database.BDException;
 
 /**
  * Clase que representa un artículo publicado en una revista.
+ * Contiene todos sus posibles campos, así como los métodos necesarios
+ * para su correcto manejo.
  */
 public class Article extends Publication 
 {
@@ -50,23 +52,23 @@ public class Article extends Publication
 
 
 	/**
-	 * Crea un artículo a partir de una serie de atributos.
-	 * @param idDoc Identificador del artículo.
-	 * @param referencia Referencia del artículo.
-	 * @param title Título del artículo.
-	 * @param year Año del artículo.
-	 * @param month Mes del artículo.
-	 * @param url Dirección URL del artículo.
-	 * @param _abstract Abstract del artículo.
-	 * @param note Nota del artículo.
-	 * @param key Claves del artículo.
-	 * @param user Usuario que ha subido el artículo.
-	 * @param proyectos Proyectos a los que pertenece el artículo.
-	 * @param author Autores del artículo.
-	 * @param journal Journal del artículo.
-	 * @param volume Volumen del artículo.
-	 * @param number Number del artículo.
-	 * @param pages Longitud en páginas del artículo.
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyectos Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 * @param journal Journal del documento.
+	 * @param volume Volumen del documento.
+	 * @param number Number del documento.
+	 * @param pages Longitud en páginas del documento.
 	 */
 	public Article(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
@@ -153,7 +155,7 @@ public class Article extends Publication
 	/**
 	 * Establece el valor de un atributo(lista) del artículo.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
-	 * @param valor Valor del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
 	 */
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
@@ -400,7 +402,8 @@ public class Article extends Publication
 	/**
 	 * Genera una serie de artículos a partir del resultado obtenido al realizar una consulta 
 	 * en la base de datos.
-	 * @param v Resultado obtenido por una consulta a la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de object representa una fila
+	 * del resultado obtenido al consultar la base de datos.
 	 * @return Vector de artículos resultante.
 	 */
 	public static Vector<Article> generaPub(Vector<Object[]> v){

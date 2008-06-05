@@ -19,7 +19,9 @@ import database.BDException;
 
 
 /**
- * Clase que representa un libro
+ * Clase que representa un libro publicado.
+ * Contiene todos sus posibles campos, así como los métodos necesarios
+ * para su correcto manejo.
  */
 public class Book extends Publication 
 {
@@ -62,17 +64,28 @@ public class Book extends Publication
 	 * Edicion del mismo.
 	 */
 	private String edition;
-
+	
 	/**
-	 * @param author
-	 * @param editor
-	 * @param publisher
-	 * @param volume
-	 * @param number
-	 * @param series
-	 * @param address
-	 * @param edition
-	 * @throws UnimplementedException 
+	 * Constructor de la clase dados sus atributos.
+	 * @param idDoc Identificador del documento.
+	 * @param referencia Referencia del documento.
+	 * @param title Título del documento.
+	 * @param year Año del documento.
+	 * @param month Mes del documento.
+	 * @param url Dirección URL del documento.
+	 * @param _abstract Abstract del documento.
+	 * @param note Nota del documento.
+	 * @param key Conjunto de keywords del documento.
+	 * @param user Usuario que ha subido el documento.
+	 * @param proyectos Proyectos a los que pertenece el documento.
+	 * @param author Autores del documento.
+	 * @param editor Editores del documento.
+	 * @param publisher Publisher del documento.
+	 * @param volume Volumen del documento.
+	 * @param number Number del documento.
+	 * @param series Serie a la que pertenece el documento.
+	 * @param address Dirección que le corresponde al documento.
+	 * @param edition Edicion del documento.
 	 */
 	public Book(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,
@@ -119,10 +132,10 @@ public class Book extends Publication
 	}
 
 	/**
-	 * Inserta el campo.
+	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valorString Valor del campo que se quiere insertar.
-	 */
+	 */	
 	private void insertar(String nombreCampo, String valorString)
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
@@ -163,6 +176,11 @@ public class Book extends Publication
 			proyecto = valorString;
 	}
 
+	/**
+	 * Establece el valor de un atributo del documento.
+	 * @param nombreCampo Nombre del campo que se quiere insertar.
+	 * @param valor Lista con los valores del campo que se quiere insertar.
+	 */	
 	private void insertar(String nombreCampo, LinkedList<AutorEditor> valor) 
 	{
 		if (nombreCampo.equalsIgnoreCase("authors") && author == null)
@@ -313,6 +331,10 @@ public class Book extends Publication
 		return bibtex;
 	}
 
+	/**
+	 * 
+	 * @return La lista de autores
+	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
@@ -460,6 +482,13 @@ public class Book extends Publication
 		return vector; 
 	}
 
+	/**
+	 * Genera una conjunto de Book a partir del resultado obtenido al realizar una consulta 
+	 * en la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de object representa una fila
+	 * del resultado obtenido al consultar la base de datos.
+	 * @return Vector de documentos resultante.
+	 */
 	public static Vector<Book> generaPub(Vector<Object[]> v) {		
 		Vector <Book> vector = new Vector <Book>();
 		if (v == null) return vector;
