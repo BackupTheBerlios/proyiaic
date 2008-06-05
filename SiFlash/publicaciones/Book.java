@@ -332,37 +332,57 @@ public class Book extends Publication
 	}
 
 	/**
-	 * 
-	 * @return La lista de autores
+	 * @return La lista de autores del documento.
 	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
 	}
 
+	/**
+	 * @return El editor del documento.
+	 */
 	public LinkedList<AutorEditor> getEditor() {
 		return editor;
 	}
 
+	/**
+	 * @return El publisher del documento.
+	 */
 	public String getPublisher() {
 		return publisher;
 	}
 
+	/**
+	 * @return El volumen del documento.
+	 */
 	public String getVolume() {
 		return volume;
 	}
 
+	/**
+	 * @return El numero del documento.
+	 */
 	public String getNumber() {
 		return number;
 	}
 
+	/**
+	 * @return La serie del documento.
+	 */
 	public String getSeries() {
 		return series;
 	}
 
+	/**
+	 * @return El address del documento.
+	 */
 	public String getAddress() {
 		return address;
 	}
 
+	/**
+	 * @return La edicion del documento.
+	 */
 	public String getEdition() {
 		return edition;
 	}
@@ -485,8 +505,8 @@ public class Book extends Publication
 	/**
 	 * Genera una conjunto de Book a partir del resultado obtenido al realizar una consulta 
 	 * en la base de datos.
-	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de object representa una fila
-	 * del resultado obtenido al consultar la base de datos.
+	 * @param v Resultado obtenido por una consulta a la base de datos, cada array de Object 
+	 * contenido en  representa una fila del resultado obtenido al consultar la base de datos.
 	 * @return Vector de documentos resultante.
 	 */
 	public static Vector<Book> generaPub(Vector<Object[]> v) {		
@@ -573,10 +593,18 @@ public class Book extends Publication
 		return vector;
 	}
 
+	/**
+	 * Añade un autor al documento.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (!author.contains(e)) author.add(e);
 	}
 
+	/**
+	 * Añade un esitor al documento.
+	 * @param e Editor a añadir.
+	 */
 	public void addEditor(AutorEditor e){
 		if (!editor.contains(e)) editor.add(e);
 	}	
