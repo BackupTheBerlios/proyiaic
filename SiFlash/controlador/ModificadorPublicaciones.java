@@ -56,7 +56,7 @@ public class ModificadorPublicaciones {
 	public void modificaPublicacion(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
 	{	
 		int id_doc = publicacion.getIdDoc();
-		String consulta = new String ("SELECT tipo FROM tipopopublicacion WHERE idDoc = " + id_doc + ";");
+		String consulta = new String ("SELECT tipo FROM tipopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
 		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);		
 		borraPublicacion(publicacion.getIdDoc(), conn);

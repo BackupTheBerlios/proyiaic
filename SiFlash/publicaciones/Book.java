@@ -519,8 +519,8 @@ public class Book extends Publication
 				id_aut = ((Long) array[16]).intValue();			
 				if (array[17] != null) n_aut = (String) array[17]; else n_aut = null;
 				if (array[18] != null) ap_aut = (String) array[18]; else ap_aut = null;
-				escrito_edit = ((Boolean) array[20]).booleanValue();
-				if (array[21] != null) clave = (String) array[21]; else clave = null;
+				escrito_edit = ((Boolean) array[19]).booleanValue();
+				if (array[20] != null) clave = (String) array[21]; else clave = null;
 
 
 				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
