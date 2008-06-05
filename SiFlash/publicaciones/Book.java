@@ -177,7 +177,7 @@ public class Book extends Publication
 	}
 
 	/**
-	 * Establece el valor de un atributo del documento.
+	 * Establece el valor de un atributo(lista) del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
 	 * @param valor Lista con los valores del campo que se quiere insertar.
 	 */	
