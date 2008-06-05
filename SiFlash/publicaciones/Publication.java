@@ -16,8 +16,9 @@ import controlador.exceptions.ExistingElementException;
 import database.BDException;
 
 /**
- * Agrupa los atributos comunes a todos los tipos de publicación. 
- * Usada para realizar las operaciones genéricas sobre ellas.
+ * Clase abstracta que agrupa los atributos comunes a todos los 
+ * tipos de documentos, igualmente define y/o implementa el 
+ * comportamiento que ha de ser común a todos ellos.
  */
 public abstract class Publication 
 {
@@ -63,7 +64,7 @@ public abstract class Publication
 	protected String note;
 
 	/**
-	 * Clave/s de la publicación.
+	 * keyword/s de la publicación.
 	 */
 	protected LinkedList<String> key;
 
@@ -83,12 +84,15 @@ public abstract class Publication
 	protected String proyecto;
 
 	/**
-	 * Separador de claves.
+	 * Separador de keywords.
 	 */
 	public static final String separador = new String (", ");
 
 
 	/**
+	 * Setter de la publicación el que se fijan todos sus atributos a los que se pasan
+	 * por parámetro, equivalente a un constructor dados los parámetros, pero al
+	 * ser una clase abstracta es más comodo el multisetter.
 	 * @param idDoc Identificador de la publicación.
 	 * @param referencia Referencia de la publicación.
 	 * @param title Título de la publicación.
@@ -143,7 +147,7 @@ public abstract class Publication
 		this.addProyect(un_proyecto);
 	}	*/
 
-	/**
+	/*
 	 * Añade un proyecto nuevo al que pertenece la publicación.
 	 * @param un_proyecto Proyecto a añadir.
 	 */
@@ -156,7 +160,7 @@ public abstract class Publication
 //	}
 
 	/**
-	 * Añade una clave nueva a la publicación.
+	 * Añade una keywords nueva a la publicación.
 	 * @param un_key La clave nueva a insertar.
 	 */
 	protected void addKey(String un_key) {
@@ -179,7 +183,8 @@ public abstract class Publication
 	public abstract Element generarElementoXML();
 
 	/**
-	 * Extrae los autores/editores de una cadena de caracteres.
+	 * Extrae los autores/editores de una cadena de caracteres que se le pasa por
+	 * parámetro.
 	 * @param autoresEditores Cadena que se  quiere separar.
 	 * @return Una lista con los autores/editores.
 	 */
@@ -353,6 +358,11 @@ public abstract class Publication
 	}
 
 
+	/**
+	 * Método auxiliar para comprobar si el caracter pasado por parámetro es mayuscula. 
+	 * @param actual Caracter a comprobar
+	 * @return Boolean - True si es una letra mayúscula, false en cualquier otro caso.
+	 */
 	private boolean esMayuscula(char actual) 
 	{
 //		char 'A' = 65.
@@ -465,7 +475,7 @@ public abstract class Publication
 	}
 
 	/**
-	 * @return Las claves de la publicación.
+	 * @return LinkedList con las keywords de la publicación.
 	 */
 	public LinkedList<String> getKeys()
 	{
@@ -514,22 +524,24 @@ public abstract class Publication
 
 
 	/**
-	 * @return El usuario de la publicación.
+	 * @return El usuario que añadió la publicación.
 	 */
 	public final String getUser() {
 		return user;
 	}
 
 
+
 	/**
-	 * @param El usuario de la publicación.
+	 * Fija el usuario del documento.
+	 * @param user usuario de la publicación.
 	 */
 	public final void setUser(String user) {
 		this.user = user;
 	}
 
 
-	/**
+	/*
 	 * @return Los proyectos de la publicación.
 	 */
 //	public final Vector<String> getProyectos() {
@@ -537,7 +549,7 @@ public abstract class Publication
 //	}
 
 
-	/**
+	/*
 	 * @param Los proyectos de la publicación.
 	 */
 //	public final void setProyectos(Vector<String> proyectos) {
@@ -554,15 +566,17 @@ public abstract class Publication
 
 
 	/**
-	 * @param  La referencia de la publicación.
+	 * Fija la referencia del documento.
+	 * @param  referencia La referencia de la publicación.
 	 */
 	public final void setReferencia(String referencia) {
 		this.referencia = referencia;
 	}
-
+	
 
 	/**
-	 * @param El título de la publicación.
+	 * Fija el título del documento.
+	 * @param title El título a fijar.
 	 */
 	public final void setTitle(String title) {
 		this.title = title;
@@ -570,7 +584,8 @@ public abstract class Publication
 
 
 	/**
-	 * @param El año de la publicación.
+	 * Fija el año del documento.
+	 * @param year El año de la publicación.
 	 */
 	public final void setYear(String year) {
 		this.year = year;
@@ -578,7 +593,8 @@ public abstract class Publication
 
 
 	/**
-	 * @param El mes de la publicación.
+	 * Fija el mes del documento.
+	 * @param month El mes de la publicación.
 	 */
 	public final void setMonth(String month) {
 		this.month = month;
@@ -586,7 +602,8 @@ public abstract class Publication
 
 
 	/**
-	 * @param El resumen de la publicación.
+	 * Fija el abstract del documento.
+	 * @param _abstract El resumen de la publicación.
 	 */
 	public final void set_abstract(String _abstract) {
 		this._abstract = _abstract;
@@ -594,7 +611,8 @@ public abstract class Publication
 
 
 	/**
-	 * @param La nota de la publicación.
+	 * Fija los comentarios del documento.
+	 * @param note La nota de la publicación.
 	 */
 	public final void setNote(String note) {
 		this.note = note;
@@ -602,7 +620,8 @@ public abstract class Publication
 
 
 	/**
-	 * @param Las claves de la publicación.
+	 * Fija el conjunto de keywords del documento.
+	 * @param Lisa con las nuevas claves para el documento.
 	 */
 	public final void setKey(LinkedList<String> key)
 	{
