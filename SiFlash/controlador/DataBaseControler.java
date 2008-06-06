@@ -32,35 +32,66 @@ public class DataBaseControler
 	 */
 	private BaseDatos database;
 
+	/**
+	 * Objeto de la clase ConsultorBaseDatos que nos ayudará a realizar las operaciones
+	 * necesarias.
+	 */
 	private ConsultorBaseDatos consultor;
-	@SuppressWarnings("unused")
+	
+	/**
+	 * Objeto de la clase ModificadorAutores que nos ayudará a realizar las operaciones
+	 * más complejas relativas a Autores/Editores.
+	 */
 	private ModificadorAutores modif_autores;
-	@SuppressWarnings("unused")
+	
+	/**
+	 * Objeto de la clase ModificadorProyectos que nos ayudará a realizar las operaciones
+	 * más complejas relativas a los proyectos.
+	 */
 	private ModificadorProyectos modif_proyectos;
+	
+	/**
+	 * Objeto de la clase ModificadorUsuarios que nos ayudará a realizar las operaciones
+	 * más complejas relativas a los usuarios de la aplicación.
+	 */
 	private ModificadorUsuarios modif_user;
+	
+	/**
+	 * Objeto de la clase ModificadorPublicaciones que nos ayudará a realizar las operaciones
+	 * más complejas relativas a las publicaciones.
+	 */
 	private ModificadorPublicaciones modif_pub;
 
 	/**
-	 * Constructor por defecto de la clase.
-	 * @roseuid 47C8A70F01C5
+	 * Constructor por defecto de la clase, iniciará todos sus atributos en relaciones
+	 * a la base de datos prefijada por defecto.
 	 */
 	public DataBaseControler() 
 	{
 		database = new BaseDatos();
 		initSubcontrolers();
 	}
+	
+	/**
+	 * Constructor de la clase proporcionandole la base de datos sobre la que debe operar.
+	 * Iniciará los subcontroladores en base a ella.
+	 * @param base Base de datos sobre la que debe operar.
+	 */
+	public DataBaseControler(BaseDatos base){
+		database = base;
+		initSubcontrolers();
+	}	
 
+	/**
+	 * Método para iniciar los distintos subcontrolares, es decir, tanto el ConsultorBaseDatos
+	 * como los distintos modificadores.
+	 */
 	private void initSubcontrolers() {		
 		consultor = new ConsultorBaseDatos (database);
 		modif_autores = new ModificadorAutores (database);
 		modif_proyectos = new ModificadorProyectos(database);
 		modif_pub = new ModificadorPublicaciones (database);
 		modif_user = new ModificadorUsuarios (database);
-	}
-
-	public DataBaseControler(BaseDatos base){
-		database = base;
-		initSubcontrolers();
 	}
 
 	/**
@@ -112,8 +143,7 @@ public class DataBaseControler
 	 * 
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException 
-	 * @throws UnimplementedException 
+	 * @throws NonExistingElementException - Esperabamos encontrar un dato que no se encuentra.
 	 */
 	public Vector<Publication> consultaDocumentos(String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws BDException, NonExistingElementException 
 	{
@@ -155,7 +185,6 @@ public class DataBaseControler
 	 * @param nombre - Nombre del autor.
 	 * @param apellido - Apellidos del autor.
 	 * @return java.util.Vector Vector con los autores y/o editores consultados
-	 * @throws UnimplementedException 
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
@@ -223,7 +252,8 @@ public class DataBaseControler
 	/**
 	 * Devuelve un vector con los proyectos a los que pertenece el usuario indicado.
 	 * @param usuario - Usuario sobre el que se desea realizar la consulta.
-	 * @return java.util.Vector 
+	 * @return java.util.Vector - Vector con los nombres de los proyectos a los que está
+	 * relacionado el usuario consultado.
 	 * @throws NonExistingElementException - En caso que el usuario no exista.
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
@@ -243,7 +273,7 @@ public class DataBaseControler
 	 * @param publicacion - Publicacion a insertar.
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws ExistingElementException - Si ya existe el documento 
+	 * @throws ExistingElementException - Si ya existe el documento.
 	 */
 	public String insertaDocumento(Publication publicacion) throws BDException
 	{		
@@ -279,7 +309,8 @@ public class DataBaseControler
 	 * proyecto cuyo nombre se pasa por parámetro.
 	 * @param publicacion - Usuario a insertar.
 	 * @param proyecto - Proyecto con el que se encontrará relacionado. 
-	 * @throws BDException 
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si el proyecto al que se desea asociar no existe.
 	 * @throws ExistingElementException - Si el Usuario ya existe.
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
@@ -329,7 +360,6 @@ public class DataBaseControler
 	 * <br> <b> Es muy importante tener en cuenta que asigna un nuevo idDoc </b>
 	 * @param publicacion - Nuevos datos de la publicación.
 	 * @return Un String indicando el resultado de la modificación.
-	 * @throws BDException 
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
@@ -376,10 +406,9 @@ public class DataBaseControler
 	 *  @param idAutor - Identificador único de Autor del autor que se desea modificar.
 	 *  @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
 	 *  @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
-	 * @throws BDException 
 	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
-	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos. 
+	 *	 analizando la clase concreta de BDException.
+	 * 	@throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos. 
 	 */
 	public String modificaAutor(int id_autor, String nombre, String apellidos) throws BDException
 	{
@@ -454,7 +483,6 @@ public class DataBaseControler
 	 * Asocia el usuario proporcionado al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea asociar al usuario.
 	 * @param Usuario - Usuario que se desea asociar.
-	 * @throws BDException 
 	 * @throws NonExistingElementException - Si no existe el usuario o el proyecto, 
 	 * se indica en parametro tipo de la excepcion cual es que no existe.   
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
@@ -502,8 +530,6 @@ public class DataBaseControler
 	 * Desasocia el usuario proporcionado al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea desasociar al usuario.
 	 * @param usuario - Usuario que se desea desasociar.
-	 * @throws BDException 
-	 * @throws UnimplementedException 
 	 * @throws NonExistingElementException - Si no existe el usuario, el proyecto o la relacion, 
 	 * se indica en parametro tipo de la excepcion cual es que no existe.   
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
@@ -546,12 +572,13 @@ public class DataBaseControler
 	 * Asocia el documento proporcionado al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea asociar el documento.
 	 * @param documento - Documento que se desea desasociar.
-	 * @throws BDException 
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws UnimplementedException 
-	 * @throws BDException 
-	 * @throws ExistingElementException 
-	 * @roseuid 47C5BBE2006D
+	 * @throws controlador.exceptions.NonExistingElementException - Cuando no existe el 
+	 * proyecto o el documento, podremos ver cual de ellos concretamente
+	 * es el que no existe consultando el campo tipo de la excepción.
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws ExistingElementException - Cuando el proyecto y el documento ya se encuentran
+	 * asociados.  
 	 */
 	public String asociaDocumentoProyecto(String proyecto, int documento) throws BDException
 	{
@@ -596,11 +623,11 @@ public class DataBaseControler
 	 * Desasocia el documento proporcionado al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea desasociar al proyecto.
 	 * @param documento - Documento que se desea desasociar.
-	 * @throws BDException 
-	 * @throws controlador.exceptions.NonExistingElementException
-	 * @throws UnimplementedException 
-	 * @throws BDException 
-	 * @roseuid 47C5BBE2006D
+	 * @throws controlador.exceptions.NonExistingElementException - Cuando no existe el 
+	 * proyecto, el documento o la relación, podremos ver cual de ellos concretamente
+	 * es el que no existe consultando el campo tipo de la excepción.
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
 	 */
 	public String desasociaDocumentoProyecto(String proyecto, int documento) throws BDException
 	{
@@ -638,11 +665,9 @@ public class DataBaseControler
 	/**
 	 * Elimina al usuario de la aplicacion, y asigna las publicaciones que ha subido
 	 * este al usuario pasado como segundo parámetro.
-	 * 
 	 * @param usuario - Nombre del usuario que se quiere eliminar.
 	 * @param nuevoUserPublicaciones - Nombre del usuario al que se le asignarán 
 	 * las publicaciones subidas por el usuario a eliminar.
-	 * @throws BDException 
 	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - En caso de que no existan alguno de los dos usuarios.
@@ -679,6 +704,16 @@ public class DataBaseControler
 	}
 
 
+	/**
+	 * Método para comprobar si el usuario cuyo nombre se pasa por parámetro se encuentra
+	 * en la base de datos, y le corresponde esa password.
+	 * @param nombre - Nombre del usuario.
+	 * @param password - Password del usuario.
+	 * @return String - Si coinciden usuario y contraseña devolvera "user", "jefe" o "admin"
+	 * dependiendo del tipo de usuario que sea.
+	 * @throws BDException - El usuario y la pass no coinciden o se ha procucido algún problema en la conexión,
+	 * es necesario consultar el tipo concreto de excepción así como su mensaje.
+	 */
 	public String verificaUsuario(String nombre, String password) throws BDException
 	{
 		Connection conn = database.abreConexion();
@@ -696,7 +731,7 @@ public class DataBaseControler
 		}
 	}
 
-	/**
+	/*
 	 * Método para consultar cual es el idAut que le ha correspondido al ultimo
 	 * AutorEditor en ser insertado en la aplicación.
 	 * @return int - Valor entero buscado.
@@ -726,6 +761,7 @@ public class DataBaseControler
 	 * tendrá en cuenta. Si los dos parametros son null devolvera el primero.
 	 * @param nombre - Nombre que debe corresponder a la persona buscada.
 	 * @param apellidos - Apellidos de la persona buscada.
+	 * @param conn - Conexión que se utilizará para operar.
 	 * @return - Entero correspondiente al idAut de la persona buscada. 0 en caso que
 	 * no exista ningun AutorEditor que se ajuste a lo que se busca.
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
@@ -746,6 +782,7 @@ public class DataBaseControler
 	 * Método que se utiliza para consultar si la keyword que se pasa por parámetro se 
 	 * encuentra ya introducida en la base de datos.
 	 * @param key - Key que deseamos saber si se encuentra en la base de datos.
+	 * @param conn - Conexión que se utilizará para operar.
 	 * @return boolean - True si la keyword se encuentra en la BBDD, false en caso contrario.
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
@@ -767,6 +804,7 @@ public class DataBaseControler
 	/**
 	 * Método para consultar cual es el idDoc que le ha correspondido al documento
 	 * en ser insertado en la aplicación.
+	 * @param conn - Conexión que se utilizará para operar.
 	 * @return int - Valor entero buscado.
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
@@ -790,11 +828,9 @@ public class DataBaseControler
 	 * Inserta en la base de datos el AutorEditor que se corresponde con los valores
 	 * que contiene el objeto pasado por parámetro.
 	 * @param ae - Objeto que contiene los datos del AutorEditor pasado por parámetro
-	 * @param conn 
+	 * @param conn - Conexión que se utilizará para operar.
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws ExistingElementException 
-	 * @throws ExistingElementException 
 	 * @throws ExistingElementException - Si un autorEditor con los 3 campos iguales 
 	 * ya se encuentra en la base de datos.
 	 */
@@ -807,6 +843,7 @@ public class DataBaseControler
 	 * Método para ejecutar la sentencia pasada por parámetro, ha de ser de tipo
 	 * modificadora de la base de datos.
 	 * @param sentence - Sentencia a ejecutar sobre la base de datos.
+	 * @param conn - Conexión que se utilizará para operar.
 	 * @throws BDException  - Diversos problemas operando con la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
@@ -823,6 +860,8 @@ public class DataBaseControler
 		}
 	}
 
+	
+	
 	private Element generaElementoAutoresEditores(Connection conn) throws BDException
 	{
 		Element eAutoresEditores = new Element("listaAutoresEditores");
@@ -1371,6 +1410,7 @@ public class DataBaseControler
 		}
 	}
 
+	
 	public String insertaProyecto(String proyecto, String jefe) throws BDException
 	{
 		Connection conn = database.abreConexion();
