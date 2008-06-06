@@ -3,14 +3,16 @@ package personas;
 import org.jdom.Element;
 
 /**
- * Clase que guarda los datos de un autor o un editor.
+ * Clase que guarda los datos de un autor o un editor, también implementa el comportamiento
+ * necesario para su correcta gestión y manipulación.
  */
 public class AutorEditor 
 {
 	/**
-	 * Identificador único de autorEditor
+	 * Identificador único de autorEditor, lo utilizamos para la base de datos.
 	 */
 	private int idAut;
+	
 	/**
 	 * Nombre del autor.
 	 */
@@ -22,9 +24,10 @@ public class AutorEditor
 	private String apellidos;
 
 	/**
-	 * @param idAut
-	 * @param nombre
-	 * @param apellidos
+	 * Constructor de la clase dados sus atributos.
+	 * @param idAut Identificador único de autor/editor
+	 * @param nombre Nombre del autor/editor.
+	 * @param apellidos Apellidos del autor/editor.
 	 */
 	public AutorEditor(int idAut, String nombre, String apellidos) {
 		this.idAut = idAut;
@@ -32,6 +35,15 @@ public class AutorEditor
 		this.apellidos = apellidos;
 	}
 	
+	
+	/**
+	 * Constructor de la clase dado una array de Object, que contiene los datos que se
+	 * utilizarán como atributos del autor/editor.
+	 * @param vector_datos Array que contiene los datos para la contrucción. 
+	 * vector_datos[0] - Debe ser un Long que contenga el idDoc.
+	 * vector_datos[1] - Debe ser un String que contenga el nombre.
+	 * vector_datos[2] - Debe ser un String que contenga los apellidos.
+	 */
 	public AutorEditor (Object vector_datos[]){
 		if (vector_datos[0] != null) this.idAut = ((Long) vector_datos[0]).intValue();
 		if (vector_datos[1] != null) this.nombre = (String)vector_datos[1];
@@ -39,8 +51,10 @@ public class AutorEditor
 	}
 
 	/**
-	 * @param nombre
-	 * @param apellidos
+	 * COnstructor de la clase dados únicamente los parametros de nombre y apellidos.
+	 * Como identificador único colocará un 0.
+	 * @param nombre Nombre del autor/editor.
+	 * @param apellidos Apellidos del autor/editor.
 	 */
 	public AutorEditor(String nombre, String apellidos) {
 		this.idAut = 0;
@@ -93,7 +107,7 @@ public class AutorEditor
 
 
 	/**
-	 * Asigna un string a el nombre o los apellidos.
+	 * Asigna un string al nombre o los apellidos.
 	 * @param substring String que se quiere asignar (tras omitir espacios)
 	 * @param asignarApellidos Si es true se asigna a los apellidos, y si es false se asigna al nombre.
 	 */
@@ -134,15 +148,28 @@ public class AutorEditor
 		
 	}
 
+	
+	/**
+	 * Devuelve el nombre del autor/editor.
+	 * @return String - Nombre del autor.
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Devuelve los apellidos del autor/editor.
+	 * @return String - Apellidos del autor.
+	 */
 	public String getApellidos() {
 		return apellidos;
 	}
 
 	
+	/**
+	 * Devuelve el identificador único de autor/editor.
+	 * @return int - Identificador único.
+	 */
 	public int getId(){
 		return idAut;
 	}
