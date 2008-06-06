@@ -11,7 +11,7 @@ public class BDException extends Exception
 {
 
 	/**
-	 * 
+	 * Identificador de Exception.
 	 */
 	private static final long serialVersionUID = 1700034899133845429L;
 
@@ -24,8 +24,8 @@ public class BDException extends Exception
 	}
 
 	/**
-	 * Constructor proporcionandole un mensaje
-	 * @param message
+	 * Constructor proporcionandole un mensaje.
+	 * @param message - Mensaje que guardará entre sus atributos.
 	 */
 	public BDException(String message) {
 		super(message);
