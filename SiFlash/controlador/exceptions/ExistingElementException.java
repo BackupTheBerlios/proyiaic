@@ -4,14 +4,15 @@ package controlador.exceptions;
 
 
 /**
- * Excepcion que se produce cuando intentamos insertar en la base de datos un 
- * elemento que ya existe.
+ * Excepcion hija de ExistenceException, esta concretamente se produce cuando intentamos
+ * existe en la base de datos un dato/relación que no esperabamos encontrar, generalmente
+ * al intentar insertar un dato que ya existe.
  */
 public class ExistingElementException extends ExistenceException 
 {
 
 	/**
-	 * 
+	 * Identificador de la clase.
 	 */
 	private static final long serialVersionUID = 430603106713792544L;
 
@@ -43,7 +44,7 @@ public class ExistingElementException extends ExistenceException
 	}
 
 	/**
-	 * 
+	 * Constructor por defecto de la clase, llama al constructor de la clase padre.
 	 */
 	public ExistingElementException() {
 		super();
@@ -51,7 +52,8 @@ public class ExistingElementException extends ExistenceException
 	}
 
 	/**
-	 * @param tipo
+	 * Constructor de la clase proporcionando el tipo de dato que la ha provocado.
+	 * @param tipo Tipo de datos que la ha provocado.
 	 */
 	public ExistingElementException(int tipo) {
 		super(tipo);

@@ -4,14 +4,15 @@ package controlador.exceptions;
 
 
 /**
- * Excepcion que se produce cuando queremos eliminar o modificar un elemento de la 
- * base de datos y no existe.
+ * Excepcion hija de ExistenceException, esta concretamente se produce cuando intentamos
+ * acceder a un dato/relación que no encontrar y no está presente, generalmente
+ * al intentar eliminar/modificar un dato que no existe.
  */
 public class NonExistingElementException extends ExistenceException 
 {
 
 	/**
-	 * 
+	 * Identificador de la clase.
 	 */
 	private static final long serialVersionUID = -3939393614705232677L;
 
@@ -34,7 +35,8 @@ public class NonExistingElementException extends ExistenceException
 	}
 
 	/**
-	 * 
+	 * Constructor por defecto de la clase, unicamente llama al de la clase padre, por
+	 * tanto se construirá con un origen indefinido.
 	 */
 	public NonExistingElementException() {
 		super();
@@ -42,7 +44,8 @@ public class NonExistingElementException extends ExistenceException
 	}
 
 	/**
-	 * @param tipo
+	 * Constructor de la clase proporcionando el tipo de dato que la ha provocado.
+	 * @param tipo Tipo de datos que la ha provocado.
 	 */
 	public NonExistingElementException(int tipo) {
 		super(tipo);

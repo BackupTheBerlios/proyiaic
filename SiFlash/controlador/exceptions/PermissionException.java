@@ -13,12 +13,12 @@ public class PermissionException extends BDException
 {
 
 	/**
-	 * 
+	 * Identificador de la clase.
 	 */
 	private static final long serialVersionUID = -2972861761470064332L;
 
 	/**
-	 * 
+	 * Constructor por defecto de la clase.
 	 */
 	public PermissionException() {
 		super();
@@ -26,7 +26,8 @@ public class PermissionException extends BDException
 	}
 
 	/**
-	 * @param message
+	 * Constructor de la clase proporcionandole un mensaje.
+	 * @param message String con el mensaje que almacenará.
 	 */
 	public PermissionException(String message) {
 		super(message);

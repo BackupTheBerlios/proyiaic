@@ -8,12 +8,12 @@ package controlador.exceptions;
 public class AuthenticationException extends Exception 
 {
 	/**
-	 * 
+	 * Identificador de la clase.
 	 */
 	private static final long serialVersionUID = 8138653528902143248L;
 
 	/**
-	 * 
+	 * Constructor por defecto de la clase.
 	 */
 	public AuthenticationException() {
 		super();
@@ -21,7 +21,8 @@ public class AuthenticationException extends Exception
 	}
 
 	/**
-	 * @param message
+	 * Constructor de la clase dado el mensaje que ha de contener.
+	 * @param message - String con el mensaje que ha de contener la excepcion.
 	 */
 	public AuthenticationException(String message) {
 		super(message);
