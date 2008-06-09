@@ -141,7 +141,7 @@ public class Unpublished extends Publication
 		elemento.addContent(eKey);
 		
 		Element eURL = new Element("URL");
-		eKey.addContent(URL);
+		eURL.addContent(URL);
 		elemento.addContent(eURL);
 
 		return elemento;
