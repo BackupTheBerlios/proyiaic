@@ -128,7 +128,7 @@ public class ModificadorAutores
 		Vector <Object[]> res1 = theBaseDatos.exeQuery(cons1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue()!=1) throw new NonExistingElementException(ExistenceException.AUTOR);
 		
-		String consulta = new String ("UPDATE Autores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "' WHERE idAut = "+ idAutor + ";") ;
+		String consulta = new String ("UPDATE autoreseditores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "' WHERE idAut = "+ idAutor + ";") ;
 		theBaseDatos.exeUpdate(consulta, conn);    
 	}	
 	
