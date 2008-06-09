@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="Scripts_SQL/|jdom/|mysql-connector-java-5.1.5-bin/" path="" kind="src"/>
-	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true" kind="con"/>
-	<classpathentry path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4" kind="con"/>
-	<classpathentry path="jdom" kind="lib"/>
-	<classpathentry path="mysql-connector-java-5.1.5-bin" kind="lib"/>
-	<classpathentry path="bin" kind="output"/>
+	<classpathentry excluding="Scripts_SQL/|jdom/|mysql-connector-java-5.1.5-bin/|doc/|doc/controlador/|doc/controlador/exceptions/|doc/database/|doc/parserFicherosBibtex/|doc/parserFicherosBibtex/excepciones/|doc/parserFicherosBibtex/JUnit/|doc/personas/|doc/principal/|doc/publicaciones/|doc/resources/" kind="src" path=""/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="jdom"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.5-bin"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
