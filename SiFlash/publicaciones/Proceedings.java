@@ -556,8 +556,6 @@ public class Proceedings extends Publication
 	 * @param address Dirección que le corresponde al documento.
 	 * @param organization Organization encargada de la sesion.
 	 * @param publisher Publisher del documento.
-	 * @param chapter Capitulos de los que se ha extraido el documento.
-	 * @param edition Edicion del documento.
 	 */			
 	public Proceedings(int idDoc, String referencia, String title,
 			String year, String month, String url, String _abstract,

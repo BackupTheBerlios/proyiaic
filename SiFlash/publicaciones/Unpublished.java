@@ -373,7 +373,7 @@ public class Unpublished extends Publication
 	 * @param note Nota del documento.
 	 * @param key Conjunto de keywords del documento.
 	 * @param user Usuario que ha subido el documento.
-	 * @param proyecto Proyectos a los que pertenece el documento.
+	 * @param proyectos Proyectos a los que pertenece el documento.
 	 * @param author Autores del documento.
 	 */		
 	public Unpublished(int idDoc, String referencia, String title,

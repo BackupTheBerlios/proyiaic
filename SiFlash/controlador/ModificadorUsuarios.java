@@ -100,7 +100,7 @@ public class ModificadorUsuarios
 
 	/**
 	 * Añade un usuario a un proyecto.
-	 * @param String - Nombre del usuario a añadir.
+	 * @param usuario - Nombre del usuario a añadir.
 	 * @param proyecto - Nombre del proyecto al cual se quiere añadir.
 	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
@@ -135,7 +135,7 @@ public class ModificadorUsuarios
 	
 	/**
 	 * Elimina el usuario en cuestion del proyecto.
-	 * @param String - Nombre del usuario a desvilcular.
+	 * @param usuario - Nombre del usuario a desvilcular.
 	 * @param proyecto - Nombre del proyecto al cual se quiere de baja al usuario.
 	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.

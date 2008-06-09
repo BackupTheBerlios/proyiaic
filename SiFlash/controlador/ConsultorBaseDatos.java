@@ -240,8 +240,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -323,8 +321,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -477,8 +473,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -554,8 +548,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -631,8 +623,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -709,8 +699,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -787,8 +775,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -865,8 +851,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -941,8 +925,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -1018,8 +1000,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -1095,8 +1075,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -1173,8 +1151,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de
@@ -1250,8 +1226,6 @@ class ConsultorBaseDatos
 	 * filtrado.
 	 * @param proyecto - Proyecto al que debe pertenecer documento,
 	 *  el null para no filtrar por este campo.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
-	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
 	 * @param authors - Vector con un conjunto de Integers que representan los idAut de
 	 * los autores por los que se desea filtrar. null para no filtrar por este campo.
 	 * @param editors - Vector con un conjunto de Integers que representan los idAut de

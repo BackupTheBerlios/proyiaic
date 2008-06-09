@@ -140,7 +140,6 @@ public class DataBaseControler
 	 * @param user - Indica el usuario que debe haber subido la publicación.
 	 * @return vector construido con las publicaciones que cumplen los 
 	 * requisitos.
-	 * 
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Esperabamos encontrar un dato que no se encuentra.
@@ -307,7 +306,7 @@ public class DataBaseControler
 	/**
 	 * Inserta el usuario pasado por parámetro en la base de datos, y lo relaciona con el
 	 * proyecto cuyo nombre se pasa por parámetro.
-	 * @param publicacion - Usuario a insertar.
+	 * @param usuario - Usuario a insertar.
 	 * @param proyecto - Proyecto con el que se encontrará relacionado. 
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
@@ -403,9 +402,9 @@ public class DataBaseControler
 
 	/** Modifica los datos del autor cuyo idAutor se ha pasado como parámetro, sustituyendolos por
 	 *  los nuevos datos que se obtienen como parámetro.
-	 *  @param idAutor - Identificador único de Autor del autor que se desea modificar.
-	 *  @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
-	 *  @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
+	 *  @param id_autor - Identificador único de Autor del autor que se desea modificar.
+	 *  @param nombre -  Nuevo nombre que se quiere almacenar en la base de datos.
+	 *  @param apellidos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
 	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 *	 analizando la clase concreta de BDException.
 	 * 	@throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos. 
@@ -444,7 +443,7 @@ public class DataBaseControler
 	 * Elimina la publicación cuyo id se le pasa por parámetro.
 	 * Para ello elimina previamente todos los vinculos que tenga, tanto con autores,
 	 * keywords, proyectos, etc. 
-	 * @param id_doc - IdDoc del documento que se desea borrar.
+	 * @param idDoc - IdDoc del documento que se desea borrar.
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - En caso que el documento no exista.
@@ -482,7 +481,7 @@ public class DataBaseControler
 	/**
 	 * Asocia el usuario proporcionado al proyecto indicado.
 	 * @param proyecto - Proyecto sobre el que se desea asociar al usuario.
-	 * @param Usuario - Usuario que se desea asociar.
+	 * @param usuario - Usuario que se desea asociar.
 	 * @throws NonExistingElementException - Si no existe el usuario o el proyecto, 
 	 * se indica en parametro tipo de la excepcion cual es que no existe.   
 	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir

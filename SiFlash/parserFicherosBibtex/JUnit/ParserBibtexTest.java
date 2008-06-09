@@ -60,7 +60,7 @@ public class ParserBibtexTest extends TestCase
 
 		boolean esArticulo = pb.getUltDoc() instanceof Article;
 		String autorEsperado = "Alfonso";
-		String tituloEsperado = "El título del artículo.";
+		String tituloEsperado = "El tï¿½tulo del artï¿½culo.";
 		String monthEsperado = "april";
 		
 		String autor = ((AutorEditor)((Article)pb.getUltDoc()).getAuthor().getFirst()).getNombre();

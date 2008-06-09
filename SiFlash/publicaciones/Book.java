@@ -77,7 +77,7 @@ public class Book extends Publication
 	 * @param note Nota del documento.
 	 * @param key Conjunto de keywords del documento.
 	 * @param user Usuario que ha subido el documento.
-	 * @param proyectos Proyectos a los que pertenece el documento.
+	 * @param proyecto Proyectos a los que pertenece el documento.
 	 * @param author Autores del documento.
 	 * @param editor Editores del documento.
 	 * @param publisher Publisher del documento.

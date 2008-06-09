@@ -152,7 +152,7 @@ public class BaseDatos
 	 * Método para realizar una modificación sobre la base de datos.
 	 * @param conn - Objeto de la clase Connection, debe ser una conexión ya establecida
 	 * con la base de datos, de tal forma que se agiliza bastante el proceso.
-	 * @param sentence - String que representa la operación a realizar.
+	 * @param sentences - Vector con los Strings que representan las operaciónes a realizar.
 	 * @throws database.BDException Si se produce un error al realizar la modificación.
 	 */
 	public void exeUpdates(Vector<String> sentences, Connection conn) throws BDException 

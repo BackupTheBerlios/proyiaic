@@ -103,7 +103,7 @@ public abstract class Publication
 	 * @param note Notas de la publicación.
 	 * @param keys Claves de la publicación.
 	 * @param user Usuario que ha subido la publicación al sistema.
-	 * @param proyectos Proyectos a los que pertenece la publicación.
+	 * @param proyecto Proyectos a los que pertenece la publicación.
 	 */
 	protected void SetAll(int idDoc, String referencia, String title, String year,
 			String month, String url, String _abstract, String note, Vector<String> keys,
@@ -516,7 +516,7 @@ public abstract class Publication
 	}
 
 	/**
-	 * @param URL de la publicación.
+	 * @param url de la publicación.
 	 */
 	public final void setURL(String url) {
 		URL = url;
@@ -621,7 +621,7 @@ public abstract class Publication
 
 	/**
 	 * Fija el conjunto de keywords del documento.
-	 * @param Lisa con las nuevas claves para el documento.
+	 * @param key Lista con las nuevas claves para el documento.
 	 */
 	public final void setKey(LinkedList<String> key)
 	{
