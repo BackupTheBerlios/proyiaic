@@ -19,8 +19,17 @@ import database.BaseDatos;
  */
 public class ModificadorPublicaciones {
 
+	
+	/**
+	 * Base de datos sobre la que realiza las operaciones.
+	 */	
 	public BaseDatos theBaseDatos;
 
+
+	/**
+	 *  Constructor pasandole el parametro de la base de datos que posee.
+	 * @param database - Objeto base de datos sobre la que trabaja.
+	 */		
 	public ModificadorPublicaciones(BaseDatos database) {
 		this.theBaseDatos = database;
 	}
@@ -31,9 +40,11 @@ public class ModificadorPublicaciones {
 	 * 
 	 * Excepcion si ya existe o no hay permisos.
 	 * @param publicacion - Publicación a insertar.
-	 * @param conn 
-	 * @throws BDException 
-	 * @throws ExistingElementException 
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException, así como su mensaje.
+	 * @throws ExistingElementException  - Si ya existe esa publicación en la base de datos.
 	 */
 	public void insertaPublicacion(Publication publicacion, Connection conn) throws BDException, ExistingElementException
 	{
@@ -46,21 +57,23 @@ public class ModificadorPublicaciones {
 	 * base de datos, cambia los antiguos datos que contenía al respecto de la misma 
 	 * por los que contiene el objeto. Para ello se basa en el idDoc, y asigna uno nuevo.
 	 * @param publicacion - Nuevos datos de la publicación.
-	 * @param conn 
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
 	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
 	 * la base de datos.
-	 * @throws ExistingElementException 
 	 */
-	public void modificaPublicacion(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
+	public void modificaPublicacion(Publication publicacion, Connection conn) throws NonExistingElementException,BDException,ExistingElementException 
 	{	
 		int id_doc = publicacion.getIdDoc();
 		String consulta = new String ("SELECT tipo FROM tipopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
 		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);		
 		borraPublicacion(publicacion.getIdDoc(), conn);
+		try{
 		insertaPublicacion(publicacion, conn);
+		}catch (ExistingElementException e){}
 	}
 
 	/**
@@ -68,6 +81,8 @@ public class ModificadorPublicaciones {
 	 * Para ello elimina previamente todos los vinculos que tenga, tanto con autores,
 	 * keywords, proyectos, etc. 
 	 * @param id_doc - IdDoc de la publicación que se desea borrar.
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
 	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException - En caso que el documento no exista.
@@ -107,12 +122,15 @@ public class ModificadorPublicaciones {
 
 	/**
 	 * Asocia una publicación a un proyecto.
-	 * @param publicacion - Publicación a asociar.
-	 * @param proyecto - Proyecto del que asociar.
-	 * @throws database.BDException
-	 * @throws NonExistingElementException 
-	 * @throws ExistingElementException 
-	 * @roseuid 47C59B0E0213
+	 * @param publicacion - idDoc de la publicación a asociar.
+	 * @param proyecto - Proyecto al que deseamos asociar la publicación.
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Cuando no exite el proyecto o la la publicación, lo podemos concretar
+	 * analizando el contenido de la excepción.
+	 * @throws ExistingElementException - Si el proyecto y la publicación ya están asociados.
 	 */
 	public void asociaPublicacion(int publicacion, String proyecto, Connection conn) throws BDException, NonExistingElementException, ExistingElementException 
 	{
@@ -137,11 +155,14 @@ public class ModificadorPublicaciones {
 	
 	/**
 	 * Desasocia la publicacion del proyecto.
-	 * @param publicacion - Publicación a desasociar.
-	 * @param proyecto - Proyecto del que desasociar.
-	 * @throws database.BDException
-	 * @throws NonExistingElementException 
-	 * @roseuid 47C59B0E0213
+	 * @param publicacion - idDoc de la publicación a asociar.
+	 * @param proyecto - Proyecto al que deseamos asociar la publicación.
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Cuando no está presente en la base de datos el idDoc de la publicación,
+	 * o el proyecto o la relación entre ambos, lo podemos concretar analizando el contenido de la excepción.
 	 */
 	public void desasociaPublicacion(int publicacion, String proyecto, Connection conn) throws BDException, NonExistingElementException 
 	{

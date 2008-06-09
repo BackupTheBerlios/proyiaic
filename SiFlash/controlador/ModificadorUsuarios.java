@@ -19,20 +19,30 @@ import database.BaseDatos;
  */
 public class ModificadorUsuarios 
 {
+	/**
+	 * Base de datos sobre la que realiza las operaciones.
+	 */	
 	public BaseDatos theBaseDatos;
 
+
+	/**
+	 *  Constructor pasandole el parametro de la base de datos que posee.
+	 * @param database - Objeto base de datos sobre la que trabaja.
+	 */		
 	public ModificadorUsuarios(BaseDatos database) {
 		this.theBaseDatos = database;
 	}
 
 	/**
-	 * Inserta en la base de datos es usuario pasado por parámetro.
+	 * Inserta en la base de datos el usuario cuyos datos se han pasado por parámetro
 	 * @param usuario - Usuario que se debe pasar por parámetro
-	 * @param proyecto 
-	 * @throws database.BDException
-	 * @throws ExistingElementException 
-	 * @throws NonExistingElementException 
-	 * @roseuid 47C5913A0271
+	 * @param proyecto - Proyecto al que estará unicialmente asociado el usuario.
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws ExistingElementException - Cuando ya existe ese usuario. 
+	 * @throws NonExistingElementException - Cuando el proyecto no existe.
 	 */
 	public void creaUsuario(Usuario usuario, String proyecto, Connection conn) throws BDException, ExistingElementException, NonExistingElementException 
 	{
@@ -59,6 +69,8 @@ public class ModificadorUsuarios
 	/**
 	 * Devuelve un vector con los proyectos a los que pertenece el usuario indicado.
 	 * @param usuario - Usuario sobre el que se desea realizar la consulta.
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
 	 * @return java.util.Vector - Conjunto de String con los nombres de los proyectos
 	 * buscados
 	 * @throws NonExistingElementException - En caso que el usuario no exista.
@@ -87,12 +99,16 @@ public class ModificadorUsuarios
 	}
 
 	/**
-	 * Añade un usuario a un proyecto, en caso de que ya estén asociados no ocurre nada.
+	 * Añade un usuario a un proyecto.
 	 * @param String - Nombre del usuario a añadir.
 	 * @param proyecto - Nombre del proyecto al cual se quiere añadir.
-	 * @throws database.BDException
-	 * @throws ExistingElementException 
-	 * @roseuid 47C5979A01F4
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Cuando el usuario o el proyecto no existen. Se concreta en el contenido
+	 * de la excepción.
+	 * @throws ExistingElementException - Cuando ya están asociados usuario y proyecto. 
 	 */
 	public void asociaProyecto(String usuario, String proyecto, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
 	{
@@ -121,8 +137,12 @@ public class ModificadorUsuarios
 	 * Elimina el usuario en cuestion del proyecto.
 	 * @param String - Nombre del usuario a desvilcular.
 	 * @param proyecto - Nombre del proyecto al cual se quiere de baja al usuario.
-	 * @throws database.BDException
-	 * @roseuid 47C599770186
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Cuando no está presente en la base de datos el usuario,
+	 * o el proyecto o la relación entre ambos, lo podemos concretar analizando el contenido de la excepción.
 	 */
 	public void desasociaProyecto(String usuario, String proyecto, Connection conn) throws NonExistingElementException,BDException 
 	{
@@ -149,13 +169,15 @@ public class ModificadorUsuarios
 	}
 
 	/**
-	 * Elimina al usuario de la aplicacion.
+	 * Elimina al usuario de la aplicacion, y le proporciona las publicaciones que este había subido al nuevo.
 	 * 
-	 * Excepcion si no existe o no se tienen permisos.
 	 * @param usuario - Nombre del usuario que se quiere eliminar.
 	 * @param nuevoUserPublicaciones - Nombre del usuario al que se le asignarán las publicaciones subidas por el usuario a eliminar.
-	 * @throws database.BDException
-	 * @roseuid 47C599E803C8
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Cuando no existe alguno de los usuarios.
 	 */
 	public void eliminaUsuario(String usuario, String nuevoUserPublicaciones, Connection conn) throws NonExistingElementException,BDException 
 	{
@@ -180,6 +202,14 @@ public class ModificadorUsuarios
 		theBaseDatos.exeUpdates(updates, conn);
 	}
 
+	
+	/**
+	 * Método auxiliar para generar un conjunto de sentencias SQL para traspasar los documentos que posee
+	 * usuario a nuevoUsuarioPublicaciones.
+	 * @param usuario - Actual propietario de los documentos.
+	 * @param nuevoUserPublicaciones - Usuario al que se le pasarán los documentos de usuario.
+	 * @return Vector con el conjunto de clausulas para realizar las actualizaciones.
+	 */
 	private Vector<String> updatesPublicaciones(String usuario, String nuevoUserPublicaciones)
 	{
 		Vector<String> updatesPublicacion = new Vector<String>();
