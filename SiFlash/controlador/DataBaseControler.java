@@ -157,7 +157,7 @@ public class DataBaseControler
 			}
 			if (proyecto != null)
 			{
-				result = database.exeQuery("SELECT nombre FROM proyectos WHERE nombre = '" + proyecto + "';", conn);
+				result = database.exeQuery("SELECT nombre FROM proyectos WHERE nombre = '" + Publication.sustituirComillasSQL(proyecto) + "';", conn);
 				if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
 			}
 			Vector <AutorEditor> v_autores = consultor.buscaAutores(autores, conn);
@@ -1531,5 +1531,4 @@ public class DataBaseControler
 			database.cierraConexion(conn);
 		}
 	}
-
 }

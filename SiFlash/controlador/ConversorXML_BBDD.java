@@ -143,6 +143,23 @@ public class ConversorXML_BBDD
 			return outputter.outputString (new Document(root));
 		}
 	}
+	
+	public String procesarModificacion(InputStream input)
+	{
+		try
+		{
+			ConversorXML_Publication conv = new ConversorXML_Publication();
+			Publication p = conv.convertir(input);
+			return dbc.modificaDocumento(p);
+		}
+		catch(BDException e)
+		{
+			Element root = new Element("exception");
+			root.addContent("Excepción al realizar Rollback: " + e.getMessage());
+			XMLOutputter outputter = new XMLOutputter();
+			return outputter.outputString (new Document(root));
+		}
+	}
 
 	private void procesarCampo(Element campo) 
 	{

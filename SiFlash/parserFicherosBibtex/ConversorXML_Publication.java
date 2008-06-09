@@ -48,6 +48,9 @@ public class ConversorXML_Publication
 			String referencia = root.getAttributeValue("referencia");
 			if (referencia != null && !referencia.equals(""))
 				listaCampos.add(new CampoPublicacion("referencia", referencia, false));
+			String idDoc = root.getAttributeValue("idDoc");
+			if (idDoc != null && !idDoc.equals(""))
+				listaCampos.add(new CampoPublicacion("idDoc", idDoc, false));
 
 			List<Element> campos = root.getChildren();
 			Iterator<Element> it = campos.iterator();

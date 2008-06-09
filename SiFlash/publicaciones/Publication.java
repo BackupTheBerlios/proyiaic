@@ -679,8 +679,17 @@ public abstract class Publication
 			vector.add(str1);
 			key = new LinkedList<String>();
 		}*/
-		vector.add("COMMIT;");
+//		vector.add("COMMIT;");
 		
 		return vector;
+	}
+	
+	public static String sustituirComillasSQL(String s)
+	{
+		String[] strings = s.split("\'");
+		String result = strings[0];
+		for (int i = 1; i < strings.length; i++)
+			result += "\\\'" + strings[i];
+		return result;
 	}
 }

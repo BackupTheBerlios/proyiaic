@@ -12,9 +12,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'article');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'article');
 END $$
 
 
@@ -28,9 +28,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'book');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'book');
 END $$
 
 
@@ -44,9 +44,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'booklet');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'booklet');
 END $$
 
 
@@ -60,9 +60,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'conference');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'conference');
 END $$
 
 
@@ -76,9 +76,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inbook');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inbook');
 END $$
 
 
@@ -92,9 +92,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'incollection');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'incollection');
 END $$
 
 
@@ -108,9 +108,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inproceedings');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inproceedings');
 END $$
 
 
@@ -124,9 +124,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'manual');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'manual');
 END $$
 
 
@@ -140,9 +140,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'mastersthesis');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'mastersthesis');
 END $$
 
 
@@ -156,9 +156,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'misc');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'misc');
 END $$
 
 
@@ -172,9 +172,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'phdthesis');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'phdthesis');
 END $$
 
 
@@ -188,10 +188,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'proceedings');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'proceedings');
 END $$
 
 
@@ -205,9 +204,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'techreport');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'techreport');
 END $$
 
 
@@ -221,10 +220,11 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'unpublished');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'unpublished');
 END $$
+
 
 DROP TRIGGER IF EXISTS insertaAutorEditor $$
 CREATE TRIGGER insertaAutorEditor BEFORE INSERT ON AutoresEditores

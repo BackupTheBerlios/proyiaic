@@ -121,6 +121,8 @@ public class Article extends Publication
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
 			author = extraerAutoresEditores(valorString);
+		else if (nombreCampo.equalsIgnoreCase("idDoc") && idDoc == 0)
+			idDoc = Integer.parseInt(valorString);
 		else if (nombreCampo.equalsIgnoreCase("referencia") && referencia == null)
 			referencia = valorString;
 		else if (nombreCampo.equalsIgnoreCase("title") && title == null)
@@ -316,65 +318,66 @@ public class Article extends Publication
 	 */
 	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException
 	{
-		idDoc = 0;
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO article VALUES (");
 		str1 += Integer.toString(getIdDoc());
 
 		if (getTitle()!= null)
-			str1 += ",'" + getTitle() + "'";
+			str1 += ",'" + sustituirComillasSQL(getTitle()) + "'";
 		else str1+= ",null";
 
 		if (getJournal()!=null)
-			str1 += ",'" + getJournal() + "'";
+			str1 += ",'" + sustituirComillasSQL(getJournal()) + "'";
 		else str1+= ",null";
 
 		if (getYear()!=null)
-			str1 += ",'" + getYear() + "'";
+			str1 += ",'" + sustituirComillasSQL(getYear()) + "'";
 		else str1+= ",null";
 
 		if(getVolume()!=null)
-			str1 += ",'" + getVolume() + "'";
+			str1 += ",'" + sustituirComillasSQL(getVolume()) + "'";
 		else str1+= ",null";
 
 		if(getNumber()!=null)
-			str1 += ",'" + getNumber() + "'";
+			str1 += ",'" + sustituirComillasSQL(getNumber()) + "'";
 		else str1+= ",null";
 
 		if(getPages()!=null)
-			str1 += ",'" + getPages() + "'";
+			str1 += ",'" + sustituirComillasSQL(getPages()) + "'";
 		else str1+= ",null";
 
 		if(getMonth()!=null)
-			str1 += ",'" + getMonth() + "'";
+			str1 += ",'" + sustituirComillasSQL(getMonth()) + "'";
 		else str1+= ",null";
 
 		if(getNote()!=null)
-			str1 += ",'" + getNote() + "'";
+			str1 += ",'" + sustituirComillasSQL(getNote()) + "'";
 		else str1+= ",null";
 
 		if(get_abstract()!=null)
-			str1 += ",'" + get_abstract() + "'";
+			str1 += ",'" + sustituirComillasSQL(get_abstract()) + "'";
 		else str1+= ",null";
 
 		if(getURL()!=null)
-			str1 += ",'" + getURL() + "'";
+			str1 += ",'" + sustituirComillasSQL(getURL()) + "'";
 		else str1+= ",null";
 
 		if(getUser()!=null)
-			str1 += ",'" + getUser() + "'";
+			str1 += ",'" + sustituirComillasSQL(getUser()) + "'";
 		else str1+= ",null";
 
 		if(getReferencia()!=null)
-			str1 += ",'" + getReferencia() + "'";
+			str1 += ",'" + sustituirComillasSQL(getReferencia()) + "'";
 		else str1+= ",null";
 
 		str1+=");";
 
 		DataBaseControler dbc = new DataBaseControler();
-		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
+//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
-		idDoc = dbc.consultaIdDoc(conn);	
+//		Vector<Object[]> res = dbc.
+		if (idDoc == 0)
+			idDoc = dbc.consultaIdDoc(conn);	
 
 		if (author != null)
 			for (int i=0;i<this.author.size();i++){

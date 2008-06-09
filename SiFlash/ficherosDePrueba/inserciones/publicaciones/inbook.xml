@@ -1,4 +1,4 @@
-<publication tipo="Inbook" referencia="la+referencia+del+inbook">
+<publication tipo="Inbook" idDoc="8" referencia="la+referencia+del+inbook">
 	<title>El titulo del inbook</title>
 	<year>2006</year>
 	<month>El mes</month>

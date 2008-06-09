@@ -116,6 +116,8 @@ public class InBook extends Publication
 	{
 		if (nombreCampo.equalsIgnoreCase("author") && author == null)
 			author = extraerAutoresEditores(valorString);
+		else if (nombreCampo.equalsIgnoreCase("idDoc") && idDoc == 0)
+			idDoc = Integer.parseInt(valorString);
 		else if (nombreCampo.equalsIgnoreCase("referencia") && referencia == null)
 			referencia = valorString;
 		else if (nombreCampo.equalsIgnoreCase("editor") && editor == null)
@@ -409,86 +411,87 @@ public class InBook extends Publication
 	}
 
 	@Override
-	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException {
-		idDoc = 0;
+	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException 
+	{
 		Vector <String> vector = new Vector <String>();
 		String str1 = new String ("INSERT INTO inbook VALUES (");
 		str1 += Integer.toString(getIdDoc());
 		
 		if (getTitle()!= null)
-		str1 += ",'" + getTitle() + "'";
+		str1 += ",'" + sustituirComillasSQL(getTitle()) + "'";
 		else str1+= ",null";
 
 		if (getChapter()!=null)
-		str1 += ",'" + getChapter() + "'";
+		str1 += ",'" + sustituirComillasSQL(getChapter()) + "'";
 		else str1+= ",null";
 		
 		if(getPages()!=null)
-		str1 += ",'" + getPages() + "'";
+		str1 += ",'" + sustituirComillasSQL(getPages()) + "'";
 		else str1+= ",null";
 				
 		if(getPublisher()!=null)
-		str1 += ",'" + getPublisher() + "'";
+		str1 += ",'" + sustituirComillasSQL(getPublisher()) + "'";
 		else str1+= ",null";
 		
 		if (getYear()!=null)
-		str1 += ",'" + getYear() + "'";
+		str1 += ",'" + sustituirComillasSQL(getYear()) + "'";
 		else str1+= ",null";
 		
 		if(getVolume()!=null)
-		str1 += ",'" + getVolume() + "'";
+		str1 += ",'" + sustituirComillasSQL(getVolume()) + "'";
 		else str1+= ",null";
 		
 		if(getNumber()!=null)
-		str1 += ",'" + getNumber() + "'";
+		str1 += ",'" + sustituirComillasSQL(getNumber()) + "'";
 		else str1+= ",null";
 		
 		if(getSeries()!=null)
-		str1 += ",'" + getSeries() + "'";
+		str1 += ",'" + sustituirComillasSQL(getSeries()) + "'";
 		else str1+= ",null";
 
 		if(getType()!=null)
-			str1 += ",'" + getType() + "'";
-			else str1+= ",null";		
+			str1 += ",'" + sustituirComillasSQL(getType()) + "'";
+		else str1+= ",null";		
 
 		if(getEdition()!=null)
-			str1 += ",'" + getEdition() + "'";
-			else str1+= ",null";			
+			str1 += ",'" + sustituirComillasSQL(getEdition()) + "'";
+		else str1+= ",null";			
 		
 		if(getAddress()!=null)
-		str1 += ",'" + getAddress() + "'";
+		str1 += ",'" + sustituirComillasSQL(getAddress()) + "'";
 		else str1+= ",null";
 		
 		if(getMonth()!=null)
-		str1 += ",'" + getMonth() + "'";
+		str1 += ",'" + sustituirComillasSQL(getMonth()) + "'";
 		else str1+= ",null";		
 
 		if(getNote()!=null)
-		str1 += ",'" + getNote() + "'";
+		str1 += ",'" + sustituirComillasSQL(getNote()) + "'";
 		else str1+= ",null";
 		
 		if(get_abstract()!=null)
-		str1 += ",'" + get_abstract() + "'";
+		str1 += ",'" + sustituirComillasSQL(get_abstract()) + "'";
 		else str1+= ",null";
 		
 		if(getURL()!=null)
-		str1 += ",'" + getURL() + "'";
+		str1 += ",'" + sustituirComillasSQL(getURL()) + "'";
 		else str1+= ",null";
 		
 		if(getUser()!=null)
-		str1 += ",'" + getUser() + "'";
+		str1 += ",'" + sustituirComillasSQL(getUser()) + "'";
 		else str1+= ",null";
 		
 		if(getReferencia()!=null)
-		str1 += ",'" + getReferencia() + "'";
+		str1 += ",'" + sustituirComillasSQL(getReferencia()) + "'";
 		else str1+= ",null";
 		
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
-		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
+//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
-		idDoc = dbc.consultaIdDoc(conn);	
+		if (idDoc == 0)
+			idDoc = dbc.consultaIdDoc(conn);	
 		
 //		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'inbook');");
 //		vector.add(str1);

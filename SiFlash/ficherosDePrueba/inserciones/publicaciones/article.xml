@@ -1,7 +1,7 @@
-<publication tipo="article" referencia="la+referencia+del+article">
-	<title>El titulo del article2</title>
+<publication tipo="article" idDoc = "3" referencia="la+referencia+del+article">
+	<title>El titulo del article3</title>
 	<year>2006</year>
-	<month>El mes</month>
+	<month>El mes3</month>
 	<authors>
 		<author>
 			<nombre>NombreAutor1</nombre>
@@ -13,13 +13,12 @@
 		</author>
 	</authors>
 	<journal>El journal</journal>
-	<volume>El volume</volume>
-	<number>El number</number>
-	<pages>El pages</pages>
-	<url>El url</url>
+	<volume>El volume3</volume>
+	<number>El number3</number>
+	<pages>El page's</pages>
+	<url>El url3</url>
 	<abstract>El abstract</abstract>
 	<note>El note</note>
 	<key>The key, Una clave, Mi clave</key>
 	<user>user1</user>
-	<proyecto>Proyecto2</proyecto>
 </publication>

@@ -49,11 +49,11 @@ create table Article (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
 	journal varchar(100) not null,
-	year varchar(50) not null,
-	volume varchar(50),
-	number varchar(50),
-	pages varchar(50),
-	month varchar(50),
+	year varchar(100) not null,
+	volume varchar(100), 
+	number varchar(100), 
+	pages varchar(100), 
+	month varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -64,14 +64,14 @@ create table Article (
 create table Book (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
-	publisher varchar(50) not null,
-	year varchar(50) not null,
-	volume varchar(50),
-	number varchar(50),
-	series varchar(100),
+	publisher varchar(100) not null,
+	year varchar(100) not null,
+	volume varchar(100), 
+	number varchar(100), 
+	series varchar(100), 
 	address varchar(100),
-	edition varchar(50),
-	month varchar(50),
+	edition varchar(100), 
+	month varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -84,8 +84,8 @@ create table Booklet (
 	title varchar(100) not null,
 	howpublished varchar(100),
 	address varchar(100),
-	month varchar(50),
-	year varchar(50),
+	month varchar(100), 
+	year varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -98,16 +98,16 @@ create table Conference (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
 	booktitle varchar(100) not null,
-	year varchar(50) not null,
+	year varchar(100) not null,
 	crossref varchar(100),
-	volume varchar(50),
-	number varchar(50),
+	volume varchar(100), 
+	number varchar(100), 
 	series varchar(100),
-	pages varchar(50),
+	pages varchar(100), 
 	address varchar(100),
-	month varchar(50),
-	organization varchar(50),
-	publisher varchar(50),
+	month varchar(100), 
+	organization varchar(100), 
+	publisher varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -119,17 +119,17 @@ create table Conference (
 create table Inbook (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
-	chapter varchar(50),
-	pages varchar(50),
-	publisher varchar(50) not null,
-	year varchar(50) not null,
-	volume varchar(50),
-	number varchar(50),
+	chapter varchar(100), 
+	pages varchar(100), 
+	publisher varchar(100) not null,
+	year varchar(100) not null,
+	volume varchar(100), 
+	number varchar(100), 
 	series varchar(100),
-	type varchar(50),
-	edition varchar(50),
+	type varchar(100), 
+	edition varchar(100), 
 	address varchar(100),
-	month varchar(50),
+	month varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -142,18 +142,18 @@ create table Incollection (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
 	booktitle varchar(100) not null,
-	publisher varchar(50) not null,
-	year varchar(50) not null,
+	publisher varchar(100) not null,
+	year varchar(100) not null,
 	crossref varchar(100),
-	volume varchar(50),
-	number varchar(50),
+	volume varchar(100), 
+	number varchar(100), 
 	series varchar(100),
-	type varchar(50),
-	chapter varchar(50),
-	pages varchar(50),
+	type varchar(100), 
+	chapter varchar(100), 
+	pages varchar(100), 
 	address varchar(100),
-	edition varchar(50),
-	month varchar(50),
+	edition varchar(100), 
+	month varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -166,16 +166,16 @@ create table Inproceedings (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
 	booktitle varchar(100) not null,
-	year varchar(50) not null,
+	year varchar(100) not null,
 	crossref varchar(100),
-	volume varchar(50),
-	number varchar(50),
+	volume varchar(100), 
+	number varchar(100), 
 	series varchar(100),
-	pages varchar(50),
+	pages varchar(100), 
 	address varchar(100),
-	month varchar(50),
-	organization varchar(50),
-	publisher varchar(50),
+	month varchar(100), 
+	organization varchar(100), 
+	publisher varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -187,11 +187,11 @@ create table Inproceedings (
 create table Manual (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
-	organization varchar(50),
+	organization varchar(100), 
 	address varchar(100),
-	edition varchar(50),
-	month varchar(50),
-	year varchar(50),
+	edition varchar(100), 
+	month varchar(100), 
+	year varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -203,11 +203,11 @@ create table Manual (
 create table Mastersthesis (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
-	school varchar(50) not null,
-	year varchar(50) not null,
-	type varchar(50),
+	school varchar(100) not null,
+	year varchar(100) not null,
+	type varchar(100), 
 	address varchar(100),
-	month varchar(50),
+	month varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -220,8 +220,8 @@ create table Misc (
 	idDoc integer unsigned primary key, 
 	title varchar(100),
 	howpublished varchar(100),
-	month varchar(50),
-	year varchar(50),
+	month varchar(100), 
+	year varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -233,11 +233,11 @@ create table Misc (
 create table Phdthesis (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
-	school varchar(50) not null,
-	year varchar(50) not null,
-	type varchar(50),
+	school varchar(100) not null,
+	year varchar(100) not null,
+	type varchar(100), 
 	address varchar(100),
-	month varchar(50),
+	month varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -249,15 +249,15 @@ create table Phdthesis (
 create table Proceedings (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
-	year varchar(50) not null,
-	booktitle varchar(50),
-	volume varchar(50),
-	number varchar(50),
+	year varchar(100) not null,
+	booktitle varchar(100), 
+	volume varchar(100), 
+	number varchar(100), 
 	series varchar(100),
 	address varchar(100),
-	month varchar(50),
-	organization varchar(50),
-	publisher varchar(50),
+	month varchar(100), 
+	organization varchar(100), 
+	publisher varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -269,12 +269,12 @@ create table Proceedings (
 create table Techreport (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
-	institution varchar(50) not null,
-	year varchar(50) not null,
-	type varchar(50),
-	number varchar(50),
+	institution varchar(100) not null,
+	year varchar(100) not null,
+	type varchar(100), 
+	number varchar(100), 
 	address varchar(100),
-	month varchar(50),
+	month varchar(100), 
 	note text,
 	abstract text,
 	URL varchar(512),
@@ -287,8 +287,8 @@ create table Unpublished (
 	idDoc integer unsigned primary key, 
 	title varchar(100) not null,
 	note text not null,
-	month varchar(50),
-	year varchar(50),
+	month varchar(100), 
+	year varchar(100), 
 	abstract text,
 	URL varchar(512),
 	user varchar(20) not null,
@@ -336,6 +336,7 @@ create table tipoPublicacion (
 	idDoc integer unsigned not null primary key,
 	tipo varchar(30) not null);
 
+
 create or replace view proyectosAccesiblesJefe(jefe, proyecto) as
   select jefe, nombre from proyectos
   union
@@ -359,9 +360,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'article');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'article');
 END $$
 
 
@@ -375,9 +376,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'book');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'book');
 END $$
 
 
@@ -391,9 +392,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'booklet');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'booklet');
 END $$
 
 
@@ -407,9 +408,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'conference');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'conference');
 END $$
 
 
@@ -423,9 +424,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inbook');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inbook');
 END $$
 
 
@@ -439,9 +440,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'incollection');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'incollection');
 END $$
 
 
@@ -455,9 +456,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inproceedings');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'inproceedings');
 END $$
 
 
@@ -471,9 +472,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'manual');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'manual');
 END $$
 
 
@@ -487,9 +488,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'mastersthesis');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'mastersthesis');
 END $$
 
 
@@ -503,9 +504,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'misc');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'misc');
 END $$
 
 
@@ -519,9 +520,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'phdthesis');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'phdthesis');
 END $$
 
 
@@ -535,10 +536,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'proceedings');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'proceedings');
 END $$
 
 
@@ -552,9 +552,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'techreport');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'techreport');
 END $$
 
 
@@ -568,9 +568,9 @@ BEGIN
       SELECT nextId INTO num FROM Id;
       SET NEW.idDoc = num;
       UPDATE Id SET nextId = nextId + 1;
-      INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'unpublished');
     END;
   END IF;
+  INSERT INTO tipopublicacion VALUES (NEW.idDoc, 'unpublished');
 END $$
 
 DROP TRIGGER IF EXISTS insertaAutorEditor $$

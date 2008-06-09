@@ -5,6 +5,7 @@ package controlador;
 import java.sql.Connection;
 import java.util.Vector;
 
+import publicaciones.Publication;
 import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
 import controlador.exceptions.NonExistingElementException;
@@ -49,8 +50,8 @@ public class ModificadorAutores
 	{
 		int idAut = consultaIdAutor(nombre, apellidos, conn);		
 		if (idAut > 0) throw new ExistingElementException(ExistenceException.AUTOR);
-
-		String insercion = "INSERT INTO autoreseditores VALUES (0,'" + nombre + "','" + apellidos + "');";
+		
+		String insercion = "INSERT INTO autoreseditores VALUES (0,'" + Publication.sustituirComillasSQL(nombre) + "','" + Publication.sustituirComillasSQL(apellidos) + "');";
 		theBaseDatos.exeUpdate(insercion, conn);
 	}
 
@@ -148,14 +149,11 @@ public class ModificadorAutores
 	 */
 	public void modificaAutor(int idAutor, String nombreNuevo, String apellidosNuevos, Connection conn) throws NonExistingElementException,BDException 
 	{		
-		String cons1 = new String ("SELECT COUNT(*) FROM autoreseditores WHERE idAut = " + idAutor +";");
+		String cons1 = new String ("SELECT * FROM autoreseditores WHERE idAut = " + idAutor +";");
 		Vector <Object[]> res1 = theBaseDatos.exeQuery(cons1, conn);
 		if (res1 == null || ((Long)res1.firstElement()[0]).intValue()!=1) throw new NonExistingElementException(ExistenceException.AUTOR);
 
 		String consulta = new String ("UPDATE autoreseditores SET nombre = '" + nombreNuevo + "', apellidos = '" + apellidosNuevos + "' WHERE idAut = "+ idAutor + ";") ;
 		theBaseDatos.exeUpdate(consulta, conn);    
 	}	
-
-
-
 }

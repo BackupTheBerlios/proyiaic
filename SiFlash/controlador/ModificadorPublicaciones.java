@@ -3,6 +3,8 @@
 package controlador;
 
 import java.sql.Connection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Vector;
 
 import controlador.exceptions.ExistenceException;
@@ -64,16 +66,29 @@ public class ModificadorPublicaciones {
 	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
 	 * la base de datos.
 	 */
-	public void modificaPublicacion(Publication publicacion, Connection conn) throws NonExistingElementException,BDException,ExistingElementException 
+	public void modificaPublicacion(Publication publicacion, Connection conn) throws NonExistingElementException,BDException, ExistingElementException 
 	{	
 		int id_doc = publicacion.getIdDoc();
 		String consulta = new String ("SELECT tipo FROM tipopublicacion WHERE idDoc = " + id_doc + ";");
 		Vector<Object []> res = theBaseDatos.exeQuery(consulta, conn);
-		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);		
+		if (res == null || res.size() <1 ) throw new NonExistingElementException (ExistenceException.DOCUMENTO);
+		
+		consulta = "SELECT proyecto FROM pertenecea WHERE idDoc=" + id_doc + ";";
+		res = theBaseDatos.exeQuery(consulta, conn);
+		LinkedList<String> proyectos = new LinkedList<String>();
+		for (int i = 0; i < res.size(); i++)
+			proyectos.add((String)res.get(i)[0]);
+		
 		borraPublicacion(publicacion.getIdDoc(), conn);
-		try{
 		insertaPublicacion(publicacion, conn);
-		}catch (ExistingElementException e){}
+		
+		Iterator<String> it = proyectos.iterator();
+		String insercion;
+		while (it.hasNext())
+		{
+			insercion = "INSERT INTO pertenecea VALUES (" + id_doc + ", '" + it.next() + "');";
+			theBaseDatos.exeUpdate(insercion, conn);
+		}		
 	}
 
 	/**
