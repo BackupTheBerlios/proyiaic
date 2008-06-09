@@ -779,4 +779,5 @@ DELIMITER ;
 
 
 INSERT INTO usuarios VALUES('user1', 'user1', 'user');
+INSERT INTO usuarios VALUES('admin', 'admin', 'admin');
 INSERT INTO proyectos VALUES('Proyecto1', 'user1');
