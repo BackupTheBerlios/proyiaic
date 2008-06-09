@@ -1470,24 +1470,26 @@ class ConsultorBaseDatos
 	 * de la publicaciones.
 	 * La cadena generada debe tener el siguiente aspecto, ejemplo para búsqueda de un libro a
 	 * los editores 1,2,8.
-	 *  
+	 *  <br>
+	 *  <pre>
 	 * 	book.idDoc IN (
 	 * 		(
-	 * 			SELECT DISTINCT editadoPor.idDoc FROM editadoPor WHERE( 
+	 * 			SELECT DISTINCT editadoPor.idDoc FROM editadoPor WHERE(
 	 * 				esctrito_editado_por.idPer IN (1,2,8)
 	 * 				AND escrito_editado_por.escrito_o_editado = FALSE
-	 * 			) 			
+	 * 			) 		
 	 * 		)
 	 * 	)
 	 * 
 	 * El mismo ejemplo pero nos valen tanto autores como editores.
 	 * 	 book.idDoc IN (
 	 * 		(
-	 * 			SELECT DISTINCT editadoPor.idDoc FROM editadoPor WHERE( 
+	 * 			SELECT DISTINCT editadoPor.idDoc FROM editadoPor WHERE(
 	 * 				esctrito_editado_por.idPer IN (1,2,8)
-	 * 			) 			
+	 * 			)		
 	 * 		)
 	 * 	)
+	 * </pre>
 	 * 
 	 * @param tabla - Nombre de la tabla que representa el tipo de documento que estamos buscando.
 	 * @param authors - Vector con todas los idPer de los autores/editores que deseamos filtrar 
@@ -1519,7 +1521,7 @@ class ConsultorBaseDatos
 	 * Ejemplo si deseamos que se busquen Books que tenga las keys teclado e inicio,
 	 * bastando con que se le parezcan.
 	 * Llamada --> creaConsultaVectorial("Books","tienekey","clave",{"teclado"-"inicio"},true,true)
-	 * return -->
+	 * return --> <pre>
 	 * (
 	 * 		Book.idDoc IN (
 	 * 			SELECT DISTINCT tienekeyA.idDoc FROM tienekey AS tienekeyA WHERE (
@@ -1535,7 +1537,7 @@ class ConsultorBaseDatos
 	 * 			)
 	 * 		)
 	 * 	)
-	 *
+	 *	</pre>
 	 * 		
 	 * 
 	 * 
@@ -1590,7 +1592,7 @@ class ConsultorBaseDatos
 	 * 	Llamada --> creaConsultaSimple ("publisher","Pearson",true);<br>
 	 * 	Return	--> publisher LIKE ('%Pearson%')<br>
 	 * 	Llamada	--> creaConsultaSimple ("publisher","Pearson",false);<br>
-	 * 	Return	--> publisher = 'Pearson'<br>
+	 * 	Return	--> publisher = 'Pearson'<br><br>
 	 * 
 	 * 
 	 * @param alias - Nombre por el que se conoce en el resto de la consulta a la tabla sobre la que deseamos
