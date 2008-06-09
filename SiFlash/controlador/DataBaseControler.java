@@ -2,11 +2,9 @@ package controlador;
 
 import java.sql.Connection;
 import java.util.Vector;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-
 import personas.AutorEditor;
 import personas.Usuario;
 import publicaciones.CodigosDatos;

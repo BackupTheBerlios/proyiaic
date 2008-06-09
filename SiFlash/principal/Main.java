@@ -1,9 +1,10 @@
 package principal;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.util.LinkedList;
 
-import controlador.ConversorXML_BBDD;
+import parserFicherosBibtex.Campo;
+import parserFicherosBibtex.CampoPublicacion;
+import publicaciones.Article;
 
 
 
@@ -61,9 +62,9 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\article.xml");
-			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarModificacion(is));
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\article.xml");
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarModificacion(is));
 			
 			//-------------------------------------------------------------------------
 			

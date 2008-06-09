@@ -7,11 +7,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
+import publicaciones.Publication;
 import controlador.exceptions.ExistenceException;
 import controlador.exceptions.ExistingElementException;
 import controlador.exceptions.NonExistingElementException;
-
-import publicaciones.Publication;
 import database.BDException;
 import database.BaseDatos;
 

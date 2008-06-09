@@ -184,6 +184,10 @@ public class TechReport extends Publication
 		Element eKey = new Element("key");
 		eKey.addContent(convertirTextoBibtexKeys(key));
 		elemento.addContent(eKey);
+		
+		Element eURL = new Element("URL");
+		eKey.addContent(URL);
+		elemento.addContent(eURL);
 
 		return elemento;
 	}
