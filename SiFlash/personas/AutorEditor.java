@@ -2,6 +2,8 @@ package personas;
 
 import org.jdom.Element;
 
+import publicaciones.Publication;
+
 /**
  * Clase que guarda los datos de un autor o un editor, también implementa el comportamiento
  * necesario para su correcta gestión y manipulación.
@@ -183,11 +185,11 @@ public class AutorEditor
 		Element eAuthor = new Element("author");
 		
 		Element eNombre = new Element("nombre");
-		eNombre.addContent(nombre);
+		eNombre.addContent(Publication.quitarLlaves(nombre));
 		eAuthor.addContent(eNombre);
 		
 		Element eApellidos = new Element("apellidos");
-		eApellidos.addContent(apellidos);
+		eApellidos.addContent(Publication.quitarLlaves(apellidos));
 		eAuthor.addContent(eApellidos);
 		
 		return eAuthor;
@@ -202,11 +204,11 @@ public class AutorEditor
 		Element eEditor = new Element("editor");
 		
 		Element eNombre = new Element("nombre");
-		eNombre.addContent(nombre);
+		eNombre.addContent(Publication.quitarLlaves(nombre));
 		eEditor.addContent(eNombre);
 		
 		Element eApellidos = new Element("apellidos");
-		eApellidos.addContent(apellidos);
+		eApellidos.addContent(Publication.quitarLlaves(apellidos));
 		eEditor.addContent(eApellidos);
 		
 		return eEditor;

@@ -1569,4 +1569,28 @@ public class DataBaseControler
 			database.cierraConexion(conn);
 		}
 	}
+	
+	public String obtenerBibtexProyecto(String proyecto)
+	{
+		try
+		{
+			String resultado = "";
+			Vector<Publication> publicaciones = consultaDocumentos(proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
+			int numP = publicaciones.size();
+			for (int i = 0;  i < numP; i++)
+				resultado += publicaciones.get(i).getBibTeX() + "\n\n";
+			return resultado;
+		}
+		catch(BDException e)
+		{
+			return "Error al obtener BibTeX del proyecto: " + e.getMessage();
+		} 
+		catch (NonExistingElementException e) 
+		{
+			if (e.getTipo() == ExistenceException.PROYECTO)
+				return "Error: El proyecto no existe.";
+			else
+				return "Error desconocido al obtener la lista de publicaciones de un proyecto.";
+		} 
+	}
 }

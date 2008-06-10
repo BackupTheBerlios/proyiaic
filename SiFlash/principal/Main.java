@@ -1,10 +1,6 @@
 package principal;
 
-import java.util.LinkedList;
-
-import parserFicherosBibtex.Campo;
-import parserFicherosBibtex.CampoPublicacion;
-import publicaciones.Article;
+import controlador.DataBaseControler;
 
 
 
@@ -32,7 +28,7 @@ public class Main
 //			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
 //			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
 //			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
-//			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David García and Ortiz Carrillo, Luis", false);
+//			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David Garc\\\'ia and Ortiz Carrillo, Luis", false);
 //			CampoPublicacion c6 = new CampoPublicacion("abstract", "54", true);
 //			
 //			LinkedList<Campo> listaCampos = new LinkedList<Campo>();
@@ -45,7 +41,7 @@ public class Main
 //			
 //			Article art = new Article(listaCampos);
 //			
-//			System.out.println(art.getBibTeX());
+//			System.out.println(art.generarElementoXML());
 
 			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola, me llamo Orb{\\\'{\\i}}s", false);
@@ -62,9 +58,9 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\article.xml");
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\manual.xml");
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarModificacion(is));
+//			System.out.println(conv.procesarInsercion(is));
 			
 			//-------------------------------------------------------------------------
 			
@@ -95,8 +91,8 @@ public class Main
 //			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaBusquedas());
 			//-------------------------------------------------------------------------
 			
-//			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.eliminaProyecto("Proyecto1"));
+			DataBaseControler db_controler = new DataBaseControler();
+			System.out.println(db_controler.obtenerBibtexProyecto("Proyecto1"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();

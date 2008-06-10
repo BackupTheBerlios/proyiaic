@@ -119,37 +119,37 @@ public class Misc extends Publication
 		if (idDoc != 0)
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
-			elemento.setAttribute("referencia", referencia);
+			elemento.setAttribute("referencia", quitarLlaves(referencia));
 
 		Element eTitle = new Element("title");
-		eTitle.addContent(title);
+		eTitle.addContent(quitarLlaves(title));
 		elemento.addContent(eTitle);
 
 		Element eAuthor = generarAutoresEditoresXML();
 		elemento.addContent(eAuthor);
 
 		Element eHowPublished = new Element("howPublished");
-		eHowPublished.addContent(howPublished);
+		eHowPublished.addContent(quitarLlaves(howPublished));
 		elemento.addContent(eHowPublished);
 
 		Element eMonth = new Element("month");
-		eMonth.addContent(month);
+		eMonth.addContent(quitarLlaves(month));
 		elemento.addContent(eMonth);
 
 		Element eYear = new Element("year");
-		eYear.addContent(year);
+		eYear.addContent(quitarLlaves(year));
 		elemento.addContent(eYear);
 
 		Element eNote = new Element("note");
-		eNote.addContent(note);
+		eNote.addContent(quitarLlaves(note));
 		elemento.addContent(eNote);
 
 		Element eAbstract = new Element("abstract");
-		eAbstract.addContent(_abstract);
+		eAbstract.addContent(quitarLlaves(_abstract));
 		elemento.addContent(eAbstract);
 
 		Element eKey = new Element("key");
-		eKey.addContent(convertirTextoBibtexKeys(key));
+		eKey.addContent(quitarLlaves(convertirTextoBibtexKeys(key)));
 		elemento.addContent(eKey);
 		
 		Element eURL = new Element("URL");

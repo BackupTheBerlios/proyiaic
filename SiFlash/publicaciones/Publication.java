@@ -293,7 +293,7 @@ public abstract class Publication
 	protected String convertirTextoBibtex(String cadena2)
 	{
 		String salida = "";
-		String cadena = quitarTildes(cadena2);
+		String cadena = quitarTildesYOtros(cadena2);
 		int longit = cadena.length();
 		char actual;
 		boolean mayusculas = false;
@@ -333,7 +333,7 @@ public abstract class Publication
 	 * @param cadena2 Cadena a procesar.
 	 * @return El resultado, tras sustituir las tildes.
 	 */
-	private String quitarTildes(String cadena2) 
+	private String quitarTildesYOtros(String cadena2) 
 	{
 		int longit = cadena2.length();
 		char actual;
@@ -346,11 +346,13 @@ public abstract class Publication
 			else if (actual == 'é')
 				sinTildes += "\\\'e";
 			else if (actual == 'í')
-				sinTildes += "\\\'{\\i}";
+				sinTildes += "\\\'i";
 			else if (actual == 'ó')
 				sinTildes += "\\\'o";
 			else if (actual == 'ú')
 				sinTildes += "\\\'u";
+			else if (actual == 'ñ')
+				sinTildes += "\\~n";
 			else
 				sinTildes += actual;
 		}
@@ -421,7 +423,7 @@ public abstract class Publication
 	{
 		if (ae.getNombre() == null)
 		{
-			String apellidos = quitarTildes(ae.getApellidos());
+			String apellidos = quitarTildesYOtros(ae.getApellidos());
 			if (tieneVariasPalabras(apellidos))
 				return ("{" + apellidos + "}");
 			else
@@ -429,10 +431,10 @@ public abstract class Publication
 		}
 		else
 		{
-			String nombre = quitarTildes(ae.getNombre());
+			String nombre = quitarTildesYOtros(ae.getNombre());
 			if (ae.getApellidos() != null)
 			{
-				String apellidos = quitarTildes(ae.getApellidos());
+				String apellidos = quitarTildesYOtros(ae.getApellidos());
 				if (tieneVariasPalabras(apellidos))
 					return (apellidos + ", " + nombre);
 				else
@@ -691,5 +693,23 @@ public abstract class Publication
 		for (int i = 1; i < strings.length; i++)
 			result += "\\\'" + strings[i];
 		return result;
+	}
+	
+	public static String quitarLlaves(String s)
+	{
+		if (s != null)
+		{
+			String result = "";
+			int numChar = s.length();
+			char actual;
+			for (int i = 0; i < numChar; i++)
+			{
+				actual = s.charAt(i);
+				if (actual != '{' && actual != '}')
+					result += actual;
+			}
+			return result;
+		}
+		else return null;
 	}
 }

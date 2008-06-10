@@ -70,6 +70,8 @@ public class CampoPublicacion extends Campo
 					case 1: almacen += actual;
 							if (actual == '\'')
 								estado = 2;
+							else if (actual == '~')
+								estado = 14;
 							else
 							{
 								nuevoValor += almacen;
@@ -89,6 +91,12 @@ public class CampoPublicacion extends Campo
 							else if (letraParaTilde == 'e')
 							{
 								nuevoValor += 'é';
+								estado = 0;
+								almacen = "";
+							}
+							else if (letraParaTilde == 'i')
+							{
+								nuevoValor += 'í';
 								estado = 0;
 								almacen = "";
 							}
@@ -168,6 +176,8 @@ public class CampoPublicacion extends Campo
 					case 7: almacen += actual;
 							if (actual == '\'')
 								estado = 8;
+							else if (actual == '~')
+								estado = 15;
 							else
 							{
 								nuevoValor += almacen;
@@ -177,7 +187,7 @@ public class CampoPublicacion extends Campo
 							break;
 							
 					case 8: almacen += actual;
-							if (actual == 'a' || actual == 'e' || actual == 'o' || actual == 'u')
+							if (actual == 'a' || actual == 'e' || actual == 'i' || actual == 'o' || actual == 'u')
 							{	
 								estado = 9;
 								letraParaTilde = actual;
@@ -207,6 +217,12 @@ public class CampoPublicacion extends Campo
 									estado = 0;
 									almacen = "";
 								}
+								else if (letraParaTilde == 'i')
+								{
+									nuevoValor += 'í';
+									estado = 0;
+									almacen = "";
+								}
 								else if (letraParaTilde == 'o')
 								{
 									nuevoValor += 'ó';
@@ -216,6 +232,12 @@ public class CampoPublicacion extends Campo
 								else if (letraParaTilde == 'u')
 								{
 									nuevoValor += 'ú';
+									estado = 0;
+									almacen = "";
+								}
+								else if (letraParaTilde == 'n')
+								{
+									nuevoValor += 'ñ';
 									estado = 0;
 									almacen = "";
 								}
@@ -272,6 +294,34 @@ public class CampoPublicacion extends Campo
 								almacen = "";
 							}
 							else
+							{
+								nuevoValor += almacen;
+								almacen = "";
+								estado = 0;
+							}
+							break;
+					case 14: almacen += actual;
+							 letraParaTilde = actual;
+							 if (letraParaTilde == 'n')
+							 {
+								 nuevoValor += 'ñ';
+								 estado = 0;
+								 almacen = "";
+							 }
+							 else
+							{
+								nuevoValor += almacen;
+								almacen = "";
+								estado = 0;
+							}
+							break;
+					case 15: almacen += actual;
+							 if (actual == 'n')
+							 {	
+								 estado = 9;
+								 letraParaTilde = actual;
+							 }
+							 else
 							{
 								nuevoValor += almacen;
 								almacen = "";
