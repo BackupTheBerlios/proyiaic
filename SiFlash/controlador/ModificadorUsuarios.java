@@ -131,6 +131,31 @@ public class ModificadorUsuarios
 		
 		theBaseDatos.exeUpdate(insercion, conn);
 	}
+	
+	/**
+	 * Modifica la contraseña del usuario.
+	 * @param usuario - Nombre del usuario a añadir.
+	 * @param newpassword - Nueva contraseña que se le quiere proporcionar al usuario.
+	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * las operaciones.
+	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Cuando el usuario no existe.
+	 * @throws ExistingElementException - Cuando ya están asociados usuario y proyecto. 
+	 */
+	public void modificaPassUsuario(String usuario, String newpassword, Connection conn) throws NonExistingElementException,BDException 
+	{
+		String consulta1, modificacion;
+		consulta1 = new String ("SELECT COUNT(*) FROM usuarios WHERE nombre = '" + usuario +"';");
+		modificacion = new String ("UPDATE usuarios SET password = '" + newpassword + "' WHERE nombre = '"
+				+ usuario + "';");
+		
+		Vector<Object []> res1;
+		res1 = theBaseDatos.exeQuery(consulta1, conn);
+		if (res1 == null || ((Long)res1.firstElement()[0]).intValue() < 1) throw new NonExistingElementException(ExistenceException.USUARIO);		
+		
+		theBaseDatos.exeUpdate(modificacion, conn);
+	}	
 
 	
 	/**

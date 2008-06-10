@@ -349,6 +349,46 @@ public class DataBaseControler
 		}
 
 	}
+	
+	
+	
+	/**
+	 * Cambia la password del usuario pasado por parámetro por la nueva que se le ha proporionado.
+	 * @param usuario - Usuario a insertar.
+	 * @param proyecto - Proyecto con el que se encontrará relacionado. 
+	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException - Si el proyecto al que se desea asociar no existe.
+	 * @throws ExistingElementException - Si el Usuario ya existe.
+	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
+	public String modificaPassUsuario(String usuario, String newPassword) throws BDException
+	{
+		Connection conn = database.abreConexion();
+		try 
+		{
+			ejecutaString("BEGIN;", conn);
+			modif_user.modificaPassUsuario(usuario, newPassword, conn);
+			ejecutaString("COMMIT;", conn);
+			return "La contraseña del usuario se ha modificado con exito.";
+		} 
+		catch (BDException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return e.getMessage();
+		} 
+
+		catch (NonExistingElementException e) 
+		{
+			ejecutaString("ROLLBACK;", conn);
+			return "Error al modificar la contraseña del usuario: el usuario no existe.";
+		}
+		finally{
+			database.cierraConexion(conn);
+		}
+
+	}	
 
 	/**
 	 * Método que se encarga de modificar la publicación pasada por parámetro en la 
