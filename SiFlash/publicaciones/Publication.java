@@ -180,7 +180,7 @@ public abstract class Publication
 	 * Genera un elemento XML con la información del objeto.
 	 * @return El elemento generado.
 	 */
-	public abstract Element generarElementoXML();
+	public abstract Element generarElementoXML(boolean quitarLlaves);
 
 	/**
 	 * Extrae los autores/editores de una cadena de caracteres que se le pasa por
@@ -695,21 +695,27 @@ public abstract class Publication
 		return result;
 	}
 	
-	public static String quitarLlaves(String s)
+	public static String quitarLlaves(String s, boolean quitarLlaves)
 	{
-		if (s != null)
+		if (quitarLlaves)
 		{
-			String result = "";
-			int numChar = s.length();
-			char actual;
-			for (int i = 0; i < numChar; i++)
+			if (s != null)
 			{
-				actual = s.charAt(i);
-				if (actual != '{' && actual != '}')
-					result += actual;
+				String result = "";
+				int numChar = s.length();
+				char actual;
+				for (int i = 0; i < numChar; i++)
+				{
+					actual = s.charAt(i);
+					if (actual != '{' && actual != '}')
+						result += actual;
+				}
+				return result;
 			}
-			return result;
+			else 
+				return null;
 		}
-		else return null;
+		else 
+			return s;
 	}
 }

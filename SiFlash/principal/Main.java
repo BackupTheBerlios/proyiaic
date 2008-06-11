@@ -1,6 +1,5 @@
 package principal;
 
-import controlador.DataBaseControler;
 
 
 
@@ -13,8 +12,7 @@ public class Main
 		{
 			//-------------------------------------------------------------------------
 //			ParserBibtex pb = new ParserBibtex();
-//			InputStream is = new FileInputStream("ficherosDePrueba\\parserBibtex\\prueba1.txt");
-//			//pb.procesar("parserFicherosBibtex\\JUnit\\ficherosDePrueba\\Rosa07.bib");
+//			InputStream is = new FileInputStream("ficherosDePrueba\\parserBibtex\\prueba.bib");
 //			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
@@ -58,7 +56,7 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\manual.xml");
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\mastersthesis.xml");
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarInsercion(is));
 			
@@ -91,8 +89,8 @@ public class Main
 //			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaBusquedas());
 			//-------------------------------------------------------------------------
 			
-			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerBibtexProyecto("Proyecto1"));
+//			DataBaseControler db_controler = new DataBaseControler();
+//			System.out.println(db_controler.obtenerBibtexProyecto("Proyecto1"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();

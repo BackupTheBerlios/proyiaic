@@ -166,56 +166,56 @@ public class Article extends Publication
 	}
 
 	@Override
-	public Element generarElementoXML()
+	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
 		elemento.setAttribute ("tipo", "Article");
 		if (idDoc != 0)
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
-			elemento.setAttribute("referencia", quitarLlaves(referencia));
+			elemento.setAttribute("referencia", quitarLlaves(referencia, quitarLlaves));
 
 		Element eTitle = new Element("title");
-		eTitle.addContent(quitarLlaves(title));
+		eTitle.addContent(quitarLlaves(title, quitarLlaves));
 		elemento.addContent(eTitle);
 
-		Element eAuthor = generarAutoresEditoresXML();
+		Element eAuthor = generarAutoresEditoresXML(quitarLlaves);
 		elemento.addContent(eAuthor);
 
 		Element eJournal = new Element("journal");
-		eJournal.addContent(quitarLlaves(journal));
+		eJournal.addContent(quitarLlaves(journal, quitarLlaves));
 		elemento.addContent(eJournal);
 
 		Element eYear = new Element("year");
-		eYear.addContent(quitarLlaves(year));
+		eYear.addContent(quitarLlaves(year, quitarLlaves));
 		elemento.addContent(eYear);
 
 		Element eVolume = new Element("volume");
-		eVolume.addContent(quitarLlaves(volume));
+		eVolume.addContent(quitarLlaves(volume, quitarLlaves));
 		elemento.addContent(eVolume);
 
 		Element eNumber = new Element("number");
-		eNumber.addContent(quitarLlaves(number));
+		eNumber.addContent(quitarLlaves(number, quitarLlaves));
 		elemento.addContent(eNumber);
 
 		Element ePages = new Element("pages");
-		ePages.addContent(quitarLlaves(pages));
+		ePages.addContent(quitarLlaves(pages, quitarLlaves));
 		elemento.addContent(ePages);
 
 		Element eMonth = new Element("month");
-		eMonth.addContent(quitarLlaves(month));
+		eMonth.addContent(quitarLlaves(month, quitarLlaves));
 		elemento.addContent(eMonth);
 
 		Element eNote = new Element("note");
-		eNote.addContent(quitarLlaves(note));
+		eNote.addContent(quitarLlaves(note, quitarLlaves));
 		elemento.addContent(eNote);
 
 		Element eAbstract = new Element("abstract");
-		eAbstract.addContent(quitarLlaves(_abstract));
+		eAbstract.addContent(quitarLlaves(_abstract, quitarLlaves));
 		elemento.addContent(eAbstract);
 
 		Element eKey = new Element("key");
-		eKey.addContent(quitarLlaves(convertirTextoBibtexKeys(key)));
+		eKey.addContent(quitarLlaves(convertirTextoBibtexKeys(key), quitarLlaves));
 		elemento.addContent(eKey);
 		
 		Element eURL = new Element("URL");
@@ -229,14 +229,14 @@ public class Article extends Publication
 	 * Genera un elemento XML con todos los autores.
 	 * @return El elemento generado.
 	 */
-	private Element generarAutoresEditoresXML() 
+	private Element generarAutoresEditoresXML(boolean quitarLlaves) 
 	{	
 		Element eAuthor = new Element("authors");
 		if (author != null)
 		{
 			Iterator<AutorEditor> it = author.iterator();
 			while (it.hasNext())
-				eAuthor.addContent(it.next().generarAuthorXML());
+				eAuthor.addContent(it.next().generarAuthorXML(quitarLlaves));
 		}
 		return eAuthor;
 	}

@@ -180,16 +180,16 @@ public class AutorEditor
 	 * Genera un elemento XML con la información del autor.
 	 * @return El elemento generado.
 	 */
-	public Element generarAuthorXML() 
+	public Element generarAuthorXML(boolean quitarLlaves) 
 	{
 		Element eAuthor = new Element("author");
 		
 		Element eNombre = new Element("nombre");
-		eNombre.addContent(Publication.quitarLlaves(nombre));
+		eNombre.addContent(Publication.quitarLlaves(nombre, quitarLlaves));
 		eAuthor.addContent(eNombre);
 		
 		Element eApellidos = new Element("apellidos");
-		eApellidos.addContent(Publication.quitarLlaves(apellidos));
+		eApellidos.addContent(Publication.quitarLlaves(apellidos, quitarLlaves));
 		eAuthor.addContent(eApellidos);
 		
 		return eAuthor;
@@ -199,16 +199,16 @@ public class AutorEditor
 	 * Genera un elemento XML con la información del editor.
 	 * @return El elemento generado.
 	 */
-	public Element generarEditorXML() 
+	public Element generarEditorXML(boolean quitarLlaves) 
 	{
 		Element eEditor = new Element("editor");
 		
 		Element eNombre = new Element("nombre");
-		eNombre.addContent(Publication.quitarLlaves(nombre));
+		eNombre.addContent(Publication.quitarLlaves(nombre, quitarLlaves));
 		eEditor.addContent(eNombre);
 		
 		Element eApellidos = new Element("apellidos");
-		eApellidos.addContent(Publication.quitarLlaves(apellidos));
+		eApellidos.addContent(Publication.quitarLlaves(apellidos, quitarLlaves));
 		eEditor.addContent(eApellidos);
 		
 		return eEditor;

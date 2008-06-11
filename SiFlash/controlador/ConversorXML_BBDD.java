@@ -275,7 +275,7 @@ public class ConversorXML_BBDD
 			for(int i = 0; i < numPublic; i++)
 			{
 				actual = vector.get(i);
-				Element elemento = actual.generarElementoXML();
+				Element elemento = actual.generarElementoXML(true);
 				root.addContent(elemento);
 
 			}

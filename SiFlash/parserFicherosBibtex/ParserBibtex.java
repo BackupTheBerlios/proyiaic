@@ -79,7 +79,7 @@ public class ParserBibtex
 		while (it.hasNext())
 		{
 			p = it.next();
-			Element elemento = p.generarElementoXML();
+			Element elemento = p.generarElementoXML(false);
 			root.addContent(elemento);
 		}
 		XMLOutputter outputter = new XMLOutputter();

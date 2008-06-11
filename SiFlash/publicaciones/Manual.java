@@ -126,52 +126,52 @@ public class Manual extends Publication
 	 * Genera un elemento XML con la información del objeto.
 	 * @return El elemento generado.
 	 */
-	public Element generarElementoXML()
+	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
 		elemento.setAttribute ("tipo", "Manual");
 		if (idDoc != 0)
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
-			elemento.setAttribute("referencia", quitarLlaves(referencia));
+			elemento.setAttribute("referencia", quitarLlaves(referencia, quitarLlaves));
 
 		Element eTitle = new Element("title");
-		eTitle.addContent(quitarLlaves(title));
+		eTitle.addContent(quitarLlaves(title, quitarLlaves));
 		elemento.addContent(eTitle);
 
-		Element eAuthor = generarAutoresEditoresXML();
+		Element eAuthor = generarAutoresEditoresXML(quitarLlaves);
 		elemento.addContent(eAuthor);
 
 		Element eOrganization = new Element("organization");
-		eOrganization.addContent(quitarLlaves(organization));
+		eOrganization.addContent(quitarLlaves(organization, quitarLlaves));
 		elemento.addContent(eOrganization);
 
 		Element eAddress = new Element("address");
-		eAddress.addContent(quitarLlaves(address));
+		eAddress.addContent(quitarLlaves(address, quitarLlaves));
 		elemento.addContent(eAddress);
 
 		Element eEdition = new Element("edition");
-		eEdition.addContent(quitarLlaves(edition));
+		eEdition.addContent(quitarLlaves(edition, quitarLlaves));
 		elemento.addContent(eEdition);
 
 		Element eMonth = new Element("month");
-		eMonth.addContent(quitarLlaves(month));
+		eMonth.addContent(quitarLlaves(month, quitarLlaves));
 		elemento.addContent(eMonth);
 
 		Element eYear = new Element("year");
-		eYear.addContent(quitarLlaves(year));
+		eYear.addContent(quitarLlaves(year, quitarLlaves));
 		elemento.addContent(eYear);
 
 		Element eNote = new Element("note");
-		eNote.addContent(quitarLlaves(note));
+		eNote.addContent(quitarLlaves(note, quitarLlaves));
 		elemento.addContent(eNote);
 
 		Element eAbstract = new Element("abstract");
-		eAbstract.addContent(quitarLlaves(_abstract));
+		eAbstract.addContent(quitarLlaves(_abstract, quitarLlaves));
 		elemento.addContent(eAbstract);
 
 		Element eKey = new Element("key");
-		eKey.addContent(quitarLlaves(convertirTextoBibtexKeys(key)));
+		eKey.addContent(quitarLlaves(convertirTextoBibtexKeys(key), quitarLlaves));
 		elemento.addContent(eKey);
 		
 		Element eURL = new Element("URL");
@@ -185,14 +185,14 @@ public class Manual extends Publication
 	 * Genera un elemento XML con todos los autores.
 	 * @return El elemento generado.
 	 */
-	private Element generarAutoresEditoresXML() 
+	private Element generarAutoresEditoresXML(boolean quitarLlaves) 
 	{	
 		Element eAuthor = new Element("authors");
 		if (author != null)
 		{
 			Iterator<AutorEditor> it = author.iterator();
 			while (it.hasNext())
-				eAuthor.addContent(it.next().generarAuthorXML());
+				eAuthor.addContent(it.next().generarAuthorXML(quitarLlaves));
 		}
 		return eAuthor;
 	}

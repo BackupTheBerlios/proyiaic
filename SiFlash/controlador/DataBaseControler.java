@@ -1061,7 +1061,7 @@ public class DataBaseControler
 		int numP = publicaciones.size();
 		for (int i = 0;  i < numP; i++)
 		{
-			Element ePublication = publicaciones.get(i).generarElementoXML();
+			Element ePublication = publicaciones.get(i).generarElementoXML(true);
 			ePublicaciones.addContent(ePublication);
 		}
 		return ePublicaciones;
@@ -1335,7 +1335,7 @@ public class DataBaseControler
 			int numP = publicaciones.size();
 			for (int i = 0;  i < numP; i++)
 			{
-				Element ePublication = publicaciones.get(i).generarElementoXML();
+				Element ePublication = publicaciones.get(i).generarElementoXML(true);
 				root.addContent(ePublication);
 			}
 			XMLOutputter outputter = new XMLOutputter();
