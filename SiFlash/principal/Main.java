@@ -1,5 +1,7 @@
 package principal;
 
+import controlador.DataBaseControler;
+
 
 
 
@@ -56,7 +58,7 @@ public class Main
 
 			//-------------------------------------------------------------------------
 			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\mastersthesis.xml");
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\mastersthesis2.xml");
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarInsercion(is));
 			
@@ -89,8 +91,8 @@ public class Main
 //			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaBusquedas());
 			//-------------------------------------------------------------------------
 			
-//			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerBibtexProyecto("Proyecto1"));
+			DataBaseControler db_controler = new DataBaseControler();
+			System.out.println(db_controler.obtenerBibtex("9"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
