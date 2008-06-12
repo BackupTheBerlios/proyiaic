@@ -371,7 +371,6 @@ public abstract class Publication
 //		char 'Z' = 90.
 //		return ((actual > 64) && (actual <91)); 
 		
-		//Mejor no usar todavía...
 		return false;
 	}
 

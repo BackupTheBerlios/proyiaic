@@ -441,6 +441,8 @@ public class Manual extends Publication
 	 * @param e Autor a añadir.
 	 */
 	public void addAutor(AutorEditor e){
+		if (author == null)
+			author = new LinkedList<AutorEditor>();
 		if (!author.contains(e)) author.add(e);
 	}
 

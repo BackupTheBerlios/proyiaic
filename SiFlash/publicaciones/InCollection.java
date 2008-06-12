@@ -700,10 +700,14 @@ public class InCollection extends Publication
 	}
 
 	public void addAutor(AutorEditor e){
+		if (author == null)
+			author = new LinkedList<AutorEditor>();
 		if (!author.contains(e)) author.add(e);
 	}
 
 	public void addEditor(AutorEditor e){
+		if (editor == null)
+			editor = new LinkedList<AutorEditor>();
 		if (!editor.contains(e)) editor.add(e);
 	}
 

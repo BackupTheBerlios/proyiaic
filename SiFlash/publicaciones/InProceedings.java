@@ -564,6 +564,8 @@ public class InProceedings extends Publication
 	 * @param e Autor a añadir.
 	 */
 	public void addAutor(AutorEditor e){
+		if (author == null)
+			author = new LinkedList<AutorEditor>();
 		if (!author.contains(e)) author.add(e);
 	}
 
@@ -572,6 +574,8 @@ public class InProceedings extends Publication
 	 * @param e Editor a añadir.
 	 */
 	public void addEditor(AutorEditor e){
+		if (editor == null)
+			editor = new LinkedList<AutorEditor>();
 		if (!editor.contains(e)) editor.add(e);
 	}
 

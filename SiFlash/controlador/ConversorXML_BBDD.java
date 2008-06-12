@@ -174,8 +174,6 @@ public class ConversorXML_BBDD
 			month = campo.getValue();
 		else if (nombreCampo.equals("URL"))
 			URL = campo.getValue();
-//		else if (nombreCampo.equals("abstract"))
-//			_abstract = campo.getValue();
 		else if (nombreCampo.equals("note"))
 			note = campo.getValue();
 		else if (nombreCampo.equals("key"))

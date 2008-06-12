@@ -504,6 +504,8 @@ public class Article extends Publication
 	 * @param e Autor nuevo a añadir.
 	 */
 	public void addAutor(AutorEditor e){
+		if (author == null)
+			author = new LinkedList<AutorEditor>();
 		if (!author.contains(e)) author.add(e);
 	}
 }

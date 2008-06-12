@@ -539,6 +539,8 @@ public class Proceedings extends Publication
 	 * @param e Editor a añadir.
 	 */
 	public void addEditor(AutorEditor e){
+		if (editor == null)
+			editor = new LinkedList<AutorEditor>();
 		if (!editor.contains(e)) editor.add(e);
 	}
 	

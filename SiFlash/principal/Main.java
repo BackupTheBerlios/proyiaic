@@ -1,6 +1,9 @@
 package principal;
 
-import controlador.DataBaseControler;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import controlador.ConversorXML_BBDD;
 
 
 
@@ -18,10 +21,10 @@ public class Main
 //			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
-//			ConversorXML_BBDD cb = new ConversorXML_BBDD();
-//			InputStream is = new FileInputStream("ficherosDePrueba\\consultas\\consulta1.xml");
-//			String salida = cb.procesarConsulta(is);
-//			System.out.println(salida);
+			ConversorXML_BBDD cb = new ConversorXML_BBDD();
+			InputStream is = new FileInputStream("ficherosDePrueba\\consultas\\consulta1.xml");
+			String salida = cb.procesarConsulta(is);
+			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
 //			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
@@ -91,8 +94,8 @@ public class Main
 //			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaBusquedas());
 			//-------------------------------------------------------------------------
 			
-			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerBibtex("11"));
+//			DataBaseControler db_controler = new DataBaseControler();
+//			System.out.println(db_controler.obtenerBibtex("11"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
