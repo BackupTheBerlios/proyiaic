@@ -95,7 +95,7 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 //			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerBibtex("11"));
+//			System.out.println(db_controler.obtenerBibtex("1"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
