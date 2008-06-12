@@ -394,6 +394,8 @@ public class PhdThesis extends Publication
 			else editores.add(autor1);	
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
+			if (autores.isEmpty()) autores = null;
+			if (editores.isEmpty()) editores = null;
 			PhdThesis phd1 = new PhdThesis(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,school,type);
 			vector.add(phd1);
 

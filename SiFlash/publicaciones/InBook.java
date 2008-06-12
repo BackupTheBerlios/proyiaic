@@ -594,6 +594,8 @@ public class InBook extends Publication
 			else editores.add(autor1);	
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
+			if (autores.isEmpty()) autores = null;
+			if (editores.isEmpty()) editores = null;
 			InBook inb1 = new InBook(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,edition,type,editores,volume,number,series,pages,address,chapter,publisher);
 			vector.add(inb1);
 

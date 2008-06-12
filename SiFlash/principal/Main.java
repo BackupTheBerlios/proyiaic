@@ -57,8 +57,8 @@ public class Main
 				System.out.println(vector.get(i).getTitle());*/
 
 			//-------------------------------------------------------------------------
-			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\mastersthesis2.xml");
+//			
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\inproceedings.xml");
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarInsercion(is));
 			
@@ -92,7 +92,7 @@ public class Main
 			//-------------------------------------------------------------------------
 			
 			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerBibtex("9"));
+			System.out.println(db_controler.obtenerBibtex("11"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();

@@ -316,6 +316,8 @@ public class Unpublished extends Publication
 			else editores.add(autor1);	
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
+			if (autores.isEmpty()) autores = null;
+			if (editores.isEmpty()) editores = null;
 			Unpublished unp1 = new Unpublished(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores);
 			vector.add(unp1);
 

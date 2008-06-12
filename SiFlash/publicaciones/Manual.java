@@ -392,6 +392,8 @@ public class Manual extends Publication
 			else editores.add(autor1);	
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
+			if (autores.isEmpty()) autores = null;
+			if (editores.isEmpty()) editores = null;
 			Manual man1 = new Manual(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,edition,organization);
 			vector.add(man1);
 

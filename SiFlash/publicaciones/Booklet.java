@@ -367,6 +367,8 @@ public class Booklet extends Publication
 			else editores.add(autor1);	
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
+			if (autores.isEmpty()) autores = null;
+			if (editores.isEmpty()) editores = null;
 			Booklet bkl1 = new Booklet(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,howpublished);
 			vector.add(bkl1);
 

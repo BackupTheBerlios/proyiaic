@@ -491,6 +491,7 @@ public class Proceedings extends Publication
 			if (escrito_edit == true) editores.add(autor1);	
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
+			if (editores.isEmpty()) editores = null;
 			Proceedings pr1 = new Proceedings(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,booktitle,editores,volume,number,series,address,organization,publisher);
 			vector.add(pr1);
 

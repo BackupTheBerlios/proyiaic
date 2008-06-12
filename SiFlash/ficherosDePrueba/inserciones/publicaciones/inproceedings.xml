@@ -1,0 +1,16 @@
+<publication tipo="inproceedings" referencia="la+referencia+del+inproceedings">
+	<title>El titulo del improceedings</title>
+	<booktitle>El booktitle</booktitle>
+	<authors>
+		<author>
+			<nombre>NombreAutor1</nombre>
+			<apellidos>ApellidosAutor1</apellidos>
+		</author>
+		<author>
+			<nombre>NombreAutor2</nombre>
+			<apellidos>ApellidosAutor2</apellidos>
+		</author>
+	</authors>
+	<year>2006</year>
+	<user>user1</user>
+</publication>

@@ -654,6 +654,8 @@ public class InCollection extends Publication
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
 			type = null;
+			if (autores.isEmpty()) autores = null;
+			if (editores.isEmpty()) editores = null;
 			InCollection inc1 = new InCollection(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,booktitle,crossref,editores,volume,number,series,pages,address,type,publisher,chapter,edition);
 			vector.add(inc1);
 
