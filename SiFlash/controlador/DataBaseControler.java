@@ -19,7 +19,7 @@ import database.BaseDatos;
 
 
 /**
- * Clase que implementa una operación por cada funcionalidad claramente definida 
+ * Implementa una operación por cada funcionalidad claramente definida 
  * que tiene que tener la aplicación respecto a la base de datos.
  */
 public class DataBaseControler
@@ -31,32 +31,27 @@ public class DataBaseControler
 	private BaseDatos database;
 
 	/**
-	 * Objeto de la clase ConsultorBaseDatos que nos ayudará a realizar las operaciones
-	 * necesarias.
+	 * Nos ayudará a realizar las operaciones necesarias.
 	 */
 	private ConsultorBaseDatos consultor;
 	
 	/**
-	 * Objeto de la clase ModificadorAutores que nos ayudará a realizar las operaciones
-	 * más complejas relativas a Autores/Editores.
+	 * Nos ayudará a realizar las operaciones más complejas relativas a Autores/Editores.
 	 */
 	private ModificadorAutores modif_autores;
 	
 	/**
-	 * Objeto de la clase ModificadorProyectos que nos ayudará a realizar las operaciones
-	 * más complejas relativas a los proyectos.
+	 * Nos ayudará a realizar las operaciones más complejas relativas a los proyectos.
 	 */
 	private ModificadorProyectos modif_proyectos;
 	
 	/**
-	 * Objeto de la clase ModificadorUsuarios que nos ayudará a realizar las operaciones
-	 * más complejas relativas a los usuarios de la aplicación.
+	 * Nos ayudará a realizar las operaciones más complejas relativas a los usuarios de la aplicación.
 	 */
 	private ModificadorUsuarios modif_user;
 	
 	/**
-	 * Objeto de la clase ModificadorPublicaciones que nos ayudará a realizar las operaciones
-	 * más complejas relativas a las publicaciones.
+	 * Nos ayudará a realizar las operaciones más complejas relativas a las publicaciones.
 	 */
 	private ModificadorPublicaciones modif_pub;
 
@@ -71,7 +66,7 @@ public class DataBaseControler
 	}
 	
 	/**
-	 * Constructor de la clase proporcionandole la base de datos sobre la que debe operar.
+	 * Constructor de la clase proporcionándole la base de datos sobre la que debe operar.
 	 * Iniciará los subcontroladores en base a ella.
 	 * @param base Base de datos sobre la que debe operar.
 	 */
@@ -99,48 +94,41 @@ public class DataBaseControler
 	 * A la hora de realizar la subconsulta correspondiente para cada tipo de documento 
 	 * buscado solo se tendrán en cuenta aquellos parámetros que le afecten. 
 	 * 
-	 * @param proyecto - Proyecto al que deseamos que pertenezca el documento.
-	 * @param tipo_publicaciones - Representa la AND lógica a nivel de bits de los 
+	 * @param proyecto Proyecto al que deseamos que pertenezca el documento.
+	 * @param tipo_publicaciones Representa la AND lógica a nivel de bits de los 
 	 * códigos correspondientes a cada tipo de publicación que deseamos consultar.
-	 * @param autores - Vector con un conjunto de AutorEditor que deben estar contenidos 
-	 * entre los autores. null para no filtrar por este campo.
-	 * @param editores - Vector con un conjunto de Strings que deben estar contenidos 
-	 * entre los autores. null para no filtrar por este campo.
-	 * @param title - Titulo o parte del título de la publicación sobre la que queremos 
-	 * realizar la búsqueda. null para no filtrar por este campo.
-	 * @param publisher - Editorial o parte de la editorial de la publicación sobre la 
-	 * que queremos realizar la búsqueda. null para no filtrar por este campo.
-	 * @param journal - Journal o parte del mismo en que se incluye. null para no 
+	 * @param autores Vector con un conjunto de AutorEditor que deben haber escrito/editado las publicaciones.
+	 * Null para no filtrar por este campo.
+	 * @param editores Vector con un conjunto de AutorEditor que deben haber escrito/editado las publicaciones.
+	 * Null para no filtrar por este campo.
+	 * @param title Título o parte del título de la publicación sobre la que queremos 
+	 * realizar la búsqueda. Null para no filtrar por este campo.
+	 * @param publisher Editorial o parte de la editorial de la publicación sobre la 
+	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
+	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
 	 * filtrar por este campo.
-	 * @param years - Vector con un conjunto de String que indica los años a los que puede pertenecer
+	 * @param years Vector con un conjunto de Strings que indica los años a los que puede pertenecer
 	 * el proyecto, de esta manera podríamos admitir por ejemplo proyectos de 1996 y 1998 sin necesidad
-	 * de admitir aquellos pertenecientes a 1997. null para no filtrar por este parámetro.  
-	 * hay límite.
-	 * @param volume - Volumen o parte de este en que se incluye. null para no filtrar 
-	 * por este campo.
-	 * @param series - Serie o parte de su nombre en que se incluye. null para no 
-	 * filtrar por este campo.
-	 * @param address - Lugar en que se realiza o parte de su nombre. null para no 
-	 * filtrar por este campo.
-	 * @param organization - Organizacion o parte del nombre de la misma a la que 
-	 * pertenece. null para no filtrar por este parámetro
-	 * @param school - Escuela o parte del nombre de la misma en la que se ha 
-	 * realizado. null para no filtrar por este campo.
-	 * @param bookTitle - Título o parte del título del libro en el que se contiene la 
-	 * publicación. null para no filtrar por este campo.
-	 * @param keys - Vector con un conjunto de String que representa keywords que han de describir
-	 * la publicación buscada.
-	 * @param parecido_** - Indica si deseamos buscar exactamente el parametro pasado, o por
+	 * de admitir aquellos pertenecientes a 1997. Null para no filtrar por este parámetro.  
+	 * @param volume Volumen o parte de este en que se incluye. Null para no filtrar por este campo.
+	 * @param series Serie o parte de su nombre en que se incluye. Null para no filtrar por este campo.
+	 * @param address Lugar en que se realiza o parte de su nombre. Null para no filtrar por este campo.
+	 * @param organization Organizacion o parte del nombre de la misma a la que pertenece. Null para no filtrar por este parámetro
+	 * @param school Escuela o parte del nombre de la misma en la que se ha 
+	 * realizado. Null para no filtrar por este campo.
+	 * @param bookTitle Título o parte del título del libro en el que se contiene la 
+	 * publicación. Null para no filtrar por este campo.
+	 * @param keys Vector de keywords que han de pertenecer a la publicación buscada.
+	 * @param parecido_** Indica si deseamos buscar exactamente el parametro pasado, o por
 	 * el contrario cualquier palabra que lo contenga. Por Ejemplo: si pasamos como parametro publisher "marc"
 	 * en caso que parecido_publisher == false, buscaía únicamente documentos cuyo publisher sea "marc",
 	 * por contra, si parecido_publisher == true, buscaría documentos cuyo publisher sea del tipo "*marc*",
 	 * representando el * cualquier cadena de caracteres, incluyendo la cadena vacia.
-	 * @param user - Indica el usuario que debe haber subido la publicación.
-	 * @return vector construido con las publicaciones que cumplen los 
-	 * requisitos.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param user Indica el usuario que debe haber subido la publicación.
+	 * @return vector construido con las publicaciones que cumplen los requisitos.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException - Esperabamos encontrar un dato que no se encuentra.
+	 * @throws NonExistingElementException Esperabamos encontrar un dato que no se encuentra.
 	 */
 	public Vector<Publication> consultaDocumentos(String idDoc, String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws BDException, NonExistingElementException 
 	{
@@ -177,12 +165,11 @@ public class DataBaseControler
 	}
 
 	/**
-	 * Método que devuelve una lista con los autores que coinciden total o parcialmente 
-	 * con los datos parámetro.
-	 * @param nombre - Nombre del autor.
-	 * @param apellido - Apellidos del autor.
-	 * @return java.util.Vector Vector con los autores y/o editores consultados
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * Devuelve una lista con los autores/editores que coinciden total o parcialmente con los datos parámetro.
+	 * @param nombre Nombre del autor/editor.
+	 * @param apellido Apellidos del autor/editor.
+	 * @return java.util.Vector Vector con los autores y/o editores consultados.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public Vector<AutorEditor> consultaAutores(String nombre, String apellido, boolean total_o_parcial) throws BDException 
@@ -228,11 +215,10 @@ public class DataBaseControler
 	/**
 	 * Devuelve un vector con los usuario que participan en el proyecto pasado por
 	 * parámetro.
-	 * @param proyecto - Proyecto sobre el que se desea realizar la consulta.
-	 * @return java.util.Vector - Conjunto de String con los nombres de los usuarios
-	 * buscados.
-	 * @throws NonExistingElementException - En caso que el proyecto no exista.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param proyecto Proyecto sobre el que se desea realizar la consulta.
+	 * @return java.util.Vector Conjunto de nombres de los usuarios buscados.
+	 * @throws NonExistingElementException En caso que el proyecto no exista.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public Vector<String> consultaUsuariosProyecto(String proyecto) 
@@ -248,11 +234,10 @@ public class DataBaseControler
 
 	/**
 	 * Devuelve un vector con los proyectos a los que pertenece el usuario indicado.
-	 * @param usuario - Usuario sobre el que se desea realizar la consulta.
-	 * @return java.util.Vector - Vector con los nombres de los proyectos a los que está
-	 * relacionado el usuario consultado.
-	 * @throws NonExistingElementException - En caso que el usuario no exista.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param usuario Usuario sobre el que se desea realizar la consulta.
+	 * @return java.util.Vector Vector con los nombres de los proyectos a los que está relacionado el usuario consultado.
+	 * @throws NonExistingElementException En caso que el usuario no exista.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public Vector<String> consultaProyectosUsuario(String usuario) throws BDException,NonExistingElementException
@@ -266,11 +251,11 @@ public class DataBaseControler
 	}
 
 	/**
-	 * Inserta la publicacion pasada por parámetro en la base de datos.
-	 * @param publicacion - Publicacion a insertar.
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
-	 * analizando la clase concreta de BDException.
-	 * @throws ExistingElementException - Si ya existe el documento.
+	 * Inserta la publicación pasada por parámetro en la base de datos.
+	 * @param publicacion Publicación a insertar.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir analizando la clase concreta de BDException.
+	 * @throws ExistingElementException Si ya existe el documento.
 	 */
 	public String insertaDocumento(Publication publicacion) throws BDException
 	{		
@@ -304,13 +289,10 @@ public class DataBaseControler
 	/**
 	 * Inserta el usuario pasado por parámetro en la base de datos, y lo relaciona con el
 	 * proyecto cuyo nombre se pasa por parámetro.
-	 * @param usuario - Usuario a insertar.
-	 * @param proyecto - Proyecto con el que se encontrará relacionado. 
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
-	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException - Si el proyecto al que se desea asociar no existe.
-	 * @throws ExistingElementException - Si el Usuario ya existe.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param usuario Usuario a insertar.
+	 * @param proyecto Proyecto con el que se encontrará relacionado. 
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public String insertaUsuario(Usuario usuario, String proyecto) throws BDException
@@ -353,14 +335,11 @@ public class DataBaseControler
 	
 	
 	/**
-	 * Cambia la password del usuario pasado por parámetro por la nueva que se le ha proporionado.
-	 * @param usuario - Usuario a insertar.
-	 * @param proyecto - Proyecto con el que se encontrará relacionado. 
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
-	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException - Si el proyecto al que se desea asociar no existe.
-	 * @throws ExistingElementException - Si el Usuario ya existe.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * Cambia la contraseña de un usuario.
+	 * @param usuario Usuario al que hay que cambiarle la contraseña.
+	 * @param newPassword Nueva contraseña del usuario.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public String modificaPassUsuario(String usuario, String newPassword) throws BDException
@@ -391,16 +370,12 @@ public class DataBaseControler
 	}	
 
 	/**
-	 * Método que se encarga de modificar la publicación pasada por parámetro en la 
-	 * base de datos, cambia los antiguos datos que contenía al respecto de la misma 
-	 * por los que contiene el objeto. Para ello se basa en el idDoc, y asigna uno nuevo.
-	 * <br> <b> Es muy importante tener en cuenta que asigna un nuevo idDoc </b>
-	 * @param publicacion - Nuevos datos de la publicación.
-	 * @return Un String indicando el resultado de la modificación.
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * Modifica la publicación pasada por parámetro en la 
+	 * base de datos, cambia los antiguos datos que contenía.
+	 * @param publicacion Nuevos datos de la publicación.
+	 * @return El resultado de la modificación.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException - Si la publicacion ( el idDoc) no se encuentra en
-	 * la base de datos. 
 	 */
 	public String modificaDocumento(Publication publicacion) throws BDException
 	{
@@ -438,14 +413,14 @@ public class DataBaseControler
 		}
 	}
 
-	/** Modifica los datos del autor cuyo idAutor se ha pasado como parámetro, sustituyendolos por
-	 *  los nuevos datos que se obtienen como parámetro.
-	 *  @param id_autor - Identificador único de Autor del autor que se desea modificar.
-	 *  @param nombre -  Nuevo nombre que se quiere almacenar en la base de datos.
-	 *  @param apellidos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
-	 * 	@throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	/** 
+	 *  Modifica los datos del autor/editor cuyo idAutor.
+	 *  @param id_autor Identificador único de autor/editor a modificar.
+	 *  @param nombre Nuevo nombre que se quiere almacenar en la base de datos.
+	 *  @param apellidos Apellidos nuevos del autor/editor que se quieren almacenar en la base de datos.
+	 *  @return El resultado de la operación.
+	 * 	@throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 *	 analizando la clase concreta de BDException.
-	 * 	@throws NonExistingElementException - Si el AutorEditor no se encuentra en la base de datos. 
 	 */
 	public String modificaAutor(int id_autor, String nombre, String apellidos) throws BDException
 	{
@@ -478,13 +453,13 @@ public class DataBaseControler
 	}
 
 	/**
-	 * Elimina la publicación cuyo id se le pasa por parámetro.
+	 * Elimina una publicación.
 	 * Para ello elimina previamente todos los vinculos que tenga, tanto con autores,
 	 * keywords, proyectos, etc. 
-	 * @param idDoc - IdDoc del documento que se desea borrar.
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param idDoc Identificador del documento que se desea borrar.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException - En caso que el documento no exista.
 	 */
 	public String eliminaDocumento(String idDoc) throws BDException
 	{
@@ -518,11 +493,10 @@ public class DataBaseControler
 
 	/**
 	 * Asocia el usuario proporcionado al proyecto indicado.
-	 * @param proyecto - Proyecto sobre el que se desea asociar al usuario.
-	 * @param usuario - Usuario que se desea asociar.
-	 * @throws NonExistingElementException - Si no existe el usuario o el proyecto, 
-	 * se indica en parametro tipo de la excepcion cual es que no existe.   
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param proyecto Proyecto sobre el que se desea asociar al usuario.
+	 * @param usuario Usuario que se desea asociar.
+	 * @return El resultado de la operación. 
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public String asociaUsuarioProyecto(String proyecto, String usuario) throws BDException
@@ -565,11 +539,10 @@ public class DataBaseControler
 
 	/**
 	 * Desasocia el usuario proporcionado al proyecto indicado.
-	 * @param proyecto - Proyecto sobre el que se desea desasociar al usuario.
-	 * @param usuario - Usuario que se desea desasociar.
-	 * @throws NonExistingElementException - Si no existe el usuario, el proyecto o la relacion, 
-	 * se indica en parametro tipo de la excepcion cual es que no existe.   
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param proyecto Proyecto sobre el que se desea desasociar al usuario.
+	 * @param usuario Usuario que se desea desasociar.
+	 * @return El resultado de la operación. 
+	 * @throws BDException  Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public String desasociaUsuarioProyecto(String proyecto, String usuario) throws BDException
@@ -607,15 +580,11 @@ public class DataBaseControler
 
 	/**
 	 * Asocia el documento proporcionado al proyecto indicado.
-	 * @param proyecto - Proyecto sobre el que se desea asociar el documento.
-	 * @param documento - Documento que se desea desasociar.
-	 * @throws controlador.exceptions.NonExistingElementException - Cuando no existe el 
-	 * proyecto o el documento, podremos ver cual de ellos concretamente
-	 * es el que no existe consultando el campo tipo de la excepción.
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param proyecto Proyecto sobre el que se desea asociar el documento.
+	 * @param documento Documento que se desea asociar.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws ExistingElementException - Cuando el proyecto y el documento ya se encuentran
-	 * asociados.  
 	 */
 	public String asociaDocumentoProyecto(String proyecto, int documento) throws BDException
 	{
@@ -658,12 +627,10 @@ public class DataBaseControler
 	
 	/**
 	 * Desasocia el documento proporcionado al proyecto indicado.
-	 * @param proyecto - Proyecto sobre el que se desea desasociar al proyecto.
-	 * @param documento - Documento que se desea desasociar.
-	 * @throws controlador.exceptions.NonExistingElementException - Cuando no existe el 
-	 * proyecto, el documento o la relación, podremos ver cual de ellos concretamente
-	 * es el que no existe consultando el campo tipo de la excepción.
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param proyecto Proyecto sobre el que se desea desasociar.
+	 * @param documento Documento que se desea desasociar.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public String desasociaDocumentoProyecto(String proyecto, int documento) throws BDException
@@ -700,17 +667,13 @@ public class DataBaseControler
 	}
 
 	/**
-	 * Elimina al usuario de la aplicacion, y asigna las publicaciones que ha subido
-	 * este al usuario pasado como segundo parámetro.
-	 * @param usuario - Nombre del usuario que se quiere eliminar.
-	 * @param nuevoUserPublicaciones - Nombre del usuario al que se le asignarán 
-	 * las publicaciones subidas por el usuario a eliminar.
+	 * Elimina al usuario de la aplicación, y asigna las publicaciones que ha subido
+	 * éste al usuario pasado como segundo parámetro.
+	 * @param usuario Nombre del usuario que se quiere eliminar.
+	 * @param nuevoUserPublicaciones Nombre del usuario al que se le asignarán las publicaciones subidas por el usuario a eliminar.
 	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws NonExistingElementException - En caso de que no existan alguno de los dos usuarios.
-	 * Si no existe el usuario a eliminar su campo int llevará el valor USUARIO, mientras
-	 * que si el que no existe es el nuevoUserPublicaciones este campo tomará el valor
-	 * INDEFINIDA.
+	 * @return El resultado de la operación.
 	 */
 	public String eliminaUsuario(String usuario, String nuevoUserPublicaciones) throws BDException
 	{
@@ -742,13 +705,13 @@ public class DataBaseControler
 
 
 	/**
-	 * Método para comprobar si el usuario cuyo nombre se pasa por parámetro se encuentra
+	 * Comprueba si el usuario cuyo nombre se pasa por parámetro se encuentra
 	 * en la base de datos, y le corresponde esa password.
-	 * @param nombre - Nombre del usuario.
-	 * @param password - Password del usuario.
-	 * @return String - Si coinciden usuario y contraseña devolvera "user", "jefe" o "admin"
+	 * @param nombre Nombre del usuario.
+	 * @param password Password del usuario.
+	 * @return String Si coinciden usuario y contraseña devolvera "user", "jefe" o "admin"
 	 * dependiendo del tipo de usuario que sea.
-	 * @throws BDException - El usuario y la pass no coinciden o se ha procucido algún problema en la conexión,
+	 * @throws BDException El usuario y la pass no coinciden o se ha procucido algún problema en la conexión,
 	 * es necesario consultar el tipo concreto de excepción así como su mensaje.
 	 */
 	public String verificaUsuario(String nombre, String password) throws BDException
@@ -768,107 +731,63 @@ public class DataBaseControler
 		}
 	}
 
-	/*
-	 * Método para consultar cual es el idAut que le ha correspondido al ultimo
-	 * AutorEditor en ser insertado en la aplicación.
-	 * @return int - Valor entero buscado.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
-	 * analizando la clase concreta de BDException.
-	 */
-	/*public int consultaIdAutor() throws BDException 
-	{
-		Connection conn = database.abreConexion();
-		try{
-			Vector<Object[]> resultado = database.exeQuery("SELECT nextIdAut FROM id;", conn);
-			int idAut = 0;
-			if (resultado.size() != 0)
-			{	
-				Object[] array = resultado.get(0);
-				idAut = ((Long) array[0]).intValue()-1;
-			}
-			return idAut;
-		}finally{
-			this.cierraConexion();
-		}
-	}*/
-
 	/**
-	 * Método que devuelve el id correspondiente al primer autor cuyo nombre y apellidos
-	 * sean iguales a los pasados por parámetro. En caso que el parámetro sea null, no lo
-	 * tendrá en cuenta. Si los dos parametros son null devolvera el primero.
-	 * @param nombre - Nombre que debe corresponder a la persona buscada.
-	 * @param apellidos - Apellidos de la persona buscada.
-	 * @param conn - Conexión que se utilizará para operar.
-	 * @return - Entero correspondiente al idAut de la persona buscada. 0 en caso que
+	 * Método que devuelve el identificador correspondiente al primer autor cuyo nombre y apellidos
+	 * sean iguales a los pasados por parámetro.
+	 * @param nombre Nombre que debe corresponder a la persona buscada.
+	 * @param apellidos Apellidos de la persona buscada.
+	 * @param conn Conexión que se utilizará para operar.
+	 * @return Entero correspondiente al idAut de la persona buscada. 0 en caso que
 	 * no exista ningun AutorEditor que se ajuste a lo que se busca.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws BDException  Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public int consultaIdAutor(String nombre, String apellidos, Connection conn) throws BDException
 	{
-		//this.abreConexion();
-//		try{
-			return modif_autores.consultaIdAutor(nombre, apellidos, conn);	
-//		}finally{
-//			this.cierraConexion();
-//		}
-
+		return modif_autores.consultaIdAutor(nombre, apellidos, conn);
 	}
 
 	/**
-	 * Método que se utiliza para consultar si la keyword que se pasa por parámetro se 
-	 * encuentra ya introducida en la base de datos.
-	 * @param key - Key que deseamos saber si se encuentra en la base de datos.
-	 * @param conn - Conexión que se utilizará para operar.
-	 * @return boolean - True si la keyword se encuentra en la BBDD, false en caso contrario.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * Indica si una keyword se encuentra ya introducida en la base de datos.
+	 * @param key Key que deseamos saber si se encuentra en la base de datos.
+	 * @param conn Conexión que se utilizará para operar.
+	 * @return Si la keyword se encuentra en la BBDD.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public boolean consultaExistenciaKey(String key, Connection conn) throws BDException 
-	{
-		//this.abreConexion();
-//		try{		
-			Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "';", conn);
-			if (resultado.size() == 0)
-				return false;
-			else
-				return true;
-//		}finally{
-//			this.cierraConexion();
-//		}
+	{		
+		Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "';", conn);
+		if (resultado.size() == 0)
+			return false;
+		else
+			return true;
 	}
 
 	/**
 	 * Método para consultar cual es el idDoc que le ha correspondido al documento
 	 * en ser insertado en la aplicación.
-	 * @param conn - Conexión que se utilizará para operar.
-	 * @return int - Valor entero buscado.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @param conn Conexión que se utilizará para operar.
+	 * @return El identificador de la ultima publicación insertada.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public int consultaIdDoc(Connection conn) throws BDException 
 	{
-		//this.abreConexion();
-//		try{
-			Vector<Object[]> resultado = database.exeQuery("SELECT nextId FROM id;", conn);
-			Object[] array = resultado.get(0);
-			int idAut = ((Long) array[0]).intValue()-1;
-			return idAut;
-//		}
-//		finally{
-//			this.cierraConexion();
-//		}
+		Vector<Object[]> resultado = database.exeQuery("SELECT nextId FROM id;", conn);
+		Object[] array = resultado.get(0);
+		int idAut = ((Long) array[0]).intValue()-1;
+		return idAut;
 	}
 
 
 	/**
-	 * Inserta en la base de datos el AutorEditor que se corresponde con los valores
-	 * que contiene el objeto pasado por parámetro.
-	 * @param ae - Objeto que contiene los datos del AutorEditor pasado por parámetro
-	 * @param conn - Conexión que se utilizará para operar.
-	 * @throws BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * Inserta en la base de datos un AutorEditor.
+	 * @param ae AutorEditor a insertar.
+	 * @param conn Conexión que se utilizará para operar.
+	 * @throws BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
-	 * @throws ExistingElementException - Si un autorEditor con los 3 campos iguales 
+	 * @throws ExistingElementException Si un autorEditor idéntico
 	 * ya se encuentra en la base de datos.
 	 */
 	public void insertaAutorEditor(AutorEditor ae, Connection conn) throws BDException, ExistingElementException
@@ -879,9 +798,9 @@ public class DataBaseControler
 	/**
 	 * Método para ejecutar la sentencia pasada por parámetro, ha de ser de tipo
 	 * modificadora de la base de datos.
-	 * @param sentence - Sentencia a ejecutar sobre la base de datos.
-	 * @param conn - Conexión que se utilizará para operar.
-	 * @throws BDException  - Diversos problemas operando con la base de datos, se puede deducir
+	 * @param sentence Sentencia a ejecutar sobre la base de datos.
+	 * @param conn Conexión que se utilizará para operar.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public void ejecutaString(String sentence, Connection conn) throws BDException 
@@ -898,7 +817,13 @@ public class DataBaseControler
 	}
 
 	
-	
+	/**
+	 * Genera un elemento XML de JDOM con todos los autores/editores presentes en la base de datos.
+	 * @param conn Conexión que se va a utilizar.
+	 * @return El elemento generado.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	private Element generaElementoAutoresEditores(Connection conn) throws BDException
 	{
 		Element eAutoresEditores = new Element("listaAutoresEditores");
@@ -932,6 +857,13 @@ public class DataBaseControler
 		return eAutoresEditores;
 	}
 	
+	/**
+	 * Genera un elemento XML de JDOM con todos los proyectos presentes en la base de datos.
+	 * @param conn Conexión que se va a utilizar.
+	 * @return El elemento generado.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	private Element generaElementoProyectos(Connection conn) throws BDException
 	{
 		Element eProyectos = new Element("listaProyectos");
@@ -952,6 +884,15 @@ public class DataBaseControler
 		return eProyectos;
 	}
 	
+	/**
+	 * Genera un elemento XML de JDOM que contiene los proyectos en los que puede insertar una publicación un usuario concreto.
+	 * @param user El usuario que va a realizar la inserción.
+	 * @param conn La conexión que se va a utilizar.
+	 * @return El elemento generado.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 * @throws NonExistingElementException Si el usuario especificado no existe.
+	 */
 	private Element generaElementoProyectos(String user, Connection conn) throws BDException, NonExistingElementException
 	{
 		Vector<Object[]> result = database.exeQuery("SELECT tipo FROM usuarios WHERE nombre = '" + user + "';", conn);
@@ -990,6 +931,10 @@ public class DataBaseControler
 		return eProyectos;
 	}
 	
+	/**
+	 * Devuelve un fichero XML con la lista de autores, editores y proyectos presentes en la base de datos.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaAutoresEditoresYProyectosParaBusquedas()
 	{
 		try
@@ -1016,7 +961,11 @@ public class DataBaseControler
 		}
 	}
 	
-	
+	/**
+	 * Devuelve un fichero XML con la lista de autores, editores y proyectos en los que puede insertar publicaciones un usuario concreto.
+	 * @param user Usuario que realiza la inserción.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaAutoresEditoresYProyectosParaInserciones(String user)
 	{
 		try
@@ -1053,7 +1002,14 @@ public class DataBaseControler
 		}
 	}
 	
-	
+	/**
+	 * Genera un elemento XML de JDOM con todas las publicaciones pertenecientes a un proyecto concreto.
+	 * @param proyecto Proyecto del que se quieren obtener las publicaciones.
+	 * @return El elemento generado.
+	 * @throws NonExistingElementException Si algún dato que se esperaba no es encontrado en la base de datos.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	private Element generaElementoPublicacionesProyecto(String proyecto) throws NonExistingElementException, BDException
 	{
 		Vector<Publication> publicaciones = consultaDocumentos(null, proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
@@ -1067,6 +1023,11 @@ public class DataBaseControler
 		return ePublicaciones;
 	}
 	
+	/**
+	 * Genera un XML con todos los usuarios y publicaciones pertenecientes a un proyecto concreto.
+	 * @param proyecto Proyecto del que se quiere extraer la información.
+	 * @return El fichero XML generado.
+	 */
 	public String obtenerUsuariosYPublicacionesProyecto(String  proyecto)
 	{
 		try
@@ -1138,6 +1099,13 @@ public class DataBaseControler
 		}
 	}
 	
+	/**
+	 * Genera un elemento XML de JDOM con todos los usuarios presentes en la base de datos.
+	 * @param conn Conexión que se va a utilizar.
+	 * @return El elemento generado.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	private Element generaElementoUsuarios(Connection conn) throws BDException
 	{
 		Element root = new Element("listaUsuarios");
@@ -1161,6 +1129,10 @@ public class DataBaseControler
 		return root;
 	}
 	
+	/**
+	 * Genera un fichero XML con la lista de todos los usuarios presentes en la base de datos.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaTotalUsuarios()
 	{
 		try
@@ -1181,6 +1153,10 @@ public class DataBaseControler
 		}
 	}
 	
+	/**
+	 * Genera un fichero XML con la lista de todos los proyectos presentes en la base de datos.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaProyectosTotales()
 	{
 		try
@@ -1200,6 +1176,11 @@ public class DataBaseControler
 		}
 	}
 	
+	/**
+	 * Genara un fichero XML con todos los proyectos que dirige un usuario concreto.
+	 * @param user El usuario que debe dirigir los proyectos a devolver.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaProyectosDirigidos(String  user)
 	{
 		try
@@ -1237,6 +1218,11 @@ public class DataBaseControler
 		}
 	}
 	
+	/**
+	 * Genera un fichero XML con la lista de todos los proyectos que puede gestionar un usuario concreto.
+	 * @param user Usuario del que se quiere averiguar sus proyectos gestionables.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaProyectosGestionables(String  user)
 	{
 		try
@@ -1272,33 +1258,11 @@ public class DataBaseControler
 		}
 	}
 	
-	/*public String obtenerListaPublicaciones(String  user) throws BDException, UnimplementedException
-	{
-		String consulta = "SELECT nombre FROM proyectos WHERE jefe='" + user + "' ORDER BY nombre;";
-		Vector<Object[]> result = database.exeQuery(consulta);
-		int numP = result.size();
-		Object[] actual;
-		String nombre;
-		Vector<Publication> publicaciones = new Vector<Publication>();
-		for (int i = 0; i < numP; i++)
-		{
-			actual = result.get(i);
-			nombre = (String)actual[0];
-
-			publicaciones.addAll(consultaDocumentos(nombre, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false));
-		}
-
-		Element root = new Element("listaPublicaciones");
-		numP = publicaciones.size();
-		for (int i = 0;  i < numP; i++)
-		{
-			Element ePublication = publicaciones.get(i).generarElementoXML();
-			root.addContent(ePublication);
-		}
-		XMLOutputter outputter = new XMLOutputter();
-		return outputter.outputString (new Document(root));
-	}*/
-	
+	/**
+	 * Genera un fichero XML con la lista de todas las publicaciones pertenecientes a un proyecto concreto.
+	 * @param proyecto Proyecto del que se quieren extraer sus publicaciones.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaPublicacionesProyecto(String  proyecto)
 	{
 		try
@@ -1326,6 +1290,11 @@ public class DataBaseControler
 		} 
 	}
 	
+	/**
+	 * Genera un fichero XML con la lista de todas las publicaciones subidas por un usuario concreto.
+	 * @param user El usuario del que se quiere averiguar sus publicaciones subidas.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaPublicacionesUsuario(String  user)
 	{
 		try
@@ -1361,7 +1330,12 @@ public class DataBaseControler
 		} 
 	}
 	
-	
+	/**
+	 * Genera un fichero XML con la lista de de todos los proyectos a los cuales un usuario concreto puede vincular y desvincular una publicación. 
+	 * @param user Usuario que quiere obtener las listas.
+	 * @param idDoc Documento del que se quiere saber a qué proyectos se puede vincular y desvincular.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaVincularDesvincular(String  user, String idDoc)
 	{
 		try
@@ -1448,7 +1422,14 @@ public class DataBaseControler
 		}
 	}
 
-	
+	/**
+	 * Inserta un proyecto nuevo en la base de datos.
+	 * @param proyecto El proyecto nuevo.
+	 * @param jefe El jefe del nuevo proyecto.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	public String insertaProyecto(String proyecto, String jefe) throws BDException
 	{
 		Connection conn = database.abreConexion();
@@ -1475,6 +1456,13 @@ public class DataBaseControler
 		}
 	}
 	
+	/**
+	 * Elimina un proyecto de la base de datos.
+	 * @param proyecto El proyecto a eliminar.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	public String eliminaProyecto(String proyecto) throws BDException
 	{
 		Connection conn = database.abreConexion();
@@ -1501,7 +1489,10 @@ public class DataBaseControler
 		}
 	}
 	
-	
+	/**
+	 * Genera un fichero XML con la lista de todos los proyectos, usuario y autores/editores presentes en la base de datos.
+	 * @return El fichero generado.
+	 */
 	public String obtenerListaProyectosUsuariosYAutores()
 	{
 		try
@@ -1531,7 +1522,14 @@ public class DataBaseControler
 		}
 	}
 
-	//Sustituye autor1 por autor2.
+	/**
+	 * Fusiona dos autores que teóricamente son el mismo.
+	 * @param autor1 Autor que se eliminará, pasando todas sus publicaciones asociadas al otro autor.
+	 * @param autor2 Autor que recibirá todas las publicaciones.
+	 * @return El resultado de la operación.
+	 * @throws BDException Diversos problemas operando con la base de datos, se puede deducir
+	 * analizando la clase concreta de BDException.
+	 */
 	public String fusionarAutoresEditores(String autor1, String autor2) throws BDException 
 	{
 		Connection conn = database.abreConexion();
@@ -1571,6 +1569,11 @@ public class DataBaseControler
 		}
 	}
 	
+	/**
+	 * Obtiene el código BibTeX asociado a una publicación concreta.
+	 * @param id_doc Identificador de la publicación de la que se generará el código BibTeX.
+	 * @return El código BibTeX generado.
+	 */
 	public String obtenerBibtex(String id_doc)
 	{
 		try
@@ -1592,6 +1595,11 @@ public class DataBaseControler
 		} 
 	}
 	
+	/**
+	 * Obtiene el código BibTeX de todas las publicaciones pertenecientes a un proyecto concreto.
+	 * @param proyecto Proyecto del que obtener el BibTeX.
+	 * @return El código BibTeX generado.
+	 */
 	public String obtenerBibtexProyecto(String proyecto)
 	{
 		try

@@ -14,7 +14,7 @@ import database.BaseDatos;
 
 
 /**
- * Clase que se encarga de realizar las modificaciones necesarias en la base de datos
+ * Se encarga de realizar las modificaciones necesarias en la base de datos
  * relativas a autores/editores.
  */
 public class ModificadorProyectos 
@@ -27,24 +27,22 @@ public class ModificadorProyectos
 
 
 	/**
-	 *  Constructor pasandole el parametro de la base de datos que posee.
-	 * @param database - Objeto base de datos sobre la que trabaja.
+	 *  Constructor especificando la base de datos que posee.
+	 * @param database Base de datos sobre la que trabaja.
 	 */	
 	public ModificadorProyectos(BaseDatos database) {
 		this.theBaseDatos = database;
 	}
 
 	/**
-	 * Método para añadir un proyecto a la aplicación.
-	 * 
-	 * Excepcion si no se cuentan con permisos.
-	 * @param nombre_proyecto - Nombre del proyecto a añadir.
-	 * @param nombre_administrador - Nombre del administrador del proyecto.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * Añade un proyecto a la aplicación.
+	 * @param nombre_proyecto Nombre del proyecto a añadir.
+	 * @param nombre_administrador Nombre del jefe del proyecto.
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
-	 * @throws ExistingElementException - Si ya existe un proyecto con ese nombre.
+	 * @throws ExistingElementException Si ya existe un proyecto con ese nombre.
 	 */
 	public void insertaProyecto(String nombre_proyecto, String nombre_administrador, Connection conn) throws ExistingElementException,BDException 
 	{
@@ -57,16 +55,15 @@ public class ModificadorProyectos
 	}
 
 	/**
-	 * Cambia el administrador del proyecto al nuevo pasado por parámetro.
-	 * 
-	 * @param nombre_proyecto - Nombre del proyecto a modificar.
-	 * @param nuevo_administrador - Nuevo administrador del proyecto.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * Cambia el administrador de un proyecto.
+	 * @param nombre_proyecto Nombre del proyecto a modificar.
+	 * @param nuevo_administrador Nuevo administrador del proyecto.
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @return nombre del antiguo administrador.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @return Nombre del antiguo administrador.
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
-	 * @throws NonExistingElementException - Si no existe ningún proyecto con ese nombre.
+	 * @throws NonExistingElementException Si no existe ningún proyecto con ese nombre.
 	 */
 	public String setAdmin(String nombre_proyecto, String nuevo_administrador, Connection conn) throws NonExistingElementException,BDException 
 	{
@@ -81,12 +78,12 @@ public class ModificadorProyectos
 
 	/**
 	 * Borra el proyecto de la aplicación.
-	 * @param proyecto - Nombre del proyecto a borrar
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * @param proyecto Nombre del proyecto a borrar
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
-	 * @throws NonExistingElementException - Si no existe ningún proyecto con ese nombre.
+	 * @throws NonExistingElementException Si no existe ningún proyecto con ese nombre.
 	 */
 	public void borraProyecto(String proyecto, Connection conn) throws NonExistingElementException,BDException 
 	{
@@ -98,15 +95,13 @@ public class ModificadorProyectos
 	}
 	
 	/**
-	 * Devuelve un vector con los usuario que participan en el proyecto pasado por
-	 * parámetro.
-	 * @param proyecto - Proyecto sobre el que se desea realizar la consulta.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * Devuelve un vector con los usuarios que participan en un proyecto concreto.
+	 * @param proyecto Proyecto sobre el que se desea realizar la consulta.
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @return java.util.Vector - Conjunto de String con los nombres de los usuarios
-	 * buscados.
-	 * @throws NonExistingElementException - En caso que el proyecto no exista.
-	 * @throws BDException  - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @return java.util.Vector Conjunto de nombres de los usuarios buscados.
+	 * @throws NonExistingElementException En caso que el proyecto no exista.
+	 * @throws BDException  Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException.
 	 */
 	public Vector <String> consultaUsuarios(String proyecto, Connection conn) 

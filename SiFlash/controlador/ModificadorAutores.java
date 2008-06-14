@@ -14,7 +14,7 @@ import database.BaseDatos;
 
 
 /**
- * Clase que se encarga de realizar las modificaciones necesarias en la base de datos
+ * Se encarga de realizar las modificaciones necesarias en la base de datos
  * relativas a autores/editores.
  */
 public class ModificadorAutores 
@@ -27,8 +27,8 @@ public class ModificadorAutores
 
 
 	/**
-	 *  Constructor pasandole el parametro de la base de datos que posee.
-	 * @param database - Objeto base de datos sobre la que trabaja.
+	 *  Constructor especificando la base de datos.
+	 * @param database Base de datos sobre la que trabaja.
 	 */	
 	public ModificadorAutores(BaseDatos database)
 	{
@@ -36,14 +36,14 @@ public class ModificadorAutores
 	}
 
 	/**
-	 * Inserta el autor cuyos datos se le pasan por parámetro en la base de datos.
-	 * @param nombre - Nombre del autor o editor.
-	 * @param apellidos - Apellidos del autor o editor.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * Inserta el autor/editor en la base de datos.
+	 * @param nombre Nombre del autor o editor.
+	 * @param apellidos Apellidos del autor o editor.
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
-	 * @throws ExistingElementException - Si ya se encuentra en la base de datos el AutorEditor
+	 * @throws ExistingElementException Si ya se encuentra en la base de datos el AutorEditor
 	 * cuyos datos se han pasado.
 	 */
 	public void insertaAutorEditor(String nombre, String apellidos, Connection conn) throws BDException, ExistingElementException 
@@ -56,15 +56,15 @@ public class ModificadorAutores
 	}
 
 	/**
-	 * Método que consulta el identificador que le corresponde al AutorEditor cuyos datos se le pasan
+	 * Consulta el identificador que le corresponde al AutorEditor cuyos datos se le pasan
 	 * por parámetro.
-	 * @param nombre - Nombre del autor o editor.
-	 * @param apellidos - Apellidos del autor o editor.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * @param nombre Nombre del autor o editor.
+	 * @param apellidos Apellidos del autor o editor.
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @return Entero con el idPer del autor que coincida con los datos que se han pasado. 0 en caso que 
+	 * @return Identificador del autor que coincida con los datos que se han especificado. 0 en caso que 
 	 * ninguno coincida.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
 	 */
 	protected int consultaIdAutor(String nombre, String apellidos, Connection conn) throws BDException 
@@ -88,16 +88,14 @@ public class ModificadorAutores
 
 
 	/**
-	 * Borra el autor cuyos datos se le pasan por parámetro de la base de datos, 
-	 * desvinculandolo previamente de todas sus operaciones.
-	 * 
-	 * @param nombre - Nombre del autor o editor.
-	 * @param apellidos - Apellidos del autor o editor.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * Borra el autor/editor, desvinculandolo previamente de todas sus publicaciones.
+	 * @param nombre Nombre del autor o editor.
+	 * @param apellidos Apellidos del autor o editor.
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @throws NonExistingElementException - Si no existe ningún autor que coincida con los datos pasados
+	 * @throws NonExistingElementException Si no existe ningún autor que coincida con los datos pasados
 	 * por parámetro.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
 	 */
 	public void borraAutor(String nombre, String apellidos, Connection conn) throws NonExistingElementException,BDException  
@@ -112,17 +110,16 @@ public class ModificadorAutores
 	}
 
 	/** 
-	 * Modifica los datos del autor cuyo nombre y apellidos se han pasado como parámetro, sustituyendolos por
-	 * los nuevos datos que se obtienen del resto de parámetros.
+	 * Modifica los datos de un autor/editor.
 	 * @param nombreActual Nombre actual del autor.
 	 * @param apellidosActual Apellidos actuales del autor.
 	 * @param nombreNuevo Nuevo nombre que se quiere almacenar en la base de datos.
 	 * @param apellidosNuevos Apellidos nuevos del autor que se quieren almacenar en la base de datos.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @throws NonExistingElementException - Si no existe ningún autor que coincida con los datos pasados
+	 * @throws NonExistingElementException Si no existe ningún autor que coincida con los datos pasados
 	 * por parámetro.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
 	 */
 	public void modificaAutor(String nombreActual, String apellidosActual, String nombreNuevo, String apellidosNuevos, Connection conn) throws NonExistingElementException,BDException 
@@ -135,16 +132,15 @@ public class ModificadorAutores
 	}
 
 	/** 
-	 * Modifica los datos del autor cuyo idAutor se ha pasado como parámetro, sustituyendolos por
-	 * los nuevos datos que se obtienen como parámetro.
-	 * @param idAutor - Identificador único de Autor del autor que se desea modificar.
-	 * @param nombreNuevo -  Nuevo nombre que se quiere almacenar en la base de datos.
-	 * @param apellidosNuevos -  Apellidos nuevos del autor que se quieren almacenar en la base de datos.
-	 * @param conn - Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
+	 * Modifica los datos de un autor/editor.
+	 * @param idAutor Identificador único del autor que se desea modificar.
+	 * @param nombreNuevo Nuevo nombre que se quiere almacenar en la base de datos.
+	 * @param apellidosNuevos Apellidos nuevos del autor que se quieren almacenar en la base de datos.
+	 * @param conn Conexión a la base de datos que utilizará de tal forma que se realizan más rapidamente
 	 * las operaciones.
-	 * @throws NonExistingElementException - Si no existe ningún autor que coincida con los datos pasados
+	 * @throws NonExistingElementException Si no existe ningún autor que coincida con los datos pasados
 	 * por parámetro.
-	 * @throws database.BDException - Diversos problemas con la conexion a la base de datos, se puede deducir
+	 * @throws database.BDException Diversos problemas con la conexion a la base de datos, se puede deducir
 	 * analizando la clase concreta de BDException, así como su mensaje.
 	 */
 	public void modificaAutor(int idAutor, String nombreNuevo, String apellidosNuevos, Connection conn) throws NonExistingElementException,BDException 
