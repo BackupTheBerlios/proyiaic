@@ -25,8 +25,6 @@ drop table AutoresEditores;
 
 
 
-
-
 create table Usuarios (
 	nombre varchar(20) primary key,
 	password varchar(10) not null,
@@ -609,6 +607,19 @@ BEGIN
 END $$
 
 
+DROP TRIGGER IF EXISTS actualizarJefe $$
+CREATE TRIGGER actualizarJefe BEFORE UPDATE ON Proyectos
+FOR EACH ROW
+BEGIN
+  DECLARE tipo VARCHAR(6);
+  SELECT usuarios.tipo INTO tipo FROM Usuarios WHERE Usuarios.nombre = NEW.jefe;
+  IF (tipo = 'user') THEN
+    UPDATE Usuarios SET tipo='jefe' WHERE nombre = NEW.jefe;  
+  END IF;
+  DELETE FROM participaEn WHERE usuario = NEW.jefe AND proyecto = NEW.nombre;
+END $$
+
+
 DROP TRIGGER IF EXISTS cambiarJefeAUser $$
 CREATE TRIGGER cambiarJefeAUser BEFORE DELETE ON Proyectos
 FOR EACH ROW
@@ -619,8 +630,16 @@ BEGIN
     UPDATE Usuarios SET tipo='user' WHERE nombre = OLD.jefe;
   END IF;
   DELETE FROM pertenecea WHERE proyecto = OLD.nombre;
+  DELETE FROM participaen WHERE proyecto = OLD.nombre;
 END $$
 
+
+DROP TRIGGER IF EXISTS borraUsuario $$
+CREATE TRIGGER borraUsuario BEFORE DELETE ON Usuarios
+FOR EACH ROW
+BEGIN
+  DELETE FROM participaen WHERE usuario= OLD.nombre;
+END $$
 
 DROP TRIGGER IF EXISTS borraArticle $$
 CREATE TRIGGER borraArticle BEFORE DELETE ON Article

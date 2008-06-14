@@ -221,7 +221,7 @@ public class ModificadorUsuarios
 		
 		Vector<String> updatesPublicaciones = updatesPublicaciones(usuario, nuevoUserPublicaciones);
 		updates.addAll(updatesPublicaciones);
-		updates.add(new String ("DELETE FROM participaen WHERE usuario ='" + usuario +"';"));
+		updates.add(new String("UPDATE proyectos SET jefe='" + nuevoUserPublicaciones + "' WHERE jefe='" + usuario + "';"));
 		updates.add(new String ("DELETE FROM usuarios WHERE nombre ='" + usuario +"';"));
 		
 		theBaseDatos.exeUpdates(updates, conn);

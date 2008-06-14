@@ -1095,7 +1095,8 @@ public class DataBaseControler
 			root.addContent(pertenecen);
 
 			Element noPertenecen = new Element("noPertenecen");
-			consulta = "SELECT usuarios.nombre FROM usuarios WHERE NOT EXISTS(SELECT * FROM participaen WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = '" + proyecto +"') ORDER BY usuarios.nombre;";
+			consulta = "SELECT usuarios.nombre FROM usuarios WHERE (NOT EXISTS(SELECT * FROM participaen WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = '" + proyecto +"')) ";
+			consulta += "AND (usuarios.nombre != (SELECT jefe FROM proyectos WHERE proyectos.nombre = '" + proyecto + "')) ORDER BY usuarios.nombre;";
 			result = database.exeQuery(consulta, conn);
 			numU = result.size();
 			for (int i = 0; i < numU; i++)
