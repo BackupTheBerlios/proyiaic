@@ -22,3 +22,4 @@ drop table TipoPublicacion;
 drop table escrito_editado_por;
 drop table Usuarios;
 drop table AutoresEditores;
+drop view proyectosAccesiblesJefe;
