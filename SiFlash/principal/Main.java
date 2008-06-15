@@ -1,6 +1,9 @@
 package principal;
 
+import java.io.FileInputStream;
 import java.util.LinkedList;
+
+import controlador.ConversorXML_BBDD;
 
 import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
@@ -28,26 +31,26 @@ public class Main
 //			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
-			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
-			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
-			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
-			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
-			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David Garc\\\'ia and Ortiz Carrillo, Luis", false);
-			CampoPublicacion c6 = new CampoPublicacion("abstract", "54", true);
-			CampoPublicacion c7 = new CampoPublicacion("key", "clave1  , clave2 , 	clave3", true);
-			
-			LinkedList<Campo> listaCampos = new LinkedList<Campo>();
-			listaCampos.add(c1);
-			listaCampos.add(c2);
-			listaCampos.add(c3);
-			listaCampos.add(c4);
-			listaCampos.add(c5);
-			listaCampos.add(c6);
-			listaCampos.add(c7);
-			
-			Article art = new Article(listaCampos);
-			
-			System.out.println(art.generarElementoXML(false));
+//			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
+//			CampoPublicacion c2 = new CampoPublicacion("year", "2001", false);
+//			CampoPublicacion c3 = new CampoPublicacion("month", "may", false);
+//			CampoPublicacion c4 = new CampoPublicacion("volume", "tercero", false);
+//			CampoPublicacion c5 = new CampoPublicacion("author", "{Cruces Orb\\\'{\\i}s} and David Garc\\\'ia and Ortiz Carrillo, Luis", false);
+//			CampoPublicacion c6 = new CampoPublicacion("abstract", "54", true);
+//			CampoPublicacion c7 = new CampoPublicacion("key", "clave1  , clave2 , 	clave3", true);
+//			
+//			LinkedList<Campo> listaCampos = new LinkedList<Campo>();
+//			listaCampos.add(c1);
+//			listaCampos.add(c2);
+//			listaCampos.add(c3);
+//			listaCampos.add(c4);
+//			listaCampos.add(c5);
+//			listaCampos.add(c6);
+//			listaCampos.add(c7);
+//			
+//			Article art = new Article(listaCampos);
+//			
+//			System.out.println(art.generarElementoXML(false));
 
 			//-------------------------------------------------------------------------
 			/*CampoPublicacion c1 = new CampoPublicacion("title", "Hola, me llamo Orb{\\\'{\\i}}s", false);
@@ -101,9 +104,9 @@ public class Main
 //			System.out.println(db_controler.obtenerListaProyectosUsuariosYAutores());
 //			//-------------------------------------------------------------------
 			
-//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarModificarAutor(new FileInputStream(".\\ficherosDePrueba\\modificaciones\\autor.xml")));
-//			//-------------------------------------------------------------------
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarModificarAutor(new FileInputStream(".\\ficherosDePrueba\\modificaciones\\autor.xml")));
+			//-------------------------------------------------------------------
 			
 			
 		}
