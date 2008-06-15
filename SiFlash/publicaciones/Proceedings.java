@@ -19,7 +19,7 @@ import database.BDException;
 
 
 /**
- * Clase que representa las actas de sesiones de una conferencia.
+ * Representa las actas de sesiones de una conferencia.
  * Contiene todos sus posibles campos, así como los métodos necesarios
  * para su correcto manejo.
  */
@@ -31,7 +31,7 @@ public class Proceedings extends Publication
 	private String booktitle;
 
 	/**
-	 * LinkedList que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 * Contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
 	 */
 	private LinkedList<AutorEditor> editor;
 
@@ -150,10 +150,7 @@ public class Proceedings extends Publication
 			editor = valor;
 	}
 	
-	/**
-	 * Genera un elemento XML con la información del objeto.
-	 * @return El elemento generado.
-	 */
+	@Override
 	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
@@ -227,6 +224,7 @@ public class Proceedings extends Publication
 
 	/**
 	 * Genera un elemento XML con todos los editores.
+	 * @param quitarLlaves Indica si se deben quitar las llaves que aparezcan en alguno de los campos de la publicación.
 	 * @return El elemento generado.
 	 */
 	private Element generarAutoresEditoresXML(boolean quitarLlaves) 
@@ -411,13 +409,9 @@ public class Proceedings extends Publication
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
-//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
 		if (idDoc == 0)
-			idDoc = dbc.consultaIdDoc(conn);	
-		
-//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'proceedings');");
-//		vector.add(str1);
+			idDoc = dbc.consultaIdDoc(conn);
 
 		if (editor != null)
 			for (int i=0;i<this.editor.size();i++){

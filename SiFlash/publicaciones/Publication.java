@@ -73,9 +73,9 @@ public abstract class Publication
 	 */
 	protected String user;
 
-	/**
-	 * Contiene todos los proyectos a los que pertenece la aplicación.
-	 */
+//	/**
+//	 * Contiene todos los proyectos a los que pertenece la aplicación.
+//	 */
 //	protected Vector<String> proyectos;
 	
 	/**
@@ -83,10 +83,10 @@ public abstract class Publication
 	 */
 	protected String proyecto;
 
-	/**
-	 * Separador de keywords.
-	 */
-	public static final String separador = new String (", ");
+//	/**
+//	 * Separador de keywords.
+//	 */
+//	public static final String separador = new String (", ");
 
 
 	/**
@@ -122,42 +122,12 @@ public abstract class Publication
 				key = new LinkedList<String>();
 			for (int i = 0;i<keys.size();i++)
 			{
-				//if (i>0) key += this.separador;
 				key.add(keys.get(i));
 			}
 		}
 		this.user = user;
 		this.proyecto = proyecto;
 	}
-
-
-	/*protected void SetAll(int idDoc, String referencia, String title, String year,
-			String month, String url, String _abstract, String note, String un_key,
-			String user, String un_proyecto) {
-		this.idDoc = idDoc;
-		this.referencia = referencia;
-		this.title = title;
-		this.year = year;
-		this.month = month;
-		URL = url;
-		this._abstract = _abstract;
-		this.note = note;
-		this.addKey(un_key);
-		this.user = user;
-		this.addProyect(un_proyecto);
-	}	*/
-
-	/*
-	 * Añade un proyecto nuevo al que pertenece la publicación.
-	 * @param un_proyecto Proyecto a añadir.
-	 */
-//	protected void addProyect(String un_proyecto) {
-//		if (this.proyectos == null){
-//			this.proyectos = new Vector<String>();
-//		}
-//		if (un_proyecto != null && !proyectos.contains(un_proyecto)) this.proyectos.add(un_proyecto);
-//
-//	}
 
 	/**
 	 * Añade una keywords nueva a la publicación.
@@ -178,6 +148,7 @@ public abstract class Publication
 
 	/**
 	 * Genera un elemento XML con la información del objeto.
+	 * @param quitarLlaves Indica si se quieren quitar las llaves que aparezcan en los campos de la publicación.
 	 * @return El elemento generado.
 	 */
 	public abstract Element generarElementoXML(boolean quitarLlaves);
@@ -193,10 +164,6 @@ public abstract class Publication
 		LinkedList<AutorEditor> lista = new LinkedList<AutorEditor>();
 		if (autoresEditores != null)
 		{
-			/*if (autoresEditores.charAt(0) == '{')
-				lista.add(new AutorEditor(autoresEditores));
-			else
-			{*/
 			String separador = dameSeparador(autoresEditores);
 			if (separador != null)
 			{
@@ -214,8 +181,7 @@ public abstract class Publication
 				AutorEditor nuevo = new AutorEditor(autoresEditores);
 				lista.add(nuevo);
 			}
-			//}
-		return lista;
+			return lista;
 		}
 		else
 			return null;
@@ -231,13 +197,43 @@ public abstract class Publication
 		if (keys != null)
 		{
 			LinkedList<String> claves = new LinkedList<String>();
-			String[] keysSep = keys.split(separador);
+			String[] keysSep = keys.split(",");
 			int numKeys = keysSep.length;
 			for (int i = 0; i < numKeys; i++)
-				claves.add(keysSep[i]);
+				claves.add(quitarEspacios(keysSep[i]));
 			return claves;
 		}
 		else return null;		
+	}
+
+	/**
+	 * Quita los caracteres en blanco que hay al comienzo y al final de una cadena.
+	 * @param c Cadena a procesar.
+	 * @return El resultado, tras eliminar los caracteres en blanco.
+	 */
+	private String quitarEspacios(String c) 
+	{
+		if (c != null)
+		{
+			int i = 0;
+			while (blanco(c.charAt(i)))
+				i++;
+			int j = c.length()-1;
+			while (blanco(c.charAt(j)))
+				j--;
+			return c.substring(i, j+1);
+		}
+		else return null;
+	}
+
+	/**
+	 * Indica si un caracter es un 'blanco' (espacio, salto de línea, tabulador o retorno de carro).
+	 * @param actual Caracter a evaluar.
+	 * @return El resultado de la evaluación
+	 */
+	private boolean blanco(char actual) 
+	{
+		return ((actual == ' ') || (actual == '\n') || (actual == '\r') || (actual == '\t')); 
 	}
 
 	/**
@@ -330,8 +326,9 @@ public abstract class Publication
 	/**
 	 * Sustituye las tildes existentes en una cadena
 	 * por sus correspondientes "sustitutos" en código LaTeX.
+	 * Idem con la letra 'ñ'.
 	 * @param cadena2 Cadena a procesar.
-	 * @return El resultado, tras sustituir las tildes.
+	 * @return El resultado, tras sustituir las tildes y la 'ñ'.
 	 */
 	private String quitarTildesYOtros(String cadena2) 
 	{
@@ -361,12 +358,13 @@ public abstract class Publication
 
 
 	/**
-	 * Método auxiliar para comprobar si el caracter pasado por parámetro es mayuscula. 
+	 * Comprueba si el caracter pasado por parámetro es mayuscula. 
 	 * @param actual Caracter a comprobar
-	 * @return Boolean - True si es una letra mayúscula, false en cualquier otro caso.
+	 * @return True si es una letra mayúscula, false en cualquier otro caso.
 	 */
 	private boolean esMayuscula(char actual) 
 	{
+		//MÉTODO NO USADO.
 //		char 'A' = 65.
 //		char 'Z' = 90.
 //		return ((actual > 64) && (actual <91)); 
@@ -406,7 +404,7 @@ public abstract class Publication
 			{
 				salida += it.next();
 				while (it.hasNext())
-					salida = salida + separador + it.next();
+					salida = salida + ", " + it.next();
 			}
 			return salida;
 		}
@@ -632,6 +630,7 @@ public abstract class Publication
 	/**
 	 * Genera una serie de sentencias SQL que se deberán ejecutar para
 	 * que la publicación quede correctamente insertada.
+	 * @param conn Conexión a la base de datos que será usada.
 	 * @return Vector con todas las sentencias SQL.
 	 * @throws BDException Si hay algún problema relacionado con la conexión a la base de datos.
 	 * @throws ExistingElementException Si hay algún problema relacionado con la existencia de tuplas en la base de datos.
@@ -659,32 +658,26 @@ public abstract class Publication
 		if (key != null)
 		{
 			ListIterator <String> keysit = this.getKeys().listIterator();
-			//str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
-			//vector.add(str1);
 			DataBaseControler dbc = new DataBaseControler();
 			while (keysit.hasNext()){
 				String k = keysit.next();
-				if (k != null && !k.equals(" ")){
-					/*String str2= new String ("INSERT INTO claves  VALUES ('" + k + "') ON DUPLICATE KEY UPDATE clave=clave;");  
-					str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
-					vector.add(str2);
-					vector.add(str1);*/
+				if (k != null && !k.equals(" "))
+				{
 					if (!dbc.consultaExistenciaKey(k, conn))
 						dbc.ejecutaString("INSERT INTO claves VALUES('" + k + "');", conn);
 					vector.add("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
 				}			
 			}
 		}
-		/*else {
-			str1 = new String("INSERT INTO tienekey VALUES (" + getIdDoc() + ",' ');");
-			vector.add(str1);
-			key = new LinkedList<String>();
-		}*/
-//		vector.add("COMMIT;");
 		
 		return vector;
 	}
 	
+	/**
+	 * Antepone una barra oblícua a todas las comillas simples que aparecen, para evitar malinterpretaciones en las sentencias SQL.
+	 * @param s Cadena a procesar.
+	 * @return La cadena entrante, con las barras oblícuas delante de las comillas simples.
+	 */
 	public static String sustituirComillasSQL(String s)
 	{
 		String[] strings = s.split("\'");
@@ -694,6 +687,12 @@ public abstract class Publication
 		return result;
 	}
 	
+	/**
+	 * Quita las llaves que aparecen en una cadena de caracteres, si así lo especifica uno de los parámetros.
+	 * @param s Cadena a procesar.
+	 * @param quitarLlaves Indica si se deben quitar las llaves.
+	 * @return La cadena, tras ser procesada.
+	 */
 	public static String quitarLlaves(String s, boolean quitarLlaves)
 	{
 		if (quitarLlaves)

@@ -27,7 +27,7 @@ public class PermissionException extends BDException
 
 	/**
 	 * Constructor de la clase proporcionandole un mensaje.
-	 * @param message String con el mensaje que almacenará.
+	 * @param message Mensaje que almacenará.
 	 */
 	public PermissionException(String message) {
 		super(message);

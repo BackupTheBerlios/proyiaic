@@ -4,7 +4,7 @@ package controlador.exceptions;
 
 
 /**
- * Excepcion que representa los errores producidos durante la consulta de
+ * Representa los errores producidos durante la consulta de
  * publicaciones en la base de datos.
  */
 public class ConsultaPublicacionesException extends ConsultaException 

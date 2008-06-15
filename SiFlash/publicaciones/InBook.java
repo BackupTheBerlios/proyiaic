@@ -19,7 +19,7 @@ import database.BDException;
 
 
 /**
- * Clase que representa una parte de un libro, que puede ser un capítulo (o sección 
+ * Representa una parte de un libro, que puede ser un capítulo (o sección 
  * o lo que fuere) o un rango de páginas.
  * Contiene todos sus posibles campos, así como los métodos necesarios
  * para su correcto manejo.
@@ -27,12 +27,12 @@ import database.BDException;
 public class InBook extends Publication 
 {
 	/**
-	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
+	 * Contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
 
 	/**
-	 * LinkedList que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 * Contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
 	 */
 	private LinkedList<AutorEditor> editor;
 
@@ -173,10 +173,7 @@ public class InBook extends Publication
 			editor = valor;
 	}
 	
-	/**
-	 * Genera un elemento XML con la información del objeto.
-	 * @return El elemento generado.
-	 */
+	@Override
 	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
@@ -261,6 +258,8 @@ public class InBook extends Publication
 
 	/**
 	 * Genera un elemento XML con todos los autores/editores.
+	 * @param b Si es true, es un autor; si es false, un editor.
+	 * @param quitarLlaves Indica si se deben quitar las llaves que aparezcan en alguno de los campos de la publicación.
 	 * @return El elemento generado.
 	 */
 	private Element generarAutoresEditoresXML(boolean b, boolean quitarLlaves) 
@@ -492,13 +491,9 @@ public class InBook extends Publication
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
-//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
 		if (idDoc == 0)
 			idDoc = dbc.consultaIdDoc(conn);	
-		
-//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'inbook');");
-//		vector.add(str1);
 
 		if (author != null)		
 			for (int i=0;i<this.author.size();i++){
@@ -651,7 +646,7 @@ public class InBook extends Publication
 
 	/**
 	 * Añade un editor al documento.
-	 * @param e
+	 * @param e Editor a añadir.
 	 */
 	public void addEditor(AutorEditor e){
 		if (editor == null)
@@ -680,7 +675,8 @@ public class InBook extends Publication
 	 * @param number Number del documento.
 	 * @param series Serie a la que pertenece el documento.
 	 * @param pages Longitud en páginas del documento.
-	 * @param address Dirección que le corresponde al documento.	 
+	 * @param address Dirección que le corresponde al documento.
+	 * @param chapter Capítulo del documento.	 
 	 * @param publisher Publisher del documento.
 	 */	
 	public InBook(int idDoc, String referencia, String title,

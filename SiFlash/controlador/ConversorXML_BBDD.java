@@ -12,13 +12,12 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
-import controlador.exceptions.ExistenceException;
-import controlador.exceptions.NonExistingElementException;
-
 import parserFicherosBibtex.ConversorXML_Publication;
 import personas.AutorEditor;
 import personas.Usuario;
 import publicaciones.Publication;
+import controlador.exceptions.ExistenceException;
+import controlador.exceptions.NonExistingElementException;
 import database.BDException;
 import database.BaseDatos;
 
@@ -282,13 +281,43 @@ public class ConversorXML_BBDD
 		if (keys != null)
 		{
 			Vector<String> claves = new Vector<String>();
-			String[] keysSep = keys.split(Publication.separador);
+			String[] keysSep = keys.split(",");
 			int numKeys = keysSep.length;
 			for (int i = 0; i < numKeys; i++)
-				claves.add(keysSep[i]);
+				claves.add(quitarEspacios(keysSep[i]));
 			return claves;
 		}
 		else return null;		
+	}
+	
+	/**
+	 * Quita los caracteres en blanco que hay al comienzo y al final de una cadena.
+	 * @param c Cadena a procesar.
+	 * @return El resultado, tras eliminar los caracteres en blanco.
+	 */
+	private String quitarEspacios(String c) 
+	{
+		if (c != null)
+		{
+			int i = 0;
+			while (blanco(c.charAt(i)))
+				i++;
+			int j = c.length();
+			while (blanco(c.charAt(j)))
+				j--;
+			return c.substring(i, j+1);
+		}
+		else return null;
+	}
+	
+	/**
+	 * Indica si un caracter es un 'blanco' (espacio, salto de línea, tabulador o retorno de carro).
+	 * @param actual Caracter a evaluar.
+	 * @return El resultado de la evaluación
+	 */
+	private boolean blanco(char actual) 
+	{
+		return ((actual == ' ') || (actual == '\n') || (actual == '\r') || (actual == '\t')); 
 	}
 	
 	/**

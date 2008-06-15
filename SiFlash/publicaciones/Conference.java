@@ -19,15 +19,15 @@ import database.BDException;
 
 
 /**
- * Clase qeu representa los Conference, dicho tipo de documento equivale a un inproceedings,
- *  incluido para compatibilidad con el lenguaje de markup Scribe en:Scribe (markup language).
+ * Clase que representa los Conference, dicho tipo de documento equivale a un inproceedings,
+ * incluido para compatibilidad con el lenguaje de markup Scribe en:Scribe (markup language).
  * Contiene todos sus posibles campos, así como los métodos necesarios
  * para su correcto manejo.
  */
 public class Conference extends Publication 
 {
 	/**
-	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
+	 * Contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
 
@@ -42,7 +42,7 @@ public class Conference extends Publication
 	private String crossref;
 
 	/**
-	 * LinkedList que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 * Contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
 	 */
 	private LinkedList<AutorEditor> editor;
 
@@ -173,10 +173,7 @@ public class Conference extends Publication
 			editor = valor;
 	}
 	
-	/**
-	 * Genera un elemento XML con la información del objeto.
-	 * @return El elemento generado.
-	 */
+	@Override
 	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
@@ -261,6 +258,8 @@ public class Conference extends Publication
 
 	/**
 	 * Genera un elemento XML con todos los autores/editores.
+	 * @param b Si es true, se trata de un autor; si es false, es un editor.
+	 * @param quitarLlaves Indica si se quieren quitar las llaves que pueden aparecer en alguno de los campos de la publicación.
 	 * @return El elemento generado.
 	 */
 	private Element generarAutoresEditoresXML(boolean b, boolean quitarLlaves) 
@@ -345,7 +344,7 @@ public class Conference extends Publication
 	}
 
 	/**
-	 * @return El titulo del documento.
+	 * @return El titulo del libro del documento.
 	 */
 	public String getBooktitle() {
 		return booktitle;
@@ -492,13 +491,9 @@ public class Conference extends Publication
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
-//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
 		if (idDoc == 0)
-			idDoc = dbc.consultaIdDoc(conn);	
-		
-//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'conference');");
-//		vector.add(str1);
+			idDoc = dbc.consultaIdDoc(conn);
 
 		if (author != null)		
 			for (int i=0;i<this.author.size();i++){

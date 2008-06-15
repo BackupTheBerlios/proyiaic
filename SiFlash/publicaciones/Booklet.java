@@ -27,7 +27,7 @@ import database.BDException;
 public class Booklet extends Publication 
 {
 	/**
-	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
+	 * Contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
 
@@ -116,10 +116,7 @@ public class Booklet extends Publication
 			author = valor;
 	}
 
-	/**
-	 * Genera un elemento XML con la información del objeto.
-	 * @return El elemento generado.
-	 */
+	@Override
 	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
@@ -173,6 +170,7 @@ public class Booklet extends Publication
 
 	/**
 	 * Genera un elemento XML con todos los autores.
+	 * @param quitarLlaves Indica si se quieren quitar las llaves que aparezcan en alguno de los campos de la publicación.
 	 * @return El elemento generado.
 	 */
 	private Element generarAutoresEditoresXML(boolean quitarLlaves) 
@@ -290,13 +288,9 @@ public class Booklet extends Publication
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
-//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
 		if (idDoc == 0)
 			idDoc = dbc.consultaIdDoc(conn);	
-		
-//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'booklet');");
-//		vector.add(str1);
 
 		if (author != null)		
 			for (int i=0;i<this.author.size();i++){

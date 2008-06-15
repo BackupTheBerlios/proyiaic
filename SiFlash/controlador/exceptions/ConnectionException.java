@@ -6,7 +6,7 @@ import database.BDException;
 
 
 /**
- * Excepción que representa un problema al intentar conectar a la base de datos.
+ * Representa un problema al intentar conectar a la base de datos.
  */
 public class ConnectionException extends BDException 
 {

@@ -5,7 +5,7 @@ package publicaciones;
 
 
 /**
- * Clase que almacena las equivalencias entre distintos enteros y el tipo
+ * Almacena las equivalencias entre distintos enteros y el tipo
  * al que representan, se utilizan a la hora de realizar las búsquedas.
  */
 public class CodigosDatos 
@@ -99,11 +99,4 @@ public class CodigosDatos
 	 * Suma de todos los códigos correspondientes a las publicaciones.
 	 */
 	public static final int codSumaTodasPublicaciones = codArticle + codBook + codBookLet + codConference + codInbook + codIncollection + codInproceedings + codManual + codMasterThesis + codMisc + codphdThesis + codProceedings + codTechReport + codUnpublished;
-	
-	/**
-	 * Array con los nombres de los meses en castellano ordenados cronológicamente,
-	 * comenzando por enero. 
-	 */
-	public static final String[] listaMeses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};   
-
 }

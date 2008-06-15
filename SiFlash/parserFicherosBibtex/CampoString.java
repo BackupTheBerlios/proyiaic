@@ -15,6 +15,11 @@ public class CampoString
 	 */
 	private String texto;
 
+	/**
+	 * Constructor especificando los parámetros.
+	 * @param ab Abreviatura.
+	 * @param tex Texto al que sustituye la abreviatura.
+	 */
 	public CampoString(String ab, String tex)
 	{
 		abrev = ab;

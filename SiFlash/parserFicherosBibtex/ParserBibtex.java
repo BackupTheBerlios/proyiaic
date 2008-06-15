@@ -26,7 +26,9 @@ import publicaciones.Publication;
 import publicaciones.TechReport;
 import publicaciones.Unpublished;
 
-
+/**
+ * Sirve para procesar ficheros BibTeX y obtener publicaciones.
+ */
 public class ParserBibtex 
 {
 	/**
@@ -39,6 +41,9 @@ public class ParserBibtex
 	 */
 	private LinkedList<CampoString> strings;
 	
+	/**
+	 * Constructor por defecto: inicializa los atributos.
+	 */
 	public ParserBibtex()
 	{
 		publicaciones = new LinkedList<Publication>();
@@ -47,16 +52,15 @@ public class ParserBibtex
 	
 	/**
 	 * Intenta abrir el fichero indicado y, si hay éxito, lo procesa.
-	 * @param ruta Ruta del fichero que se quiere procesar.
+	 * @param is Fichero que se quiere procesar.
+	 * @param nombreFichero Ruta y nombre del fichero de destino.
 	 */
 	public void procesar(InputStream is, String nombreFichero)
 	{
-		try {
-			
+		try 
+		{
 			extraerDocumento(is);
-			
 			generarXML(nombreFichero);
-			
 		} 
 		catch (ExcepcionLexica e)
 		{
@@ -95,8 +99,8 @@ public class ParserBibtex
 	/**
 	 * Lee el tipo de publicación a procesar, así como sus campos. Después, genera la publicación.
 	 * @param is Fichero del que se va a leer.
-	 * @throws IOException
-	 * @throws ExcepcionLexica
+	 * @throws IOException Causada por errores en la entrada/salida.
+	 * @throws ExcepcionLexica Si hay errores léxicos en el fichero entrante.
 	 */
 	private void extraerDocumento(InputStream is) throws IOException, ExcepcionLexica
 	{
@@ -136,8 +140,8 @@ public class ParserBibtex
 	 * Extrae el contenido de un "@STRING".
 	 * @param is Fichero desde donde se va a leer.
 	 * @return El contenido del "@STRING"
-	 * @throws IOException
-	 * @throws ExcepcionLexica
+	 * @throws IOException Causada por errores de entrada/salida.
+	 * @throws ExcepcionLexica Causada por errores léxicos en el fichero entrante.
 	 */
 	private CampoString extraerCampoString(InputStream is) throws IOException, ExcepcionLexica 
 	{
@@ -174,7 +178,7 @@ public class ParserBibtex
 	 * Genera una publicación, a partir del tipo de documento y los campos extraídos.
 	 * @param tipoDoc Tipo de publicación a generar.
 	 * @param campos Campos de la publicación a generar.
-	 * @throws ExcepcionLexica
+	 * @throws ExcepcionLexica Causada por errores léxicos en el fichero entrante.
 	 */
 	private void generarDocumentoBibtex(String tipoDoc, LinkedList<Campo> campos) throws ExcepcionLexica 
 	{
@@ -243,8 +247,8 @@ public class ParserBibtex
 	 * Extrae los campos del documento.
 	 * @param is Fichero del que se va a leer.
 	 * @return La lista de los campos extraídos.
-	 * @throws IOException
-	 * @throws ExcepcionLexica
+	 * @throws IOException Causada por errores en la entrada/salida.
+	 * @throws ExcepcionLexica Causada por errores léxicos en el fichero entrante.
 	 */
 	private LinkedList<Campo> extraerCampos(InputStream is) throws IOException, ExcepcionLexica 
 	{
@@ -270,8 +274,8 @@ public class ParserBibtex
 	 * @param is Fichero del que se va a leer.
 	 * @param posibleReferencia Indica si hay posibilidad de que lo que se extraiga sea la referencia de un documento, y no uno de sus campos.
 	 * @return Un campo de una publicación.
-	 * @throws ExcepcionLexica
-	 * @throws IOException
+	 * @throws ExcepcionLexica Causada por errores léxicos en el fichero entrante.
+	 * @throws IOException Causada por errores en la entrada/salida.
 	 */
 	private CampoPublicacion extraerCampo(InputStream is, boolean posibleReferencia) throws ExcepcionLexica, IOException 
 	{
@@ -374,7 +378,7 @@ public class ParserBibtex
 	 * @param desde Caracter anterior al punto desde donde se empezará a copiar. Sirve para permitir niveles.
 	 * @param hasta Caracter que indicará que se tiene que dejar de copiar.
 	 * @return String resultante.
-	 * @throws IOException
+	 * @throws IOException Causada por errores en la entrada/salida.
 	 */
 	private String copiarIntegroDesdeHasta(InputStream is, String valorCampo, char desde, char hasta) throws IOException 
 	{
@@ -404,7 +408,7 @@ public class ParserBibtex
 	 * Extrae el tipo de documento.
 	 * @param is Fichero desde el que se va a leer.
 	 * @return El tipo de documento.
-	 * @throws IOException
+	 * @throws IOException Causada por errores en la entrada/salida.
 	 */
 	private String extraerTipoDoc(InputStream is) throws IOException {
 		String s = "";
@@ -421,7 +425,7 @@ public class ParserBibtex
 	 * Lee el siguiente caracter desde un fichero. Omite tabulaciones, saltos de línea, espacios, ...
 	 * @param is Fichero desde el que se va a leer.
 	 * @return El siguiente caracter.
-	 * @throws IOException
+	 * @throws IOException Causada por errores en la entrada/salida.
 	 */
 	private char siguienteCaracter(InputStream is) throws IOException
 	{
@@ -442,7 +446,7 @@ public class ParserBibtex
 	/**
 	 * Salta los comentarios que hay en un fichero.
 	 * @param is Fichero desde el que se lee.
-	 * @throws IOException
+	 * @throws IOException Causada por errores en la entrada/salida.
 	 */
 	private void saltarComentario(InputStream is) throws IOException 
 	{

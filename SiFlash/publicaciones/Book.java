@@ -26,12 +26,12 @@ import database.BDException;
 public class Book extends Publication 
 {
 	/**
-	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
+	 * Contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
 
 	/**
-	 * LinkedList que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 * Contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
 	 */
 	private LinkedList<AutorEditor> editor;
 
@@ -51,7 +51,7 @@ public class Book extends Publication
 	private String number;
 
 	/**
-	 * Serie en la que se encuadra la publicacion.
+	 * Serie en la que se encuadra la publicación.
 	 */
 	private String series;
 
@@ -191,10 +191,7 @@ public class Book extends Publication
 			editor = valor;
 	}
 
-	/**
-	 * Genera un elemento XML con la información del objeto.
-	 * @return El elemento generado.
-	 */
+	@Override
 	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
@@ -267,6 +264,8 @@ public class Book extends Publication
 
 	/**
 	 * Genera un elemento XML con todos los autores/editores.
+	 * @param b Si es true, se trata de un autor; si es false, se trata de un editor.
+	 * @param quitarLlaves Indica si se quieren quitar las llaves que aparezcan en alguno de los campos de la publicación.
 	 * @return El elemento generado.
 	 */
 	private Element generarAutoresEditoresXML(boolean b, boolean quitarLlaves) 
@@ -459,13 +458,9 @@ public class Book extends Publication
 		str1+=");";
 
 		DataBaseControler dbc = new DataBaseControler();
-//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
 		if (idDoc == 0)
 			idDoc = dbc.consultaIdDoc(conn);	
-
-//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'book');");
-//		vector.add(str1);
 
 		if (author != null)
 			for (int i=0;i<this.author.size();i++){
@@ -612,7 +607,7 @@ public class Book extends Publication
 	}
 
 	/**
-	 * Añade un esitor al documento.
+	 * Añade un editor al documento.
 	 * @param e Editor a añadir.
 	 */
 	public void addEditor(AutorEditor e){

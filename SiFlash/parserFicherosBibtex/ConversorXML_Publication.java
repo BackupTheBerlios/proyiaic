@@ -28,10 +28,18 @@ import publicaciones.Publication;
 import publicaciones.TechReport;
 import publicaciones.Unpublished;
 
+/**
+ * Sirve para convertir un fichero XML en una publicación.
+ */
 public class ConversorXML_Publication 
 {
 	public ConversorXML_Publication() {}
 
+	/**
+	 * Convierte un fichero XML en una publicación.
+	 * @param input El fichero XML a procesar.
+	 * @return La publicación resultante.
+	 */
 	@SuppressWarnings("unchecked")
 	public Publication convertir(InputStream input)
 	{
@@ -88,6 +96,11 @@ public class ConversorXML_Publication
 		return null;
 	}
 
+	/**
+	 * Procesa un elemento XML que contiene la información de uno o varios autores/editores.
+	 * @param e Elemento XML a procesar.
+	 * @return Una lista enlazada de autores/editores.
+	 */
 	@SuppressWarnings("unchecked")
 	private LinkedList<AutorEditor> procesarAutorEditor(Element e) 
 	{
@@ -111,6 +124,12 @@ public class ConversorXML_Publication
 			return listaAutoresEditores;
 	}
 
+	/**
+	 * Genera una publicación a partir de la información extraída.
+	 * @param tipoP Tipo de publicación a generar (article, book, ...)
+	 * @param listaCampos Lista de campos que forman parte de la publicación.
+	 * @return La publicación resultante.
+	 */
 	private Publication generarPublicacion(String tipoP, LinkedList<Campo> listaCampos) 
 	{
 		if (tipoP.equalsIgnoreCase("article"))

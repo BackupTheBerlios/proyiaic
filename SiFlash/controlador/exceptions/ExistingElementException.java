@@ -4,7 +4,7 @@ package controlador.exceptions;
 
 
 /**
- * Excepcion hija de ExistenceException, esta concretamente se produce cuando intentamos
+ * Excepcion hija de ExistenceException, ésta concretamente se produce cuando
  * existe en la base de datos un dato/relación que no esperabamos encontrar, generalmente
  * al intentar insertar un dato que ya existe.
  */

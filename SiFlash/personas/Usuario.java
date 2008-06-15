@@ -4,7 +4,7 @@ package personas;
 
 
 /**
- * Clase que representa un usuario registrado del sistema.
+ * Representa un usuario registrado del sistema.
  */
 public class Usuario 
 {
@@ -52,7 +52,7 @@ public class Usuario
 
 	/**
 	 * Devuelve el nombre de usuario.
-	 * @return String - Nombre de usuario.
+	 * @return Nombre de usuario.
 	 */
 	public String getNombre() {
 		return nombre;
@@ -60,7 +60,7 @@ public class Usuario
 
 	/**
 	 * Cambia el actual nombre de usuario al que se le pasa por parámetro.
-	 * @param nombre - Nombre que se le dará al usuario.
+	 * @param Nombre que se le dará al usuario.
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -68,7 +68,7 @@ public class Usuario
 
 	/**
 	 * Devuelve el password del usuario.
-	 * @return String - Password del usuario
+	 * @return Password del usuario
 	 */
 	public String getPassword() {
 		return password;
@@ -76,7 +76,7 @@ public class Usuario
 
 	/**
 	 * Cambia el password del usuario al que se pasa por parámetro.
-	 * @param password - El password que se pondrá al usuario.
+	 * @param El password que se pondrá al usuario.
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -84,7 +84,7 @@ public class Usuario
 
 	/**
 	 * Devuelve el tipo de usuario.
-	 * @return String Indica el tipo de usuario mediante un string, que
+	 * @return Indica el tipo de usuario mediante un string, que
 	 * puede ser "user" para el usuario básico, "jefe" para el jefe de
 	 * proyecto, "admin" para el administrador de la aplicación y null
 	 * en caso de incoherencias.

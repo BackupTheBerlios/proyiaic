@@ -4,7 +4,7 @@ package controlador.exceptions;
 
 
 /**
- * Excepción que representa un error en el intento de conexión a la base
+ * Representa un error en el intento de conexión a la base
  * de datos, concretamente indica que se ha producido
  * porque no existe base de datos a la que conectar.
  */

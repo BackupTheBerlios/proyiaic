@@ -227,6 +227,7 @@ public class Article extends Publication
 
 	/**
 	 * Genera un elemento XML con todos los autores.
+	 * @param quitarLlaves Indica si se quieren quitar las llaves que aparezcan en el nombre y/o apellidos.
 	 * @return El elemento generado.
 	 */
 	private Element generarAutoresEditoresXML(boolean quitarLlaves) 
@@ -278,7 +279,7 @@ public class Article extends Publication
 	}
 
 	/**
-	 * @return La lista de autores.
+	 * @return La lista de autores del artículo.
 	 */
 	public LinkedList<AutorEditor> getAuthor() {
 		return author;
@@ -313,13 +314,6 @@ public class Article extends Publication
 	}
 
 	@Override
-	/**
-	 * Genera una serie de sentencias SQL que se deberán ejecutar para
-	 * que el artículo quede correctamente insertado.
-	 * @return Vector con todas las sentencias SQL.
-	 * @throws BDException Si hay algún problema relacionado con la conexión a la base de datos.
-	 * @throws ExistingElementException Si hay algún problema relacionado con la existencia de tuplas en la base de datos.
-	 */
 	public Vector<String> generaInserciones(Connection conn) throws BDException, ExistingElementException
 	{
 		Vector <String> vector = new Vector <String>();
@@ -377,9 +371,7 @@ public class Article extends Publication
 		str1+=");";
 
 		DataBaseControler dbc = new DataBaseControler();
-//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
-//		Vector<Object[]> res = dbc.
 		if (idDoc == 0)
 			idDoc = dbc.consultaIdDoc(conn);	
 
@@ -413,8 +405,8 @@ public class Article extends Publication
 	 * del resultado obtenido al consultar la base de datos.
 	 * @return Vector de artículos resultante.
 	 */
-	public static Vector<Article> generaPub(Vector<Object[]> v){
-		//	"SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.address, ART1.month, ART1.publisher, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM articles AS ART1, pertenecea AS PRY1, autoreseditores AS AUT1, escrito_editado_por AS EEX1, tienekey AS KEY1 WHERE PRY1.idDoc = ART1.idDoc AND EEX1.idDoc = ART1.idDoc AND AUT1.idAut = EEX1.idPer AND KEY1.idDoc = ART1.idDoc"
+	public static Vector<Article> generaPub(Vector<Object[]> v)
+	{
 		Vector <Article> vector = new Vector <Article>();
 		if (v == null) return vector;
 		for (int i=0; i< v.size();){

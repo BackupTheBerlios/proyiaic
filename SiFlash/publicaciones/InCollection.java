@@ -19,14 +19,14 @@ import database.BDException;
 
 
 /**
- * Clase que representa una parte de un libro que tiene su propio título.
+ * Representa una parte de un libro que tiene su propio título.
  * Contiene todos sus posibles campos, así como los métodos necesarios
  * para su correcto manejo.
  */
 public class InCollection extends Publication 
 {
 	/**
-	 * LinkedList que contiene los autores que han colaborado en la creación de la misma.
+	 * Contiene los autores que han colaborado en la creación de la misma.
 	 */
 	private LinkedList<AutorEditor> author;
 
@@ -46,7 +46,7 @@ public class InCollection extends Publication
 	private String crossref;
 
 	/**
-	 * LinkedList que contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
+	 * Contiene a la/s persona/s que, sin ser autores propiamente dichos, ayudaron a editar la obra.
 	 */
 	private LinkedList<AutorEditor> editor;
 
@@ -76,7 +76,7 @@ public class InCollection extends Publication
 	private String chapter;
 
 	/**
-	 * Paginas en las que está contenido.
+	 * Páginas en las que está contenido.
 	 */
 	private String pages;
 
@@ -86,7 +86,7 @@ public class InCollection extends Publication
 	private String address;
 
 	/**
-	 * Edicion del mismo.
+	 * Edición del mismo.
 	 */
 	private String edition;
 
@@ -187,10 +187,7 @@ public class InCollection extends Publication
 			editor = valor;
 	}
 
-	/**
-	 * Genera un elemento XML con la información del objeto.
-	 * @return El elemento generado.
-	 */
+	@Override
 	public Element generarElementoXML(boolean quitarLlaves)
 	{
 		Element elemento = new Element("publication");
@@ -283,6 +280,8 @@ public class InCollection extends Publication
 
 	/**
 	 * Genera un elemento XML con todos los autores/editores.
+	 * @param b Si es true, es un autor; si es false, un editor.
+	 * @param quitarLlaves Indica si se deben quitar las llaves que aparezcan en alguno de los campos de la publicación.
 	 * @return El elemento generado.
 	 */
 	private Element generarAutoresEditoresXML(boolean b, boolean quitarLlaves) 
@@ -382,11 +381,6 @@ public class InCollection extends Publication
 		return publisher;
 	}
 
-	@Override
-	public String getYear() {
-		return year;
-	}
-
 	/**
 	 * @return Crossref del documento.
 	 */
@@ -456,11 +450,6 @@ public class InCollection extends Publication
 	 */
 	public String getEdition() {
 		return edition;
-	}
-
-	@Override
-	public String getMonth() {
-		return month;
 	}
 
 	@Override
@@ -549,13 +538,9 @@ public class InCollection extends Publication
 		str1+=");";
 
 		DataBaseControler dbc = new DataBaseControler();
-//		dbc.ejecutaString("BEGIN;", conn); //Comenzar transacción.
 		dbc.ejecutaString(str1, conn);
 		if (idDoc == 0)
 			idDoc = dbc.consultaIdDoc(conn);	
-
-//		str1 = new String ("INSERT INTO tipopublicacion VALUES (" + getIdDoc() + ",'incollection');");
-//		vector.add(str1);
 
 		if (author != null)
 			for (int i=0;i<this.author.size();i++){
@@ -699,12 +684,20 @@ public class InCollection extends Publication
 		return vector;
 	}
 
+	/**
+	 * Añade un autor a la publicación.
+	 * @param e Autor a añadir.
+	 */
 	public void addAutor(AutorEditor e){
 		if (author == null)
 			author = new LinkedList<AutorEditor>();
 		if (!author.contains(e)) author.add(e);
 	}
 
+	/**
+	 * Añade un editor a la publicación.
+	 * @param e Editor a añadir.
+	 */
 	public void addEditor(AutorEditor e){
 		if (editor == null)
 			editor = new LinkedList<AutorEditor>();

@@ -4,7 +4,7 @@ import database.BDException;
 
 
 /**
- * Excepcion que representa un error a la hora de consultar en la base de datos.
+ * Representa un error a la hora de consultar en la base de datos.
  */
 public class ConsultaException extends BDException 
 {

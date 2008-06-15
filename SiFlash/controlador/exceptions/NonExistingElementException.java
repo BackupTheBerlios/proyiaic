@@ -5,7 +5,7 @@ package controlador.exceptions;
 
 /**
  * Excepcion hija de ExistenceException, esta concretamente se produce cuando intentamos
- * acceder a un dato/relación que no encontrar y no está presente, generalmente
+ * acceder a un dato/relación que esperamos encontrar y no está presente, generalmente
  * al intentar eliminar/modificar un dato que no existe.
  */
 public class NonExistingElementException extends ExistenceException 

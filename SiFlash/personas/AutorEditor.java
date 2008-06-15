@@ -5,23 +5,23 @@ import org.jdom.Element;
 import publicaciones.Publication;
 
 /**
- * Clase que guarda los datos de un autor o un editor, también implementa el comportamiento
+ * Guarda los datos de un autor o un editor, también implementa el comportamiento
  * necesario para su correcta gestión y manipulación.
  */
 public class AutorEditor 
 {
 	/**
-	 * Identificador único de autorEditor, lo utilizamos para la base de datos.
+	 * Identificador único de autorEditor, utilizado en la base de datos.
 	 */
 	private int idAut;
 	
 	/**
-	 * Nombre del autor.
+	 * Nombre del autor/editor.
 	 */
 	private String nombre;
 	
 	/**
-	 * Apellidos del autor.
+	 * Apellidos del autor/editor.
 	 */
 	private String apellidos;
 
@@ -65,7 +65,7 @@ public class AutorEditor
 	}
 
 	/**
-	 * Separa el nombre y apellidos de los autores/editores.
+	 * Contructor dados el nombre y los apellidos juntos en un mismo string.
 	 * @param autorEditor String que contiene el nombre y apellidos de los autores/editores.
 	 */
 	public AutorEditor(String autorEditor) 
@@ -153,7 +153,7 @@ public class AutorEditor
 	
 	/**
 	 * Devuelve el nombre del autor/editor.
-	 * @return String - Nombre del autor.
+	 * @return Nombre del autor.
 	 */
 	public String getNombre() {
 		return nombre;
@@ -161,7 +161,7 @@ public class AutorEditor
 
 	/**
 	 * Devuelve los apellidos del autor/editor.
-	 * @return String - Apellidos del autor.
+	 * @return Apellidos del autor.
 	 */
 	public String getApellidos() {
 		return apellidos;
@@ -170,7 +170,7 @@ public class AutorEditor
 	
 	/**
 	 * Devuelve el identificador único de autor/editor.
-	 * @return int - Identificador único.
+	 * @return Identificador único.
 	 */
 	public int getId(){
 		return idAut;

@@ -1,7 +1,7 @@
 package parserFicherosBibtex;
 
 /**
- * Clase que sirve para extraer un campo de una publicación 
+ * Sirve para extraer un campo de una publicación 
  * mediante el ParserBibTeX.
  */
 public class CampoPublicacion extends Campo
@@ -16,7 +16,12 @@ public class CampoPublicacion extends Campo
 	 */
 	private boolean esUltimo;
 	
-	
+	/**
+	 * Constructor especificando los valores.
+	 * @param nombre Nombre del campo.
+	 * @param valor Valor del campo.
+	 * @param ult Indica si es el último campo.
+	 */
 	public CampoPublicacion(String nombre, String valor, boolean ult)
 	{
 		this.nombre = nombre;
@@ -37,6 +42,7 @@ public class CampoPublicacion extends Campo
 	/**
 	 * Sustituye las cadenas de caracteres que representan las tildes,
 	 * por la propia letra con tilde.
+	 * También sustituye la cadena que representa la letra 'ñ' por la propia letra.
 	 */
 	public void sustituirTildes() 
 	{
@@ -335,6 +341,9 @@ public class CampoPublicacion extends Campo
 		}
 	}
 	
+	/**
+	 * Convierte a String el nombre y el valor del campo.
+	 */
 	public String toString()
 	{
 		return nombre + " " + valor;

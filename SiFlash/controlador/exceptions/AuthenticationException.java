@@ -3,7 +3,7 @@ package controlador.exceptions;
 
 
 /**
- * Excepcion que se produce al verificar incorrectamente a un usuario.
+ * Se produce al verificar incorrectamente a un usuario.
  */
 public class AuthenticationException extends Exception 
 {
@@ -22,7 +22,7 @@ public class AuthenticationException extends Exception
 
 	/**
 	 * Constructor de la clase dado el mensaje que ha de contener.
-	 * @param message - String con el mensaje que ha de contener la excepcion.
+	 * @param message Mensaje que ha de contener la excepcion.
 	 */
 	public AuthenticationException(String message) {
 		super(message);
