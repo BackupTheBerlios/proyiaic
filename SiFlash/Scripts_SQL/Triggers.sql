@@ -289,6 +289,14 @@ BEGIN
 END $$
 
 
+DROP TRIGGER IF EXISTS borraUsuario $$
+CREATE TRIGGER borraUsuario BEFORE DELETE ON Usuarios
+FOR EACH ROW
+BEGIN
+  DELETE FROM participaen WHERE usuario= OLD.nombre;
+END $$
+
+
 DROP TRIGGER IF EXISTS borraArticle $$
 CREATE TRIGGER borraArticle BEFORE DELETE ON Article
 FOR EACH ROW
