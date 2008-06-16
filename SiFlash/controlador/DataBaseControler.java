@@ -1036,8 +1036,9 @@ public class DataBaseControler
 			Element pertenecen = new Element("pertenecen");
 
 			Connection conn = database.abreConexion();
-			Vector<Object[]> result = database.exeQuery("SELECT * FROM proyectos WHERE nombre='" + proyecto + "';", conn);
+			Vector<Object[]> result = database.exeQuery("SELECT jefe FROM proyectos WHERE nombre='" + proyecto + "';", conn);
 			if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
+			root.setAttribute("jefe", (String)result.get(0)[0]);
 			String consulta = "SELECT usuarios.nombre FROM usuarios, participaen WHERE usuarios.nombre = participaen.usuario AND participaen.proyecto = '" + proyecto +"' ORDER BY usuarios.nombre;";
 			result = database.exeQuery(consulta, conn);
 			int numU = result.size();

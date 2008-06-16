@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.util.LinkedList;
 
 import controlador.ConversorXML_BBDD;
+import controlador.DataBaseControler;
 
 import parserFicherosBibtex.Campo;
 import parserFicherosBibtex.CampoPublicacion;
@@ -100,12 +101,12 @@ public class Main
 //			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaBusquedas());
 			//-------------------------------------------------------------------------
 			
-//			DataBaseControler db_controler = new DataBaseControler();
-//			System.out.println(db_controler.obtenerListaProyectosUsuariosYAutores());
+			DataBaseControler db_controler = new DataBaseControler();
+			System.out.println(db_controler.obtenerUsuariosYPublicacionesProyecto("Proyecto1"));
 //			//-------------------------------------------------------------------
 			
-			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarModificarAutor(new FileInputStream(".\\ficherosDePrueba\\modificaciones\\autor.xml")));
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarModificarAutor(new FileInputStream(".\\ficherosDePrueba\\modificaciones\\autor.xml")));
 			//-------------------------------------------------------------------
 			
 			
