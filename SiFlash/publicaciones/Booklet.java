@@ -443,4 +443,10 @@ public class Booklet extends Publication
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
 				user, proyecto);
 	}	
+	
+	@Override
+	public boolean obligatoriosRellenos()
+	{
+		return false;
+	}
 }

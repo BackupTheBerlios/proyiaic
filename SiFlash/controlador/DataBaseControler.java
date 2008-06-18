@@ -130,7 +130,7 @@ public class DataBaseControler
 	 * analizando la clase concreta de BDException.
 	 * @throws NonExistingElementException Esperabamos encontrar un dato que no se encuentra.
 	 */
-	public Vector<Publication> consultaDocumentos(String idDoc, String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws BDException, NonExistingElementException 
+	public Vector<Publication> consultaDocumentos(String idDoc, String proyecto, int tipo_publicaciones, final Vector<AutorEditor> autores, final Vector<AutorEditor> editores, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, String bookTitle, Vector<String> keys, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, boolean parecido_keys, String user) throws BDException, NonExistingElementException 
 	{
 		Connection conn = database.abreConexion();
 		// Primero localizar a los autores y editores.
@@ -158,7 +158,7 @@ public class DataBaseControler
 				v_editors.add(new Integer (v_editores.get(i).getId()));
 			}
 
-			return consultor.getPublicaciones(idDoc, proyecto, tipo_publicaciones, v_authors, v_editors, title, parecido_title, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle, user, conn);
+			return consultor.getPublicaciones(idDoc, proyecto, tipo_publicaciones, v_authors, v_editors, title, parecido_title, referencia, publisher, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, school, parecido_school,keys, bookTitle, parecido_bookTitle, user, conn);
 		}finally{
 			database.cierraConexion(conn);
 		}
@@ -1012,7 +1012,7 @@ public class DataBaseControler
 	 */
 	private Element generaElementoPublicacionesProyecto(String proyecto) throws NonExistingElementException, BDException
 	{
-		Vector<Publication> publicaciones = consultaDocumentos(null, proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
+		Vector<Publication> publicaciones = consultaDocumentos(null, proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
 		Element ePublicaciones = new Element("listaPublicaciones");
 		int numP = publicaciones.size();
 		for (int i = 0;  i < numP; i++)
@@ -1300,7 +1300,7 @@ public class DataBaseControler
 	{
 		try
 		{
-			Vector<Publication> publicaciones = consultaDocumentos(null, null, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, user);
+			Vector<Publication> publicaciones = consultaDocumentos(null, null, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, user);
 
 			Element root = new Element("listaPublicaciones");
 			int numP = publicaciones.size();
@@ -1579,7 +1579,7 @@ public class DataBaseControler
 	{
 		try
 		{
-			Vector<Publication> v = consultaDocumentos(id_doc, null, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
+			Vector<Publication> v = consultaDocumentos(id_doc, null, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
 			Publication res = v.get(0);
 			return res.getBibTeX();
 		}
@@ -1606,7 +1606,7 @@ public class DataBaseControler
 		try
 		{
 			String resultado = "";
-			Vector<Publication> publicaciones = consultaDocumentos(null, proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
+			Vector<Publication> publicaciones = consultaDocumentos(null, proyecto, CodigosDatos.codSumaTodasPublicaciones, null, null, null, false, null, null, null, null, null, null, null, null, null, null, null, false, false, false, false, false, false, false, false, false, null);
 			int numP = publicaciones.size();
 			for (int i = 0;  i < numP; i++)
 				resultado += publicaciones.get(i).getBibTeX() + "\n\n";

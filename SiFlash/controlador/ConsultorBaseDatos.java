@@ -94,7 +94,7 @@ class ConsultorBaseDatos
 	 */	
 	protected Vector<Publication> getPublicaciones(String idDoc, String proyecto, final int tipo_publicaciones, 
 			final Vector<Integer> authors, final Vector<Integer> editors, final String title, 
-			final boolean parecido_title, final String publisher, final boolean parecido_publisher, 
+			final boolean parecido_title, final String referencia, final String publisher, final boolean parecido_publisher, 
 			final String journal, final boolean parecido_journal, Vector<String> years, final String volume, 
 			final boolean parecido_volume, final String series, final boolean parecido_series, 
 			final String address, final boolean parecido_address, final String organization, 
@@ -104,46 +104,46 @@ class ConsultorBaseDatos
 	{
 		Vector<Publication> vector= new Vector<Publication>();
 		if ((tipo_publicaciones & CodigosDatos.codArticle)== CodigosDatos.codArticle)
-			vector.addAll(this.getArticles(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getArticles(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codBook)== CodigosDatos.codBook)
-			vector.addAll(this.getBooks(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getBooks(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codBookLet)== CodigosDatos.codBookLet)
-			vector.addAll(this.getBooklets(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getBooklets(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codConference) == CodigosDatos.codConference)
-			vector.addAll(this.getConferences(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getConferences(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codInbook) == CodigosDatos.codInbook)
-			vector.addAll(this.getInbooks(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getInbooks(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codIncollection) == CodigosDatos.codIncollection)
-			vector.addAll(this.getIncollection(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getIncollection(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codInproceedings) == CodigosDatos.codInproceedings)
-			vector.addAll(this.getInproceedings(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getInproceedings(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codManual) == CodigosDatos.codManual)
-			vector.addAll(this.getManuals(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getManuals(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codMasterThesis) == CodigosDatos.codMasterThesis)
-			vector.addAll(this.getMasterThesis(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getMasterThesis(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codMisc) == CodigosDatos.codMisc)
-			vector.addAll(this.getMiscs(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getMiscs(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codphdThesis) == CodigosDatos.codphdThesis)
-			vector.addAll(this.getPhdThesis(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getPhdThesis(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codProceedings) == CodigosDatos.codProceedings)
-			vector.addAll(this.getProceedings(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getProceedings(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codTechReport) == CodigosDatos.codTechReport)
-			vector.addAll(this.getTechReports(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getTechReports(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 
 		if ((tipo_publicaciones & CodigosDatos.codUnpublished) == CodigosDatos.codUnpublished)
-			vector.addAll(this.getUnpublisheds(idDoc, proyecto, authors, editors, title, parecido_title, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
+			vector.addAll(this.getUnpublisheds(idDoc, proyecto, authors, editors, title, parecido_title, referencia, publisher, journal, years, volume, series, address, organization, school, v_key, bookTitle, parecido_publisher, parecido_series, parecido_address, parecido_journal, parecido_volume, parecido_school, parecido_bookTitle, parecido_organization, user, conn));
 		return vector;
 	}
 
@@ -202,14 +202,14 @@ class ConsultorBaseDatos
 	 * contenga.
 	 */		
 	private Vector<Article> getArticles(final String idDoc, final String proyecto, final Vector<Integer> authors, 
-			final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, 
+			final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, 
 			String journal, Vector<String> years, String volume, String series, String address, 
 			String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher,
 			boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume,
 			boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user,
 			Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT ART1.idDoc, ART1.title, ART1.journal, ART1.year, ART1.volume, ART1.number, ART1.pages, ART1.month, ART1.note, ART1.abstract, ART1.URL, ART1.user, ART1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM article ART1 LEFT OUTER JOIN tienekey KEY1 ON ART1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON ART1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON ART1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "ART1", "article",authors, editors, title, parecido_title, null, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);		
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "ART1", "article",authors, editors, title, parecido_title, referencia, null, parecido_publisher, journal, parecido_journal, years, volume, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);		
 		consulta += " ORDER BY ART1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Article> vector = Article.generaPub(v);
@@ -270,9 +270,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */	
-	private Vector<Book> getBooks(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<Book> getBooks(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT BOOK1.idDoc, BOOK1.title, BOOK1.publisher, BOOK1.year, BOOK1.volume, BOOK1.number, BOOK1.series, BOOK1.address, BOOK1.edition, BOOK1.month, BOOK1.note, BOOK1.abstract, BOOK1.URL, BOOK1.user, BOOK1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM book BOOK1 LEFT OUTER JOIN tienekey KEY1 ON BOOK1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON BOOK1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON BOOK1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "BOOK1","book", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "BOOK1","book", authors, editors, title, parecido_title, referencia, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY BOOK1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Book> vector = Book.generaPub(v);
@@ -333,9 +333,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */	
-	private Vector<Booklet> getBooklets(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<Booklet> getBooklets(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT BOOK1.idDoc, BOOK1.title, BOOK1.howpublished, BOOK1.address, BOOK1.month, BOOK1.year, BOOK1.note, BOOK1.abstract, BOOK1.URL, BOOK1.user, BOOK1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM booklet BOOK1 LEFT OUTER JOIN tienekey KEY1 ON BOOK1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON BOOK1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON BOOK1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "BOOK1","booklet", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "BOOK1","booklet", authors, editors, title, parecido_title, referencia, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY BOOK1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Booklet> vector = Booklet.generaPub(v);		
@@ -396,9 +396,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */	
-	private Vector<Conference> getConferences(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<Conference> getConferences(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT CONF1.idDoc, CONF1.title, CONF1.booktitle, CONF1.year, CONF1.crossref, CONF1.volume, CONF1.number, CONF1.series, CONF1.pages, CONF1.address, CONF1.month, CONF1.organization, CONF1.publisher, CONF1.note, CONF1.abstract, CONF1.URL, CONF1.user, CONF1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM conference CONF1 LEFT OUTER JOIN tienekey KEY1 ON CONF1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON CONF1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON CONF1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "CONF1","conference", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);	   
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "CONF1","conference", authors, editors, title, parecido_title, referencia, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);	   
 		consulta += " ORDER BY CONF1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Conference> vector = Conference.generaPub(v);
@@ -459,9 +459,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */		
-	private Vector<InBook> getInbooks(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<InBook> getInbooks(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT INB1.idDoc, INB1.title, INB1.edition, INB1.year, INB1.type, INB1.volume, INB1.number, INB1.series, INB1.pages, INB1.address, INB1.month, INB1.chapter, INB1.publisher, INB1.note, INB1.abstract, INB1.URL, INB1.user, INB1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM inbook INB1 LEFT OUTER JOIN tienekey KEY1 ON INB1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON INB1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON INB1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "INB1","inbook", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "INB1","inbook", authors, editors, title, parecido_title, referencia, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY INB1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <InBook> vector = InBook.generaPub(v);
@@ -522,9 +522,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */	
-	private Vector<InCollection> getIncollection(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<InCollection> getIncollection(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT INC1.idDoc, INC1.title, INC1.booktitle, INC1.year, INC1.crossref, INC1.volume, INC1.number, INC1.series, INC1.pages, INC1.address, INC1.month, INC1.publisher, INC1.note, INC1.abstract, INC1.URL, INC1.user, INC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave, INC1.chapter, INC1.edition FROM incollection INC1 LEFT OUTER JOIN tienekey KEY1 ON INC1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON INC1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON INC1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "INC1","incollection", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);	   
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "INC1","incollection", authors, editors, title, parecido_title, referencia, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, null, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);	   
 		consulta += " ORDER BY INC1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <InCollection> vector = InCollection.generaPub(v);
@@ -586,9 +586,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */		
-	private Vector<InProceedings> getInproceedings(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<InProceedings> getInproceedings(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT INP1.idDoc, INP1.title, INP1.booktitle, INP1.year, INP1.crossref, INP1.volume, INP1.number, INP1.series, INP1.pages, INP1.address, INP1.month, INP1.organization, INP1.publisher, INP1.note, INP1.abstract, INP1.URL, INP1.user, INP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM inproceedings INP1 LEFT OUTER JOIN tienekey KEY1 ON INP1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON INP1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON INP1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "INP1","inproceedings", authors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);	   
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "INP1","inproceedings", authors, editors, title, parecido_title, referencia, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);	   
 		consulta += " ORDER BY INP1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <InProceedings> vector = InProceedings.generaPub(v);
@@ -650,9 +650,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */		
-	private Vector<Manual> getManuals(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<Manual> getManuals(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT MAN1.idDoc, MAN1.title, MAN1.organization, MAN1.edition, MAN1.address, MAN1.month, MAN1.year, MAN1.note, MAN1.abstract, MAN1.URL, MAN1.user, MAN1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM manual MAN1 LEFT OUTER JOIN tienekey KEY1 ON MAN1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON MAN1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON MAN1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "MAN1","manual", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "MAN1","manual", authors, editors, title, parecido_title, referencia, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY MAN1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Manual> vector = Manual.generaPub(v);		
@@ -714,9 +714,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */			
-	private Vector<MastersThesis> getMasterThesis(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<MastersThesis> getMasterThesis(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT MAS1.idDoc, MAS1.title, MAS1.type, MAS1.school, MAS1.address, MAS1.month, MAS1.year, MAS1.note, MAS1.abstract, MAS1.URL, MAS1.user, MAS1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM mastersthesis MAS1 LEFT OUTER JOIN tienekey KEY1 ON MAS1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON MAS1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON MAS1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "MAS1","mastersthesis", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "MAS1","mastersthesis", authors, editors, title, parecido_title, referencia, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY MAS1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <MastersThesis> vector = MastersThesis.generaPub(v);		
@@ -776,9 +776,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */		
-	private Vector<Misc> getMiscs(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<Misc> getMiscs(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT MISC1.idDoc, MISC1.title, MISC1.howpublished, MISC1.month, MISC1.year, MISC1.note, MISC1.abstract, MISC1.URL, MISC1.user, MISC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM misc MISC1 LEFT OUTER JOIN tienekey KEY1 ON MISC1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON MISC1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON MISC1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "MISC1","misc", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "MISC1","misc", authors, editors, title, parecido_title, referencia, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY MISC1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Misc> vector = Misc.generaPub(v);		
@@ -839,9 +839,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */			
-	private Vector<PhdThesis> getPhdThesis(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<PhdThesis> getPhdThesis(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT PHD1.idDoc, PHD1.title, PHD1.type, PHD1.school, PHD1.address, PHD1.month, PHD1.year, PHD1.note, PHD1.abstract, PHD1.URL, PHD1.user, PHD1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM phdthesis PHD1 LEFT OUTER JOIN tienekey KEY1 ON PHD1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON PHD1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON PHD1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "PHD1","phdthesis", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "PHD1","phdthesis", authors, editors, title, parecido_title, referencia, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, null, parecido_organization, school, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY PHD1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <PhdThesis> vector = PhdThesis.generaPub(v);		
@@ -902,9 +902,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */	
-	private Vector<Proceedings> getProceedings(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<Proceedings> getProceedings(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT PROC1.idDoc, PROC1.title, PROC1.booktitle, PROC1.year, PROC1.volume, PROC1.number, PROC1.series, PROC1.address, PROC1.month, PROC1.organization, PROC1.publisher, PROC1.note, PROC1.abstract, PROC1.URL, PROC1.user, PROC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM proceedings PROC1 LEFT OUTER JOIN tienekey KEY1 ON PROC1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON PROC1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON PROC1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "PROC1","proceedings", editors, editors, title, parecido_title, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "PROC1","proceedings", editors, editors, title, parecido_title, referencia, publisher, parecido_publisher, null, parecido_journal, years, volume, parecido_volume, series, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, bookTitle, parecido_bookTitle, user);
 		consulta += " ORDER BY PROC1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Proceedings> vector = Proceedings.generaPub(v);
@@ -966,9 +966,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */		
-	private Vector<TechReport> getTechReports(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<TechReport> getTechReports(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT TEC1.idDoc, TEC1.title, TEC1.type, TEC1.institution, TEC1.address, TEC1.month, TEC1.year, TEC1.note, TEC1.abstract, TEC1.URL, TEC1.user, TEC1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave, TEC1.number FROM techreport TEC1 LEFT OUTER JOIN tienekey KEY1 ON TEC1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON TEC1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON TEC1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "TEC1","techreport", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "TEC1","techreport", authors, editors, title, parecido_title, referencia, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, address, parecido_address, organization, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY TEC1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <TechReport> vector = TechReport.generaPub(v);		
@@ -1029,9 +1029,9 @@ class ConsultorBaseDatos
 	 * se puede concretar analizando la clase concreta de BDException, así como el mensaje que
 	 * contenga.
 	 */	
-	private Vector<Unpublished> getUnpublisheds(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
+	private Vector<Unpublished> getUnpublisheds(final String idDoc, final String proyecto, final Vector<Integer> authors, final Vector<Integer> editors, String title, final boolean parecido_title, String referencia, String publisher, String journal, Vector<String> years, String volume, String series, String address, String organization, String school, Vector<String> v_key, String bookTitle, boolean parecido_publisher, boolean parecido_series, boolean parecido_address, boolean parecido_journal, boolean parecido_volume, boolean parecido_school, boolean parecido_bookTitle, boolean parecido_organization, String user, Connection conn) throws BDException{
 		String consulta = new String ("SELECT DISTINCT UNP1.idDoc, UNP1.title, UNP1.month, UNP1.year, UNP1.note, UNP1.abstract, UNP1.URL, UNP1.user, UNP1.referencia, PRY1.proyecto, AUT1.idAut, AUT1.nombre, AUT1.apellidos, EEX1.escrito_o_editado, KEY1.clave FROM unpublished UNP1 LEFT OUTER JOIN tienekey KEY1 ON UNP1.idDoc = KEY1.idDoc LEFT OUTER JOIN pertenecea PRY1 ON UNP1.idDoc = PRY1.idDoc LEFT OUTER JOIN escrito_editado_por EEX1 ON UNP1.idDoc = EEX1.idDoc LEFT OUTER JOIN autoreseditores AUT1 ON AUT1.idAut = EEX1.idPer WHERE TRUE");
-		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "UNP1","unpublished", authors, editors, title, parecido_title, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
+		consulta += this.creaConsulta(idDoc, proyecto, "PRY1", "UNP1","unpublished", authors, editors, title, parecido_title, referencia, null, parecido_publisher, null, parecido_journal, years, null, parecido_volume, null, parecido_series, null, parecido_address, null, parecido_organization, null, parecido_school, v_key, null, parecido_bookTitle, user);
 		consulta += " ORDER BY UNP1.idDoc,AUT1.idAut;";
 		Vector <Object[]> v = database.exeQuery(consulta, conn);
 		Vector <Unpublished> vector = Unpublished.generaPub(v);		
@@ -1098,7 +1098,7 @@ class ConsultorBaseDatos
 			final String alias_pertenecea, 
 			final String alias_tabla,final String nombre_tabla, 
 			final Vector<Integer> authors, final Vector<Integer> editors,
-			final String title, final boolean parecido_title,
+			final String title, final boolean parecido_title, final String referencia,
 			final String publisher, final boolean parecido_publisher,
 			final String journal, final boolean parecido_journal,		   
 			final Vector<String> years,
@@ -1136,6 +1136,11 @@ class ConsultorBaseDatos
 		if (title != null){
 			str += (" AND ");
 			str += creaConsultaSimple(alias_tabla,nombre_tabla,"title",title,parecido_title);
+		}
+		
+		if (referencia != null){
+			str += (" AND ");
+			str += creaConsultaSimple(alias_tabla,nombre_tabla,"referencia",referencia,true);
 		}
 
 		if (publisher != null){
@@ -1367,7 +1372,6 @@ class ConsultorBaseDatos
 		cons += "FROM " + tabla_data + " AS " + tabla_data +"A WHERE (" +tabla_data + "A." + campo_de_busqueda;
 		cons += " LIKE (\"" + Publication.sustituirComillasSQL(palabra) + "\")))";
 		return cons;		
-
 	}  
 
 	

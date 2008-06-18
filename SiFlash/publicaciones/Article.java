@@ -500,4 +500,10 @@ public class Article extends Publication
 			author = new LinkedList<AutorEditor>();
 		if (!author.contains(e)) author.add(e);
 	}
+	
+	@Override
+	public boolean obligatoriosRellenos()
+	{
+		return false;
+	}
 }

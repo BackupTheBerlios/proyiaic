@@ -615,4 +615,10 @@ public class Book extends Publication
 			editor = new LinkedList<AutorEditor>();
 		if (!editor.contains(e)) editor.add(e);
 	}	
+	
+	@Override
+	public boolean obligatoriosRellenos()
+	{
+		return false;
+	}
 }

@@ -701,4 +701,9 @@ public class InProceedings extends Publication
 		return vector; 
 	}
 
+	@Override
+	public boolean obligatoriosRellenos()
+	{
+		return false;
+	}
 }

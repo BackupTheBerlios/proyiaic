@@ -146,6 +146,13 @@ public abstract class Publication
 	 * @return El código BibTeX generado.
 	 */
 	public abstract String getBibTeX();
+	
+	/**
+	 * Comprueba si todos los campos obligatorios de la publicacion
+	 * han sido cumplimentados
+	 * @return El resultado de la comprobación.
+	 */
+	public abstract boolean obligatoriosRellenos();
 
 	/**
 	 * Genera un elemento XML con la información del objeto.

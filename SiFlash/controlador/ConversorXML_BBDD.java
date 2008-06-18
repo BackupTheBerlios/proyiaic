@@ -39,7 +39,7 @@ public class ConversorXML_BBDD
 	/**
 	 * Sólo usado en consultas: referencia de las publicaciones a buscar.
 	 */
-	//private String referencia;
+	private String referencia;
 	/**
 	 * Sólo usado en consultas: título de las publicaciones a buscar.
 	 */
@@ -101,6 +101,8 @@ public class ConversorXML_BBDD
 	 */
 	private Vector<AutorEditor> editors;
 	
+	
+	
 	/**
 	 * Constructor por defecto: inicializa todos los atributos.
 	 */
@@ -111,6 +113,7 @@ public class ConversorXML_BBDD
 		tipoPublicaciones = -1;
 		
 		title = null;
+		referencia = null;
 		yearIni = -1;
 		yearFin = -1;
 		key = null;
@@ -215,6 +218,8 @@ public class ConversorXML_BBDD
 		String nombreCampo = campo.getName();
 		if (nombreCampo.equals("title"))
 			title = campo.getValue();
+		else if (nombreCampo.equals("referencia"))
+			referencia = campo.getValue();
 		else if (nombreCampo.equals("yearIni"))
 			yearIni = Integer.parseInt(campo.getValue());
 		else if (nombreCampo.equals("yearFin"))
@@ -336,7 +341,7 @@ public class ConversorXML_BBDD
 					years.add("" + i);
 			}
 
-			Vector<Publication> vector = dbc.consultaDocumentos(null, proyecto, tipoPublicaciones, authors, editors, title, true, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true, null);
+			Vector<Publication> vector = dbc.consultaDocumentos(null, proyecto, tipoPublicaciones, authors, editors, title, true, referencia, publisher, journal, years, volume, series, address, organization, school, booktitle, key, true, true, true, true, true, true, true, true, true, null);
 
 			int numPublic = vector.size();
 			Publication actual;
