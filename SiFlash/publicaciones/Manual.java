@@ -476,6 +476,8 @@ public class Manual extends Publication
 	{
 		if (title == null)
 			return "Error: 'title' es un campo obligatorio.";
+		else if (URL == null)
+			return "Error: 'URL' es un campo obligatorio.";
 		else 
 			return null;
 	}
