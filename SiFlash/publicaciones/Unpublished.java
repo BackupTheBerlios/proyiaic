@@ -391,8 +391,17 @@ public class Unpublished extends Publication
 	}	
 	
 	@Override
-	public boolean obligatoriosRellenos()
+	public String obligatoriosRellenos()
 	{
-		return false;
+		if (title == null)
+			return "Error: 'title' es un campo obligatorio.";
+		else if (note == null)
+			return "Error: 'note' es un campo obligatorio.";
+		else if (author == null)
+			return "Error: Debe especificar al menos un autor.";
+		else if (URL == null)
+			return "Error: 'URL' es un campo obligatorio.";
+		else 
+			return null;
 	}
 }

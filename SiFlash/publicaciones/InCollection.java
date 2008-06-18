@@ -756,8 +756,21 @@ public class InCollection extends Publication
 	}
 	
 	@Override
-	public boolean obligatoriosRellenos()
+	public String obligatoriosRellenos()
 	{
-		return false;
+		if (title == null)
+			return "Error: 'title' es un campo obligatorio.";
+		else if (booktitle == null)
+			return "Error: 'booktitle' es un campo obligatorio.";
+		else if (publisher == null)
+			return "Error: 'publisher' es un campo obligatorio.";
+		else if (year == null)
+			return "Error: 'year' es un campo obligatorio.";
+		else if (author == null)
+			return "Error: Debe especificar al menos un autor.";
+		else if (URL == null)
+			return "Error: 'URL' es un campo obligatorio.";
+		else 
+			return null;
 	}
 }

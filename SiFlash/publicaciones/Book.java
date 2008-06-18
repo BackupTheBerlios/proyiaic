@@ -617,8 +617,19 @@ public class Book extends Publication
 	}	
 	
 	@Override
-	public boolean obligatoriosRellenos()
+	public String obligatoriosRellenos()
 	{
-		return false;
+		if (title == null)
+			return "Error: 'title' es un campo obligatorio.";
+		else if (publisher == null)
+			return "Error: 'publisher' es un campo obligatorio.";
+		else if (year == null)
+			return "Error: 'year' es un campo obligatorio.";
+		else if (author == null && editor == null)
+			return "Error: Debe especificar al menos un autor o editor.";
+		else if (URL == null)
+			return "Error: 'URL' es un campo obligatorio.";
+		else 
+			return null;
 	}
 }

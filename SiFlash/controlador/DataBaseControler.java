@@ -103,6 +103,8 @@ public class DataBaseControler
 	 * Null para no filtrar por este campo.
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -262,10 +264,16 @@ public class DataBaseControler
 		Connection conn = database.abreConexion();
 		try
 		{
-			ejecutaString("BEGIN;", conn);
-			modif_pub.insertaPublicacion(publicacion, conn);
-			ejecutaString("COMMIT;", conn);
-			return "La publicación se ha insertado correctamente.";
+			String obligatorios = publicacion.obligatoriosRellenos();
+			if (obligatorios == null)
+			{	
+				ejecutaString("BEGIN;", conn);
+				modif_pub.insertaPublicacion(publicacion, conn);
+				ejecutaString("COMMIT;", conn);
+				return "La publicación se ha insertado correctamente.";
+			}
+			else
+				return obligatorios;
 		}
 		catch (ExistingElementException e) 
 		{

@@ -418,8 +418,11 @@ public class Misc extends Publication
 	}	
 	
 	@Override
-	public boolean obligatoriosRellenos()
+	public String obligatoriosRellenos()
 	{
-		return false;
+		if (URL == null)
+			return "Error: 'URL' es un campo obligatorio.";
+		else 
+			return null;
 	}
 }

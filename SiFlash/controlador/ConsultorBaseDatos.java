@@ -67,6 +67,7 @@ class ConsultorBaseDatos
 	 * @param editors Vector con un conjunto de enteros que representan los idAut de los editores por los que se desea filtrar. Null para no filtrar por este campo.	
 	 * @param title Titulo o parte del título de la publicación sobre la que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_publisher Indica si basta con que el publisher del documento sea parecido (*publisher*).
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no filtrar por este campo.
@@ -159,6 +160,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -228,6 +231,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -291,6 +296,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -354,6 +361,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -417,6 +426,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -480,6 +491,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -544,6 +557,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -608,6 +623,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -672,6 +689,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -734,6 +753,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -797,6 +818,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -860,6 +883,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -987,6 +1012,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param journal Journal o parte del mismo en que se incluye. Null para no 
@@ -1057,6 +1084,8 @@ class ConsultorBaseDatos
 	 * @param title Título o parte del título de la publicación sobre la que queremos 
 	 * realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_title Indica si basta con que el title del documento sea parecido (*title*).
+	 * @param referencia Referencia de la publicación sobre la que queremos realizar la búsqueda. Null para no filtar
+	 * por este campo.
 	 * @param publisher Editorial o parte de la editorial de la publicación sobre la	 
 	 * que queremos realizar la búsqueda. Null para no filtrar por este campo.
 	 * @param parecido_publisher Indica si basta con que el publisher del documento sea 

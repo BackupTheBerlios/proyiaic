@@ -152,7 +152,7 @@ public abstract class Publication
 	 * han sido cumplimentados
 	 * @return El resultado de la comprobación.
 	 */
-	public abstract boolean obligatoriosRellenos();
+	public abstract String obligatoriosRellenos();
 
 	/**
 	 * Genera un elemento XML con la información del objeto.
