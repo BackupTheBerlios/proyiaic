@@ -1,12 +1,3 @@
 <listaCampos tipoPublicaciones="16383" referencia="">
-  <authors>
-  	<author idAut="1">
-  	  		<nombre>Fernando</nombre>
-  	  		<apellidos>Rosa-Velardo</apellidos>
-  	</author>
-  	<author idAut="7">
-  	  		<nombre>David de</nombre>
-  	  		<apellidos>Frutos-Escrig</apellidos>
-  	</author>
-  </authors>
-</listaCampos>
+  <title>'</title>
+ </listaCampos>

@@ -302,7 +302,7 @@ public class ConversorXML_BBDD
 			int i = 0;
 			while (blanco(c.charAt(i)))
 				i++;
-			int j = c.length();
+			int j = c.length()-1;
 			while (blanco(c.charAt(j)))
 				j--;
 			return c.substring(i, j+1);
@@ -436,8 +436,10 @@ public class ConversorXML_BBDD
 			Element root = doc.getRootElement();
 			String proyecto = root.getChild("proyecto").getValue();
 			String jefe = root.getChild("jefe").getValue();
-
-			return dbc.insertaProyecto(proyecto, jefe);
+			if (proyecto.length() == 0)
+				return "Error: Nombre de proyecto no válido.";
+			else
+				return dbc.insertaProyecto(proyecto, jefe);
 		}
 		catch(BDException e)
 		{

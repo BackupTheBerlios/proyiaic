@@ -1324,7 +1324,7 @@ class ConsultorBaseDatos
 
 			cons += "SELECT DISTINCT " + tabla_datos +"A.idDoc " ;
 			cons += "FROM " + tabla_datos + " AS " + tabla_datos +"A WHERE (" +tabla_datos + "A." + campo_datos;
-			cons += " LIKE ('" + palabra + "')))";
+			cons += " LIKE (\"" + Publication.sustituirComillasSQL(palabra) + "\")))";
 		}
 		if (cons == null ) cons = new String ("TRUE");
 		else cons += ")";
@@ -1365,7 +1365,7 @@ class ConsultorBaseDatos
 		cons += alias + ".idDoc IN (";
 		cons += "SELECT DISTINCT " + tabla_data +"A.idDoc ";
 		cons += "FROM " + tabla_data + " AS " + tabla_data +"A WHERE (" +tabla_data + "A." + campo_de_busqueda;
-		cons += " LIKE ('" + palabra + "')))";
+		cons += " LIKE (\"" + Publication.sustituirComillasSQL(palabra) + "\")))";
 		return cons;		
 
 	}  
@@ -1385,8 +1385,8 @@ class ConsultorBaseDatos
 		if (authors== null || authors.size() == 0) return v_res;
 		String cons = new String("SELECT * FROM autoreseditores WHERE (");		
 		for (int i = 0; i<authors.size();i++){
-			String palabra_nombre = new String ("'%" + authors.get(i).getNombre() + "%'");
-			String palabra_apellidos = new String ("'%" + authors.get(i).getApellidos() + "%'");
+			String palabra_nombre = new String ("\"%" + Publication.sustituirComillasSQL(authors.get(i).getNombre()) + "%\"");
+			String palabra_apellidos = new String ("\"%" + Publication.sustituirComillasSQL(authors.get(i).getApellidos()) + "%\"");
 			if (i > 0) cons += " OR ";
 			if (authors.get(i).getNombre()!=null){
 				cons += "nombre LIKE " + palabra_nombre;

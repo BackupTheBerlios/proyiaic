@@ -63,9 +63,9 @@ public class Main
 
 			//-------------------------------------------------------------------------
 //			
-			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\inbook.xml");
-			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-			System.out.println(conv.procesarInsercion(is));
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\inbook.xml");
+//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+//			System.out.println(conv.procesarInsercion(is));
 			
 			//-------------------------------------------------------------------------
 			
@@ -75,8 +75,8 @@ public class Main
 			
 			//-------------------------------------------------------------------------
 			
-//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarNuevoUsuario(new FileInputStream(".\\ficherosDePrueba\\inserciones\\usuario.xml")));
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarNuevoProyecto(new FileInputStream(".\\ficherosDePrueba\\inserciones\\proyecto.xml")));
 		
 			//-------------------------------------------------------------------------
 		
