@@ -143,7 +143,7 @@ public class DataBaseControler
 			}
 			if (proyecto != null)
 			{
-				result = database.exeQuery("SELECT nombre FROM proyectos WHERE nombre = '" + Publication.sustituirComillasSQL(proyecto) + "';", conn);
+				result = database.exeQuery("SELECT nombre FROM proyectos WHERE nombre = \"" + Publication.sustituirComillasSQL(proyecto) + "\";", conn);
 				if (result == null || result.size() == 0) throw new NonExistingElementException(ExistenceException.PROYECTO);
 			}
 			Vector <AutorEditor> v_autores = consultor.buscaAutores(autores, conn);
@@ -757,7 +757,7 @@ public class DataBaseControler
 	 */
 	public boolean consultaExistenciaKey(String key, Connection conn) throws BDException 
 	{		
-		Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = '" + key + "';", conn);
+		Vector<Object[]> resultado = database.exeQuery("SELECT clave FROM claves WHERE clave = \"" + Publication.sustituirComillasSQL(key) + "\";", conn);
 		if (resultado.size() == 0)
 			return false;
 		else

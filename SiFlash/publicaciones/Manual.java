@@ -265,47 +265,47 @@ public class Manual extends Publication
 		str1 += Integer.toString(getIdDoc());
 
 		if (getTitle()!= null)
-			str1 += ",'" + sustituirComillasSQL(getTitle()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getTitle()) + "\"";
 		else str1+= ",null";
 
 		if (getOrganization()!=null)
-			str1 += ",'" + sustituirComillasSQL(getOrganization()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getOrganization()) + "\"";
 		else str1+= ",null";
 
 		if(getAddress()!=null)
-			str1 += ",'" + sustituirComillasSQL(getAddress()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getAddress()) + "\"";
 		else str1+= ",null";		
 
 		if(getEdition()!=null)
-			str1 += ",'" + sustituirComillasSQL(getEdition()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getEdition()) + "\"";
 		else str1+= ",null";		
 
 		if(getMonth()!=null)
-			str1 += ",'" + sustituirComillasSQL(getMonth()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getMonth()) + "\"";
 		else str1+= ",null";
 
 		if (getYear()!=null)
-			str1 += ",'" + sustituirComillasSQL(getYear()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getYear()) + "\"";
 		else str1+= ",null";
 
 		if(getNote()!=null)
-			str1 += ",'" + sustituirComillasSQL(getNote()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getNote()) + "\"";
 		else str1+= ",null";
 
 		if(get_abstract()!=null)
-			str1 += ",'" + sustituirComillasSQL(get_abstract()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(get_abstract()) + "\"";
 		else str1+= ",null";
 
 		if(getURL()!=null)
-			str1 += ",'" + sustituirComillasSQL(getURL()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getURL()) + "\"";
 		else str1+= ",null";
 
 		if(getUser()!=null)
-			str1 += ",'" + sustituirComillasSQL(getUser()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getUser()) + "\"";
 		else str1+= ",null";
 
 		if(getReferencia()!=null)
-			str1 += ",'" + sustituirComillasSQL(getReferencia()) + "'";
+			str1 += ",\"" + sustituirComillasSQL(getReferencia()) + "\"";
 		else str1+= ",null";
 
 		str1+=");";

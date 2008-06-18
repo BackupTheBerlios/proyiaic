@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
+import parserFicherosBibtex.CampoPublicacion;
 import personas.AutorEditor;
 import controlador.DataBaseControler;
 import controlador.exceptions.ExistingElementException;
@@ -651,7 +652,7 @@ public abstract class Publication
 		if (proyecto != null)
 		{
 			String str = new String ("INSERT INTO pertenecea VALUES(" + getIdDoc());
-			str += ",'" + proyecto + "');";
+			str += ",\"" + sustituirComillasSQL(proyecto) + "\");";
 			vector.add(str);
 		}
 		
@@ -664,12 +665,11 @@ public abstract class Publication
 				if (k != null && !k.equals(" "))
 				{
 					if (!dbc.consultaExistenciaKey(k, conn))
-						dbc.ejecutaString("INSERT INTO claves VALUES('" + k + "');", conn);
-					vector.add("INSERT INTO tienekey VALUES (" + getIdDoc() + ",'" + k +"');");
+						dbc.ejecutaString("INSERT INTO claves VALUES(\"" + k + "\");", conn);
+					vector.add("INSERT INTO tienekey VALUES (" + getIdDoc() + ",\"" + sustituirComillasSQL(k) +"\");");
 				}			
 			}
 		}
-		
 		return vector;
 	}
 	
@@ -680,10 +680,11 @@ public abstract class Publication
 	 */
 	public static String sustituirComillasSQL(String s)
 	{
-		String[] strings = s.split("\'");
+		s = CampoPublicacion.sustituirTildes(s);
+		String[] strings = s.split("\"");
 		String result = strings[0];
 		for (int i = 1; i < strings.length; i++)
-			result += "\\\'" + strings[i];
+			result += "\\\"" + strings[i];
 		return result;
 	}
 	

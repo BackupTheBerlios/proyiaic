@@ -28,7 +28,7 @@ public class CampoPublicacion extends Campo
 		this.valor = valor;
 		this.esUltimo = ult;
 		
-		sustituirTildes();
+		valor = sustituirTildes(valor);
 	}
 	
 	public boolean getEsUltimo()
@@ -43,22 +43,24 @@ public class CampoPublicacion extends Campo
 	 * Sustituye las cadenas de caracteres que representan las tildes,
 	 * por la propia letra con tilde.
 	 * También sustituye la cadena que representa la letra 'ñ' por la propia letra.
+	 * @param s Cadena a analizar.
+	 * @return Cadena sin tildes ni 'ñ'.
 	 */
-	public void sustituirTildes() 
+	public static String sustituirTildes(String s) 
 	{
-		if (valor != null)
+		if (s != null)
 		{
 			int estado = 0;
 			String almacen = "";
 			String nuevoValor = "";
 			int indice = 0;
-			int longit = valor.length();
+			int longit = s.length();
 			
 			char actual;
 			char letraParaTilde = '\0';
 			while(indice < longit)
 			{
-				actual = valor.charAt(indice++);
+				actual = s.charAt(indice++);
 				switch(estado)
 				{
 					case 0: almacen += actual;
@@ -337,8 +339,9 @@ public class CampoPublicacion extends Campo
 				}
 			}
 			nuevoValor += almacen;
-			valor = nuevoValor;
+			return nuevoValor;
 		}
+		else return s;
 	}
 	
 	/**

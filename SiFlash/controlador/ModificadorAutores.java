@@ -51,7 +51,7 @@ public class ModificadorAutores
 		int idAut = consultaIdAutor(nombre, apellidos, conn);		
 		if (idAut > 0) throw new ExistingElementException(ExistenceException.AUTOR);
 		
-		String insercion = "INSERT INTO autoreseditores VALUES (0,'" + Publication.sustituirComillasSQL(nombre) + "','" + Publication.sustituirComillasSQL(apellidos) + "');";
+		String insercion = "INSERT INTO autoreseditores VALUES (0,\"" + Publication.sustituirComillasSQL(nombre) + "\",\"" + Publication.sustituirComillasSQL(apellidos) + "\");";
 		theBaseDatos.exeUpdate(insercion, conn);
 	}
 
@@ -70,8 +70,8 @@ public class ModificadorAutores
 	protected int consultaIdAutor(String nombre, String apellidos, Connection conn) throws BDException 
 	{		
 		String consulta = "SELECT idAut FROM AutoresEditores WHERE ";
-		if (nombre != null) consulta += "nombre = '" + nombre + "' AND ";
-		if (apellidos != null) consulta += "apellidos = '" + apellidos + "' AND ";
+		if (nombre != null) consulta += "nombre = \"" + Publication.sustituirComillasSQL(nombre) + "\" AND ";
+		if (apellidos != null) consulta += "apellidos = \"" + Publication.sustituirComillasSQL(apellidos) + "\" AND ";
 		consulta += "TRUE;";
 
 

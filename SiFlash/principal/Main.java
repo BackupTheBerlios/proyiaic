@@ -1,14 +1,9 @@
 package principal;
 
 import java.io.FileInputStream;
-import java.util.LinkedList;
+import java.io.InputStream;
 
 import controlador.ConversorXML_BBDD;
-import controlador.DataBaseControler;
-
-import parserFicherosBibtex.Campo;
-import parserFicherosBibtex.CampoPublicacion;
-import publicaciones.Article;
 
 
 
@@ -68,9 +63,9 @@ public class Main
 
 			//-------------------------------------------------------------------------
 //			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\inproceedings.xml");
-//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarInsercion(is));
+			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\inbook.xml");
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarInsercion(is));
 			
 			//-------------------------------------------------------------------------
 			
@@ -101,8 +96,8 @@ public class Main
 //			System.out.println(db_controler.obtenerListaAutoresEditoresYProyectosParaBusquedas());
 			//-------------------------------------------------------------------------
 			
-			DataBaseControler db_controler = new DataBaseControler();
-			System.out.println(db_controler.obtenerUsuariosYPublicacionesProyecto("Proyecto1"));
+//			DataBaseControler db_controler = new DataBaseControler();
+//			System.out.println(db_controler.obtenerUsuariosYPublicacionesProyecto("Proyecto1"));
 //			//-------------------------------------------------------------------
 			
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();

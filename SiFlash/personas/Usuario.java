@@ -60,7 +60,7 @@ public class Usuario
 
 	/**
 	 * Cambia el actual nombre de usuario al que se le pasa por parámetro.
-	 * @param Nombre que se le dará al usuario.
+	 * @param nombre Nombre que se le dará al usuario.
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -76,7 +76,7 @@ public class Usuario
 
 	/**
 	 * Cambia el password del usuario al que se pasa por parámetro.
-	 * @param El password que se pondrá al usuario.
+	 * @param password El password que se pondrá al usuario.
 	 */
 	public void setPassword(String password) {
 		this.password = password;
