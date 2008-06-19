@@ -326,14 +326,20 @@ public class Misc extends Publication
 			if (array[8] != null) user = (String) array[8]; else user = null;
 			if (array[9] != null) referencia = (String) array[9]; else referencia = null;
 			if (array[10] != null) proyecto = (String) array[10]; else proyecto = null;
-			id_aut = ((Long) array[11]).intValue();			
-			if (array[12] != null) n_aut = (String) array[12]; else n_aut = null;
-			if (array[13] != null) ap_aut = (String) array[13]; else ap_aut = null;
-			escrito_edit = ((Boolean) array[14]).booleanValue();
 			if (array[15] != null) clave = (String) array[15]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
-			if (escrito_edit == true) autores.add(autor1);
-			else editores.add(autor1);	
+			
+			if (array[11] != null)
+			{	
+				id_aut = ((Long) array[11]).intValue();			
+				if (array[14] != null) n_aut = (String) array[12]; else n_aut = null;
+				if (array[15] != null) ap_aut = (String) array[13]; else ap_aut = null;
+				escrito_edit = ((Boolean) array[14]).booleanValue();
+				
+				AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
+				if (escrito_edit == true) autores.add(autor1);
+				else editores.add(autor1);
+			}
+			
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
 			if (autores.isEmpty()) autores = null;
@@ -359,7 +365,7 @@ public class Misc extends Publication
 				if (array[15] != null) clave = (String) array[15]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
+				AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) misc1.addAutor(autor1);				
 
 

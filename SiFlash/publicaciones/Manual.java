@@ -70,7 +70,7 @@ public class Manual extends Publication
 
 		}
 	}
-	
+
 	/**
 	 * Establece el valor de un atributo del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
@@ -110,7 +110,7 @@ public class Manual extends Publication
 			proyecto = valorString;
 	}
 
-	
+
 	/**
 	 * Establece el valor de un atributo(lista) del documento.
 	 * @param nombreCampo Nombre del campo que se quiere insertar.
@@ -170,7 +170,7 @@ public class Manual extends Publication
 		Element eKey = new Element("key");
 		eKey.addContent(quitarLlaves(convertirTextoBibtexKeys(key), quitarLlaves));
 		elemento.addContent(eKey);
-		
+
 		Element eURL = new Element("URL");
 		eURL.addContent(URL);
 		elemento.addContent(eURL);
@@ -338,7 +338,7 @@ public class Manual extends Publication
 		return vector; 
 	}
 
-	
+
 	/**
 	 * Genera una conjunto de Manuales a partir del resultado obtenido al realizar una consulta 
 	 * en la base de datos.
@@ -376,14 +376,19 @@ public class Manual extends Publication
 			if (array[10] != null) user = (String) array[10]; else user = null;
 			if (array[11] != null) referencia = (String) array[11]; else referencia = null;
 			if (array[12] != null) proyecto = (String) array[12]; else proyecto = null;
-			id_aut = ((Long) array[13]).intValue();			
-			if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
-			if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
-			escrito_edit = ((Boolean) array[16]).booleanValue();
+			if (array[13] != null)
+			{	
+				id_aut = ((Long) array[13]).intValue();			
+				if (array[14] != null) n_aut = (String) array[14]; else n_aut = null;
+				if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
+				escrito_edit = ((Boolean) array[16]).booleanValue();
+				
+				AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
+				if (escrito_edit == true) autores.add(autor1);
+				else editores.add(autor1);
+			}
+			
 			if (array[17] != null) clave = (String) array[17]; else clave = null;
-			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
-			if (escrito_edit == true) autores.add(autor1);
-			else editores.add(autor1);	
 //			if (proyecto != null) proyectos.add(proyecto);
 			if (clave != null) claves.add(clave);
 			if (autores.isEmpty()) autores = null;
@@ -409,7 +414,7 @@ public class Manual extends Publication
 				if (array[17] != null) clave = (String) array[17]; else clave = null;
 
 
-				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
+				AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				
 				if (escrito_edit == true) man1.addAutor(autor1);				
 
 
@@ -470,7 +475,7 @@ public class Manual extends Publication
 		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
 				user, proyecto);
 	}	
-	
+
 	@Override
 	public String obligatoriosRellenos()
 	{
