@@ -144,6 +144,9 @@ public class ConversorXML_BBDD
 			Document doc = builder.build(input);
 			Element root = doc.getRootElement();
 			tipoPublicaciones = Integer.parseInt(root.getAttributeValue("tipoPublicaciones"));
+			referencia = root.getAttributeValue("referencia");
+			if (referencia != null && referencia.length() == 0)
+				referencia = null;
 			List<Element> campos = (List<Element>)root.getChildren();
 
 			Iterator<Element> it = campos.iterator();
@@ -218,8 +221,6 @@ public class ConversorXML_BBDD
 		String nombreCampo = campo.getName();
 		if (nombreCampo.equals("title"))
 			title = campo.getValue();
-		else if (nombreCampo.equals("referencia"))
-			referencia = campo.getValue();
 		else if (nombreCampo.equals("yearIni"))
 			yearIni = Integer.parseInt(campo.getValue());
 		else if (nombreCampo.equals("yearFin"))
