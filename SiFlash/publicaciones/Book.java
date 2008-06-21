@@ -69,6 +69,7 @@ public class Book extends Publication
 	 * Constructor de la clase dados sus atributos.
 	 * @param idDoc Identificador del documento.
 	 * @param referencia Referencia del documento.
+	 * @param doi DOI del documento.
 	 * @param title Título del documento.
 	 * @param year Año del documento.
 	 * @param month Mes del documento.
@@ -87,7 +88,7 @@ public class Book extends Publication
 	 * @param address Dirección que le corresponde al documento.
 	 * @param edition Edicion del documento.
 	 */
-	public Book(int idDoc, String referencia, String title,
+	public Book(int idDoc, String referencia, String doi, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user, String proyecto,
 			LinkedList<AutorEditor> author, LinkedList<AutorEditor> editor,
@@ -101,7 +102,7 @@ public class Book extends Publication
 		this.series = series;
 		this.address = address;
 		this.edition = edition;
-		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note,
+		super.SetAll(idDoc, referencia, doi, title, year, month, url, _abstract, note,
 				key, user, proyecto);
 	}
 
@@ -176,6 +177,8 @@ public class Book extends Publication
 			URL = valorString;
 		else if (nombreCampo.equalsIgnoreCase("proyecto") && proyecto == null)
 			proyecto = valorString;
+		else if (nombreCampo.equalsIgnoreCase("DOI") && DOI == null)
+			DOI = valorString;
 	}
 
 	/**
@@ -200,6 +203,8 @@ public class Book extends Publication
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
 			elemento.setAttribute("referencia", quitarLlaves(referencia, quitarLlaves));
+		if (DOI != null)
+			elemento.setAttribute("DOI", quitarLlaves(DOI, quitarLlaves));
 
 		Element eTitle = new Element("title");
 		eTitle.addContent(quitarLlaves(title, quitarLlaves));
@@ -454,6 +459,10 @@ public class Book extends Publication
 		if(getReferencia()!=null)
 			str1 += ",\"" + sustituirComillasSQL(getReferencia()) + "\"";
 		else str1+= ",null";
+		
+		if(getDOI()!=null)
+			str1 += ",\"" + sustituirComillasSQL(getDOI()) + "\"";
+		else str1+= ",null";
 
 		str1+=");";
 
@@ -516,7 +525,7 @@ public class Book extends Publication
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
 			int idDoc,id_aut;
-			String title,publisher,volume,number,year,series, address, edition;
+			String title,doi,publisher,volume,number,year,series, address, edition;
 			String month, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
@@ -547,6 +556,7 @@ public class Book extends Publication
 			if (array[18] != null) ap_aut = (String) array[18]; else ap_aut = null;
 			escrito_edit = ((Boolean) array[19]).booleanValue();
 			if (array[20] != null) clave = (String) array[20]; else clave = null;
+			if (array[21] != null) doi = (String) array[21]; else doi = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
@@ -554,7 +564,7 @@ public class Book extends Publication
 			if (clave != null) claves.add(clave);
 			if (autores.isEmpty()) autores = null;
 			if (editores.isEmpty()) editores = null;
-			Book book1 = new Book(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,editores,publisher,volume,number,series,address,edition);
+			Book book1 = new Book(idDoc,referencia,doi,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,editores,publisher,volume,number,series,address,edition);
 			vector.add(book1);
 
 			// Evaluamos el cambio_pub
@@ -572,7 +582,7 @@ public class Book extends Publication
 				if (array[17] != null) n_aut = (String) array[17]; else n_aut = null;
 				if (array[18] != null) ap_aut = (String) array[18]; else ap_aut = null;
 				escrito_edit = ((Boolean) array[19]).booleanValue();
-				if (array[20] != null) clave = (String) array[21]; else clave = null;
+				if (array[20] != null) clave = (String) array[20]; else clave = null;
 
 
 				autor1 = new AutorEditor(id_aut,n_aut,ap_aut);				

@@ -1,4 +1,4 @@
-<publication tipo="misc" referencia="la+referencia+del+misc">
+<publication tipo="misc" referencia="la+referencia+del+misc" DOI="El DOI">
 	<title>El título del misc</title>
 	<year>2006</year>
 	<month>El mes</month>

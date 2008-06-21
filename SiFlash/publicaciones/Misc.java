@@ -94,6 +94,8 @@ public class Misc extends Publication
 			URL = valorString;
 		else if (nombreCampo.equalsIgnoreCase("proyecto") && proyecto == null)
 			proyecto = valorString;
+		else if (nombreCampo.equalsIgnoreCase("DOI") && DOI == null)
+			DOI = valorString;
 	}
 
 	
@@ -117,6 +119,8 @@ public class Misc extends Publication
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
 			elemento.setAttribute("referencia", quitarLlaves(referencia, quitarLlaves));
+		if (DOI != null)
+			elemento.setAttribute("DOI", quitarLlaves(DOI, quitarLlaves));
 
 		Element eTitle = new Element("title");
 		eTitle.addContent(quitarLlaves(title, quitarLlaves));
@@ -261,6 +265,10 @@ public class Misc extends Publication
 		str1 += ",\"" + sustituirComillasSQL(getReferencia()) + "\"";
 		else str1+= ",null";
 		
+		if(getDOI()!=null)
+			str1 += ",\"" + sustituirComillasSQL(getDOI()) + "\"";
+			else str1+= ",null";
+		
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
@@ -306,7 +314,7 @@ public class Misc extends Publication
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
 			int idDoc,id_aut;
-			String title, month,howpublished,note, abstracts, URL,user, referencia; 
+			String doi, title, month,howpublished,note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave,year;
 			LinkedList<AutorEditor> autores,editores;
 //			Vector<String> proyectos = new Vector<String>();
@@ -327,6 +335,7 @@ public class Misc extends Publication
 			if (array[9] != null) referencia = (String) array[9]; else referencia = null;
 			if (array[10] != null) proyecto = (String) array[10]; else proyecto = null;
 			if (array[15] != null) clave = (String) array[15]; else clave = null;
+			if (array[16] != null) doi = (String) array[16]; else doi = null;
 			
 			if (array[11] != null)
 			{	
@@ -344,7 +353,7 @@ public class Misc extends Publication
 			if (clave != null) claves.add(clave);
 			if (autores.isEmpty()) autores = null;
 			if (editores.isEmpty()) editores = null;
-			Misc misc1 = new Misc(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,howpublished);
+			Misc misc1 = new Misc(idDoc,referencia,doi,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,howpublished);
 			vector.add(misc1);
 
 			// Evaluamos el cambio_pub
@@ -400,6 +409,7 @@ public class Misc extends Publication
 	 * Constructor de la clase dados sus atributos.
 	 * @param idDoc Identificador del documento.
 	 * @param referencia Referencia del documento.
+	 * @param doi DOI del documento.
 	 * @param title Título del documento.
 	 * @param year Año del documento.
 	 * @param month Mes del documento.
@@ -412,14 +422,14 @@ public class Misc extends Publication
 	 * @param author Autores del documento.
 	 * @param howpublished Forma en la que ha sido publicado el documento.
 	 */		
-	public Misc(int idDoc, String referencia, String title,
+	public Misc(int idDoc, String referencia, String doi, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			String proyecto,LinkedList<AutorEditor> author, 
 			String howpublished) {
 		this.author = author;
 		this.howPublished = howpublished;
-		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
+		super.SetAll(idDoc, referencia, doi, title, year, month, url, _abstract, note, key,
 				user, proyecto);
 	}	
 	

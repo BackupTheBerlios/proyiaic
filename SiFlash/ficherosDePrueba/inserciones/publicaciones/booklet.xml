@@ -1,7 +1,9 @@
-<publication tipo="article"  referencia="la+referencia+del+arti'cle" DOI="El DOI">
-	<title>El titulo del article</title>
-	<year>2006</year>
+<publication tipo="booklet"  referencia="la+referencia+del+booklet" DOI="El DOI">
+	<title>El titulo del booklet</title>
+	<howpublished>El howpublished</howpublished>
+	<address>El address</address>
 	<month>El mes</month>
+	<year>2006</year>
 	<authors>
 		<author>
 			<nombre>Alfonso</nombre>
@@ -12,10 +14,6 @@
 			<apellidos>ApellidosAut{\'o}r2</apellidos>
 		</author>
 	</authors>
-	<journal>El journal</journal>
-	<volume>El volume</volume>
-	<number>El number</number>
-	<pages>El pages</pages>
 	<url>El url</url>
 	<abstract>El abstract</abstract>
 	<note>El note</note>

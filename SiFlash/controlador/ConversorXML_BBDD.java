@@ -156,7 +156,6 @@ public class ConversorXML_BBDD
 				if (!actual.getValue().equals(""))
 					procesarCampo(actual);
 			}
-
 			return realizarConsulta();
 		}
 		catch(Exception e)

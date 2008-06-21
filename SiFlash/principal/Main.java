@@ -63,7 +63,7 @@ public class Main
 
 			//-------------------------------------------------------------------------
 //			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\techreport.xml");
+//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\unpublished.xml");
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarInsercion(is));
 			

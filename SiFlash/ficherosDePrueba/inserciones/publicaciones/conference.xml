@@ -1,5 +1,5 @@
-<publication tipo="inproceedings" referencia="la+referencia+del+inproceedings" DOI="EL DOI">
-	<title>El titulo del inproceedings</title>
+<publication tipo="conference" referencia="la+referencia+de+la+conference" DOI="EL DOI">
+	<title>El titulo del conference</title>
 	<booktitle>El booktitle</booktitle>
 	<year>2006</year>
 	<crossref>El crossref</crossref>

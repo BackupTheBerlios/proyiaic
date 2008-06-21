@@ -109,6 +109,8 @@ public class PhdThesis extends Publication
 			URL = valorString;
 		else if (nombreCampo.equalsIgnoreCase("proyecto") && proyecto == null)
 			proyecto = valorString;
+		else if (nombreCampo.equalsIgnoreCase("DOI") && DOI == null)
+			DOI = valorString;
 	}
 
 	
@@ -132,6 +134,8 @@ public class PhdThesis extends Publication
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
 			elemento.setAttribute("referencia", quitarLlaves(referencia, quitarLlaves));
+		if (DOI != null)
+			elemento.setAttribute("DOI", quitarLlaves(DOI, quitarLlaves));
 
 		Element eTitle = new Element("title");
 		eTitle.addContent(quitarLlaves(title, quitarLlaves));
@@ -310,6 +314,10 @@ public class PhdThesis extends Publication
 		str1 += ",\"" + sustituirComillasSQL(getReferencia()) + "\"";
 		else str1+= ",null";
 		
+		if(getDOI()!=null)
+			str1 += ",\"" + sustituirComillasSQL(getDOI()) + "\"";
+			else str1+= ",null";
+		
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
@@ -355,7 +363,7 @@ public class PhdThesis extends Publication
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
 			int idDoc,id_aut;
-			String title,address,year;
+			String doi, title,address,year;
 			String month,type,school, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
@@ -383,6 +391,7 @@ public class PhdThesis extends Publication
 			if (array[15] != null) ap_aut = (String) array[15]; else ap_aut = null;
 			escrito_edit = ((Boolean) array[16]).booleanValue();
 			if (array[17] != null) clave = (String) array[17]; else clave = null;
+			if (array[18] != null) doi = (String) array[18]; else doi = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
@@ -390,7 +399,7 @@ public class PhdThesis extends Publication
 			if (clave != null) claves.add(clave);
 			if (autores.isEmpty()) autores = null;
 			if (editores.isEmpty()) editores = null;
-			PhdThesis phd1 = new PhdThesis(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,school,type);
+			PhdThesis phd1 = new PhdThesis(idDoc,referencia,doi,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,school,type);
 			vector.add(phd1);
 
 			// Evaluamos el cambio_pub
@@ -447,6 +456,7 @@ public class PhdThesis extends Publication
 	 * Constructor de la clase dados sus atributos.
 	 * @param idDoc Identificador del documento.
 	 * @param referencia Referencia del documento.
+	 * @param doi DOI del documento.
 	 * @param title Título del documento.
 	 * @param year Año del documento.
 	 * @param month Mes del documento.
@@ -461,7 +471,7 @@ public class PhdThesis extends Publication
 	 * @param school Escuela en la que se elaboró el documento.
 	 * @param type Tipo del contenido del documento.
 	 */			
-	public PhdThesis(int idDoc, String referencia, String title,
+	public PhdThesis(int idDoc, String referencia, String doi, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			String proyecto,LinkedList<AutorEditor> author, 
@@ -470,7 +480,7 @@ public class PhdThesis extends Publication
 		this.address = address;
 		this.type = type;
 		this.school = school;
-		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
+		super.SetAll(idDoc, referencia, doi, title, year, month, url, _abstract, note, key,
 				user, proyecto);
 	}	
 	

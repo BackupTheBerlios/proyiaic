@@ -103,6 +103,8 @@ public class Booklet extends Publication
 			URL = valorString;
 		else if (nombreCampo.equalsIgnoreCase("proyecto") && proyecto == null)
 			proyecto = valorString;
+		else if (nombreCampo.equalsIgnoreCase("DOI") && DOI == null)
+			DOI = valorString;
 	}
 
 	/**
@@ -125,6 +127,8 @@ public class Booklet extends Publication
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
 			elemento.setAttribute("referencia", quitarLlaves(referencia, quitarLlaves));
+		if (DOI != null)
+			elemento.setAttribute("DOI", quitarLlaves(DOI, quitarLlaves));
 
 		Element eTitle = new Element("title");
 		eTitle.addContent(quitarLlaves(title, quitarLlaves));
@@ -285,6 +289,10 @@ public class Booklet extends Publication
 		str1 += ",\"" + sustituirComillasSQL(getReferencia()) + "\"";
 		else str1+= ",null";
 		
+		if(getDOI()!=null)
+			str1 += ",\"" + sustituirComillasSQL(getDOI()) + "\"";
+			else str1+= ",null";
+		
 		str1+=");";
 			
 		DataBaseControler dbc = new DataBaseControler();
@@ -329,7 +337,7 @@ public class Booklet extends Publication
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
 			int idDoc,id_aut;
-			String title,address,year;
+			String doi, title,address,year;
 			String month,howpublished,note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
@@ -356,6 +364,7 @@ public class Booklet extends Publication
 			if (array[14] != null) ap_aut = (String) array[14]; else ap_aut = null;
 			escrito_edit = ((Boolean) array[15]).booleanValue();
 			if (array[16] != null) clave = (String) array[16]; else clave = null;
+			if (array[17] != null) doi = (String) array[17]; else doi = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
@@ -363,7 +372,7 @@ public class Booklet extends Publication
 			if (clave != null) claves.add(clave);
 			if (autores.isEmpty()) autores = null;
 			if (editores.isEmpty()) editores = null;
-			Booklet bkl1 = new Booklet(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,howpublished);
+			Booklet bkl1 = new Booklet(idDoc,referencia,doi,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,howpublished);
 			vector.add(bkl1);
 
 			// Evaluamos el cambio_pub
@@ -419,6 +428,7 @@ public class Booklet extends Publication
 	 * Constructor de la clase dados sus atributos.
 	 * @param idDoc Identificador del documento.
 	 * @param referencia Referencia del documento.
+	 * @param doi DOI del documento.
 	 * @param title Título del documento.
 	 * @param year Año del documento.
 	 * @param month Mes del documento.
@@ -432,7 +442,7 @@ public class Booklet extends Publication
 	 * @param address Dirección que le corresponde al documento.
 	 * @param howpublished Forma en la que ha sido publicado.		
 	 */	
-	public Booklet(int idDoc, String referencia, String title,
+	public Booklet(int idDoc, String referencia, String doi, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			String proyecto,LinkedList<AutorEditor> author, 
@@ -440,7 +450,7 @@ public class Booklet extends Publication
 		this.author = author;
 		this.address = address;
 		this.howPublished = howpublished;
-		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
+		super.SetAll(idDoc, referencia, doi, title, year, month, url, _abstract, note, key,
 				user, proyecto);
 	}	
 	

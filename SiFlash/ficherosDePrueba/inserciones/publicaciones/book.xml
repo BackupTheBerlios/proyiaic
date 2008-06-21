@@ -1,24 +1,21 @@
-<publication tipo="inproceedings" referencia="la+referencia+del+inproceedings" DOI="EL DOI">
-	<title>El titulo del inproceedings</title>
-	<booktitle>El booktitle</booktitle>
+<publication tipo="book"  referencia="la+referencia+del+book" DOI="El DOI">
+	<title>El titulo del book</title>
+	<publisher>El publisher</publisher>
 	<year>2006</year>
-	<crossref>El crossref</crossref>
 	<volume>El volume</volume>
 	<number>El number</number>
 	<series>El series</series>
-	<pages>El pages</pages>
 	<address>El address</address>
-	<month>El month</month>
-	<organization>El organization</organization>
-	<publisher>El publisher</publisher>
+	<edition>El edition</edition>
+	<month>El mes</month>
 	<authors>
 		<author>
-			<nombre>NombreAutor1</nombre>
-			<apellidos>ApellidosAutor1</apellidos>
+			<nombre>Alfonso</nombre>
+			<apellidos>Cruces Orb{\'{\i}}s</apellidos>
 		</author>
 		<author>
 			<nombre>NombreAutor2</nombre>
-			<apellidos>ApellidosAutor2</apellidos>
+			<apellidos>ApellidosAut{\'o}r2</apellidos>
 		</author>
 	</authors>
 	<editors>

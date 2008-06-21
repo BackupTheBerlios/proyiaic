@@ -1,4 +1,4 @@
-<publication tipo="unpublished" referencia="la+referencia+del+unpublished">
+<publication tipo="unpublished" referencia="la+referencia+del+unpublished" DOI="El DOI">
 	<title>El titulo del unpublished</title>
 	<year>2006</year>
 	<month>El mes</month>

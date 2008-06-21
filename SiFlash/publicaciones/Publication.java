@@ -33,6 +33,11 @@ public abstract class Publication
 	 * Referencia del documento BibTeX.
 	 */
 	protected String referencia;
+	
+	/**
+	 * DOI del documento.
+	 */
+	protected String DOI;
 
 	/**
 	 * Título que le corresponde a la publicación.
@@ -106,11 +111,12 @@ public abstract class Publication
 	 * @param user Usuario que ha subido la publicación al sistema.
 	 * @param proyecto Proyectos a los que pertenece la publicación.
 	 */
-	protected void SetAll(int idDoc, String referencia, String title, String year,
+	protected void SetAll(int idDoc, String referencia, String doi, String title, String year,
 			String month, String url, String _abstract, String note, Vector<String> keys,
 			String user, String proyecto) {
 		this.idDoc = idDoc;
 		this.referencia = referencia;
+		this.DOI = doi;
 		this.title = title;
 		this.year = year;
 		this.month = month;
@@ -512,6 +518,13 @@ public abstract class Publication
 	 */
 	public String getReferencia() {
 		return referencia;
+	}
+	
+	/**
+	 * @return El DOI de la publicación.
+	 */
+	public String getDOI() {
+		return DOI;
 	}
 
 

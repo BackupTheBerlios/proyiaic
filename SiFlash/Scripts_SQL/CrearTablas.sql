@@ -30,6 +30,7 @@ create table Article (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 create table Book (
@@ -48,6 +49,7 @@ create table Book (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 create table Booklet (
@@ -62,6 +64,7 @@ create table Booklet (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -84,6 +87,7 @@ create table Conference (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -106,6 +110,7 @@ create table Inbook (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -130,6 +135,7 @@ create table Incollection (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -152,6 +158,7 @@ create table Inproceedings (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -168,6 +175,7 @@ create table Manual (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));	
 
 
@@ -184,6 +192,7 @@ create table Mastersthesis (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -198,6 +207,7 @@ create table Misc (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -214,6 +224,7 @@ create table Phdthesis (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -234,6 +245,7 @@ create table Proceedings (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -251,6 +263,7 @@ create table Techreport (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));
 
 
@@ -264,6 +277,7 @@ create table Unpublished (
 	URL varchar(512),
 	user varchar(20) not null,
 	referencia varchar(50),
+	doi varchar(50),
 	foreign key(user) references Usuarios(nombre));	
 
 

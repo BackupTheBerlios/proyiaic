@@ -116,6 +116,8 @@ public class TechReport extends Publication
 			URL = valorString;
 		else if (nombreCampo.equalsIgnoreCase("proyecto") && proyecto == null)
 			proyecto = valorString;
+		else if (nombreCampo.equalsIgnoreCase("DOI") && DOI == null)
+			DOI = valorString;
 	}
 
 	/**
@@ -138,6 +140,8 @@ public class TechReport extends Publication
 			elemento.setAttribute("idDoc", ""+idDoc);
 		if (referencia != null)
 			elemento.setAttribute("referencia", quitarLlaves(referencia, quitarLlaves));
+		if (DOI != null)
+			elemento.setAttribute("DOI", quitarLlaves(DOI, quitarLlaves));
 
 		Element eTitle = new Element("title");
 		eTitle.addContent(quitarLlaves(title, quitarLlaves));
@@ -331,6 +335,10 @@ public class TechReport extends Publication
 		if(getReferencia()!=null)
 			str1 += ",\"" + sustituirComillasSQL(getReferencia()) + "\"";
 		else str1+= ",null";
+		
+		if(getDOI()!=null)
+			str1 += ",\"" + sustituirComillasSQL(getDOI()) + "\"";
+		else str1+= ",null";
 
 		str1+=");";
 
@@ -378,7 +386,7 @@ public class TechReport extends Publication
 		for (int i=0; i< v.size();){
 			Object[] array = v.get(i);
 			int idDoc,id_aut;
-			String title,address,type,year;
+			String doi, title,address,type,year;
 			String month,number,institution, note, abstracts, URL,user, referencia; 
 			String proyecto,n_aut,ap_aut,clave;
 			LinkedList<AutorEditor> autores,editores;
@@ -407,6 +415,7 @@ public class TechReport extends Publication
 			escrito_edit = ((Boolean) array[16]).booleanValue();
 			if (array[17] != null) clave = (String) array[17]; else clave = null;
 			if (array[18] != null) number = (String) array[18]; else number = null;
+			if (array[19] != null) doi = (String) array[19]; else doi = null;
 			AutorEditor autor1 = new AutorEditor(id_aut,n_aut,ap_aut);
 			if (escrito_edit == true) autores.add(autor1);
 			else editores.add(autor1);	
@@ -414,7 +423,7 @@ public class TechReport extends Publication
 			if (clave != null) claves.add(clave);
 			if (autores.isEmpty()) autores = null;
 			if (editores.isEmpty()) editores = null;
-			TechReport tec1 = new TechReport(idDoc,referencia,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,institution,type,number);
+			TechReport tec1 = new TechReport(idDoc,referencia,doi,title,year,month,URL,abstracts,note,claves,user,proyecto,autores,address,institution,type,number);
 			vector.add(tec1);
 
 			// Evaluamos el cambio_pub
@@ -472,6 +481,7 @@ public class TechReport extends Publication
 	 * Constructor de la clase dados sus atributos.
 	 * @param idDoc Identificador del documento.
 	 * @param referencia Referencia del documento.
+	 * @param doi DOI del documento.
 	 * @param title Título del documento.
 	 * @param year Año del documento.
 	 * @param month Mes del documento.
@@ -487,7 +497,7 @@ public class TechReport extends Publication
 	 * @param type Tipo del documento.
 	 * @param number Number del documento.
 	 */			
-	public TechReport(int idDoc, String referencia, String title,
+	public TechReport(int idDoc, String referencia, String doi, String title,
 			String year, String month, String url, String _abstract,
 			String note, Vector<String> key, String user,
 			String proyecto,LinkedList<AutorEditor> author, 
@@ -497,7 +507,7 @@ public class TechReport extends Publication
 		this.type = type;
 		this.institution = institution;
 		this.number = number;
-		super.SetAll(idDoc, referencia, title, year, month, url, _abstract, note, key,
+		super.SetAll(idDoc, referencia, doi, title, year, month, url, _abstract, note, key,
 				user, proyecto);
 	}	
 	
