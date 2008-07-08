@@ -18,9 +18,9 @@ public class Main
 		try
 		{
 			//-------------------------------------------------------------------------
-			ParserBibtex pb = new ParserBibtex();
-			InputStream is = new FileInputStream("ficherosDePrueba\\parserBibtex\\prueba.bib");
-			pb.procesar(is, "miXML.xml");
+//			ParserBibtex pb = new ParserBibtex();
+//			InputStream is = new FileInputStream("ficherosDePrueba\\parserBibtex\\prueba.bib");
+//			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
 //			ConversorXML_BBDD cb = new ConversorXML_BBDD();
@@ -65,9 +65,9 @@ public class Main
 
 			//-------------------------------------------------------------------------
 //			
-//			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\unpublished.xml");
-//			ConversorXML_BBDD conv = new ConversorXML_BBDD();
-//			System.out.println(conv.procesarInsercion(is));
+			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\article.xml");
+			ConversorXML_BBDD conv = new ConversorXML_BBDD();
+			System.out.println(conv.procesarInsercion(is));
 //			
 			//-------------------------------------------------------------------------
 			

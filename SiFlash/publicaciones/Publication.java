@@ -704,7 +704,10 @@ public abstract class Publication
 		String[] strings = s.split("\"");
 		String result = strings[0];
 		for (int i = 1; i < strings.length; i++)
-			result += "\\\"" + strings[i];
+			if (result.length()>0 && result.charAt(result.length()-1)=='\\')
+				result += "\"" + strings[i];
+			else
+				result += "\\\"" + strings[i];
 		return result;
 	}
 	
