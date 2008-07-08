@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import parserFicherosBibtex.excepciones.ExcepcionLexica;
@@ -86,7 +87,10 @@ public class ParserBibtex
 			Element elemento = p.generarElementoXML(false);
 			root.addContent(elemento);
 		}
-		XMLOutputter outputter = new XMLOutputter();
+		
+		Format formato = Format.getCompactFormat();
+		formato.setEncoding("ISO-8859-1");
+		XMLOutputter outputter = new XMLOutputter(formato);
 		try
 		{
 			outputter.output (new Document(root), new FileOutputStream(rutaXML));
