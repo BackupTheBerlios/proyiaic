@@ -319,7 +319,7 @@ public class InCollection extends Publication
 	{
 		String bibtex = "@incollection{";
 		if (referencia != null)
-			bibtex += referencia;
+			bibtex += referencia + ",";
 		bibtex += "\n";
 		if (title != null)
 			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";

@@ -297,7 +297,7 @@ public class Conference extends Publication
 	{
 		String bibtex = "@conference{";
 		if (referencia != null)
-			bibtex += referencia;
+			bibtex += referencia + ",";
 		bibtex += "\n";
 		if (title != null)
 			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";

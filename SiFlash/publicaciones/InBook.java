@@ -297,7 +297,7 @@ public class InBook extends Publication
 	{
 		String bibtex = "@inbook{";
 		if (referencia != null)
-			bibtex += referencia;
+			bibtex += referencia + ",";
 		bibtex += "\n";
 		if (title != null)
 			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";

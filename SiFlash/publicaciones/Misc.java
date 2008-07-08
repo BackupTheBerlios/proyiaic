@@ -182,7 +182,7 @@ public class Misc extends Publication
 	{
 		String bibtex = "@misc{";
 		if (referencia != null)
-			bibtex += referencia;
+			bibtex += referencia + ","; 
 		bibtex += "\n";
 		if (title != null)
 			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";

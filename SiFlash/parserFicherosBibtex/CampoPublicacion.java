@@ -28,7 +28,7 @@ public class CampoPublicacion extends Campo
 		this.valor = valor;
 		this.esUltimo = ult;
 		
-		valor = sustituirTildes(valor);
+		this.valor = sustituirTildes(valor);
 	}
 	
 	public boolean getEsUltimo()

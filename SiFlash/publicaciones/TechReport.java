@@ -215,7 +215,7 @@ public class TechReport extends Publication
 	{
 		String bibtex = "@techreport{";
 		if (referencia != null)
-			bibtex += referencia;
+			bibtex += referencia + ",";
 		bibtex += "\n";
 		if (title != null)
 			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";

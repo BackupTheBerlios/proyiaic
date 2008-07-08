@@ -170,7 +170,7 @@ public class Unpublished extends Publication
 	{
 		String bibtex = "@unpublished{";
 		if (referencia != null)
-			bibtex += referencia;
+			bibtex += referencia + ",";
 		bibtex += "\n";
 		if (title != null)
 			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";

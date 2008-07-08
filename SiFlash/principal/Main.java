@@ -3,6 +3,8 @@ package principal;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import parserFicherosBibtex.ParserBibtex;
+
 import controlador.ConversorXML_BBDD;
 
 
@@ -16,15 +18,15 @@ public class Main
 		try
 		{
 			//-------------------------------------------------------------------------
-//			ParserBibtex pb = new ParserBibtex();
-//			InputStream is = new FileInputStream("ficherosDePrueba\\parserBibtex\\prueba.bib");
-//			pb.procesar(is, "miXML.xml");
+			ParserBibtex pb = new ParserBibtex();
+			InputStream is = new FileInputStream("ficherosDePrueba\\parserBibtex\\prueba.bib");
+			pb.procesar(is, "miXML.xml");
 			
 			//-------------------------------------------------------------------------
-			ConversorXML_BBDD cb = new ConversorXML_BBDD();
-			InputStream is = new FileInputStream("ficherosDePrueba\\consultas\\consulta1.xml");
-			String salida = cb.procesarConsulta(is);
-			System.out.println(salida);
+//			ConversorXML_BBDD cb = new ConversorXML_BBDD();
+//			InputStream is = new FileInputStream("ficherosDePrueba\\consultas\\consulta1.xml");
+//			String salida = cb.procesarConsulta(is);
+//			System.out.println(salida);
 
 			//-------------------------------------------------------------------------
 //			CampoPublicacion c1 = new CampoPublicacion("title", "Hola Mundo", false);
@@ -66,7 +68,7 @@ public class Main
 //			InputStream is = new FileInputStream(".\\ficherosDePrueba\\inserciones\\publicaciones\\unpublished.xml");
 //			ConversorXML_BBDD conv = new ConversorXML_BBDD();
 //			System.out.println(conv.procesarInsercion(is));
-			
+//			
 			//-------------------------------------------------------------------------
 			
 //			DataBaseControler db_controler = new DataBaseControler();

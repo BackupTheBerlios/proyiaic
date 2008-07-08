@@ -304,7 +304,7 @@ public class Book extends Publication
 	{
 		String bibtex = "@book{";
 		if (referencia != null)
-			bibtex += referencia;
+			bibtex += referencia + ",";
 		bibtex += "\n";
 		if (title != null)
 			bibtex += "\ttitle={" + convertirTextoBibtex(title) + "},\n";
